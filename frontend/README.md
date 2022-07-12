@@ -29,6 +29,7 @@
 + index: routes
 + Layout: contains navbar and outlet
 + admin-login: admin login
++ admin: admin navbar
 + charts: charts
 + NoPage: 404 page.
 
