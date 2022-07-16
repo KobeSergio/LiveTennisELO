@@ -16,8 +16,8 @@ function admin_login() {
                         <label>Username</label>
                         <div className="input-group">
                             <input type="text" className="form-control bg-transparent" />
-                            <div class="input-group-prepend bg-transparent">
-                                <span class="input-group-text bg-transparent" id="login_input">
+                            <div className="input-group-prepend bg-transparent">
+                                <span className="input-group-text bg-transparent" id="login_input">
                                     <img src={require('../img/id-icon.png')} className="input-group-prepend bg-transparent border-0"></img>
                                 </span>
                             </div>
@@ -28,15 +28,15 @@ function admin_login() {
                         <label>Password</label>
                         <div className="input-group">
                             <input type="password" className="form-control bg-transparent" />
-                            <div class="input-group-prepend bg-transparent">
-                                <span class="input-group-text bg-transparent" id="login_input">
+                            <div className="input-group-prepend bg-transparent">
+                                <span className="input-group-text bg-transparent" id="login_input">
                                     <img src={require('../img/pw-icon.png')} className="input-group-prepend bg-transparent border-0"></img>
                                 </span>
                             </div>
                         </div>
-                        <div class="input-group-prepend text-end bg-transparent">
-                        <span class="bg-transparent">
-                                    <a href="" class="no-underline color-2">Forgot Password?</a>
+                        <div className="input-group-prepend text-end bg-transparent">
+                        <span className="bg-transparent">
+                                    <a href="" className="no-underline color-2">Forgot Password?</a>
                         </span>
                         </div>
 

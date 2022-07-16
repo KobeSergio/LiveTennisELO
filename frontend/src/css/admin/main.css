@@ -8,11 +8,91 @@
 .main-head {
     height: 150px;
     background: #FFF;
+}
 
+.bg-admin {
+    z-index: -5;
+    position: fixed;
+    background: #F9F9FB;
+    filter: brightness(95.8%);
+    right: 0;
+    width: 85%;
+    border-radius: 80px 0px 0px 0px;
+    height: 100% !important;
+}
+
+.box {
+    float: left;
+    height: 15px;
+    width: 15px;
+    margin-top: 6px;
+    clear: both;
+}
+
+.admin-input {
+    filter: drop-shadow(1px 3px 8px #000);
+}
+
+.o40 {
+    color: #AFAFAF !important;
+}
+
+.table-hard {
+    display: table-cell;
+
+    border-radius: 10px;
+    background-color: #3B9FB9 !important;
+    color: #ffffff;
+
+    width: 80px;
+    font-weight: 500;
+}
+
+.table-clay {
+    display: table-cell;
+
+    border-radius: 10px;
+    background-color: #E96513 !important;
+    color: #ffffff;
+
+    width: 80px;
+    font-weight: 500;
+}
+
+.table-grass {
+    display: table-cell;
+
+    border-radius: 10px;
+    background-color: #3EBA7C !important;
+    color: #ffffff;
+
+    width: 80px;
+    font-weight: 500;
+}
+
+.hard {
+    background: #3B9FB9 !important;
+}
+
+
+.clay {
+    background: #E96513 !important;
+}
+
+.grass {
+    background: #3EBA7C !important;
+}
+
+
+.admin-sidebar {
+    box-sizing: border-box;
+    z-index: 10 !important;
+    height: calc(100vh - 5rem);
+    ;
 }
 
 .sidenav {
-    height: 100%;
+    position: absolute;
     /* background-color: #000; */
     /* overflow-y: hidden; */
     /* padding-top: 20px; */
@@ -20,6 +100,17 @@
 
 .color-2 {
     color: #5F5F5F;
+}
+
+.nav-link {
+    color: #878787;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    border-radius: 10px;
+    color: #339966;
+    background-color: #ABE3C7;
 }
 
 .login {

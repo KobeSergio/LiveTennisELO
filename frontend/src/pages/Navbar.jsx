@@ -8,7 +8,7 @@ function navbar() {
   return [
     <nav className="navbar navbar-expand-md px-3 py-3 navbar-light bg-light border border-3 rounded-bottom" aria-label="Fourth navbar example">
       <div className="container-fluid">
-        <a className="navbar-brand fw-bold" href="/">Live Tennis Elo Ratings</a>
+        <a className="navbar-brand fw-bold" href="/">Live Tennis ELO Ratings</a>
 
             <div className="navbar-nav me-auto ms-5">
               <a class="nav-link" href="/">Live Ratings</a>
@@ -26,7 +26,7 @@ function navbar() {
               </button>
             </span>
 
-            </div>
+          </div>
         </div>
           </form>
       </div>
