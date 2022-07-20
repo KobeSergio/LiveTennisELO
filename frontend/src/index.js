@@ -9,6 +9,8 @@ import Admin from "./pages/admin_layout";
 import Records from "./pages/records";
 
 import Charts from "./pages/charts";
+import Players from "./pages/players";
+
 import Layout from "./pages/Layout"
 import NoPage from "./pages/NoPage";
 import LiveRatings from "./pages/index";
@@ -23,8 +25,8 @@ export default function App() {
       <Route path="admin-login" element={<Home />} />
 
         <Route path="/admin/" element={<Admin />}>
-          <Route index element={<Records />} />
-          <Route path="charts" element={<Charts />} />
+          <Route path="/admin/" element={<Records />} />
+          <Route path="players" element={<Players />} />
         </Route>
 
 

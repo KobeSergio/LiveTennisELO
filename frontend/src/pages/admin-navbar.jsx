@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import { Table, People, Upload } from 'react-bootstrap-icons';
 
 function Content() {
@@ -31,24 +31,34 @@ function Sidebar() {
                     <div className="align-items-center align-items-sm-start px-3 pt-3 text-white min-vh-50">
                         <div className="col-10">
                             <div className="nav flex-column nav-pills gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a className="nav-link active" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                                    <Table size={15} color="green" className="mb-1 me-3" />
-                                    Records
-                                </a>
-                                <a className="nav-link" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                                    <People size={15} className="mb-1 me-3" />
-                                    Players
-                                </a>
-                                <a className="nav-link" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
-                                    <Upload size={15} className="mb-1 me-3" />
-                                    Import
-                                </a>
+                                <NavLink className="nav-link" activeclassname="nav-link active" to='/admin/'>
+                                    <a data-toggle="pill" role="tab" aria-selected="false">
+                                        <Table size={15} className="mb-1 me-3" />
+                                        Records
+                                    </a>
+                                </NavLink>
+
+                                <NavLink className="nav-link" activeclassname="nav-link active" to='/admin/players'>
+                                    <a data-toggle="pill" role="tab" aria-selected="false">
+                                        <People size={15} className="mb-1 me-3" />
+                                        Players
+                                    </a>
+                                </NavLink>
+
+
+                                <NavLink className="nav-link" activeclassname="nav-link active" to='/admin/upload'>
+                                    <a data-toggle="pill" aria-selected="false">
+                                        <Upload size={15} className="mb-1 me-3" />
+                                        Import
+                                    </a>
+                                </NavLink>
+
                             </div>
                         </div>
                     </div>
                 </aside>
                 {/* content */}
-                <div className="bg-admin"/>
+                <div className="bg-admin" />
                 <main className="col p-5 w-75 h-75">
                     <Content />
                 </main>

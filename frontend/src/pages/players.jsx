@@ -1,14 +1,14 @@
 import React from "react";
-import { ChevronLeft, ChevronRight, Download, Search, TrashFill } from "react-bootstrap-icons";
-import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown';
+import { Download, Search, TrashFill } from "react-bootstrap-icons";
+import ReactCountryFlag from 'react-country-flag';
+import { Filter, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
 
-
-function Records() {
+function Players() {
     return (
         <>
             <div>
-                <h1 className="fw-bold fs-3">Tennis Records</h1>
+                <h1 className="fw-bold fs-3">Player's Data</h1>
             </div>
 
 
@@ -17,26 +17,14 @@ function Records() {
                 <div className="me-4">
                     <div className="input-group">
                         <div className="me-4">
-                            <YearDropdown />
+                            <Filter />
                         </div>
-
-                        <span className="input-group-button">
-                            <button className="btn btn-white border rounded-3 me-2" type="submit">
-                                <ChevronLeft color="gray" style={{fontSize: "18px"}} />
-                            </button>
-                        </span>
-                        <DateDropdown />
-                        <span className="input-group-button">
-                            <button className="btn btn-white border rounded-3 ms-2" type="submit">
-                                <ChevronRight color="gray" style={{fontSize: "18px"}} />
-                            </button>
-                        </span>
 
                     </div>
                 </div>
 
                 <div className="input-group" style={{ width: "30%" }}>
-                    <input className="form-control border rounded-3" type="text" placeholder="Search Record" aria-label="Search Record" />
+                    <input className="form-control border rounded-3" type="text" placeholder="Search Player" aria-label="Search Player" />
                     <span className="input-group-button">
                         <button className="btn btn-green search-btn px-3 py-1" type="submit">
                             <Search color="white" className="fs-7" />
@@ -83,25 +71,38 @@ function Records() {
                         <thead>
                             <tr>
                                 <th scope="col">Player ID</th>
+                                <th scope="col">Country</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Overall</th>
-                                <th scope="col">Hard</th>
-                                <th scope="col">Clay</th>
-                                <th scope="col">Grass</th>
                                 <th scope="col">ATP</th>
-                                <th scope="col">Last Active</th>
+                                <th scope="col">Overall</th>
+                                <th scope="col">Peak</th>
+                                <th className="text-start" scope="col">Hard Peak</th>
+                                <th className="text-start" scope="col">Clay Peak</th>
+                                <th className="text-start" scope="col">Grass Peak</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">RS0010</th>
+                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="RU" style={{ filter: "drop-shadow(0 0 0.25rem black)" }} svg /></th>
                                 <td className="text-start" id="name">Novak Djokovic</td>
-                                <td id="overall">3161</td>
-                                <td className="table-hard" id="hard">3076</td>
-                                <td className="table-clay" id="clay">2919</td>
-                                <td className="table-grass" id="grass">2824</td>
-                                <td id="atp">3151</td>
-                                <td id="lactive">01/07/2017</td>
+                                <td className="table-40px" id="atp">3000</td>
+                                <td className="table-40px" id="overall">3161</td>
+                                <td className="table-120px" id="peak">3216 (2014-07)</td>
+                                <td className="table-hard table-160px" id="hard">3076 3115 (2014-06)</td>
+                                <td className="table-clay table-160px" id="clay">2919 2934 (2019-12)</td>
+                                <td className="table-grass table-160px" id="grass">2824 2824 (2014-07)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">CH0020</th>
+                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="CH" style={{ filter: "drop-shadow(0 0 0.25rem black)" }} svg /></th>
+                                <td className="text-start" id="name">Roger Federer</td>
+                                <td className="table-40px" id="atp">3000</td>
+                                <td className="table-40px" id="overall">3161</td>
+                                <td className="table-120px" id="peak">3216 (2014-07)</td>
+                                <td className="table-hard table-160px" id="hard">3076 3115 (2014-06)</td>
+                                <td className="table-clay table-160px" id="clay">2919 2934 (2019-12)</td>
+                                <td className="table-grass table-160px" id="grass">2824 2824 (2014-07)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -117,4 +118,4 @@ function Records() {
     );
 }
 
-export default Records;
+export default Players;
