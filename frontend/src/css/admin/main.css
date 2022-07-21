@@ -37,6 +37,11 @@
     color: #AFAFAF !important;
 }
 
+.table {
+    border-collapse: separate;
+    border-spacing: 10px 6px;
+}
+
 .table-hard {
     display: table-cell;
 
@@ -68,6 +73,22 @@
 
     width: 80px;
     font-weight: 500;
+}
+
+.table-120px {
+    width: 120px !important;
+}
+
+.table-160px {
+    width: 160px !important;
+}
+
+.table-40px {
+    width: 40px !important;
+}
+
+.table-60px {
+    width: 60px !important;
 }
 
 .hard {
