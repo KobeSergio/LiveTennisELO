@@ -5,6 +5,10 @@
     color: #5F5F5F;
 }
 
+h1 { 
+    color: #000;
+}
+
 .main-head {
     height: 150px;
     background: #FFF;
@@ -98,6 +102,14 @@
 
 .clay {
     background: #E96513 !important;
+}
+
+.msg-100 {
+    color: #3EBA7C !important;
+}
+
+.gc-100 {
+    color: #339966 !important;
 }
 
 .grass {
@@ -251,6 +263,10 @@ li .pagination-button {
     border-bottom: 1px solid #5F5F5F;
 }
 
+.btn {
+    border-radius: 10px !important;
+}
+
 .search-btn {
     border-radius: 0px 10px 10px 0px;
 }
@@ -343,8 +359,37 @@ li .pagination-button {
     color: #fff;
 }
 
+.btn-green {
+    background-color: #3EBA7C !important;
+    color: #fff;
+}
+
+.btn-green-transparent:hover {
+    background: #339966 !important;
+    color: #fff !important;
+}
+
+.btn-green-transparent {
+    background: transparent !important;
+    border-color: #339966 !important;
+    color: #3EBA7C !important;
+}
+
 .form-control {
     border: 0;
     outline: 0;
     border-bottom: 1px solid #5F5F5F;
 }
+
+.u-green {
+    color: #3EBA7C !important;
+    text-decoration: underline !important;
+    text-decoration-color: #3EBA7C !important;
+}
+
+.upload-box {
+    border-style: dashed;
+    border-color: #ABE3C7;
+    height: 300px;
+}
+
