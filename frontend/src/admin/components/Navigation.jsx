@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { Table, People, Upload } from 'react-bootstrap-icons';
+import Footer from '../components/Footer';
 
 function Content() {
     return (
@@ -46,7 +47,7 @@ function Sidebar() {
                                 </NavLink>
 
 
-                                <NavLink className="nav-link" activeclassname="nav-link active" to='/admin/upload'>
+                                <NavLink className="nav-link" activeclassname="nav-link active" to='/admin/import'>
                                     <a data-toggle="pill" aria-selected="false">
                                         <Upload size={15} className="mb-1 me-3" />
                                         Import
@@ -72,6 +73,7 @@ function AdminNav() {
         <>
             <Navbar />
             <Sidebar />
+            <Footer />
         </>
     );
 }

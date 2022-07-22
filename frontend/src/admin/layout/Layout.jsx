@@ -1,5 +1,5 @@
 import React from "react";
-import AdminNav from "./admin-navbar"; 
+import AdminNav from "../components/Navigation"; 
 
 function Admin() {
     return (

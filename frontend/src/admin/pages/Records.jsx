@@ -1,4 +1,3 @@
-import React from "react";
 import { ChevronLeft, ChevronRight, Download, Search, TrashFill } from "react-bootstrap-icons";
 import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
@@ -105,9 +104,13 @@ function Records() {
                             </tr>
                         </tbody>
                     </table>
+                    <div>
+                        <a href="" className="color-1">Edit Record</a>
+                    </div>
                     <div className="ms-auto">
                         <Pagination />
                     </div>
+
                 </div>
             </div>
 
