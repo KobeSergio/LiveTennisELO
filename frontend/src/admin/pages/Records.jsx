@@ -1,54 +1,7 @@
-import React from "react";
 import { ChevronLeft, ChevronRight, Download, Search, TrashFill } from "react-bootstrap-icons";
-import Dropdown from 'react-bootstrap/Dropdown';
+import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown';
+import Pagination from '../components/Pagination';
 
-function YearDropdown() {
-    return (
-        <Dropdown className="border rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-                2022
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/2021">2021</Dropdown.Item>
-                <Dropdown.Item href="#/2020">2020</Dropdown.Item>
-                <Dropdown.Item href="#/2019">2019</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    );
-}
-
-function DateDropdown() {
-    return (
-        <Dropdown className="border rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-                27/06/2022
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/2022/27/06">2022/27/06</Dropdown.Item>
-                <Dropdown.Item href="#/2022/26/06">2022/26/06</Dropdown.Item>
-                <Dropdown.Item href="#/2022/25/06">2022/25/06</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    );
-}
-
-function RowsDropdown() {
-    return (
-        <Dropdown className="border rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-                10 per page
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/">15 per page</Dropdown.Item>
-                <Dropdown.Item href="#/">20 per page</Dropdown.Item>
-                <Dropdown.Item href="#/">25 per page</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    );
-}
 
 function Records() {
     return (
@@ -132,9 +85,7 @@ function Records() {
                                 <th scope="col">Name</th>
                                 <th scope="col">Overall</th>
                                 <th scope="col">Hard</th>
-                                &nbsp;
                                 <th scope="col">Clay</th>
-                                &nbsp;
                                 <th scope="col">Grass</th>
                                 <th scope="col">ATP</th>
                                 <th scope="col">Last Active</th>
@@ -146,15 +97,20 @@ function Records() {
                                 <td className="text-start" id="name">Novak Djokovic</td>
                                 <td id="overall">3161</td>
                                 <td className="table-hard" id="hard">3076</td>
-                                &nbsp;
                                 <td className="table-clay" id="clay">2919</td>
-                                &nbsp;
                                 <td className="table-grass" id="grass">2824</td>
                                 <td id="atp">3151</td>
                                 <td id="lactive">01/07/2017</td>
                             </tr>
                         </tbody>
                     </table>
+                    <div>
+                        <a href="" className="color-1">Edit Record</a>
+                    </div>
+                    <div className="ms-auto">
+                        <Pagination />
+                    </div>
+
                 </div>
             </div>
 

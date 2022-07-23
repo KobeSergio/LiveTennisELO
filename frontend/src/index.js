@@ -3,15 +3,23 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//  ORGANIZE PAGES
-import Home from "./pages/admin-login";
-import Admin from "./pages/admin_layout";
-import Records from "./pages/records";
+// Layouts
+import Admin from "./admin/layout/Layout"; // Admin
+import Layout from "./user/layout/Layout" // User
 
-import Charts from "./pages/charts";
-import Layout from "./pages/Layout"
-import NoPage from "./pages/NoPage";
-import LiveRatings from "./pages/index";
+
+//  Admin 
+import Home from "./admin/pages/Login";
+import Records from "./admin/pages/Records";
+import Players from "./admin/pages/Players";
+import Import from "./admin/pages/Import";
+
+// User
+import LiveRatings from "./user/pages/LiveRatings";
+import Charts from "./user/pages/Charts";
+import About from "./user/pages/About"
+
+import NoPage from "./user/pages/NoPage";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -23,14 +31,16 @@ export default function App() {
       <Route path="admin-login" element={<Home />} />
 
         <Route path="/admin/" element={<Admin />}>
-          <Route index element={<Records />} />
-          <Route path="charts" element={<Charts />} />
+          <Route path="/admin/" element={<Records />} />
+          <Route path="players" element={<Players />} />
+          <Route path="import" element={<Import />} />
         </Route>
 
 
         <Route path="/" element={<Layout />}>
           <Route index element={<LiveRatings />} />
           <Route path="charts" element={<Charts />} />
+          <Route path="about" element={<About />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

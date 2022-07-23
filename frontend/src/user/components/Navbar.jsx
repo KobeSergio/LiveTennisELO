@@ -1,7 +1,5 @@
 import React from "react";
-import '../css/admin/main.css';
-import { Navbar, Nav } from "react-bootstrap";
-import { Switch, BrowserRouter as Route, Link } from "react-router-dom";
+import './main.css';
 import { Search } from "react-bootstrap-icons";
 
 function navbar() {
