@@ -58,12 +58,21 @@ function Sidebar() {
                         </div>
                     </div>
                 </aside>
-                {/* content */}
-                <div className="bg-admin" />
-                <main className="col p-5 w-75 h-75">
-                    <Content />
-                </main>
+
+                <div className="bg-admin d-flex flex-column">
+                    <main className="flex-shrink-0">
+                        <div className="container-fluid">
+                            <div className="mt-5">
+                                <Content />
+                            </div>
+                        </div>
+                    </main>
+                        
+                        <Footer />
+                </div>
+
             </div>
+
         </div>
     );
 }
@@ -73,7 +82,7 @@ function AdminNav() {
         <>
             <Navbar />
             <Sidebar />
-            <Footer />
+
         </>
     );
 }

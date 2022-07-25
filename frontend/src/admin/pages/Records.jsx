@@ -7,7 +7,7 @@ function Records() {
     return (
         <>
             <div>
-                <h1 className="fw-bold fs-3">Tennis Records</h1>
+                <h1 className="fw-bold fs-4">Tennis Records</h1>
             </div>
 
 
