@@ -16,8 +16,7 @@ export function Filter() {
 
 export function YearDropdown() {
     return (
-        <div className='dropdown'>
-            <Dropdown className="border-0 rounded-3">
+            <Dropdown className="border-0 dropdown rounded-3">
                 <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
                     2022
                 </Dropdown.Toggle>
@@ -27,7 +26,6 @@ export function YearDropdown() {
                     <Dropdown.Item href="#/2019">2019</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-        </div>
     );
 }
 
