@@ -3,6 +3,7 @@ import { Download, Search, TrashFill } from "react-bootstrap-icons";
 import ReactCountryFlag from 'react-country-flag';
 import { Filter, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
+import { SearchPlayers } from "../components/Search";
 
 function Players() {
     return (
@@ -23,14 +24,7 @@ function Players() {
                     </div>
                 </div>
 
-                <div className="input-group" style={{ width: "30%" }}>
-                    <input className="form-control border rounded-3" type="text" placeholder="Search Player" aria-label="Search Player" />
-                    <span className="input-group-button">
-                        <button className="btn btn-green search-btn px-3 py-1" type="submit">
-                            <Search color="white" className="fs-7" />
-                        </button>
-                    </span>
-                </div>
+                <SearchPlayers />
 
                 <div className="ms-auto me-5">
                     <RowsDropdown />
