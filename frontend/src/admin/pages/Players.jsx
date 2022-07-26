@@ -8,12 +8,12 @@ function Players() {
     return (
         <>
             <div>
-                <h1 className="fw-bold fs-3">Player's Data</h1>
+                <h1 className="fw-bold fs-4">Player's Data</h1>
             </div>
 
 
             {/* main search + filters */}
-            <div className="input-group pt-3 pb-3 mx-3">
+            <div className="input-group pt-3 pb-3 mx-3 ">
                 <div className="me-4">
                     <div className="input-group">
                         <div className="me-4">
@@ -84,7 +84,7 @@ function Players() {
                         <tbody>
                             <tr>
                                 <th scope="row">RS0010</th>
-                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="RU" style={{ filter: "drop-shadow(0 0 0.25rem black)" }} svg /></th>
+                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="RU" style={{ filter: "drop-shadow(0 0 0.12rem black)" }} svg /></th>
                                 <td className="text-start" id="name">Novak Djokovic</td>
                                 <td className="table-40px" id="atp">3000</td>
                                 <td className="table-40px" id="overall">3161</td>
@@ -95,7 +95,7 @@ function Players() {
                             </tr>
                             <tr>
                                 <th scope="row">CH0020</th>
-                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="CH" style={{ filter: "drop-shadow(0 0 0.25rem black)" }} svg /></th>
+                                <th className="table-40px" scope="row"><ReactCountryFlag countryCode="CH" style={{ filter: "drop-shadow(0 0 0.12rem black)" }} svg /></th>
                                 <td className="text-start" id="name">Roger Federer</td>
                                 <td className="table-40px" id="atp">3000</td>
                                 <td className="table-40px" id="overall">3161</td>
