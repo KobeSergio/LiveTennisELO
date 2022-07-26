@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Download, Search, TrashFill } from "react-bootstrap-icons";
 import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
-
+import { SearchRecords } from "../components/Search";
 
 function Records() {
     return (
@@ -20,13 +20,13 @@ function Records() {
                         </div>
 
                         <span className="input-group-button">
-                            <button className="btn btn-white border rounded-3 me-2" type="submit">
+                            <button className="btn btn-white border-0 dropdown rounded-3 me-2" type="submit">
                                 <ChevronLeft color="gray" style={{fontSize: "18px"}} />
                             </button>
                         </span>
                         <DateDropdown />
                         <span className="input-group-button">
-                            <button className="btn btn-white border rounded-3 ms-2" type="submit">
+                            <button className="btn btn-white border-0 dropdown rounded-3 ms-2" type="submit">
                                 <ChevronRight color="gray" style={{fontSize: "18px"}} />
                             </button>
                         </span>
@@ -34,14 +34,7 @@ function Records() {
                     </div>
                 </div>
 
-                <div className="input-group" style={{ width: "30%" }}>
-                    <input className="form-control border rounded-3" type="text" placeholder="Search Record" aria-label="Search Record" />
-                    <span className="input-group-button">
-                        <button className="btn btn-green search-btn px-3 py-1" type="submit">
-                            <Search color="white" className="fs-7" />
-                        </button>
-                    </span>
-                </div>
+                <SearchRecords />
 
                 <div className="ms-auto me-5">
                     <RowsDropdown />
