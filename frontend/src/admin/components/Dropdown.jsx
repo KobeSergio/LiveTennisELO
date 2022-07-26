@@ -2,7 +2,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 export function Filter() {
     return (
-        <Dropdown className="border rounded-3">
+        <Dropdown className="border-0 dropdown rounded-3">
             <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
                 Filter by
             </Dropdown.Toggle>
@@ -16,23 +16,24 @@ export function Filter() {
 
 export function YearDropdown() {
     return (
-        <Dropdown className="border rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-                2022
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                <Dropdown.Item href="#/2021">2021</Dropdown.Item>
-                <Dropdown.Item href="#/2020">2020</Dropdown.Item>
-                <Dropdown.Item href="#/2019">2019</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
+        <div className='dropdown'>
+            <Dropdown className="border-0 rounded-3">
+                <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+                    2022
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/2021">2021</Dropdown.Item>
+                    <Dropdown.Item href="#/2020">2020</Dropdown.Item>
+                    <Dropdown.Item href="#/2019">2019</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
     );
 }
 
 export function DateDropdown() {
     return (
-        <Dropdown className="border rounded-3">
+        <Dropdown className="border-0 dropdown rounded-3">
             <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
                 27/06/2022
             </Dropdown.Toggle>
@@ -48,7 +49,7 @@ export function DateDropdown() {
 
 export function RowsDropdown() {
     return (
-        <Dropdown className="border rounded-3">
+        <Dropdown className="border-0 dropdown rounded-3">
             <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
                 10 per page
             </Dropdown.Toggle>
