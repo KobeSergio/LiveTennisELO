@@ -1,9 +1,11 @@
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler') 
+const player = require('../models/playerModel')
 // @desc:       Get players
 // @route:      GET /admin 
-// @access      Private
+// @access      Private    
 const getPlayers = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Get players' })
+    const players = await player.find()
+    res.status(200).json(players)
 })
 
 // @desc:       Post player
