@@ -13,6 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/admin', require('./routes/playerRoutes'))
+app.use('/admin-login', require('./routes/loginRoutes'))
 
 app.use(errorHandler)
 
