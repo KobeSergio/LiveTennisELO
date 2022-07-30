@@ -13,6 +13,7 @@ import Home from "./admin/pages/Login";
 import Records from "./admin/pages/Records";
 import Players from "./admin/pages/Players";
 import Import from "./admin/pages/Import";
+import ManagePlayer from "./admin/pages/ManagePlayer";
 
 // User
 import LiveRatings from "./user/pages/LiveRatings";
@@ -28,13 +29,19 @@ export default function App() {
     <BrowserRouter>
       <Routes>
 
-      <Route path="admin-login" element={<Home />} />
+        <Route path="admin-login" element={<Home />} />
 
         <Route path="/admin/" element={<Admin />}>
           <Route path="/admin/" element={<Records />} />
+
           <Route path="players" element={<Players />} />
+          <Route path="players/manage" element={<ManagePlayer />} />
+          
+
           <Route path="import" element={<Import />} />
         </Route>
+
+
 
 
         <Route path="/" element={<Layout />}>
@@ -48,4 +55,4 @@ export default function App() {
   );
 }
 
-root.render(<App/>);
+root.render(<App />);

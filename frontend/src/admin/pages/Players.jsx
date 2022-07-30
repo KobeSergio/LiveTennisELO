@@ -4,8 +4,11 @@ import ReactCountryFlag from 'react-country-flag';
 import { Filter, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
 import { SearchPlayers } from "../components/Search";
+import { useNavigate } from "react-router-dom";
+
 
 function Players() {
+    const navigate = useNavigate();
     return (
         <>
             <div>
@@ -75,8 +78,8 @@ function Players() {
                                 <th className="text-start" scope="col">Grass Peak</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody className="tbody">
+                            <tr onClick={() => navigate('manage')}>
                                 <th scope="row">RS0010</th>
                                 <th className="table-40px" scope="row"><ReactCountryFlag countryCode="RU" style={{ filter: "drop-shadow(0 0 0.12rem black)" }} svg /></th>
                                 <td className="text-start" id="name">Novak Djokovic</td>
