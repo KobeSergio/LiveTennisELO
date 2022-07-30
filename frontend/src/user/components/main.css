@@ -126,6 +126,17 @@ h1 {
     background: #3EBA7C !important;
 }
 
+.hard-text {
+    color: #015778 !important;
+}
+
+.clay-text {
+    color: #E96513 !important;
+}
+
+.grass-text {
+    color: #339966 !important;
+}
 
 .admin-sidebar {
     box-sizing: border-box;
@@ -456,4 +467,12 @@ li .pagination-button {
 
 .dropdown {
     box-shadow: 0px 1px 2px -1px gray;
+}
+
+.player_pfpic {
+    border-radius: 10px !important;
+}
+
+.tbody tr:hover {
+    background: rgb(219, 219, 219);
 }
