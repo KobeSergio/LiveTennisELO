@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, Download, Search, TrashFill } from "react-bo
 import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
 import { SearchRecords } from "../components/Search";
+import { SurfaceLegend } from "../components/Legend";
 
 function Records() {
     return (
@@ -51,18 +52,8 @@ function Records() {
                     </div>
 
                     <div className="ms-auto d-flex align-items-start">
-                        <div className="me-3">
-                            <div className="box hard me-2 rounded" />
-                            Hard
-                        </div>
-                        <div className="me-3">
-                            <div className="box clay me-2 rounded" />
-                            Clay
-                        </div>
-                        <div className="me-3">
-                            <div className="box grass me-2 rounded" />
-                            Grass
-                        </div>
+                        
+                        <SurfaceLegend />
 
                     </div>
                 </div>

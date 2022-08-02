@@ -476,3 +476,95 @@ li .pagination-button {
 .tbody tr:hover {
     background: rgb(219, 219, 219);
 }
+
+.table-ratings {
+    display: table-cell;
+
+    width: 80px;
+}
+
+.table-name {
+    display: table-cell;
+
+    width: 250px;
+}
+
+
+.table-score {
+    display: table-cell;
+
+    width: 120px;
+}
+
+.table-result-label {
+    display: inline;
+	padding: .2em 12px .3em;
+
+
+    border-radius: 10px;
+    background-color: #F38689 !important;
+    color: #000;
+
+    width: 80px !important;
+
+}
+
+.table-result {
+    display: table-cell;
+
+
+    width: 40px;
+}
+
+.table-surface-elo {
+    display: table-cell;
+
+    border-radius: 10px;
+    color: #000;
+
+    width: 80px;
+}
+
+.table-surface-elo-label {
+    display: inline;
+	padding: .2em .6em .3em;
+
+
+    border-radius: 10px;
+    background-color: #E96513 !important;
+    color: #ffffff;
+
+    width: 40px;
+}
+
+.positive-elo {
+        color: #3EBA7C;
+        display: inline-block;
+        vertical-align: inherit;
+        line-height: 0.8;
+        font-size: 12px;
+}
+
+.highlights-button {
+    display: inline-block;
+    vertical-align: inherit;
+}
+
+.rounded {
+    border-radius: 10px !important;
+}
+
+.table-tournament {
+    display: table-cell;
+    width: 120px;
+}
+
+.table-date {
+    display: table-cell;
+    width: 100px;
+}
+
+.table-round {
+    display: table-cell;
+    width: 100px;
+}

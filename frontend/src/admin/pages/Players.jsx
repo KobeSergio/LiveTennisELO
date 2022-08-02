@@ -5,6 +5,7 @@ import { Filter, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
 import { SearchPlayers } from "../components/Search";
 import { useNavigate } from "react-router-dom";
+import { SurfaceLegend } from "../components/Legend";
 
 
 function Players() {
@@ -44,19 +45,7 @@ function Players() {
                     </div>
 
                     <div className="ms-auto d-flex align-items-start">
-                        <div className="me-3">
-                            <div className="box hard me-2 rounded" />
-                            Hard
-                        </div>
-                        <div className="me-3">
-                            <div className="box clay me-2 rounded" />
-                            Clay
-                        </div>
-                        <div className="me-3">
-                            <div className="box grass me-2 rounded" />
-                            Grass
-                        </div>
-
+                        <SurfaceLegend />
                     </div>
                 </div>
             </div>
