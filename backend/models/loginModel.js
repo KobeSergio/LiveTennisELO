@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-const adminSchema = mongoose.Schema({
+const loginSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Insert a name first.']
     },
-    username: {
+    email: {
         type: String,
         required: [true, 'Insert a username first.'],
         unique: true
@@ -15,8 +15,8 @@ const adminSchema = mongoose.Schema({
         required: [true, 'Insert a name first.']
     } 
 },{
-    collection: 'admin',
+    collection: 'login',
     timestamps: true
 })
 
-module.exports = mongoose.model('admin', adminSchema)
+module.exports = mongoose.model('login', loginSchema)
