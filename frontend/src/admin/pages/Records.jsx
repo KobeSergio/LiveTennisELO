@@ -3,6 +3,7 @@ import { YearDropdown, DateDropdown, RowsDropdown } from '../components/Dropdown
 import Pagination from '../components/Pagination';
 import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
+import { EditRecord } from "../components/admin/Modals";
 
 function Records() {
     return (
@@ -89,7 +90,7 @@ function Records() {
                         </tbody>
                     </table>
                     <div>
-                        <a href="" className="color-1">Edit Record</a>
+                        <EditRecord />
                     </div>
                     <div className="ms-auto">
                         <Pagination />
