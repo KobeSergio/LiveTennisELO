@@ -1,4 +1,5 @@
 import { PlayerCharts } from "../components/admin/PlayerCharts";
+import { PlayerMatches } from "../components/admin/PlayerMatches";
 
 function ManagePlayer() {
     return (
@@ -7,8 +8,8 @@ function ManagePlayer() {
                 <h1 className="fw-bold fs-4 pb-3">Manage Player</h1>
             </div>
 
-            <div className="container-fluid h-100 shadow p-5 mb-5">
-                <div className="row h-100 py-3">
+            <div className="bg-white container-fluid h-100 shadow rounded p-5 mb-5">
+                <div className="row h-100 py-3 rounded">
                     <aside className="col-sm-2">
                         <div className="mb-3">
                             <img className="player_pfpic bg-transparent border-0 img-responsive img-thumbnail" id='player-pfpic' src={require('../img/player_sample.png')}></img>
@@ -143,6 +144,7 @@ function ManagePlayer() {
             </div>
 
             <PlayerCharts />
+            <PlayerMatches />
         </>
 
     );
