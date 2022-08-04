@@ -4,7 +4,7 @@
 
 import axios from "axios";
 
-const LOGIN_URL = "http://localhost:5000/admin/login";
+const LOGIN_URL = "http://localhost:5000/admin-login";
 
 //Login user
 const login = async (userData) => {

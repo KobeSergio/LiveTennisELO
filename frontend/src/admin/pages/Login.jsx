@@ -1,7 +1,7 @@
 import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login, reset } from "../../features/auth/authSlice";
+import { login, reset } from "../../features/auth/authSlice"; 
 
 //Constructor
 function Admin_login() {
@@ -25,6 +25,7 @@ function Admin_login() {
   useEffect(() => {
     if (isError) {
       //Error message
+      console.log("Wrong credentials")
     }
     if (isSuccess || user) {
       //
@@ -116,10 +117,7 @@ function Admin_login() {
                 </div>
               </div>
               <div className="input-group-prepend text-end bg-transparent">
-                <span className="bg-transparent">
-                  <a href="" className="no-underline color-2">
-                    Forgot Password?
-                  </a>
+                <span className="bg-transparent"> 
                 </span>
               </div>
               <br className="mt-2" />

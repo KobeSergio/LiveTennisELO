@@ -2,7 +2,21 @@ import { PlayerCharts } from "../components/admin/PlayerCharts";
 import { PlayerMatches } from "../components/admin/PlayerMatches";
 import { EditContent } from "../components/admin/Modals"; 
 
+//Backend 
+import { useEffect } from 'react' 
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+
 function ManagePlayer() {
+    const navigate = useNavigate();
+    //Redirect if not logged in
+    const {user} = useSelector((state)=> state.auth)
+
+    useEffect(()=> {
+        if(!user){
+            navigate('/admin-login')
+        }
+    }, [user, navigate]) 
     return (
         <>
             <div>
