@@ -5,11 +5,24 @@ import { Filter, RowsDropdown } from '../components/Dropdown';
 import Pagination from '../components/Pagination';
 import { SearchPlayers } from "../components/Search";
 import { useNavigate } from "react-router-dom";
-import { SurfaceLegend } from "../components/Legend";
+import { SurfaceLegend } from "../components/Legend";  
 
+//Backend 
+import { useEffect } from 'react' 
+import { useSelector } from 'react-redux'
 
 function Players() {
     const navigate = useNavigate();
+
+    //Redirect if not logged in
+    const {user} = useSelector((state)=> state.auth)
+
+    useEffect(()=> {
+        if(!user){
+            navigate('/admin-login')
+        }
+    }, [user, navigate])
+
     return (
         <>
             <div>

@@ -5,7 +5,22 @@ import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
 import { EditRecord } from "../components/admin/Modals";
 
+//Backend 
+import { useEffect } from 'react' 
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+
 function Records() {
+    const navigate = useNavigate();
+    //Redirect if not logged in
+    const {user} = useSelector((state)=> state.auth)
+
+    useEffect(()=> {
+        if(!user){
+            navigate('/admin-login')
+        }
+    }, [user, navigate]) 
+
     return (
         <>
             <div>
