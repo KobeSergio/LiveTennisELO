@@ -1,5 +1,6 @@
 import { PlayerCharts } from "../components/admin/PlayerCharts";
 import { PlayerMatches } from "../components/admin/PlayerMatches";
+import { EditContent } from "../components/admin/Modals"; 
 
 function ManagePlayer() {
     return (
@@ -133,7 +134,7 @@ function ManagePlayer() {
 
                                 </div>
                                 <div className="col pt-4">
-                                    <button type="button" className="ms-4 px-2 btn btn-green btn-sm float-end" style={{fontSize: "18px", borderWidth: "0px", width: "150px", height: "40px", fontWeight: "600"}}>Edit Content</button>
+                                    <EditContent />
                                 </div>
 
                             </div>
