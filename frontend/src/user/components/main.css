@@ -569,6 +569,14 @@ li .pagination-button {
     font-size: 12px;
 }
 
+.negative-elo {
+    color: #DB1131;
+    display: inline-block;
+    vertical-align: inherit;
+    line-height: 0.8;
+    font-size: 12px;
+}
+
 .highlights-button {
     display: inline-block;
     vertical-align: inherit;
