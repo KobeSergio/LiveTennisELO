@@ -411,12 +411,29 @@ li .pagination-button {
 }
 
 .btn-green {
-    background-color: #3EBA7C !important;
+    background-color: #339966 !important;
     color: #fff;
 }
 
 .btn-green-transparent:hover {
     background: #339966 !important;
+    color: #fff !important;
+}
+
+.btn-gray {
+    background-color: #AFAFAF !important;
+    color: #fff;
+}
+
+.btn-gray-transparent {
+    background: transparent !important;
+    border-color: #AFAFAF !important;
+    border-width: 2px !important;
+    color: #AFAFAF;
+}
+
+.btn-gray-transparent:hover {
+    background: #AFAFAF !important;
     color: #fff !important;
 }
 
@@ -437,6 +454,13 @@ li .pagination-button {
     border: 0;
     outline: 0;
     border-bottom: 1px solid #5F5F5F;
+}
+
+.form-control-border:focus {
+    box-shadow: none;
+    border: 0;
+    outline: 0;
+    border: 1px solid #5F5F5F;
 }
 
 .u-green {
@@ -498,7 +522,7 @@ li .pagination-button {
 
 .table-result-label {
     display: inline;
-	padding: .2em 12px .3em;
+    padding: .2em 12px .3em;
 
 
     border-radius: 10px;
@@ -527,7 +551,7 @@ li .pagination-button {
 
 .table-surface-elo-label {
     display: inline;
-	padding: .2em .6em .3em;
+    padding: .2em .6em .3em;
 
 
     border-radius: 10px;
@@ -538,11 +562,11 @@ li .pagination-button {
 }
 
 .positive-elo {
-        color: #3EBA7C;
-        display: inline-block;
-        vertical-align: inherit;
-        line-height: 0.8;
-        font-size: 12px;
+    color: #3EBA7C;
+    display: inline-block;
+    vertical-align: inherit;
+    line-height: 0.8;
+    font-size: 12px;
 }
 
 .highlights-button {
@@ -567,4 +591,19 @@ li .pagination-button {
 .table-round {
     display: table-cell;
     width: 100px;
+}
+
+.form-control-border {
+    border: 0;
+    outline: 0;
+    border: 1px solid #5F5F5F;
+    border-radius: 10px;
+}
+
+.modal-header {
+    border-bottom: 0 !important;
+}
+
+.modal-footer {
+	border-top: 0 !important;
 }

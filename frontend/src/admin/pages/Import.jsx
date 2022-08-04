@@ -1,6 +1,21 @@
 import { Download } from "react-bootstrap-icons";
 import UploadBox from "../components/UploadBox";
 
+function ImportFailed() {
+    return (
+        <>
+            <div>
+                <h1 className="fw-bold fs-4 pb-3">Import Tennis Records CSV</h1>
+            </div>
+            <div className="pt-3">
+                <h1 className="fw-bold fs-5">Record Failed to upload.</h1>
+                <p>Please check the table below for the error and try to check for system solutions, or try to fix them first in your CSV and reupload.</p>
+            </div>
+            {/* Table here */}
+        </>
+    )
+}
+
 function Import() {
     return (
         <>
@@ -47,7 +62,7 @@ function Import() {
             <div className="py-4">
                 <h1 className="fw-bold fs-5">Upload Manually</h1>
                 You can also upload manually here:
-                <button type="button" className="ms-4 px-2 btn btn-green-transparent btn-sm" style={{fontSize: "16px", borderWidth: "2px", width: "200px", height: "40px", fontWeight: "600"}}>Upload Record Manually</button>
+                <button type="button" className="ms-4 px-2 btn btn-green-transparent btn-sm" style={{ fontSize: "16px", borderWidth: "2px", width: "200px", height: "40px", fontWeight: "600" }}>Upload Record Manually</button>
             </div>
         </>
 

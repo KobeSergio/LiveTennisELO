@@ -131,42 +131,40 @@ export const grass_data = {
 export function PlayerCharts() {
     return (
         <>
-            <div className="container-fluid h-100">
+            <div className="d-flex h-100">
                 <div className="row h-100">
-                    <main className="col">
-                        <div className='row gx-4 mb-3'>
-                            <div className='bg-white col-md me-2 shadow rounded mb-2'>
-                                <h1 className='mt-2 fs-4'>Overall Rating</h1>
-                                <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
-                                <div>
-                                    <Line options={overall} data={overall_data} width={"500px"} height={"500px"} />
-                                </div>
-                            </div>
-                            <div className='bg-white col-md me-2 shadow rounded mb-2'>
-                                <h1 className='mt-2 fs-4 clay-text'>Clay Rating</h1>
-                                <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
-                                <div>
-                                    <Line options={clay} data={clay_data} width={"500px"} height={"500px"} />
-                                </div>
+                    <div className='ms-0 row gx-4 mb-3'>
+                        <div className='bg-white col me-2 shadow rounded mb-2'>
+                            <h1 className='mt-2 fs-4'>Overall Rating</h1>
+                            <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
+                            <div>
+                                <Line options={overall} data={overall_data} width={"500px"} height={"500px"} />
                             </div>
                         </div>
-                        <div className='row gx-4'>
-                            <div className='bg-white col-md me-2 shadow rounded mb-2'>
-                                <h1 className='mt-2 fs-4 hard-text'>Hard Rating</h1>
-                                <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
-                                <div>
-                                    <Line options={hard} data={hard_data} width={"500px"} height={"500px"} />
-                                </div>
-                            </div>
-                            <div className='bg-white col-md me-2 shadow rounded mb-2'>
-                                <h1 className='mt-2 fs-4 grass-text'>Grass Rating</h1>
-                                <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
-                                <div>
-                                    <Line options={grass} data={grass_data} width={"500px"} height={"500px"} />
-                                </div>
+                        <div className='bg-white col shadow rounded mb-2'>
+                            <h1 className='mt-2 fs-4 clay-text'>Clay Rating</h1>
+                            <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
+                            <div>
+                                <Line options={clay} data={clay_data} width={"500px"} height={"500px"} />
                             </div>
                         </div>
-                    </main>
+                    </div>
+                    <div className='ms-0 row gx-4'>
+                        <div className='bg-white col me-2 shadow rounded mb-2'>
+                            <h1 className='mt-2 fs-4 hard-text'>Hard Rating</h1>
+                            <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
+                            <div>
+                                <Line options={hard} data={hard_data} width={"500px"} height={"500px"} />
+                            </div>
+                        </div>
+                        <div className='bg-white col shadow rounded mb-2'>
+                            <h1 className='mt-2 fs-4 grass-text'>Grass Rating</h1>
+                            <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
+                            <div>
+                                <Line options={grass} data={grass_data} width={"500px"} height={"500px"} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
