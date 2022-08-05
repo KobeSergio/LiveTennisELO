@@ -22,8 +22,7 @@ app.use(function(req, res, next) {
   });
 
   
-app.use("/admin", require("./routes/recordRoutes"));
-//app.use("/admin/players", require("./routes/playerRoutes"));
+app.use("/admin", require("./routes/adminRoutes"));
 app.use("/admin-login", require("./routes/loginRoutes")); 
 
 app.use(errorHandler);

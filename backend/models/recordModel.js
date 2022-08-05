@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const recordSchema = new mongoose.Schema(
-  {
+  { 
+    doc_date: String,
     player_id: String,
     name: String,
     ranking: Number,
@@ -18,9 +19,9 @@ const recordSchema = new mongoose.Schema(
     date3: String,
     last_active: String,
     atp: Number,
-    doc_date: String,
+    
   },
-  { collection: "records" }
+  { collection: "records", strictQuery: 'throw'}
 );
 
 module.exports = mongoose.model("records", recordSchema);

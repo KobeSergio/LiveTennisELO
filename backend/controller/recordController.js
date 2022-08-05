@@ -3,10 +3,10 @@ const Record = require("../models/recordModel");
 // @desc:       Get record from database
 // @route:      GET /admin/:id
 // @access      Private
-const getRecord = asyncHandler(async (req, res) => {
-  
-  const record = await Record.find({ doc_date: { $gte:req.params.id} }).limit(5).exec();
-  console.log(record);
+const getRecord = asyncHandler(async (req, res) => { 
+  const record = await Record.find({
+    doc_date: { $eq: req.params.doc_date },
+  }).exec();
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -45,12 +45,11 @@ const postRecord = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc:       Update record with the id of :id
-// @route:      UPDATE /admin/:id
+// @desc:       Update individual record with the id of :id
+// @route:      UPDATE /admin/:doc_date/:id
 // @access      Private
 const updateRecord = asyncHandler(async (req, res) => {
-  const record = await Record.findById(req.params.id);
-
+  const record = await Record.findById(req.params.id); 
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -59,16 +58,16 @@ const updateRecord = asyncHandler(async (req, res) => {
       req.params.id,
       req.body
     );
+    console.log(req.body);
     res.status(200).json(updatedRecord);
   }
 });
 
-// @desc:       Delete record with the id of :id
-// @route:      DELETE /admin/:id
+// @desc:       Delete individual record with the id of :id
+// @route:      DELETE /admin/:doc_date/:id
 // @access      Private
 const deleteRecord = asyncHandler(async (req, res) => {
   const record = await Record.findById(req.params.id);
-
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -78,9 +77,27 @@ const deleteRecord = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc:       Delete whole record with the id of :id
+// @route:      DELETE /admin/:doc_date/:id
+// @access      Private
+const deleteWholeRecord = asyncHandler(async (req, res) => {
+    const recordsToDelete = await Record.find({
+        doc_date: { $eq: req.params.doc_date }})
+    if (!recordsToDelete) {
+      res.status(400);
+      throw new Error("Record not found");
+    } else {
+    recordsToDelete.forEach(record => {
+        record.remove();
+    }); 
+      res.status(200).json({ id: req.params.doc_date, message: 'deleted' });
+    }
+  });
+
 module.exports = {
   getRecord,
   postRecord,
   updateRecord,
   deleteRecord,
+  deleteWholeRecord,
 };
