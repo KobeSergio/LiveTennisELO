@@ -20,7 +20,8 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
+var cors = require('cors') 
+app.use(cors()) // Use this after the variable declaration
   
 app.use("/admin", require("./routes/adminRoutes"));
 app.use("/admin-login", require("./routes/loginRoutes")); 

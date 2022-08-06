@@ -33,7 +33,7 @@ export default function App() {
           {/* Admin page routes */}
           <Route path="/admin-login" element={<Login />} />
           <Route path="/admin/" element={<Admin />}>
-            <Route path="/admin/" element={<Records />} />
+            <Route path="/admin/:doc_date" element={<Records />} />
             <Route path="players" element={<Players />} />
             <Route path="players/manage" element={<ManagePlayer />} />
             <Route path="import" element={<Import />} />

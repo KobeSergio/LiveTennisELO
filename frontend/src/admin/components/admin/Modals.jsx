@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
-import { EditRecordTable } from './EditRecordTable';
+import { Button, Modal, Form } from 'react-bootstrap'; 
 
 
 export function EditRecord(props) {
@@ -20,8 +19,7 @@ export function EditRecord(props) {
         <Modal.Body>
           <div className="row px-5 rounded">
 
-            <main className="col ms-3">
-              <EditRecordTable />
+            <main className="col ms-3"> 
               <div className="row">
 
               </div>

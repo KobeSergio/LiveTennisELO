@@ -67,18 +67,18 @@ const updateRecord = asyncHandler(async (req, res) => {
 // @route:      DELETE /admin/:doc_date/:id
 // @access      Private
 const deleteRecord = asyncHandler(async (req, res) => {
-  const record = await Record.findById(req.params.id);
+  const record = await Record.findById(req.params.id);  
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
   } else {
     await record.remove();
-    res.status(200).json({ id: req.params.id });
+    res.status(200).json({ id: req.params.id, message: 'deleted' });
   }
 });
 
 // @desc:       Delete whole record with the id of :id
-// @route:      DELETE /admin/:doc_date/:id
+// @route:      DELETE /admin/:doc_date
 // @access      Private
 const deleteWholeRecord = asyncHandler(async (req, res) => {
     const recordsToDelete = await Record.find({

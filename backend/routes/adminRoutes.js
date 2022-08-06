@@ -16,17 +16,22 @@ const {
 } = require("../controller/playerController");
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/players").get(getPlayers);
+router.route("/players").get(protect, getPlayers);
 router
   .route("/players/:id")
-  .get(getIndPlayer)
-  .put(updatePlayer)
-  .delete(deletePlayer);
+  .get(protect, getIndPlayer)
+  .put(protect, updatePlayer)
+  .delete(protect, deletePlayer);
 
-router.route("/:doc_date").get(getRecord).delete(deleteWholeRecord);
-router.route("/:doc_date/:id").put(updateRecord);
+router
+  .route("/:doc_date")
+  .get(protect, getRecord)
+  .delete(protect, deleteWholeRecord);
+
+router
+  .route("/:doc_date/:id")
+  .put(protect, updateRecord)
+  .delete(protect, deleteRecord);
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
-
-
 
 module.exports = router;
