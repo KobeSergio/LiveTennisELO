@@ -1,0 +1,16 @@
+.border-all {
+    border: 1px solid #5F5F5F;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.table-border {
+    display: inline;
+    padding: .2em 1.4em .3em;
+
+
+    border-radius: 10px;
+    border: 1px solid #5F5F5F !important;
+
+    width: 40px;
+}

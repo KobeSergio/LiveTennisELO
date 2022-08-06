@@ -1,5 +1,6 @@
 import { YearDropdown, DateDropdown } from "../Dropdown";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import "../../../css/admin/borders.css";
 
 function Filters() {
     return (
@@ -54,12 +55,22 @@ export function EditRecordTable() {
                             <tr>
                                 <th scope="row">RS0010</th>
                                 <td id="name">Novak Djokovic</td>
-                                <td contenteditable='true'id="overall">3161</td>
-                                <td contenteditable='true' className="" id="hard">3076</td>
-                                <td contenteditable='true' className="" id="clay">2919</td>
-                                <td contenteditable='true' className="" id="grass">2824</td>
-                                <td contenteditable='true' id="atp">3151</td>
-                                <td contenteditable='true' id="lactive">01/07/2017</td>
+                                <td contenteditable='true' className="table-surface-elo" id="overall">
+                                    <span className="table-border">3161</span>
+                                </td>
+                                <td contenteditable='true' className="table-surface-elo" id="hard">
+                                    <span className="table-border hard-text">3076</span>
+                                </td>
+                                <td contenteditable='true' className="table-surface-elo" id="clay">
+                                    <span className="table-border clay-text">2919</span>
+                                </td>
+                                <td contenteditable='true' className="table-surface-elo" id="grass">
+                                    <span className="table-border grass-text">2824</span>
+                                </td>
+                                <td contenteditable='true' className="table-surface-elo" id="atp">
+                                    <span className="table-border">3151</span>
+                                </td>
+                                <td contenteditable='true' id="lactive">07/2017</td>
                             </tr>
                         </tbody>
                     </table>
