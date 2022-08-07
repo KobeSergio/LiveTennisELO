@@ -6,6 +6,7 @@ const {
   updateRecord,
   deleteRecord,
   deleteWholeRecord,
+  latestRecord
 } = require("../controller/recordController");
 const {
   getPlayers,
@@ -22,6 +23,8 @@ router
   .get(protect, getIndPlayer)
   .put(protect, updatePlayer)
   .delete(protect, deletePlayer);
+
+router.route("/").get(protect, latestRecord);
 
 router
   .route("/:doc_date")

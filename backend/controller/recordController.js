@@ -15,6 +15,16 @@ const getRecord = asyncHandler(async (req, res) => {
   }
 });
 
+const latestRecord = asyncHandler(async (req,res) => {
+  const record = await Record.findOne({}, {}, { sort: { doc_date : -1 } })
+  if (!record) {
+    res.status(400);
+    throw new Error("Record not found");
+  } else {
+    res.status(200).json(record);
+  }
+})
+
 // @desc:       Post record/s to database
 // @route:      POST /admin/import
 // @access      Private
@@ -100,4 +110,5 @@ module.exports = {
   updateRecord,
   deleteRecord,
   deleteWholeRecord,
+  latestRecord
 };

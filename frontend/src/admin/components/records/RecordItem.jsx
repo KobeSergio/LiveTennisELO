@@ -1,12 +1,16 @@
 import {
   deleteIndRecord,
   loadRecord,
+  reset,
 } from "../../../features/records/recordsSlice";
 import { EditRecord } from "../records/EditModal";
 import { TrashFill } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; 
+
 export default function RecordItem({ record }) {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
+  const { records, isLoading, isSuccess, message } = useSelector(
+    (state) => state.records)
   return (
     <tr>
       <th scope="row">{record.player_id}</th>
@@ -27,7 +31,16 @@ export default function RecordItem({ record }) {
       <td id="lactive">{record.last_active}</td>
       <td id="edit">
         <EditRecord props={record} /> &nbsp;
-        <TrashFill onClick={() => dispatch(deleteIndRecord({ _id: record._id, doc_date: record.doc_date }))} />
+        <a
+          href="#"
+          onClick={() => {
+            dispatch(
+              deleteIndRecord({ _id: record._id, doc_date: record.doc_date })
+            ); 
+          }}
+        >
+          <TrashFill />
+        </a>
       </td>
     </tr>
   );

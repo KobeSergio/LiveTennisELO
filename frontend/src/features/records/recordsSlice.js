@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import recordsService from "./recordsService"; 
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
   records: [],
+  latest: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-//Load record, if no id presented, redirect to latest doc_date.
-// @http:   GET admin/ or GET admin/:doc_date
+//Load record
+// @http:   GET admin/:doc_date
 // @res:    admin: json
 export const loadRecord = createAsyncThunk(
   "records/loadRecord",
@@ -31,13 +31,34 @@ export const loadRecord = createAsyncThunk(
   }
 );
 
+//Load latest record
+// @http:   GET admin/
+// @res:    admin: json
+export const latestRecord = createAsyncThunk(
+  "records/latestRecord",
+  async (_,thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token; 
+      return await recordsService.latestRecord(token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //Delete individual record.
 // @params: Record._id
 export const deleteIndRecord = createAsyncThunk(
   "records/deleteIndividual",
   async (id, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token; 
+      const token = thunkAPI.getState().auth.user.token;
       return await recordsService.deleteIndRecord(id, token);
     } catch (error) {
       const message =
@@ -56,7 +77,12 @@ export const recordsSlice = createSlice({
   initialState,
   reducers: {
     //ACTION: Resets all state
-    reset: () => initialState,
+    reset: (state) => {  
+      state.records = []; 
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = ""},
   },
   extraReducers: (builder) => {
     builder
@@ -66,9 +92,22 @@ export const recordsSlice = createSlice({
       .addCase(loadRecord.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.records.push(action.payload);
+        state.records[0] = action.payload;
       })
       .addCase(loadRecord.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(latestRecord.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(latestRecord.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.latest = action.payload;
+      })
+      .addCase(latestRecord.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -79,9 +118,9 @@ export const recordsSlice = createSlice({
       .addCase(deleteIndRecord.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.records = state.records.filter(
+        state.records[0] = state.records[0].filter(
           (record) => record._id !== action.payload.id
-        )
+        );
       })
       .addCase(deleteIndRecord.rejected, (state, action) => {
         state.isLoading = false;

@@ -1,9 +1,8 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Download,
-  Search,
-  TrashFill, 
+  Download, 
+  TrashFill,
 } from "react-bootstrap-icons";
 import {
   YearDropdown,
@@ -14,6 +13,7 @@ import Pagination from "../components/Pagination";
 import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
 import RecordItem from "../components/records/RecordItem";
+import ClipLoader from "react-spinners/ClipLoader"; 
 
 //Backend
 import { useEffect } from "react";
@@ -31,22 +31,35 @@ function Records() {
     (state) => state.records
   );
 
-  useEffect(() => {
-    if (isError) {
-      console.log(message); 
-    }
-
+  useEffect(() => {  
     if (!user) {
       navigate("/admin-login");
-    }
-
+    } 
     dispatch(loadRecord({ doc_date: doc_date }));
+  }, [user]);
 
-    return () => {
-      dispatch(reset());
-    };
-  }, [user, navigate, isError, message, dispatch]);
+//   useEffect(() => {
+//     if (isError) {
+//       console.log(message);
+//     }
+    
+//     
 
+//     return () => {
+//       dispatch(reset());
+//     };
+//   }, [isError, message, dispatch]);
+  
+  const override = {
+    margin: 0,
+    position: 'absolute',
+    top: '45%',
+    left: '45%',
+    transform: 'translate(-45%, -45%)', 
+  };
+  if (isLoading) {
+    return <ClipLoader cssOverride={override} size={70}/>;
+  }
   return (
     <>
       <div>
@@ -79,10 +92,8 @@ function Records() {
               </button>
             </span>
           </div>
-        </div>
-
-        <SearchRecords />
-
+        </div> 
+        <SearchRecords /> 
         <div className="ms-auto me-5">
           <RowsDropdown />
         </div>
@@ -125,8 +136,7 @@ function Records() {
                 <th scope="col">Grass</th>
                 <th scope="col">ATP</th>
                 <th scope="col">Last Active</th>
-                <th style={{ minWidth: 25 }} scope="col"> 
-                </th>
+                <th style={{ minWidth: 25 }} scope="col"></th>
               </tr>
             </thead>
             <tbody>

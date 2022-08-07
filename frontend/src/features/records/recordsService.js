@@ -6,17 +6,17 @@ import axios from "axios";
 
 const RECORD_URL = "http://localhost:5000/admin/";
 
-//Load record, if no id presented, redirect to latest doc_date.
-// @http:   GET admin/ or GET admin/:doc_date
-// @res:    user: json
-const loadRecord = async (payload,token) => {
+//Load record, 
+// @http:   GET admin/:doc_date
+// @res:    record: json
+const loadRecord = async (payload, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-   
-  const response = await axios.get(RECORD_URL+payload.doc_date, config);
+
+  const response = await axios.get(RECORD_URL + payload.doc_date, config);
 
   if (response.data) {
     localStorage.setItem("record", JSON.stringify(response.data));
@@ -24,39 +24,57 @@ const loadRecord = async (payload,token) => {
 
   return response.data;
 };
- 
-//Delete all in record
-// @payload:   record.doc_date
-const deleteRecord = async (payload,token) => {
+
+//Load record to latest doc_date.
+// @http:   GET admin/
+// @res:    user: json
+const latestRecord = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-   
-  const response = await axios.delete(RECORD_URL+payload.doc_date, config);
  
+  const loadLast = await axios.get(RECORD_URL, config);    
+  return loadLast.data.doc_date;
+};
+
+//Delete all in record
+// @payload:   record.doc_date
+const deleteRecord = async (payload, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.delete(RECORD_URL + payload.doc_date, config);
+
   return response.data;
 };
 
 //Delete individual record
-// @payload:   record._id 
-const deleteIndRecord = async (payload,token) => {
+// @payload:   record._id
+const deleteIndRecord = async (payload, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-   
-  console.log(RECORD_URL+payload.doc_date+'/'+payload._id)
-  const response = await axios.delete(RECORD_URL+payload.doc_date+'/'+payload._id, config); 
+
+  const response = await axios.delete(
+    RECORD_URL + payload.doc_date + "/" + payload._id,
+    config
+  ); 
+
   return response.data;
 };
 
 const recordsService = {
-  loadRecord, 
+  loadRecord,
   deleteRecord,
-  deleteIndRecord
+  deleteIndRecord,
+  latestRecord
 };
 
 export default recordsService;
