@@ -9,10 +9,9 @@ import {
   DateDropdown,
   RowsDropdown,
 } from "../components/Dropdown";
-import Pagination from "../components/Pagination";
 import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
-import RecordItem from "../components/records/RecordItem";
+import RecordTable from "../components/records/RecordTable";
 import ClipLoader from "react-spinners/ClipLoader"; 
 
 //Backend
@@ -117,45 +116,13 @@ function Records() {
         </div>
       </div>
 
-      {/* tables */}
+      {/* tables */
+      }
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
       >
-        <div className="input-group px-2">
-          <table className="table table-borderless text-center">
-            <thead>
-              <tr>
-                <th scope="col">Player ID</th>
-                <th style={{ textAlign: "left" }} scope="col">
-                  Name
-                </th>
-                <th scope="col">Overall</th>
-                <th scope="col">Hard</th>
-                <th scope="col">Clay</th>
-                <th scope="col">Grass</th>
-                <th scope="col">ATP</th>
-                <th scope="col">Last Active</th>
-                <th style={{ minWidth: 25 }} scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {records[0] != null ? (
-                <>
-                  {records[0].map((record) => (
-                    <RecordItem key={record._id} record={record} />
-                  ))}
-                </>
-              ) : (
-                <h3>You have not set any goals</h3>
-              )}
-            </tbody>
-          </table>
-          <div></div>
-          <div className="ms-auto">
-            <Pagination />
-          </div>
-        </div>
+        <RecordTable />
       </div>
     </>
   );
