@@ -244,14 +244,6 @@ export function EditContent(props) {
   );
 }
 
-export function Graph(props) {
-  return (
-    <>
-
-    </>
-  )
-}
-
 export function VideoHighlights(props) {
   return (
     <>

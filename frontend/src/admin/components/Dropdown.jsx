@@ -61,7 +61,7 @@ export function RowsDropdown() {
     );
 }
 
-export function MatchFilter() {
+export function SurfaceFilter() {
     return ( 
     <Dropdown className="border-0 dropdown rounded-3">
         <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
@@ -74,5 +74,21 @@ export function MatchFilter() {
             <Dropdown.Item href="#/">Grass</Dropdown.Item>
         </Dropdown.Menu>
     </Dropdown>
+    )
+}
+
+export function ELORating() {
+    return (
+        <>
+        
+        </>
+    )
+}
+
+export function ELORatingTime() {
+    return (
+        <>
+        
+        </>
     )
 }
