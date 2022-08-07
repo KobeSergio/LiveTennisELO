@@ -17,8 +17,7 @@ function Content() {
 
 function Navbar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch(); 
 
   const onLogout = () => {
     dispatch(logout())
@@ -49,6 +48,9 @@ function Navbar() {
 }
 
 function Sidebar() {
+  const { latest } = useSelector(
+    (state) => state.records
+  );
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
@@ -64,7 +66,7 @@ function Sidebar() {
                 <NavLink
                   className="nav-link"
                   activeclassname="nav-link active"
-                  to="/admin/"
+                  to={`/admin/`+latest}
                 >
                   <a data-toggle="pill" role="tab" aria-selected="false">
                     <Table size={15} className="mb-1 me-3" />

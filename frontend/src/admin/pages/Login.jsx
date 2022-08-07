@@ -1,7 +1,8 @@
 import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login, reset } from "../../features/auth/authSlice"; 
+import { login, reset } from "../../features/auth/authSlice";
+import { latestRecord } from "../../features/records/recordsSlice";
 
 //Constructor
 function Admin_login() {
@@ -19,18 +20,19 @@ function Admin_login() {
   //Get data from state
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
-  );
-
+  ); 
+  const { latest } = useSelector((state) => state.records); 
   //Check if selector changes
   useEffect(() => {
     if (isError) {
       //Error message
-      console.log("Wrong credentials")
+      console.log("Wrong credentials");
     }
     if (isSuccess || user) {
-      //
-      navigate("/admin");
-    } 
+      // 
+      dispatch(latestRecord());
+      navigate("/admin/"+latest);
+    }
     dispatch(reset);
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
@@ -117,8 +119,7 @@ function Admin_login() {
                 </div>
               </div>
               <div className="input-group-prepend text-end bg-transparent">
-                <span className="bg-transparent"> 
-                </span>
+                <span className="bg-transparent"></span>
               </div>
               <br className="mt-2" />
               <div className="mx-auto text-center" style={{ width: "100%" }}>

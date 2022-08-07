@@ -1,23 +1,27 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const recordSchema = new mongoose.Schema({
+const recordSchema = new mongoose.Schema(
+  { 
+    doc_date: String,
     player_id: String,
+    name: String,
     ranking: Number,
     record_high: Number,
-    date: Date,
+    date: String,
     hard: Number,
     hard_high: Number,
-    date1: Date,
+    date1: String,
     grass: Number,
     grass_high: Number,
-    date2: Date,
+    date2: String,
     clay: Number,
     clay_high: Number,
-    date3: Date,
-    last_active: Date,
+    date3: String,
+    last_active: String,
     atp: Number,
-    doc_date: Number
-}, { collection: 'records' })
- 
+    
+  },
+  { collection: "records", strictQuery: 'throw'}
+);
 
-module.exports = mongoose.model("atp_records", recordSchema)
+module.exports = mongoose.model("records", recordSchema);
