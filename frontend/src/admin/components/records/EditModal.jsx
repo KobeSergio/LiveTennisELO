@@ -1,19 +1,78 @@
-import React, { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap"; 
+import React, { useState, useEffect } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Pencil } from "react-bootstrap-icons";
-import "../../../css/admin/borders.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import {
+  loadRecord,
+  updateRecord,
+  reset
+} from "../../../features/records/recordsSlice";
 
 export function EditRecord(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let { doc_date } = useParams();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true); 
+  const handleShow = () => setShow(true);
+  const [formData, setFormData] = useState({
+    overall: props.props.ranking,
+    hard: props.props.hard,
+    clay: props.props.clay,
+    grass: props.props.grass,
+    atp: props.props.atp,
+    lactive: props.props.last_active,
+  });
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  const { overall, hard, clay, grass, atp, lactive } = formData;
+
+  useEffect(() => {
+    if (isError) {
+    }
+
+    if (isSuccess) {
+      navigate("/admin/" + doc_date);
+    }
+  
+    // dispatch(loadRecord(doc_date));
+  }, [isError, isSuccess, message, navigate, dispatch]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const recordData = {
+      overall,
+      hard,
+      clay,
+      grass,
+      atp,
+      lactive,
+    };
+    const routeDetails = {
+      _id: props.props._id,
+      doc_date: doc_date,
+    };
+    dispatch(updateRecord([routeDetails, recordData]));
+  };
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <>
       <a href="#" onClick={handleShow} className="color-1">
         <Pencil />
       </a>
       <Modal show={show} onHide={handleClose} size="xl" centered>
-        <form>
+        <form onSubmit={onSubmit}>
           <div
             className="py-3 bg-white rounded"
             style={{ borderRadius: "10px 10px 0 0" }}
@@ -22,8 +81,12 @@ export function EditRecord(props) {
               <table className="table table-borderless text-center">
                 <thead>
                   <tr>
-                    <th scope="col">Player ID</th>
-                    <th scope="col">Name</th>
+                    <th style={{ width: "10%" }} scope="col">
+                      Player ID
+                    </th>
+                    <th style={{ width: "15%" }} scope="col">
+                      Name
+                    </th>
                     <th scope="col">Overall</th>
                     <th scope="col">Hard</th>
                     <th scope="col">Clay</th>
@@ -36,43 +99,65 @@ export function EditRecord(props) {
                   <tr>
                     <th scope="row">{props.props.player_id}</th>
                     <td id="name">{props.props.name}</td>
-                    <td
-                      contenteditable="true"
-                      className="table-surface-elo"
-                      id="overall"
-                    >
-                      <span className="table-border">3161</span>
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="overall"
+                        name="overall"
+                        placeholder={props.props.ranking} 
+                        onChange={onChange}
+                      />
                     </td>
-                    <td
-                      contenteditable="true"
-                      className="table-surface-elo"
-                      id="hard"
-                    >
-                      <input type="number" />
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="hard"
+                        name="hard"
+                        placeholder={props.props.hard} 
+                        onChange={onChange}
+                      />
                     </td>
-                    <td
-                      contenteditable="true"
-                      className="table-surface-elo"
-                      id="clay"
-                    >
-                      <span className="table-border clay-text">2919</span>
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="clay"
+                        name="clay"
+                        placeholder={props.props.clay} 
+                        onChange={onChange}
+                      />
                     </td>
-                    <td
-                      contenteditable="true"
-                      className="table-surface-elo"
-                      id="grass"
-                    >
-                      <span className="table-border grass-text">2824</span>
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="grass"
+                        name="grass"
+                        placeholder={props.props.grass} 
+                        onChange={onChange}
+                      />
                     </td>
-                    <td
-                      contenteditable="true"
-                      className="table-surface-elo"
-                      id="atp"
-                    >
-                      <span className="table-border">3151</span>
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="atp"
+                        name="atp"
+                        placeholder={props.props.atp} 
+                        onChange={onChange}
+                      />
                     </td>
-                    <td contenteditable="true" id="lactive">
-                      07/2017
+                    <td>
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="lactive"
+                        name="lactive"
+                        placeholder={props.props.last_active} 
+                        onChange={onChange}
+                      />
                     </td>
                   </tr>
                 </tbody>
@@ -93,9 +178,8 @@ export function EditRecord(props) {
             >
               Cancel
             </Button>
-
             <Button
-              onClick={handleClose}
+              type="Submit"
               className="ms-2 btn btn-green btn-sm me-4"
               style={{
                 fontSize: "16px",

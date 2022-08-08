@@ -72,6 +72,27 @@ export const deleteIndRecord = createAsyncThunk(
   }
 );
 
+//Update record
+// @http:   PUT admin/:doc_date/:id
+// @res:    admin: json
+export const updateRecord = createAsyncThunk(
+  "records/updateRecord",
+  async (payload,thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token; 
+      return await recordsService.updateRecord(payload,token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const recordsSlice = createSlice({
   name: "records",
   initialState,
@@ -95,6 +116,19 @@ export const recordsSlice = createSlice({
         state.records[0] = action.payload;
       })
       .addCase(loadRecord.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateRecord.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateRecord.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.records[0] = action.payload[1];
+      })
+      .addCase(updateRecord.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
