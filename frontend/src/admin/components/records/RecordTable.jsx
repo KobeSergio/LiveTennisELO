@@ -4,7 +4,7 @@ import Pagination from "../Pagination";
 import {
   deleteIndRecord,
   loadRecord,
-  reset,
+  resetRecords,
 } from "../../../features/records/recordsSlice";
 import { EditRecord } from "../records/EditModal";
 import { TrashFill } from "react-bootstrap-icons";
@@ -46,7 +46,7 @@ export default function RecordItem() {
          
       a = a[col];
       b = b[col];
-      
+
       if (a == null) {
         a = 0;
       }

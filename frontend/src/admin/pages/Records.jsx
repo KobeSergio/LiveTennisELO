@@ -1,7 +1,7 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Download, 
+  Download,
   TrashFill,
 } from "react-bootstrap-icons";
 import {
@@ -12,13 +12,13 @@ import {
 import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
 import RecordTable from "../components/records/RecordTable";
-import ClipLoader from "react-spinners/ClipLoader"; 
+import ClipLoader from "react-spinners/ClipLoader";
 
 //Backend
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadRecord, reset } from "../../features/records/recordsSlice";
+import { loadRecord, resetRecords } from "../../features/records/recordsSlice";
 
 function Records() {
   const navigate = useNavigate();
@@ -29,35 +29,37 @@ function Records() {
   const { records, isLoading, isError, message } = useSelector(
     (state) => state.records
   );
+ 
 
-  useEffect(() => {  
-    if (!user) {
+  useEffect(() => {
+    if (!user || !doc_date) {
       navigate("/admin-login");
-    } 
+    }
     dispatch(loadRecord({ doc_date: doc_date }));
   }, [user]);
 
-//   useEffect(() => {
-//     if (isError) {
-//       console.log(message);
-//     }
-    
-//     
+  //   useEffect(() => {
+  //     if (isError) {
+  //       console.log(message);
+  //     }
 
-//     return () => {
-//       dispatch(reset());
-//     };
-//   }, [isError, message, dispatch]);
-  
+  //
+
+  //     return () => {
+  //       dispatch(reset());
+  //     };
+  //   }, [isError, message, dispatch]);
+
   const override = {
     margin: 0,
-    position: 'absolute',
-    top: '45%',
-    left: '45%',
-    transform: 'translate(-45%, -45%)', 
+    position: "absolute",
+    top: "45%",
+    left: "45%",
+    transform: "translate(-45%, -45%)",
   };
+
   if (isLoading) {
-    return <ClipLoader cssOverride={override} size={70}/>;
+    return <ClipLoader cssOverride={override} size={70} />;
   }
   return (
     <>
@@ -91,8 +93,8 @@ function Records() {
               </button>
             </span>
           </div>
-        </div> 
-        <SearchRecords /> 
+        </div>
+        <SearchRecords />
         <div className="ms-auto me-5">
           <RowsDropdown />
         </div>
@@ -116,8 +118,7 @@ function Records() {
         </div>
       </div>
 
-      {/* tables */
-      }
+      {/* tables */}
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}

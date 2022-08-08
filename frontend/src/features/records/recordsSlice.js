@@ -98,7 +98,7 @@ export const recordsSlice = createSlice({
   initialState,
   reducers: {
     //ACTION: Resets all state
-    reset: (state) => {  
+    resetRecords: (state) => {  
       state.records = []; 
       state.isError = false;
       state.isSuccess = false;
@@ -164,5 +164,5 @@ export const recordsSlice = createSlice({
   },
 });
 
-export const { reset } = recordsSlice.actions;
+export const { resetRecords } = recordsSlice.actions;
 export default recordsSlice.reducer;
