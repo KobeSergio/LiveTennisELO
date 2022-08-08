@@ -70,9 +70,8 @@ const deleteRecord = async (payload, token) => {
     },
   };
 
-  const response = await axios.delete(RECORD_URL + payload.doc_date, config);
-
-  return response.data;
+  const ret = await axios.delete(RECORD_URL + payload.doc_date, config); 
+  return ret.data;
 };
 
 //Delete individual record

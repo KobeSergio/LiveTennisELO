@@ -17,8 +17,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 //Backend
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { loadRecord, resetRecords } from "../../features/records/recordsSlice";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import {
+  loadRecord,
+  deleteRecord,
+  latestRecord,
+  resetRecords,
+  resetStatus,
+} from "../../features/records/recordsSlice";
 
 function Records() {
   const navigate = useNavigate();
@@ -26,29 +32,29 @@ function Records() {
   //Redirect if not logged in
   const { doc_date } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const { records, isLoading, isError, message } = useSelector(
+  const { latest, records, isLoading, isError, message } = useSelector(
     (state) => state.records
   );
- 
 
   useEffect(() => {
     if (!user || !doc_date) {
       navigate("/admin-login");
     }
-    dispatch(loadRecord({ doc_date: doc_date }));
-  }, [user]);
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //       console.log(message);
-  //     }
+    console.log("CALLED ");
+    if (latest !== doc_date) {
+      navigate("/admin/" + latest);
+    }
 
-  //
+    dispatch(loadRecord({ doc_date: latest }));
+    dispatch(resetRecords());
+  }, [user, navigate, dispatch, latest]);
 
-  //     return () => {
-  //       dispatch(reset());
-  //     };
-  //   }, [isError, message, dispatch]);
+  const onDelete = () => {
+    dispatch(deleteRecord({ doc_date: doc_date })).then(() =>
+      dispatch(latestRecord())
+    );
+  };
 
   const override = {
     margin: 0,
@@ -108,7 +114,9 @@ function Records() {
       >
         <div className="input-group px-2">
           <div className="py-1">
-            <TrashFill className="fs-6 me-3" color="red" />
+            <a href="#" onClick={onDelete}>
+              <TrashFill className="fs-6 me-3" color="red" />
+            </a>
             <Download className="fs-6" />
           </div>
 

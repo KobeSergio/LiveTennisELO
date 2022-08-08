@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import recordsService from "./recordsService"; 
+import recordsService from "./recordsService";
 
 const initialState = {
   records: [],
@@ -36,9 +36,9 @@ export const loadRecord = createAsyncThunk(
 // @res:    admin: json
 export const latestRecord = createAsyncThunk(
   "records/latestRecord",
-  async (_,thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token; 
+      const token = thunkAPI.getState().auth.user.token;
       return await recordsService.latestRecord(token); //SERVICE
     } catch (error) {
       const message =
@@ -72,15 +72,35 @@ export const deleteIndRecord = createAsyncThunk(
   }
 );
 
+//Delete individual record.
+// @params: Record._id
+export const deleteRecord = createAsyncThunk(
+  "records/deleteRecord",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await recordsService.deleteRecord(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //Update record
 // @http:   PUT admin/:doc_date/:id
 // @res:    admin: json
 export const updateRecord = createAsyncThunk(
   "records/updateRecord",
-  async (payload,thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token; 
-      return await recordsService.updateRecord(payload,token); //SERVICE
+      const token = thunkAPI.getState().auth.user.token;
+      return await recordsService.updateRecord(payload, token); //SERVICE
     } catch (error) {
       const message =
         (error.response &&
@@ -98,12 +118,19 @@ export const recordsSlice = createSlice({
   initialState,
   reducers: {
     //ACTION: Resets all state
-    resetRecords: (state) => {  
-      state.records = []; 
+    resetRecords: (state) => {
+      state.records = [];
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = ""},
+      state.message = "";
+    },
+    resetStatus: (state) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -160,9 +187,21 @@ export const recordsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(deleteRecord.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteRecord.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteRecord.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true; 
       });
   },
 });
 
-export const { resetRecords } = recordsSlice.actions;
+export const { resetRecords, resetStatus } = recordsSlice.actions;
 export default recordsSlice.reducer;
