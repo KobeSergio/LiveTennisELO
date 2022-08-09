@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import {
   loadRecord,
   updateRecord,
-  reset
+  reset,
 } from "../../../features/records/recordsSlice";
 
 export function EditRecord(props) {
@@ -18,7 +18,7 @@ export function EditRecord(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [formData, setFormData] = useState({
-    overall: props.props.ranking,
+    ranking: props.props.ranking,
     hard: props.props.hard,
     clay: props.props.clay,
     grass: props.props.grass,
@@ -29,7 +29,7 @@ export function EditRecord(props) {
     (state) => state.auth
   );
 
-  const { overall, hard, clay, grass, atp, lactive } = formData;
+  const { ranking, hard, clay, grass, atp, lactive } = formData;
 
   useEffect(() => {
     if (isError) {
@@ -38,14 +38,14 @@ export function EditRecord(props) {
     if (isSuccess) {
       navigate("/admin/" + doc_date);
     }
-  
+
     // dispatch(loadRecord(doc_date));
   }, [isError, isSuccess, message, navigate, dispatch]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const recordData = {
-      overall,
+      ranking,
       hard,
       clay,
       grass,
@@ -103,9 +103,9 @@ export function EditRecord(props) {
                       <input
                         className="w-100 form-input"
                         type="text"
-                        id="overall"
-                        name="overall"
-                        placeholder={props.props.ranking} 
+                        id="ranking"
+                        name="ranking"
+                        placeholder={props.props.ranking}
                         onChange={onChange}
                       />
                     </td>
@@ -115,7 +115,7 @@ export function EditRecord(props) {
                         type="text"
                         id="hard"
                         name="hard"
-                        placeholder={props.props.hard} 
+                        placeholder={props.props.hard}
                         onChange={onChange}
                       />
                     </td>
@@ -125,7 +125,7 @@ export function EditRecord(props) {
                         type="text"
                         id="clay"
                         name="clay"
-                        placeholder={props.props.clay} 
+                        placeholder={props.props.clay}
                         onChange={onChange}
                       />
                     </td>
@@ -135,7 +135,7 @@ export function EditRecord(props) {
                         type="text"
                         id="grass"
                         name="grass"
-                        placeholder={props.props.grass} 
+                        placeholder={props.props.grass}
                         onChange={onChange}
                       />
                     </td>
@@ -145,7 +145,7 @@ export function EditRecord(props) {
                         type="text"
                         id="atp"
                         name="atp"
-                        placeholder={props.props.atp} 
+                        placeholder={props.props.atp}
                         onChange={onChange}
                       />
                     </td>
@@ -155,7 +155,7 @@ export function EditRecord(props) {
                         type="text"
                         id="lactive"
                         name="lactive"
-                        placeholder={props.props.last_active} 
+                        placeholder={props.props.last_active}
                         onChange={onChange}
                       />
                     </td>

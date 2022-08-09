@@ -18,7 +18,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadRecord, resetRecords } from "../../features/records/recordsSlice";
+import {
+  loadRecord,
+  resetRecords,
+  latestRecord,
+} from "../../features/records/recordsSlice";
 
 function Records() {
   const navigate = useNavigate();
@@ -26,16 +30,21 @@ function Records() {
   //Redirect if not logged in
   const { doc_date } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const { records, isLoading, isError, message } = useSelector(
+  const { records, isLoading, latest, message } = useSelector(
     (state) => state.records
   );
- 
 
   useEffect(() => {
-    if (!user || !doc_date) {
+    if (!user) {
       navigate("/admin-login");
     }
-    dispatch(loadRecord({ doc_date: doc_date }));
+    if (doc_date === "null" || latest == null) {
+      dispatch(latestRecord()).then((e) =>
+        dispatch(loadRecord({ doc_date: e.doc_date }))
+      );
+    } else {
+      dispatch(loadRecord({ doc_date: doc_date }));
+    }
   }, [user]);
 
   //   useEffect(() => {
