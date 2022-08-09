@@ -25,8 +25,9 @@ export function EditRecord(props) {
     atp: props.props.atp,
     lactive: props.props.last_active,
   });
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
+  const { user } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.records
   );
 
   const { ranking, hard, clay, grass, atp, lactive } = formData;
@@ -179,6 +180,7 @@ export function EditRecord(props) {
               Cancel
             </Button>
             <Button
+              onClick={handleClose}
               type="Submit"
               className="ms-2 btn btn-green btn-sm me-4"
               style={{

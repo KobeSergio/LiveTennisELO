@@ -7,6 +7,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  isDeleted: false,
   message: "",
 };
 
@@ -123,12 +124,14 @@ export const recordsSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
+      state.isDeleted = false;
       state.message = "";
     },
     resetStatus: (state) => {
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
+      state.isDeleted = false;
       state.message = "";
     },
   },
@@ -198,7 +201,8 @@ export const recordsSlice = createSlice({
       })
       .addCase(deleteRecord.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true; 
+        state.isSuccess = true;
+        state.isDeleted = true;
       });
   },
 });

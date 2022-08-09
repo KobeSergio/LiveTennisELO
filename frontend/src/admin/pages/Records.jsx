@@ -27,33 +27,48 @@ import {
 } from "../../features/records/recordsSlice";
 
 function Records() {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   //Redirect if not logged in
   const { doc_date } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const { latest, records, isLoading, isError, message } = useSelector(
+  const { latest, records, isLoading, isDeleted } = useSelector(
     (state) => state.records
   );
 
+  //On load
   useEffect(() => {
-    if (!user || !doc_date) {
+    if (!user) {
       navigate("/admin-login");
     }
 
-    console.log("CALLED ");
-    if (latest !== doc_date) {
-      navigate("/admin/" + latest);
+    console.log("Default load");
+    if (latest == null) {
+      console.log("Hey your latest is null");
+      dispatch(latestRecord())
+        .then((e) => dispatch(loadRecord({ doc_date: e.payload })))
+        .then(() => dispatch(resetStatus()));
+    } else {
+      dispatch(loadRecord({ doc_date: doc_date })).then(() =>
+        dispatch(resetStatus())
+      );
     }
+  }, []);
 
-    dispatch(loadRecord({ doc_date: latest }));
-    dispatch(resetRecords());
-  }, [user, navigate, dispatch, latest]);
+  //On Navigate
+  useEffect(() => {
+    console.log("Navigate load");
+    if (isDeleted) {
+      dispatch(resetStatus());
+      dispatch(resetRecords());
+      dispatch(latestRecord())
+        .then((e) => dispatch(loadRecord({ doc_date: e.payload })))
+        .then(() => dispatch(resetStatus()));
+    }
+  }, [isDeleted]);
 
   const onDelete = () => {
-    dispatch(deleteRecord({ doc_date: doc_date })).then(() =>
-      dispatch(latestRecord())
-    );
+    dispatch(deleteRecord({ doc_date: doc_date }));
   };
 
   const override = {
@@ -64,7 +79,8 @@ function Records() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (isLoading) {
+  console.log(records.length);
+  if (records.length == 0) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
   return (
