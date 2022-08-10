@@ -2,7 +2,7 @@ import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
-import { latestRecord } from "../../features/records/recordsSlice";
+import { latestRecord, loadRecord } from "../../features/records/recordsSlice";
 
 //Constructor
 function Admin_login() {
@@ -18,23 +18,26 @@ function Admin_login() {
   const dispatch = useDispatch();
 
   //Get data from state
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
-  ); 
-  const { latest } = useSelector((state) => state.records); 
+  );
+
+  //Get data from state
+  const { isLoading } = useSelector((state) => state.records);
+  const { latest } = useSelector((state) => state.records);
   //Check if selector changes
   useEffect(() => {
     if (isError) {
       //Error message
       console.log("Wrong credentials");
     }
-    if (isSuccess || user) {
-      // 
-      dispatch(latestRecord());
-      navigate("/admin/"+latest);
+    if (isSuccess) {
+      dispatch(latestRecord()).then((e) =>
+        navigate("/admin/" + e.payload.record.doc_date)
+      );
     }
     dispatch(reset);
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [user, isError, isSuccess, message]);
 
   //Fetch from fields
   const handleChange = (e) => {

@@ -5,7 +5,8 @@ import Footer from "../components/Footer";
 
 //Backend
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../../features/auth/authSlice";
+import { logout, reset } from "../../features/auth/authSlice"; 
+import { resetRecords } from "../../features/records/recordsSlice";
 
 function Content() {
   return (
@@ -22,6 +23,7 @@ function Navbar() {
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset())
+    dispatch(resetRecords())
     navigate('/admin-login')
   }
 
