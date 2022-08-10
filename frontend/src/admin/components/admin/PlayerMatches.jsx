@@ -1,4 +1,4 @@
-import { SurfaceFilter } from '../Dropdown';
+import { MatchFilter } from '../Dropdown';
 import { SurfaceLegend } from '../Legend';
 import { PlayerMatchesTable } from './PlayerMatchesTable';
 
@@ -16,7 +16,7 @@ export function PlayerMatches() {
                     <main className="col ms-3">
 
                         <div className='ms-auto d-flex'>
-                            <SurfaceFilter />
+                            <MatchFilter />
                             <div className='ms-auto d-flex align-items-start py-2'>
                                 <SurfaceLegend />
                             </div>

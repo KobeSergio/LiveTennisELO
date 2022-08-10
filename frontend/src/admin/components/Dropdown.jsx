@@ -3,7 +3,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 export function Filter() {
     return (
         <Dropdown className="border-0 dropdown rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+            <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+            >
                 Filter by
             </Dropdown.Toggle>
 
@@ -17,7 +22,12 @@ export function Filter() {
 export function YearDropdown() {
     return (
         <Dropdown className="border-0 dropdown rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+            <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+            >
                 2022
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -29,17 +39,35 @@ export function YearDropdown() {
     );
 }
 
-export function DateDropdown() {
+
+export function DateDropdown(choices) {
+    const { doc_date } = useParams();
+    var choicesCopy = [...choices.choices];
+    choicesCopy = choicesCopy.reverse();
     return (
         <Dropdown className="border-0 dropdown rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-                27/06/2022
+            <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+            >
+                {doc_date.substring(0, 4) +
+                    "/" +
+                    doc_date.substring(4, 6) +
+                    "/" +
+                    doc_date.substring(6, 8)}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
-                <Dropdown.Item href="#/2022/27/06">2022/27/06</Dropdown.Item>
-                <Dropdown.Item href="#/2022/26/06">2022/26/06</Dropdown.Item>
-                <Dropdown.Item href="#/2022/25/06">2022/25/06</Dropdown.Item>
+                {choicesCopy.map((choice) => (
+                    <Dropdown.Item href={choice}>
+                        {choice.substring(0, 4) +
+                            "/" +
+                            choice.substring(4, 6) +
+                            "/" +
+                            choice.substring(6, 8)}
+                    </Dropdown.Item>
+                ))}
             </Dropdown.Menu>
         </Dropdown>
     );
@@ -48,7 +76,12 @@ export function DateDropdown() {
 export function RowsDropdown() {
     return (
         <Dropdown className="border-0 dropdown rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+            <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+            >
                 10 per page
             </Dropdown.Toggle>
 
@@ -61,10 +94,17 @@ export function RowsDropdown() {
     );
 }
 
-export function SurfaceFilter() {
+
+
+export function MatchFilter() {
     return (
         <Dropdown className="border-0 dropdown rounded-3">
-            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+            <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+            >
                 All Surfaces
             </Dropdown.Toggle>
 
@@ -74,7 +114,7 @@ export function SurfaceFilter() {
                 <Dropdown.Item href="#/">Grass</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
-    )
+    );
 }
 
 export function ELORating() {

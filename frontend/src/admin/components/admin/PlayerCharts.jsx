@@ -12,7 +12,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
-import { SurfaceFilter, ELORating, ELORatingTime } from "../Dropdown";
+import { MatchFilter, ELORating, ELORatingTime } from "../Dropdown";
 import { Download } from "react-bootstrap-icons";
 import "../../../css/admin/colors.css";
 
@@ -233,7 +233,7 @@ export function PlayerCharts() {
                                         <ELORatingTime />
                                     </div>
                                     <div className="me-4">
-                                        <SurfaceFilter />
+                                        <MatchFilter />
                                     </div>
                                     <div className="ms-auto me-5 mt-2">
                                         
