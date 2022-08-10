@@ -22,7 +22,9 @@ import {
   loadRecord,
   resetRecords,
   latestRecord,
+  deleteRecord,
 } from "../../features/records/recordsSlice";
+import e from "cors";
 
 function Records() {
   const navigate = useNavigate();
@@ -38,26 +40,24 @@ function Records() {
     if (!user) {
       navigate("/admin-login");
     }
-    if (doc_date === "null" || latest == null) {
-      dispatch(latestRecord()).then((e) =>
-        dispatch(loadRecord({ doc_date: e.doc_date }))
-      );
+    if (latest == null) {
+      dispatch(latestRecord());
+    }
+    if (doc_date === "null") {
+      dispatch(latestRecord()).then((e) => {
+        navigate("/admin/" + e.payload);
+      });
     } else {
       dispatch(loadRecord({ doc_date: doc_date }));
     }
-  }, [user]);
+  }, [user, navigate]);
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //       console.log(message);
-  //     }
-
-  //
-
-  //     return () => {
-  //       dispatch(reset());
-  //     };
-  //   }, [isError, message, dispatch]);
+  const onDelete = () => {
+    dispatch(resetRecords());
+    dispatch(deleteRecord({ doc_date: doc_date })).then(() =>
+      navigate("/admin/null")
+    );
+  };
 
   const override = {
     margin: 0,
@@ -67,7 +67,7 @@ function Records() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (isLoading) {
+  if (records.length == 0 || isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
   return (
@@ -117,7 +117,10 @@ function Records() {
       >
         <div className="input-group px-2">
           <div className="py-1">
-            <TrashFill className="fs-6 me-3" color="red" />
+            <a href="#">
+              <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
+            </a>
+
             <Download className="fs-6" />
           </div>
 

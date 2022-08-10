@@ -3,7 +3,7 @@ const Record = require("../models/recordModel");
 // @desc:       Get record from database
 // @route:      GET /admin/:id
 // @access      Private
-const getRecord = asyncHandler(async (req, res) => { 
+const getRecord = asyncHandler(async (req, res) => {
   const record = await Record.find({
     doc_date: { $eq: req.params.doc_date },
   }).exec();
@@ -15,15 +15,15 @@ const getRecord = asyncHandler(async (req, res) => {
   }
 });
 
-const latestRecord = asyncHandler(async (req,res) => {
-  const record = await Record.findOne({}, {}, { sort: { doc_date : -1 } })
+const latestRecord = asyncHandler(async (req, res) => {
+  const record = await Record.findOne({}, {}, { sort: { doc_date: -1 } });
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
   } else {
     res.status(200).json(record);
   }
-})
+});
 
 // @desc:       Post record/s to database
 // @route:      POST /admin/import
@@ -59,7 +59,7 @@ const postRecord = asyncHandler(async (req, res) => {
 // @route:      UPDATE /admin/:doc_date/:id
 // @access      Private
 const updateRecord = asyncHandler(async (req, res) => {
-  const record = await Record.findById(req.params.id); 
+  const record = await Record.findById(req.params.id);
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -77,13 +77,13 @@ const updateRecord = asyncHandler(async (req, res) => {
 // @route:      DELETE /admin/:doc_date/:id
 // @access      Private
 const deleteRecord = asyncHandler(async (req, res) => {
-  const record = await Record.findById(req.params.id);  
+  const record = await Record.findById(req.params.id);
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
   } else {
     await record.remove();
-    res.status(200).json({ id: req.params.id, message: 'deleted' });
+    res.status(200).json({ id: req.params.id, message: "deleted" });
   }
 });
 
@@ -91,18 +91,15 @@ const deleteRecord = asyncHandler(async (req, res) => {
 // @route:      DELETE /admin/:doc_date
 // @access      Private
 const deleteWholeRecord = asyncHandler(async (req, res) => {
-    const recordsToDelete = await Record.find({
-        doc_date: { $eq: req.params.doc_date }})
-    if (!recordsToDelete) {
-      res.status(400);
-      throw new Error("Record not found");
-    } else {
-    recordsToDelete.forEach(record => {
-        record.remove();
-    }); 
-      res.status(200).json({ id: req.params.doc_date, message: 'deleted' });
-    }
+  const recordsToDelete = await Record.deleteMany({
+    doc_date: { $eq: req.params.doc_date },
   });
+  const record = await Record.findOne({}, {}, { sort: { doc_date: -1 } });
+  const urecord = await Record.find({
+    doc_date: { $eq: record.doc_date },
+  });
+  res.status(200).json({ urecord });
+});
 
 module.exports = {
   getRecord,
@@ -110,5 +107,5 @@ module.exports = {
   updateRecord,
   deleteRecord,
   deleteWholeRecord,
-  latestRecord
+  latestRecord,
 };

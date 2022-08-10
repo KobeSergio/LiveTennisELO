@@ -32,12 +32,7 @@ function Admin_login() {
       console.log("Wrong credentials");
     }
     if (isSuccess) {
-      if (!latest) {
-        dispatch(latestRecord());
-      }
-      if (latest) {
-        navigate("/admin/" + latest);
-      }
+      dispatch(latestRecord()).then((e) => navigate("/admin/" + e.payload));
     }
     dispatch(reset);
   }, [user, isError, isSuccess, message]);
