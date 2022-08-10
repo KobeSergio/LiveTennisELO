@@ -35,8 +35,8 @@ const latestRecord = async (token) => {
     },
   };
 
-  const loadLast = await axios.get(RECORD_URL, config);
-  return loadLast.data.doc_date;
+  const loadLast = await axios.get(RECORD_URL, config); 
+  return loadLast.data;
 };
 
 //Update record.

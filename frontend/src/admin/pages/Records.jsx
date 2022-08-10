@@ -25,6 +25,7 @@ import {
   deleteRecord,
 } from "../../features/records/recordsSlice";
 import e from "cors";
+import { RecordChoices } from "../components/records/RecordChoices";
 
 function Records() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Records() {
   //Redirect if not logged in
   const { doc_date } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const { records, isLoading, latest, message } = useSelector(
+  const { records, isLoading, latest, choices } = useSelector(
     (state) => state.records
   );
 
@@ -45,7 +46,8 @@ function Records() {
     }
     if (doc_date === "null") {
       dispatch(latestRecord()).then((e) => {
-        navigate("/admin/" + e.payload);
+        console.log(e.payload);
+        navigate("/admin/" + e.payload.record.doc_date);
       });
     } else {
       dispatch(loadRecord({ doc_date: doc_date }));
@@ -58,6 +60,8 @@ function Records() {
       navigate("/admin/null")
     );
   };
+
+  //Document selector
 
   const override = {
     margin: 0,
@@ -79,29 +83,7 @@ function Records() {
       {/* main search + filters */}
       <div className="input-group pt-3 pb-3 mx-3">
         <div className="me-4">
-          <div className="input-group">
-            <div className="me-4">
-              <YearDropdown />
-            </div>
-
-            <span className="input-group-button">
-              <button
-                className="btn btn-white border-0 dropdown rounded-3 me-2"
-                type="submit"
-              >
-                <ChevronLeft color="gray" style={{ fontSize: "18px" }} />
-              </button>
-            </span>
-            <DateDropdown />
-            <span className="input-group-button">
-              <button
-                className="btn btn-white border-0 dropdown rounded-3 ms-2"
-                type="submit"
-              >
-                <ChevronRight color="gray" style={{ fontSize: "18px" }} />
-              </button>
-            </span>
-          </div>
+          <RecordChoices choices={choices} />
         </div>
         <SearchRecords />
         <div className="ms-auto me-5">

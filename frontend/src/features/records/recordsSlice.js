@@ -3,6 +3,7 @@ import recordsService from "./recordsService";
 
 const initialState = {
   records: [],
+  choices: [],
   latest: null,
   isError: false,
   isSuccess: false,
@@ -160,7 +161,8 @@ export const recordsSlice = createSlice({
       .addCase(latestRecord.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.latest = action.payload;
+        state.latest = action.payload.record.doc_date;
+        state.choices = action.payload.records;
       })
       .addCase(latestRecord.rejected, (state, action) => {
         state.isLoading = false;
@@ -172,12 +174,12 @@ export const recordsSlice = createSlice({
       })
       .addCase(deleteRecord.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true; 
-        state.records = action.payload
+        state.isSuccess = true;
+        state.records = action.payload;
       })
       .addCase(deleteRecord.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true; 
+        state.isError = true;
       })
       .addCase(deleteIndRecord.pending, (state) => {
         state.isLoading = true;
