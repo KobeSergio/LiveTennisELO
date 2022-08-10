@@ -115,6 +115,8 @@ export function MatchFilter() {
   );
 }
 
+// ELO RATING DROPDOWNS
+
 export function ELORating() {
     return (
         <>
