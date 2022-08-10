@@ -61,18 +61,54 @@ export function RowsDropdown() {
     );
 }
 
-export function MatchFilter() {
-    return ( 
-    <Dropdown className="border-0 dropdown rounded-3">
-        <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
-            All Surfaces
-        </Dropdown.Toggle>
+export function SurfaceFilter() {
+    return (
+        <Dropdown className="border-0 dropdown rounded-3">
+            <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+                All Surfaces
+            </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-            <Dropdown.Item href="#/">Hard</Dropdown.Item>
-            <Dropdown.Item href="#/">Clay</Dropdown.Item>
-            <Dropdown.Item href="#/">Grass</Dropdown.Item>
-        </Dropdown.Menu>
-    </Dropdown>
+            <Dropdown.Menu>
+                <Dropdown.Item href="#/">Hard</Dropdown.Item>
+                <Dropdown.Item href="#/">Clay</Dropdown.Item>
+                <Dropdown.Item href="#/">Grass</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    )
+}
+
+export function ELORating() {
+    return (
+        <>
+            <Dropdown className="border-0 dropdown rounded-3">
+                <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+                    ELO Rating
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/">2000</Dropdown.Item>
+                    <Dropdown.Item href="#/">1500</Dropdown.Item>
+                    <Dropdown.Item href="#/">1000</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </>
+    )
+}
+
+export function ELORatingTime() {
+    return (
+        <>
+            <Dropdown className="border-0 dropdown rounded-3">
+                <Dropdown.Toggle className="o40" variant="white" id="dropdown-basic" size="sm">
+                    All Time
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/">2021</Dropdown.Item>
+                    <Dropdown.Item href="#/">2020</Dropdown.Item>
+                    <Dropdown.Item href="#/">2019</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </>
     )
 }
