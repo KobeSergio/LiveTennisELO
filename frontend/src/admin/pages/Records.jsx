@@ -1,7 +1,7 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Download, 
+  Download,
   TrashFill,
 } from "react-bootstrap-icons";
 import {
@@ -12,13 +12,20 @@ import {
 import { SearchRecords } from "../components/Search";
 import { SurfaceLegend } from "../components/Legend";
 import RecordTable from "../components/records/RecordTable";
-import ClipLoader from "react-spinners/ClipLoader"; 
+import ClipLoader from "react-spinners/ClipLoader";
 
 //Backend
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadRecord, reset } from "../../features/records/recordsSlice";
+import {
+  loadRecord,
+  resetRecords,
+  latestRecord,
+  deleteRecord,
+} from "../../features/records/recordsSlice";
+import e from "cors";
+import { RecordChoices } from "../components/records/RecordChoices";
 
 function Records() {
   const navigate = useNavigate();
@@ -26,38 +33,46 @@ function Records() {
   //Redirect if not logged in
   const { doc_date } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const { records, isLoading, isError, message } = useSelector(
+  const { records, isLoading, latest, choices } = useSelector(
     (state) => state.records
   );
 
-  useEffect(() => {  
+  useEffect(() => {
     if (!user) {
       navigate("/admin-login");
-    } 
-    dispatch(loadRecord({ doc_date: doc_date }));
-  }, [user]);
+    }
+    if (latest == null) {
+      dispatch(latestRecord());
+    }
+    if (doc_date === "null") {
+      dispatch(latestRecord()).then((e) => {
+        console.log(e.payload);
+        navigate("/admin/" + e.payload.record.doc_date);
+      });
+    } else {
+      dispatch(loadRecord({ doc_date: doc_date }));
+    }
+  }, [user, navigate]);
 
-//   useEffect(() => {
-//     if (isError) {
-//       console.log(message);
-//     }
-    
-//     
+  const onDelete = () => {
+    dispatch(resetRecords());
+    dispatch(deleteRecord({ doc_date: doc_date })).then(() =>
+      navigate("/admin/null")
+    );
+  };
 
-//     return () => {
-//       dispatch(reset());
-//     };
-//   }, [isError, message, dispatch]);
-  
+  //Document selector
+
   const override = {
     margin: 0,
-    position: 'absolute',
-    top: '45%',
-    left: '45%',
-    transform: 'translate(-45%, -45%)', 
+    position: "absolute",
+    top: "45%",
+    left: "45%",
+    transform: "translate(-45%, -45%)",
   };
-  if (isLoading) {
-    return <ClipLoader cssOverride={override} size={70}/>;
+
+  if (records.length == 0 || isLoading) {
+    return <ClipLoader cssOverride={override} size={70} />;
   }
   return (
     <>
@@ -68,31 +83,9 @@ function Records() {
       {/* main search + filters */}
       <div className="input-group pt-3 pb-3 mx-3">
         <div className="me-4">
-          <div className="input-group">
-            <div className="me-4">
-              <YearDropdown />
-            </div>
-
-            <span className="input-group-button">
-              <button
-                className="btn btn-white border-0 dropdown rounded-3 me-2"
-                type="submit"
-              >
-                <ChevronLeft color="gray" style={{ fontSize: "18px" }} />
-              </button>
-            </span>
-            <DateDropdown />
-            <span className="input-group-button">
-              <button
-                className="btn btn-white border-0 dropdown rounded-3 ms-2"
-                type="submit"
-              >
-                <ChevronRight color="gray" style={{ fontSize: "18px" }} />
-              </button>
-            </span>
-          </div>
-        </div> 
-        <SearchRecords /> 
+          <RecordChoices choices={choices} />
+        </div>
+        <SearchRecords />
         <div className="ms-auto me-5">
           <RowsDropdown />
         </div>
@@ -106,7 +99,10 @@ function Records() {
       >
         <div className="input-group px-2">
           <div className="py-1">
-            <TrashFill className="fs-6 me-3" color="red" />
+            <a href="#">
+              <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
+            </a>
+
             <Download className="fs-6" />
           </div>
 
@@ -116,8 +112,7 @@ function Records() {
         </div>
       </div>
 
-      {/* tables */
-      }
+      {/* tables */}
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
