@@ -55,6 +55,7 @@ function Admin_login() {
   };
 
   return [
+    <>
     <div className="img-fluid sidenav">
       <img
         className="rectwhite img-fluid"
@@ -64,7 +65,7 @@ function Admin_login() {
         className="rectgreen img-fluid"
         src={require("../img/rect-green.png")}
       />
-    </div>,
+    </div>
 
     <div className="main">
       <div className="ms-5 ps-5">
@@ -135,7 +136,8 @@ function Admin_login() {
           </div>
         </div>
       </div>
-    </div>,
+    </div>
+    </>
   ];
 }
 

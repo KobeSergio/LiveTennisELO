@@ -613,7 +613,7 @@ li .pagination-button {
 }
 
 .modal-footer {
-	border-top: 0 !important;
+    border-top: 0 !important;
 }
 
 .active {
@@ -622,4 +622,9 @@ li .pagination-button {
 
 .add_underline {
     text-decoration: underline !important;
+}
+
+.liverating-bg {
+    background-repeat: no-repeat;
+    background: top right no-repeat;
 }
