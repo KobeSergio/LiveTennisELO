@@ -1,12 +1,7 @@
 import { YearDropdown } from "../../components/Dropdown";
-import { ChevronLeft, ChevronRight, ArrowUp, ArrowDown } from 'react-bootstrap-icons';
+import { ChevronLeft, ChevronRight} from 'react-bootstrap-icons';
 import { RowsDropdown, DateDropdown } from "../../components/Dropdown";
 import bg_img from "../img/bg-liveratings.png";
-import SearchRecords from "../components/Search/SearchRecords";
-import SearchCountry from "../components/Search/SearchCountry";
-import ShowInactive from "../components/Toggle/ShowInactive";
-import ReactCountryFlag from "react-country-flag";
-import { PositiveElo, NegativeElo } from "../components/Labels/ELO.jsx";
 import LiveRatingsTable from "../components/Tables/LiveRatingsTable";
 
 export default function Charts() {
