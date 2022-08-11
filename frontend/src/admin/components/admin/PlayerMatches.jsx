@@ -13,9 +13,6 @@ export function PlayerMatches() {
                         <h1 className="fs-5 fw-bold pb-2">Last 10 matches of Djokovic</h1>
                     </div>
 
-
-
-
                     <main className="col ms-3">
 
                         <div className='ms-auto d-flex'>

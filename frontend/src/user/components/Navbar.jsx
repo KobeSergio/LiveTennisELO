@@ -1,17 +1,44 @@
 import React from "react";
 import './main.css';
 import { Search } from "react-bootstrap-icons";
+import { NavLink } from "react-router-dom";
 
 function navbar() {
   return [
-    <nav className="navbar navbar-expand-md px-3 py-3 navbar-light bg-light border border-3 rounded-bottom" aria-label="Fourth navbar example">
+    <nav className="navbar navbar-expand-md px-3 py-3 navbar-light bg-light border-bottom border-2 rounded-bottom" aria-label="Fourth navbar example">
       <div className="container-fluid">
         <a className="navbar-brand fw-bold" href="/">Live Tennis ELO Ratings</a>
 
             <div className="navbar-nav me-auto ms-5">
-              <a class="nav-link" href="/">Live Ratings</a>
-              <a class="nav-link ms-4" href="charts">Charts</a>
-              <a class="nav-link ms-4" href="about">About</a>
+              <NavLink
+                  className="nav-link me-4"
+                  activeclassname="nav-link active add_underline"
+                  to="/"
+                >
+                  <a data-toggle="pill" role="tab" aria-selected="false">
+                    Live Ratings
+                  </a>
+                </NavLink>
+
+                <NavLink
+                  className="nav-link me-4"
+                  activeclassname="nav-link active"
+                  to="/charts"
+                >
+                  <a data-toggle="pill" role="tab" aria-selected="false">
+                    Charts
+                  </a>
+                </NavLink>
+
+                <NavLink
+                  className="nav-link"
+                  activeclassname="nav-link active"
+                  to="/about"
+                >
+                  <a data-toggle="pill" aria-selected="false">
+                    About
+                  </a>
+                </NavLink>
             </div>
 
           <form>

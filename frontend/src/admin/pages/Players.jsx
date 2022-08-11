@@ -37,7 +37,6 @@ function Players() {
                         <div className="me-4">
                             <Filter />
                         </div>
-
                     </div>
                 </div>
 
