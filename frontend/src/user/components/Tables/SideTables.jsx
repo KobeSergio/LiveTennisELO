@@ -127,6 +127,7 @@ export default function() {
                                 options={{ height: 600 }}
                                 noHeader="true"
                                 noFooter="true"
+                                noScrollbar="true"
                             />
                         </div>
                     </div>
