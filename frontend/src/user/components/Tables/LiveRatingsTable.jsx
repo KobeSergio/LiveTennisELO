@@ -12,7 +12,7 @@ export default function () {
         <>
             <div className="w-75">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-lg-12">
 
                         <nav>
                             <div className="nav nav-tabs pb-1 border-0" id="nav-tab" role="tablist">
@@ -48,7 +48,7 @@ export default function () {
                         <div class="tab-content" id="nav-tabContent">
 
                             <div class="tab-pane fade show active bg-white rounded" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <table class="table table-borderless liverating-table-bg-white" cellSpacing="0">
+                                <table class="table table-borderless table-responsive liverating-table-bg-white" cellSpacing="0">
                                     <thead>
                                         <tr className="text-center">
                                             <th>Rank</th>

@@ -1,8 +1,10 @@
-import { YearDropdown } from "../../components/Dropdown";
 import { ChevronLeft, ChevronRight} from 'react-bootstrap-icons';
-import { RowsDropdown, DateDropdown } from "../../components/Dropdown";
 import bg_img from "../img/bg-liveratings.png";
+
+import { YearDropdown, RowsDropdown, DateDropdown } from "../../components/Dropdown";
 import LiveRatingsTable from "../components/Tables/LiveRatingsTable";
+import SideTables from "../components/Tables/SideTables";
+import Footer from "../components/Footer/Footer";
 
 export default function Charts() {
     return (
@@ -10,12 +12,12 @@ export default function Charts() {
 
             <div className="liverating-bg" style={{ backgroundImage: `url(${bg_img})` }}>
                 <div className="px-5 py-4">
-                    <div className="p-2">
+                    <div className="p-2 w-50">
                         <h1 className="fs-3">Welcome to Live Tennis ELO Ratings!</h1>
                         <p>Your go-to place for men's professional tennis statistics! Track your favorite player's ratings with the help of graphs and compare them to their rivals.</p>
                     </div>
 
-                    <div>
+                    <div className="w-50">
                         <div className="input-group pt-3 pb-3">
                             <div className="input-group">
                                 <div className="me-4">
@@ -43,13 +45,14 @@ export default function Charts() {
                         </div>
                     </div>
                     
-                    <LiveRatingsTable />
-
+                    <div className="row">
+                        <LiveRatingsTable />
+                        <SideTables />
+                    </div>
                 </div>
 
-                <div>
+                <Footer />
 
-                </div>
             </div>
 
         </>
