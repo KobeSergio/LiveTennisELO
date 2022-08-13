@@ -1,9 +1,4 @@
-import {
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  TrashFill,
-} from "react-bootstrap-icons";
+import { Search, Download, TrashFill } from "react-bootstrap-icons";
 import {
   YearDropdown,
   DateDropdown,
@@ -15,7 +10,7 @@ import RecordTable from "../components/records/RecordTable";
 import ClipLoader from "react-spinners/ClipLoader";
 
 //Backend
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -24,7 +19,6 @@ import {
   latestRecord,
   deleteRecord,
 } from "../../features/records/recordsSlice";
-import e from "cors";
 import { RecordChoices } from "../components/records/RecordChoices";
 
 function Records() {
@@ -71,6 +65,24 @@ function Records() {
     transform: "translate(-45%, -45%)",
   };
 
+  const [data, setData] = useState(records[0]);
+  const [len, setLen] = useState(0);
+  const onSearch = (e) => { 
+    if (e.target.value != "") {
+      setLen(e.target.value.length);
+      setData(
+        records[0].filter((o) =>
+          Object.keys(o).some((k) =>
+            String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+          )
+        )
+      );
+    } else {
+      setLen(e.target.value.length);
+      setData([...records[0]]);
+    }
+  };
+
   if (records.length == 0 || isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
@@ -85,7 +97,24 @@ function Records() {
         <div className="me-4">
           <RecordChoices choices={choices} />
         </div>
-        <SearchRecords />
+        <div className="input-group" style={{ width: "30%" }}>
+          <input
+            className="form-control border-0 dropdown rounded-3"
+            type="text"
+            placeholder="Search Record"
+            aria-label="Search Record"
+            onChange={onSearch}
+            onR
+          />
+          <span className="input-group-button">
+            <button
+              className="btn btn-green search-btn px-3 py-1"
+              type="submit"
+            >
+              <Search color="white" className="fs-7" />
+            </button>
+          </span>
+        </div>
         <div className="ms-auto me-5">
           <RowsDropdown />
         </div>
@@ -117,7 +146,12 @@ function Records() {
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
       >
-        <RecordTable />
+        {console.log(len)}
+        {len > 0 ? (
+          <RecordTable records={data} />
+        ) : (
+          <RecordTable records={records[0]} />
+        )}
       </div>
     </>
   );
