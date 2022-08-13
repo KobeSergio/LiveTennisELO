@@ -8,12 +8,17 @@ import {
 } from "../../../features/records/recordsSlice";
 import { EditRecord } from "../records/EditModal";
 import { TrashFill } from "react-bootstrap-icons";
+import { useEffect } from "react";
 
-export default function RecordItem() {
-  const { records } = useSelector((state) => state.records);
-  const [data, setData] = useState(records[0]);
+export default function RecordItem(recs) {
+  const [data, setData] = useState(recs.records);
   const [order, setOrder] = useState("ASC");
+  const { records } = useSelector((state) => state.records);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setData(recs.records);
+  }, [recs]);
 
   const sorting = (col) => {
     if (order === "ASC") {
@@ -43,7 +48,6 @@ export default function RecordItem() {
 
   function alphabetically(ascending, col) {
     return function (a, b) {
-         
       a = a[col];
       b = b[col];
 
@@ -143,6 +147,7 @@ export default function RecordItem() {
                             doc_date: record.doc_date,
                           })
                         );
+                        window.location.reload(false);
                       }}
                     >
                       <TrashFill />

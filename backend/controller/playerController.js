@@ -6,6 +6,7 @@ const Matches = require("../models/matchModel");
 // @route:      GET /admin/players
 // @access      Private
 const getPlayers = asyncHandler(async (req, res) => {
+  console.log("CALLED");
   const players = await Player.find();
 
   if (!players) {
@@ -43,14 +44,19 @@ const deletePlayer = asyncHandler(async (req, res) => {
 });
 
 const getIndPlayer = asyncHandler(async (req, res) => {
-  const player = await Player.find({ player_id: {$eq:req.params.id}});
-  const matches = await Matches.find({$or: [{winner_local_id: {$eq: req.params.id}}, {loser_local_id: {$eq: req.params.id}}]})
-   
+  const player = await Player.find({ player_id: { $eq: req.params.id } });
+  const matches = await Matches.find({
+    $or: [
+      { winner_local_id: { $eq: req.params.id } },
+      { loser_local_id: { $eq: req.params.id } },
+    ],
+  });
+
   if (!player && !matches) {
     res.status(400);
     throw new Error("Data insufficient");
   }
-  const container = {'player':player,'matches':matches}
+  const container = { player: player, matches: matches };
   res.status(200).json(container);
 });
 

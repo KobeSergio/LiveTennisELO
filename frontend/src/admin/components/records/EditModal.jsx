@@ -56,7 +56,9 @@ export function EditRecord(props) {
       _id: props.props._id,
       doc_date: doc_date,
     };
-    dispatch(updateRecord([routeDetails, recordData]));
+    dispatch(updateRecord([routeDetails, recordData])).then(() => {
+      window.location.reload(false);
+    });
   };
 
   const onChange = (e) => {
