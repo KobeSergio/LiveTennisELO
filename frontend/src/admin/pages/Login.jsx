@@ -2,7 +2,8 @@ import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
-import { latestRecord, loadRecord } from "../../features/records/recordsSlice";
+import { latestRecord, loadRecord } from "../../features/records/recordsSlice"; 
+import { loadPlayers } from "../../features/players/playersSlice";
 
 //Constructor
 function Admin_login() {
@@ -31,7 +32,7 @@ function Admin_login() {
       //Error message
       console.log("Wrong credentials");
     }
-    if (isSuccess) {
+    if (isSuccess) { 
       dispatch(latestRecord()).then((e) =>
         navigate("/admin/" + e.payload.record.doc_date)
       );

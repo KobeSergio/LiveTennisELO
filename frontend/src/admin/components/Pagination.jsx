@@ -1,30 +1,23 @@
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons'
+import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 
-export default function Pagination() {
-    return (
-        <nav className='pagination-outer'>
-            <ul className="pagination">
-                <li className='page-item'>
-                    <a href="" className='pagination-button'>
-                        <ChevronLeft />
-                        Previous
-                    </a>
-                </li>
+export default function Pagination({ postsPerPage, totalPosts, paginate }) {
+  const pageNumbers = [];
 
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item"><a className="page-link" href="#">...</a></li>
-                <li className="page-item"><a className="page-link" href="#">188</a></li>
+  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
-                <li className='page-item'>
-                    <a href="" className='pagination-button'>
-                        Next
-                        <ChevronRight />
-
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    )
+  return (
+    <nav className="pagination-outer">
+      <ul className="pagination"> 
+        {pageNumbers.map((number) => (
+          <li key={number} className="page-item">
+            <a onClick={() => paginate(number)} className="page-link" href="#">
+              {number}
+            </a>
+          </li>
+        ))} 
+      </ul>
+    </nav>
+  );
 }
