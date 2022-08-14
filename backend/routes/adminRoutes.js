@@ -6,7 +6,7 @@ const {
   updateRecord,
   deleteRecord,
   deleteWholeRecord,
-  latestRecord,
+  latestRecord
 } = require("../controller/recordController");
 const {
   getPlayers,
@@ -17,6 +17,7 @@ const {
 } = require("../controller/playerController");
 const { protect } = require("../middleware/authMiddleware");
 
+router.route("/players").get(protect, getPlayers);
 router
   .route("/players/:id")
   .get(protect, getIndPlayer)
@@ -35,5 +36,5 @@ router
   .put(protect, updateRecord)
   .delete(protect, deleteRecord);
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
-router.route("/players").get(protect, getPlayers);
+
 module.exports = router;

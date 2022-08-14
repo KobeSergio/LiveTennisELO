@@ -39,8 +39,7 @@ function Records() {
       dispatch(latestRecord());
     }
     if (doc_date === "null") {
-      dispatch(latestRecord()).then((e) => {
-        console.log(e.payload);
+      dispatch(latestRecord()).then((e) => { 
         navigate("/admin/" + e.payload.record.doc_date);
       });
     } else {
@@ -145,8 +144,7 @@ function Records() {
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
-      >
-        {console.log(len)}
+      > 
         {len > 0 ? (
           <RecordTable records={data} />
         ) : (
