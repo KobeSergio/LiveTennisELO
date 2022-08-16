@@ -52,6 +52,22 @@ const updatePlayer = async (payload, token) => {
   return updatedPlayer.data;
 };
 
-const playersService = { loadPlayers, loadPlayer, updatePlayer };
+//Update Player
+// @http:   DELETE admin/players/:player_id
+// @res:    message: json
+const deletePlayer = async (player_id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const deletedPlayer = await axios.delete(
+    PLAYERS_URL + "/" + player_id,
+    config
+  );
+  return deletedPlayer.data;
+};
+
+const playersService = { loadPlayers, loadPlayer, updatePlayer, deletePlayer };
 
 export default playersService;

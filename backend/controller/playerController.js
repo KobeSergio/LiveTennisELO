@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Player = require("../models/playerModel");
 const Matches = require("../models/matchModel");
+const Records = require("../models/recordModel");
 
 // @desc:       Get players
 // @route:      GET /admin/players
@@ -46,13 +47,6 @@ const updatePlayer = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc:       Delete player with the id of :id
-// @route:      DELETE /admin/:player_id
-// @access      Private
-const deletePlayer = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Delete player ${req.params.id}` });
-});
-
 const getIndPlayer = asyncHandler(async (req, res) => {
   const player = await Player.find({ player_id: { $eq: req.params.id } });
   const matches = await Matches.find({
@@ -61,13 +55,31 @@ const getIndPlayer = asyncHandler(async (req, res) => {
       { loser_local_id: { $eq: req.params.id } },
     ],
   });
+  const records = await Records.find({ player_id: { $eq: req.params.id } });
 
-  if (!player && !matches) {
+  if (!player && !matches && !records) {
     res.status(400);
     throw new Error("Data insufficient");
   }
-  const container = { player: player, matches: matches };
+  const container = { player: player, matches: matches, records: records };
   res.status(200).json(container);
+});
+
+// @desc:       Delete player with the id of :id
+// @route:      DELETE /admin/players/:player_id
+// @access      Private
+const deletePlayer = asyncHandler(async (req, res) => {
+  const playertoDelete = await Player.findOneAndDelete({
+    player_id: { $eq: req.params.id },
+  });
+  if (!playertoDelete) {
+    res.status(400);
+    throw new Error("Record not found");
+  } else {
+    res
+      .status(200)
+      .json({ id: req.params.id, message: `Delete player ${req.params.id}` });
+  }
 });
 
 module.exports = {

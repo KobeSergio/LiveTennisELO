@@ -1,4 +1,4 @@
-import { PlayerCharts } from "../components/admin/PlayerCharts";
+import { PlayerCharts } from "../components/player/PlayerCharts";
 import { PlayerMatches } from "../components/admin/PlayerMatches";
 import { EditContent } from "../components/player/EditContent";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
@@ -14,7 +14,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadPlayer } from "../../features/players/playerSlice";
+import { loadPlayer, deletePlayer } from "../../features/players/playerSlice";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -62,7 +62,7 @@ function ManagePlayer() {
 
   //Redirect if not logged in
   const { user } = useSelector((state) => state.auth);
-  const { player_details, player_matches, player_isLoading } = useSelector(
+  const { player_details, player_matches, player_isLoading, player_records } = useSelector(
     (state) => state.player
   );
 
@@ -423,6 +423,11 @@ function ManagePlayer() {
                 </div>
                 <div className="col pt-4">
                   <Button
+                    onClick={() =>
+                      dispatch(deletePlayer(player_id))
+                        .then(() => navigate("/admin/players/"))
+                        .then(() => window.location.reload(false))
+                    }
                     className="ms-4 px-2 btn btn-danger btn-sm float-end"
                     style={{
                       fontSize: "18px",
@@ -441,8 +446,7 @@ function ManagePlayer() {
           </main>
         </div>
       </div>
-
-      <PlayerCharts />
+      <PlayerCharts player_records={player_records} />
       <PlayerMatches />
     </>
   );
