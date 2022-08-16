@@ -9,13 +9,13 @@ const initialState = {
   players_message: "",
 };
 
-//Load record
+//Load players
 // @http:   GET admin/players/
 // @res:    players: json
 export const loadPlayers = createAsyncThunk(
   "players/loadPlayers",
   async (_, thunkAPI) => {
-    try {  
+    try {
       const token = thunkAPI.getState().auth.user.token;
       return await playersService.loadPlayers(token); //SERVICE
     } catch (error) {
@@ -28,7 +28,8 @@ export const loadPlayers = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-);
+); 
+
 export const playersSlice = createSlice({
   name: "players",
   initialState,

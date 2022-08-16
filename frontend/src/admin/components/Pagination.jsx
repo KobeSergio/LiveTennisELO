@@ -1,9 +1,9 @@
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 
-export default function Pagination({ postsPerPage, totalPosts, paginate }) {
+export default function Pagination({ DataPerPage, totalData, paginate }) {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalData / DataPerPage); i++) {
     pageNumbers.push(i);
   }
 

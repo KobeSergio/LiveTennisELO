@@ -109,6 +109,18 @@ function Players() {
     dispatch(loadPlayers());
   }, [user, navigate]);
 
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DataPerPage, setDataPerPage] = useState(100);
+
+  //Get index of the last Data
+  const indexOfLastData = currentPage * DataPerPage;
+  const indexOfFirstData = indexOfLastData - DataPerPage;
+  const currentData = data.slice(indexOfFirstData, indexOfLastData);
+
+  //Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const override = {
     margin: 0,
     position: "absolute",
@@ -116,18 +128,6 @@ function Players() {
     left: "45%",
     transform: "translate(-45%, -45%)",
   };
-
-  //Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostPerPage] = useState(100);
-
-  //Get index of the last post
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
-
-  //Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (players.length == 0 || players_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
@@ -141,13 +141,6 @@ function Players() {
 
       {/* main search + filters */}
       <div className="input-group pt-3 pb-3 mx-3 ">
-        <div className="me-4">
-          <div className="input-group">
-            <div className="me-4">
-              <Filter />
-            </div>
-          </div>
-        </div>
         <div className="input-group" style={{ width: "30%" }}>
           <input
             className="form-control border-0 dropdown rounded-3"
@@ -173,21 +166,21 @@ function Players() {
               id="dropdown-basic"
               size="sm"
             >
-              {postsPerPage} per page
+              {DataPerPage} per page
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setPostPerPage(100)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
                 100 per page
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setPostPerPage(250)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(250)} href="#">
                 250 per page
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setPostPerPage(500)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(500)} href="#">
                 500 per page
               </Dropdown.Item>
               <Dropdown.Item
-                onClick={() => setPostPerPage(data.length)}
+                onClick={() => setDataPerPage(data.length)}
                 href="#"
               >
                 All
@@ -203,7 +196,6 @@ function Players() {
       >
         <div className="input-group px-2">
           <div className="py-1">
-            <TrashFill className="fs-6 me-3" color="red" />
             <Download className="fs-6" />
           </div>
 
@@ -266,9 +258,9 @@ function Players() {
               </tr>
             </thead>
             <tbody className="tbody">
-              {currentPosts != null ? (
+              {currentData != null ? (
                 <>
-                  {currentPosts.map((player) => (
+                  {currentData.map((player) => (
                     <tr onClick={() => navigate(player.player_id)}>
                       <th scope="row">{player.player_id}</th>
                       <th className="table-40px" scope="row">
@@ -288,23 +280,31 @@ function Players() {
                         {player.overall_rating}
                       </td>
                       <td className="table-120px" id="overall_peak_rating">
-                        {player.overall_peak_rating} (
-                        {player.overall_peak_rating_date})
+                        {player.overall_peak_rating}
+                        {player.overall_peak_rating_date == null
+                          ? "\xa0"
+                          : " (" + player.overall_peak_rating_date + ")"}
                       </td>
                       <td className="table-hard table-160px" id="hard">
-                        {player.hard_peak_rating} (
-                        {player.hard_peak_rating_date})
+                        {player.hard_peak_rating}
+                        {player.hard_peak_rating_date == null
+                          ? "\xa0"
+                          : " (" + player.hard_peak_rating_date + ")"}
                       </td>
                       <td
                         className="table-clay table-160px"
                         id="clay_peak_rating"
                       >
-                        {player.clay_peak_rating} (
-                        {player.clay_peak_rating_date})
+                        {player.clay_peak_rating}
+                        {player.clay_peak_rating_date == null
+                          ? "\xa0"
+                          : " (" + player.clay_peak_rating_date + ")"}
                       </td>
                       <td className="table-grass table-160px" id="grass">
-                        {player.grass_peak_rating} (
-                        {player.grass_peak_rating_date})
+                        {player.grass_peak_rating}
+                        {player.grass_peak_rating_date == null
+                          ? "\xa0"
+                          : " (" + player.grass_peak_rating_date + ")"}
                       </td>
                     </tr>
                   ))}
@@ -316,8 +316,8 @@ function Players() {
           </table>
           <div className="ms-auto">
             <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={data.length}
+              DataPerPage={DataPerPage}
+              totalData={data.length}
               paginate={paginate}
             />
           </div>
