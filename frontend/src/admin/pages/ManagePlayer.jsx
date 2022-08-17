@@ -1,5 +1,5 @@
 import { PlayerCharts } from "../components/player/PlayerCharts";
-import { PlayerMatches } from "../components/admin/PlayerMatches";
+import { PlayerMatches } from "../components/player/PlayerMatches";
 import { EditContent } from "../components/player/EditContent";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import {
@@ -62,9 +62,8 @@ function ManagePlayer() {
 
   //Redirect if not logged in
   const { user } = useSelector((state) => state.auth);
-  const { player_details, player_matches, player_isLoading, player_records } = useSelector(
-    (state) => state.player
-  );
+  const { player_details, player_matches, player_isLoading, player_records } =
+    useSelector((state) => state.player);
 
   useEffect(() => {
     if (!user) {
@@ -446,8 +445,14 @@ function ManagePlayer() {
           </main>
         </div>
       </div>
-      <PlayerCharts player_records={player_records} />
-      <PlayerMatches />
+      <PlayerCharts
+        player_records={player_records}
+        player={player_details[0]}
+      />
+      <PlayerMatches
+        player={player_details[0]}
+        player_matches={player_matches}
+      />
     </>
   );
 }
