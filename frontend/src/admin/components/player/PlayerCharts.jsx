@@ -193,36 +193,48 @@ export const OverallElo = {
 
 function pushToDatasets(player_records) {
   var chartData = [...player_records];
+  var tempCtr = 0;
+  var tempStorage = "";
   chartData
     .sort((a, b) =>
       a.doc_date < b.doc_date ? -1 : b.doc_date > a.doc_date ? 1 : 0
     )
     .forEach((record) => {
-      var label = new Date(
-        record.doc_date.substring(0, 4),
-        record.doc_date.substring(4, 6),
-        record.doc_date.substring(6, 8)
-      );
-      overall_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.ranking,
-      });
-      clay_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.clay,
-      });
-      grass_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.grass,
-      });
-      hard_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.hard,
-      });
+      //Lessen long lines
+      if (record.ranking === tempStorage) {
+        tempCtr++;
+      } else {
+        tempStorage = record.ranking;
+        tempCtr = 0;
+      }
+
+      if (tempCtr < 52) {
+        var label = new Date(
+          record.doc_date.substring(0, 4),
+          record.doc_date.substring(4, 6),
+          record.doc_date.substring(6, 8)
+        );
+        overall_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.ranking,
+        });
+        clay_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.clay,
+        });
+        grass_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.grass,
+        });
+        hard_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.hard,
+        });
+      }
     });
 }
 
-export function PlayerCharts(props) { 
+export function PlayerCharts(props) {
   useEffect(() => {
     overall_data = [];
     hard_data = [];

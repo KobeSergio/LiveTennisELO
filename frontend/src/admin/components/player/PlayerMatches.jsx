@@ -5,6 +5,42 @@ import { useParams } from "react-router-dom";
 import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { AddHighlight } from "./AddHighlight";
+import Dropdown from "react-bootstrap/Dropdown";
+
+String.prototype.replaceAt = function (index, replacement) {
+  return (
+    this.substring(0, index) +
+    replacement +
+    this.substring(index + replacement.length)
+  );
+};
+
+function arrangeScore(player_id, match) {
+  var set = match.score.split(" ");
+  var fixed = [];
+  if (match.winner_local_id == player_id) {
+    return match.score;
+  } else {
+    if (set.length > 1) {
+      set.forEach((score) => {
+        var temp = "";
+        temp = score[0];
+
+        console.log(score);
+        try {
+          score = score.replaceAt(0, score[2]);
+          score = score.replaceAt(2, temp);
+        } catch {
+          console.log("ha");
+        }
+        console.log(score);
+        fixed.push(score);
+      });
+      return fixed.join([" "]);
+    }
+    return match.score;
+  }
+}
 
 function parseDate(date) {
   var dateString = date.toString();
@@ -55,9 +91,48 @@ function checkOpp(player_id, match) {
   };
 }
 
+function getPerformance(data, player_id) {
+  var performanceELO = 0;
+
+  data.forEach((match) => {
+    var p1 = 0;
+    var p2 = 0;
+
+    //Instantiate rounds
+    var set = match.score.split(" ");
+    set.forEach((round) => {
+      if (round[0] > round[2]) {
+        p1++;
+      } else {
+        p2++;
+      }
+    });
+
+    //Add win or lose
+    if (match.winner_local_id == player_id) {
+      performanceELO += 300;
+      //Add bonus
+      if (Math.abs(p1 - p2) == 2) {
+        performanceELO += 50;
+      } else if (Math.abs(p1 - p2) == 3) {
+        performanceELO += 100;
+      }
+    } else if (match.loser_local_id == player_id) {
+      performanceELO -= 300;
+      //Add bonus
+      if (Math.abs(p1 - p2) == 2) {
+        performanceELO -= 50;
+      } else if (Math.abs(p1 - p2) == 3) {
+        performanceELO -= 100;
+      }
+    }
+  });
+
+  return performanceELO;
+}
+
 function getStats(data, player_id) {
   var opp_ratings = [];
-  var opp_surface_ratings = [];
 
   data.forEach((element) => {
     if (element.winner_local_id == player_id) {
@@ -81,7 +156,6 @@ function getStats(data, player_id) {
     }
   });
 
-  console.log(opp_ratings);
   return {
     ave_ELO: opp_ratings.reduce((a, b) => a + b, 0) / opp_ratings.length,
     perf_ELO: null,
@@ -103,7 +177,6 @@ export function PlayerMatches(props) {
     );
   }, []);
 
-  console.log(data);
   return (
     <>
       <div className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5">
@@ -115,7 +188,92 @@ export function PlayerMatches(props) {
           </div>
           <main className="col ms-3">
             <div className="ms-auto d-flex">
-              <MatchFilter />
+              <Dropdown className="border-0 dropdown rounded-3">
+                <Dropdown.Toggle
+                  className="o40"
+                  variant="white"
+                  id="dropdown-basic"
+                  size="sm"
+                >
+                  Filter by surface
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setData(
+                        [...props.player_matches]
+                          .sort(
+                            (a, b) =>
+                              b.tourney_date - a.tourney_date ||
+                              b.match_num - a.match_num
+                          )
+                          .splice(0, 10)
+                      );
+                    }}
+                    href="#/"
+                  >
+                    All Surface
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setData(
+                        [...props.player_matches]
+                          .filter(
+                            (element) => element.surface.toLowerCase() == "hard"
+                          )
+                          .sort(
+                            (a, b) =>
+                              b.tourney_date - a.tourney_date ||
+                              b.match_num - a.match_num
+                          )
+                          .splice(0, 10)
+                      );
+                    }}
+                    href="#/"
+                  >
+                    Hard
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setData(
+                        [...props.player_matches]
+                          .filter(
+                            (element) => element.surface.toLowerCase() == "clay"
+                          )
+                          .sort(
+                            (a, b) =>
+                              b.tourney_date - a.tourney_date ||
+                              b.match_num - a.match_num
+                          )
+                          .splice(0, 10)
+                      );
+                    }}
+                    href="#/"
+                  >
+                    Clay
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setData(
+                        [...props.player_matches]
+                          .filter(
+                            (element) =>
+                              element.surface.toLowerCase() == "grass"
+                          )
+                          .sort(
+                            (a, b) =>
+                              b.tourney_date - a.tourney_date ||
+                              b.match_num - a.match_num
+                          )
+                          .splice(0, 10)
+                      );
+                    }}
+                    href="#/"
+                  >
+                    Grass
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <div className="ms-auto d-flex align-items-start py-2">
                 <SurfaceLegend />
               </div>
@@ -329,7 +487,7 @@ export function PlayerMatches(props) {
                             )}
                           </td>
                           <td className="text-start table-score" id="score">
-                            {match.score}
+                            {arrangeScore(player_id, match)}
                           </td>
                           <td className="table-tournament" id="tournament">
                             {match.tourney_name}
@@ -348,7 +506,9 @@ export function PlayerMatches(props) {
               <div className="d-inline fw-500 pe-5">
                 Ave. ELO (Opp.): {getStats(data, player_id).ave_ELO}
               </div>
-              <div className="d-inline fw-500">Performance ELO: -</div>
+              <div className="d-inline fw-500">
+                Performance ELO: {getPerformance(data, player_id)}
+              </div>
             </div>
           </main>
         </div>
