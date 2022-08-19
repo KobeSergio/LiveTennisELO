@@ -629,6 +629,11 @@ li .pagination-button {
     background: top right no-repeat;
 }
 
+.charts-bg {
+    background-repeat: no-repeat;
+    background: top left no-repeat;
+}
+
 .liverating-table-bg-white {
     /* add table background */
     background: #fff;

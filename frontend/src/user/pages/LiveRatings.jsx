@@ -6,7 +6,7 @@ import LiveRatingsTable from "../components/Tables/LiveRatingsTable";
 import SideTables from "../components/Tables/SideTables";
 import Footer from "../components/Footer/Footer";
 
-export default function Charts() {
+export default function LiveRatings() {
     return (
         <>
 
