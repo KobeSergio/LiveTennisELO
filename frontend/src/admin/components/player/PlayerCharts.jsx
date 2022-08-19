@@ -31,10 +31,10 @@ ChartJS.register(
   Legend
 );
 
-const overall_data = [];
-const hard_data = [];
-const grass_data = [];
-const clay_data = [];
+var overall_data = [];
+var hard_data = [];
+var grass_data = [];
+var clay_data = [];
 
 //Options
 const options = {
@@ -192,39 +192,58 @@ export const OverallElo = {
 };
 
 function pushToDatasets(player_records) {
-  var chartData = [...player_records.player_records];
+  var chartData = [...player_records];
+  var tempCtr = 0;
+  var tempStorage = "";
   chartData
     .sort((a, b) =>
       a.doc_date < b.doc_date ? -1 : b.doc_date > a.doc_date ? 1 : 0
     )
     .forEach((record) => {
-      var label = new Date(
-        record.doc_date.substring(0, 4),
-        record.doc_date.substring(4, 6),
-        record.doc_date.substring(6, 8)
-      );
-      overall_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.ranking,
-      });
-      clay_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.clay,
-      });
-      grass_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.grass,
-      });
-      hard_data.push({
-        x: label.toLocaleDateString("en-CA"),
-        y: record.hard,
-      });
+      //Lessen long lines
+      if (record.ranking === tempStorage) {
+        tempCtr++;
+      } else {
+        tempStorage = record.ranking;
+        tempCtr = 0;
+      }
+
+      if (tempCtr < 52) {
+        var label = new Date(
+          record.doc_date.substring(0, 4),
+          record.doc_date.substring(4, 6),
+          record.doc_date.substring(6, 8)
+        );
+        overall_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.ranking,
+        });
+        clay_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.clay,
+        });
+        grass_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.grass,
+        });
+        hard_data.push({
+          x: label.toLocaleDateString("en-CA"),
+          y: record.hard,
+        });
+      }
     });
 }
 
-export function PlayerCharts(player_records) {
+export function PlayerCharts(props) {
+  useEffect(() => {
+    overall_data = [];
+    hard_data = [];
+    grass_data = [];
+    clay_data = [];
+  }, []);
+
   if (overall_data.length == 0) {
-    pushToDatasets(player_records);
+    pushToDatasets(props.player_records);
   }
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -315,7 +334,7 @@ export function PlayerCharts(player_records) {
         <Modal.Header closeButton className="px-4 py-3">
           <Modal.Title className="gc-100">
             <span className="gc-100" id="playername">
-              Novak Djokovic
+              {props.player.player_name}
             </span>
             's Elo Ratings
           </Modal.Title>
@@ -325,9 +344,9 @@ export function PlayerCharts(player_records) {
           <div className="row px-2 rounded">
             <div className="row">
               <div className="input-group">
-                <div className="me-4">
+                {/* <div className="me-4">
                   Rank Type: <ELORating />
-                </div> 
+                </div> */}
                 {/* <div className="ms-auto me-5 mt-2">
                   <a className="o60 fs-5" href="#">
                     <Download className="me-2 mb-1" />

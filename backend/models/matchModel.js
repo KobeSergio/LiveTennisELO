@@ -27,7 +27,7 @@ const playerSchema = new mongoose.Schema(
     loser_age: Number,
     score: String,
     best_of: Number,
-    round: Number,
+    round: String,
     minutes: Number,
     w_ace: Number,
     w_svpt: Number,

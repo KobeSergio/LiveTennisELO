@@ -1,9 +1,7 @@
 import React from "react";
 import { Download, Search, TrashFill } from "react-bootstrap-icons";
-import ReactCountryFlag from "react-country-flag";
-import { Filter, RowsDropdown } from "../components/Dropdown";
-import Pagination from "../components/Pagination";
-import { SearchPlayers } from "../components/Search";
+import ReactCountryFlag from "react-country-flag"; 
+import Pagination from "../components/Pagination"; 
 import { SurfaceLegend } from "../components/Legend";
 
 //Backend
