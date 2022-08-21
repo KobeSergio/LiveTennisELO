@@ -1,7 +1,7 @@
 import React from "react";
 import { Download, Search, TrashFill } from "react-bootstrap-icons";
-import ReactCountryFlag from "react-country-flag"; 
-import Pagination from "../components/Pagination"; 
+import ReactCountryFlag from "react-country-flag";
+import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend";
 
 //Backend
@@ -281,13 +281,15 @@ function Players() {
                         {player.overall_peak_rating}
                         {player.overall_peak_rating_date == null
                           ? "\xa0"
-                          : " (" + player.overall_peak_rating_date + ")"}
+                          : " (" +
+                            player.overall_peak_rating_date.split(" ")[0] +
+                            ")"}
                       </td>
                       <td className="table-hard table-160px" id="hard">
                         {player.hard_peak_rating}
                         {player.hard_peak_rating_date == null
                           ? "\xa0"
-                          : " (" + player.hard_peak_rating_date + ")"}
+                          : " (" + player.hard_peak_rating_date.split(" ")[0] + ")"}
                       </td>
                       <td
                         className="table-clay table-160px"
@@ -296,13 +298,17 @@ function Players() {
                         {player.clay_peak_rating}
                         {player.clay_peak_rating_date == null
                           ? "\xa0"
-                          : " (" + player.clay_peak_rating_date + ")"}
+                          : " (" +
+                            player.clay_peak_rating_date.split(" ")[0] +
+                            ")"}
                       </td>
                       <td className="table-grass table-160px" id="grass">
                         {player.grass_peak_rating}
                         {player.grass_peak_rating_date == null
                           ? "\xa0"
-                          : " (" + player.grass_peak_rating_date + ")"}
+                          : " (" +
+                            player.grass_peak_rating_date.split(" ")[0] +
+                            ")"}
                       </td>
                     </tr>
                   ))}
