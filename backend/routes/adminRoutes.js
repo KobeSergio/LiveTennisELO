@@ -6,7 +6,7 @@ const {
   updateRecord,
   deleteRecord,
   deleteWholeRecord,
-  latestRecord
+  latestRecord,
 } = require("../controller/recordController");
 const {
   getPlayers,
@@ -15,6 +15,7 @@ const {
   deletePlayer,
   getIndPlayer,
 } = require("../controller/playerController");
+const { updateMatch } = require("../controller/matchesController");
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/players").get(protect, getPlayers);
@@ -26,6 +27,8 @@ router
 
 router.route("/").get(protect, latestRecord);
 
+router.route("/matches/:id").put(protect, updateMatch);
+
 router
   .route("/:doc_date")
   .get(protect, getRecord)
@@ -35,6 +38,7 @@ router
   .route("/:doc_date/:id")
   .put(protect, updateRecord)
   .delete(protect, deleteRecord);
+
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
 
 module.exports = router;

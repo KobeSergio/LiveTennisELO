@@ -39,9 +39,29 @@ export const updatePlayer = createAsyncThunk(
   "player/updatePlayer",
   async (payload, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token;
-      console.log(token);
+      const token = thunkAPI.getState().auth.user.token; 
       return await playersService.updatePlayer(payload, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//TEMP Insert highlight
+// @http:   PUT admin/matches/:match_id
+// @res:    updateMatch: json
+export const insertHighlight = createAsyncThunk(
+  "player/insertHighlight",
+  async (payload, thunkAPI) => {
+    try { 
+      const token = thunkAPI.getState().auth.user.token;
+      return await playersService.insertHighlight(payload, token); //SERVICE
     } catch (error) {
       const message =
         (error.response &&
@@ -61,8 +81,7 @@ export const deletePlayer = createAsyncThunk(
   "player/deletePlayer",
   async (player_id, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token;
-      console.log(token);
+      const token = thunkAPI.getState().auth.user.token; 
       return await playersService.deletePlayer(player_id, token); //SERVICE
     } catch (error) {
       const message =
@@ -85,7 +104,6 @@ export const playerSlice = createSlice({
       state.player_details = [];
       state.player_matches = [];
       state.player_records = [];
-      state.player_matches = false;
       state.player_isError = false;
       state.player_isSuccess = false;
       state.player_isLoading = false;
@@ -118,6 +136,18 @@ export const playerSlice = createSlice({
         state.player_details = action.payload;
       })
       .addCase(updatePlayer.rejected, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isError = true;
+        state.player_message = action.payload;
+      })
+      .addCase(insertHighlight.pending, (state) => {
+        state.player_isLoading = true;
+      })
+      .addCase(insertHighlight.fulfilled, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isSuccess = true;
+      })
+      .addCase(insertHighlight.rejected, (state, action) => {
         state.player_isLoading = false;
         state.player_isError = true;
         state.player_message = action.payload;

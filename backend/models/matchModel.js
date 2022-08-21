@@ -59,6 +59,7 @@ const playerSchema = new mongoose.Schema(
     loser_elo_gains: Number,
     winner_elo_surface_gains: Number,
     loser_elo_surface_gains: Number,
+    highlight: String,
   },
   { collection: "matches" }
 );
