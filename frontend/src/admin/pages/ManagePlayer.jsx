@@ -14,7 +14,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadPlayer, deletePlayer } from "../../features/players/playerSlice";
+import {
+  loadPlayer,
+  deletePlayer,
+  resetPlayer,
+} from "../../features/players/playerSlice";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -66,6 +70,7 @@ function ManagePlayer() {
     useSelector((state) => state.player);
 
   useEffect(() => {
+    dispatch(resetPlayer());
     if (!user) {
       navigate("/admin-login");
     }
@@ -449,10 +454,7 @@ function ManagePlayer() {
         player_records={player_records}
         player={player_details[0]}
       />
-      <PlayerMatches
-        player={player_details[0]}
-        player_matches={player_matches}
-      />
+      <PlayerMatches />
     </>
   );
 }

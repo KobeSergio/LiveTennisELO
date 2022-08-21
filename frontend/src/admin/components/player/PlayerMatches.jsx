@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
 import { useEffect } from "react";
-import { AddHighlight } from "./AddHighlight";
+import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useSelector } from "react-redux";
 
 String.prototype.replaceAt = function (index, replacement) {
   return (
@@ -25,15 +26,12 @@ function arrangeScore(player_id, match) {
       set.forEach((score) => {
         var temp = "";
         temp = score[0];
-
-        console.log(score);
         try {
           score = score.replaceAt(0, score[2]);
           score = score.replaceAt(2, temp);
         } catch {
           console.log("ha");
         }
-        console.log(score);
         fixed.push(score);
       });
       return fixed.join([" "]);
@@ -162,9 +160,13 @@ function getStats(data, player_id) {
   };
 }
 
-export function PlayerMatches(props) {
-  const [data, setData] = useState(props.player_matches);
+export function PlayerMatches() {
   const { player_id } = useParams();
+  const { player_details, player_matches } = useSelector(
+    (state) => state.player
+  );
+
+  const [data, setData] = useState(player_matches);
 
   useEffect(() => {
     //Sort table by latest matches and in the proper order.
@@ -183,7 +185,7 @@ export function PlayerMatches(props) {
         <div className="row h-100 py-3 rounded">
           <div>
             <h1 className="fs-5 fw-bold pb-2">
-              Last 10 matches of {props.player.player_name}
+              Last 10 matches of {player_details[0].player_name}
             </h1>
           </div>
           <main className="col ms-3">
@@ -201,7 +203,7 @@ export function PlayerMatches(props) {
                   <Dropdown.Item
                     onClick={() => {
                       setData(
-                        [...props.player_matches]
+                        [...player_matches]
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -217,7 +219,7 @@ export function PlayerMatches(props) {
                   <Dropdown.Item
                     onClick={() => {
                       setData(
-                        [...props.player_matches]
+                        [...player_matches]
                           .filter(
                             (element) => element.surface.toLowerCase() == "hard"
                           )
@@ -236,7 +238,7 @@ export function PlayerMatches(props) {
                   <Dropdown.Item
                     onClick={() => {
                       setData(
-                        [...props.player_matches]
+                        [...player_matches]
                           .filter(
                             (element) => element.surface.toLowerCase() == "clay"
                           )
@@ -255,7 +257,7 @@ export function PlayerMatches(props) {
                   <Dropdown.Item
                     onClick={() => {
                       setData(
-                        [...props.player_matches]
+                        [...player_matches]
                           .filter(
                             (element) =>
                               element.surface.toLowerCase() == "grass"
@@ -321,12 +323,22 @@ export function PlayerMatches(props) {
                           </th>
                           <td className="table-result" id="result">
                             <span className="me-2 highlights-button">
-                              <AddHighlight />
+                              {match.highlight != "" ? (
+                                <ShowHighlight
+                                  props={match._id}
+                                  src={match.highlight}
+                                />
+                              ) : (
+                                <AddHighlight props={match._id} />
+                              )}
                             </span>
                             {checkOpp(player_id, match).result === "W" ? (
                               //GREEN SPAN
                               <span
-                                style={{ backgroundColor: "#9DDEBD" }}
+                                style={{
+                                  backgroundColor: "#9DDEBD",
+                                  padding: ".2em 8px .3em",
+                                }}
                                 className="table-result-label"
                               >
                                 {checkOpp(player_id, match).result}
@@ -358,7 +370,8 @@ export function PlayerMatches(props) {
                             )}
                           </td>
                           <td className="table-ratings" id="opp-rating">
-                            {checkOpp(player_id, match).opp_rating != 2400
+                            {checkOpp(player_id, match).opp_rating != 2400 &&
+                            checkOpp(player_id, match).opp_rating != null
                               ? checkOpp(player_id, match).opp_rating -
                                 checkOpp(player_id, match).opp_rating_gains
                               : "< 2400"}
