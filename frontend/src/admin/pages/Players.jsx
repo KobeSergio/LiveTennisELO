@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadPlayers } from "../../features/players/playersSlice";
+import { resetPlayer } from "../../features/players/playerSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -22,8 +23,12 @@ function Players() {
     (state) => state.players
   );
 
-  const [data, setData] = useState(players);
+  const [data, setData] = useState([]);
   const [order, setOrder] = useState("ASC");
+  
+  useEffect(() => {
+    setData(players);
+  }, [players]);
 
   const onSearch = (e) => {
     setCurrentPage(1);
@@ -101,6 +106,7 @@ function Players() {
   }
 
   useEffect(() => {
+    dispatch(resetPlayer());
     if (!user) {
       navigate("/admin-login");
     }
@@ -127,7 +133,7 @@ function Players() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (players.length == 0 || players_isLoading) {
+  if (data.length == 0 || players_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
 
@@ -194,7 +200,7 @@ function Players() {
       >
         <div className="input-group px-2">
           <div className="py-1">
-            <Download className="fs-6" />
+            {/* <Download className="fs-6" /> */}
           </div>
 
           <div className="ms-auto d-flex align-items-start">
@@ -289,7 +295,9 @@ function Players() {
                         {player.hard_peak_rating}
                         {player.hard_peak_rating_date == null
                           ? "\xa0"
-                          : " (" + player.hard_peak_rating_date.split(" ")[0] + ")"}
+                          : " (" +
+                            player.hard_peak_rating_date.split(" ")[0] +
+                            ")"}
                       </td>
                       <td
                         className="table-clay table-160px"

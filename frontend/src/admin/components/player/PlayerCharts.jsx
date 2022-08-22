@@ -19,6 +19,9 @@ import { MatchFilter, ELORating, ELORatingTime } from "../Dropdown";
 import { Download } from "react-bootstrap-icons";
 import "../../../css/admin/colors.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { resetPlayer } from "../../../features/players/playerSlice";
+import { useDispatch, useSelector } from "react-redux";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -91,106 +94,6 @@ const gen_options = {
   maintainAspectRatio: false,
 };
 
-const overall_dataset = {
-  datasets: [
-    {
-      data: overall_data,
-      borderColor: "black",
-      backgroundColor: "black",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-  ],
-};
-
-const hard_dataset = {
-  datasets: [
-    {
-      data: hard_data,
-      borderColor: "#015778",
-      backgroundColor: "#015778",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-  ],
-};
-const clay_dataset = {
-  datasets: [
-    {
-      data: clay_data,
-      borderColor: "#E96513",
-      backgroundColor: "#E96513",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-  ],
-};
-
-const grass_dataset = {
-  datasets: [
-    {
-      data: grass_data,
-      borderColor: "#339966",
-      backgroundColor: "#339966",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-  ],
-};
-
-export const OverallElo = {
-  datasets: [
-    {
-      label: "Overall",
-      data: overall_data,
-      borderColor: "black",
-      backgroundColor: "black",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-    {
-      label: "Hard",
-      data: hard_data,
-      borderColor: "#015778",
-      backgroundColor: "#015778",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-    {
-      label: "Clay",
-      data: clay_data,
-      borderColor: "#E96513",
-      backgroundColor: "#E96513",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-    {
-      label: "Grass",
-      data: grass_data,
-      borderColor: "#339966",
-      backgroundColor: "#339966",
-      borderWidth: 2,
-      pointBorderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-    },
-  ],
-};
-
 function pushToDatasets(player_records) {
   var chartData = [...player_records];
   var tempCtr = 0;
@@ -244,7 +147,8 @@ export function PlayerCharts(props) {
 
   if (overall_data.length == 0) {
     pushToDatasets(props.player_records);
-  }
+  } 
+  
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -265,7 +169,19 @@ export function PlayerCharts(props) {
               <Line
                 onClick={handleShow}
                 options={options}
-                data={overall_dataset}
+                data={{
+                  datasets: [
+                    {
+                      data: overall_data,
+                      borderColor: "black",
+                      backgroundColor: "black",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
                 height={"500px"}
               />
             </div>
@@ -283,7 +199,19 @@ export function PlayerCharts(props) {
               <Line
                 onClick={handleShow}
                 options={options}
-                data={clay_dataset}
+                data={{
+                  datasets: [
+                    {
+                      data: clay_data,
+                      borderColor: "#E96513",
+                      backgroundColor: "#E96513",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
                 height={"500px"}
               />
             </div>
@@ -304,7 +232,19 @@ export function PlayerCharts(props) {
               <Line
                 onClick={handleShow}
                 options={options}
-                data={hard_dataset}
+                data={{
+                  datasets: [
+                    {
+                      data: hard_data,
+                      borderColor: "#015778",
+                      backgroundColor: "#015778",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
                 height={"500px"}
               />
             </div>
@@ -322,7 +262,19 @@ export function PlayerCharts(props) {
               <Line
                 onClick={handleShow}
                 options={options}
-                data={grass_dataset}
+                data={{
+                  datasets: [
+                    {
+                      data: grass_data,
+                      borderColor: "#339966",
+                      backgroundColor: "#339966",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
                 height={"500px"}
               />
             </div>
@@ -359,7 +311,50 @@ export function PlayerCharts(props) {
               <div>
                 <Line
                   options={gen_options}
-                  data={OverallElo}
+                  data={{
+                    datasets: [
+                      {
+                        label: "Overall",
+                        data: overall_data,
+                        borderColor: "black",
+                        backgroundColor: "black",
+                        borderWidth: 2,
+                        pointBorderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                      },
+                      {
+                        label: "Hard",
+                        data: hard_data,
+                        borderColor: "#015778",
+                        backgroundColor: "#015778",
+                        borderWidth: 2,
+                        pointBorderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                      },
+                      {
+                        label: "Clay",
+                        data: clay_data,
+                        borderColor: "#E96513",
+                        backgroundColor: "#E96513",
+                        borderWidth: 2,
+                        pointBorderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                      },
+                      {
+                        label: "Grass",
+                        data: grass_data,
+                        borderColor: "#339966",
+                        backgroundColor: "#339966",
+                        borderWidth: 2,
+                        pointBorderWidth: 2,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                      },
+                    ],
+                  }}
                   width={"1000px"}
                   height={"500px"}
                 />
