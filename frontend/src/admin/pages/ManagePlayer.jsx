@@ -450,10 +450,7 @@ function ManagePlayer() {
           </main>
         </div>
       </div>
-      <PlayerCharts
-        player_records={player_records}
-        player={player_details[0]}
-      />
+      <PlayerCharts />
       <PlayerMatches />
     </>
   );
