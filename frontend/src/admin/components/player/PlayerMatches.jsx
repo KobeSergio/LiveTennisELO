@@ -1,4 +1,3 @@
-import { MatchFilter } from "../Dropdown";
 import { SurfaceLegend } from "../Legend";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
