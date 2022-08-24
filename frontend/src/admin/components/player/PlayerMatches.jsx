@@ -233,7 +233,7 @@ export function PlayerMatches() {
   const [currentSurface, setCurrentSurface] = useState("All Surface");
   return (
     <>
-      <div className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5">
+      <div style={{overflow:"auto"}} className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5">
         <div className="row h-100 py-3 rounded">
           <h1 className="fs-4  mb-0">
             Last 10 matches of {player_details[0].player_name}

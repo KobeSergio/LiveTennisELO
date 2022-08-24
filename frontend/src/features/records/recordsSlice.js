@@ -53,6 +53,27 @@ export const latestRecord = createAsyncThunk(
   }
 );
 
+//Upload Record
+// @http:   PUT admin/import
+// @res:
+export const uploadRecord = createAsyncThunk(
+  "records/uploadRecord",
+  async (payload, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await recordsService.uploadRecord(payload, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //Delete whole record.
 // @params: Record.doc_date
 export const deleteRecord = createAsyncThunk(
@@ -138,6 +159,19 @@ export const recordsSlice = createSlice({
         state.records[0] = action.payload;
       })
       .addCase(loadRecord.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(uploadRecord.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadRecord.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload;
+      })
+      .addCase(uploadRecord.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
