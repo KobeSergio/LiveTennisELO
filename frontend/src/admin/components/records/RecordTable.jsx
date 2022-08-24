@@ -135,7 +135,7 @@ export default function RecordItem(recs) {
                     {record.grass}
                   </td>
                   <td id="atp">{record.atp}</td>
-                  <td id="lactive">{record.last_active}</td>
+                  <td id="lactive">{record.last_active.split(" ")[0]}</td>
                   <td id="edit">
                     <EditRecord props={record} /> &nbsp;
                     <a
