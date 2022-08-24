@@ -346,7 +346,8 @@ export function PlayerCharts() {
                     filter.toLowerCase() == "elo rankings by age" ? (
                       <>
                         {Math.floor(overall_data[0].x)} -{" "}
-                        {Math.floor(overall_data[overall_data.length - 1].x)} years
+                        {Math.floor(overall_data[overall_data.length - 1].x)}{" "}
+                        years
                       </>
                     ) : (
                       <>
@@ -424,8 +425,8 @@ export function PlayerCharts() {
                     {filter.toLowerCase() == "elo ratings by age" ||
                     filter.toLowerCase() == "elo rankings by age" ? (
                       <>
-                        {Math.floor(clay_data[0].x)} - {Math.floor(clay_data[clay_data.length - 1].x)}{" "}
-                        years
+                        {Math.floor(clay_data[0].x)} -{" "}
+                        {Math.floor(clay_data[clay_data.length - 1].x)} years
                       </>
                     ) : (
                       <>
@@ -503,8 +504,8 @@ export function PlayerCharts() {
                     {filter.toLowerCase() == "elo ratings by age" ||
                     filter.toLowerCase() == "elo rankings by age" ? (
                       <>
-                        {Math.floor(hard_data[0].x)} - {Math.floor(hard_data[hard_data.length - 1].x)}{" "}
-                        years
+                        {Math.floor(hard_data[0].x)} -{" "}
+                        {Math.floor(hard_data[hard_data.length - 1].x)} years
                       </>
                     ) : (
                       <>
@@ -637,6 +638,96 @@ export function PlayerCharts() {
                       data: grass_data,
                       borderColor: "#339966",
                       backgroundColor: "#339966",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
+                height={"500px"}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="card bg-white col me-2 shadow rounded mb-2">
+            <h1 className="mt-2 fs-4">
+              ATP {filter.substring(3, filter.length)}
+            </h1>
+            <h2 className="fs-5">
+              From:{" "}
+              <span id="years">
+                {hard_data[0] != null ? (
+                  <>
+                    {filter.toLowerCase() == "elo ratings by age" ||
+                    filter.toLowerCase() == "elo rankings by age" ? (
+                      <>
+                        {Math.floor(hard_data[0].x)} -{" "}
+                        {Math.floor(hard_data[hard_data.length - 1].x)} years
+                      </>
+                    ) : (
+                      <>
+                        {hard_data[0].x.length > 2 ? (
+                          <>
+                            {hard_data[0].x.substring(0, 4)} -{" "}
+                            {hard_data[hard_data.length - 1].x.substring(0, 4)}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </span>
+            </h2>
+            <div>
+              <Line
+                options={{
+                  scales: {
+                    xAxes: {
+                      type: type,
+                      time: {
+                        unit: "year",
+                        tooltipFormat: "YYYY-MM-DD",
+                      },
+                    },
+                    yAxes: {
+                      position: "right",
+                      reverse: invert,
+                    },
+                  },
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                    title: {
+                      display: false,
+                    },
+                    zoom: {
+                      zoom: {
+                        drag: {
+                          enabled: true,
+                        },
+                        wheel: {
+                          enabled: true,
+                        },
+                      },
+                    },
+                  },
+
+                  maintainAspectRatio: false,
+                }}
+                data={{
+                  datasets: [
+                    {
+                      data: atp_data,
+                      borderColor: "#4C5454",
+                      backgroundColor: "#4C5454",
                       borderWidth: 2,
                       pointBorderWidth: 2,
                       pointRadius: 0,

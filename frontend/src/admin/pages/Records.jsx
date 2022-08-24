@@ -131,7 +131,7 @@ function Records() {
               <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
             </a>
 
-            <Download className="fs-6" />
+            {/* <Download className="fs-6" /> */}
           </div>
 
           <div className="ms-auto d-flex align-items-start">
