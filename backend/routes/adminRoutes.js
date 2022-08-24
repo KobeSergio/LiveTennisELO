@@ -17,7 +17,9 @@ const {
 } = require("../controller/playerController");
 const { updateMatch } = require("../controller/matchesController");
 const { protect } = require("../middleware/authMiddleware");
+const { parseCSV } = require("../middleware/parseCSV");
 
+//Players
 router.route("/players").get(protect, getPlayers);
 router
   .route("/players/:id")
@@ -25,15 +27,18 @@ router
   .put(protect, updatePlayer)
   .delete(protect, deletePlayer);
 
+//Imports
+var multer = require("multer");
+var upload = multer();
+router.route("/import").post(upload.single("file"), parseCSV);
+
+//Records
 router.route("/").get(protect, latestRecord);
-
 router.route("/matches/:id").put(protect, updateMatch);
-
 router
   .route("/:doc_date")
   .get(protect, getRecord)
   .delete(protect, deleteWholeRecord);
-
 router
   .route("/:doc_date/:id")
   .put(protect, updateRecord)
