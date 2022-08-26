@@ -714,3 +714,32 @@ input:checked+.slider:before {
     background-color: #339966 !important;
     border-radius: 10px 10px 0 0 !important;
 }
+
+.gc-100-bg {
+    background: #339966 !important;
+}
+
+.rounded-top-3 {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.rounded-3 {
+    border-radius: 10px !important;
+}
+
+.rounded-4 {
+    border-radius: 10px !important;
+}
+
+/* BUTTONS */
+.gc-100-button {
+    background: #339966 !important;
+    border: 10px !important;
+    color: #fff;
+}
+
+.gc-100-button:hover {
+    background: #339988 !important;
+    border: 10px !important;
+    color: #fff;
+}
