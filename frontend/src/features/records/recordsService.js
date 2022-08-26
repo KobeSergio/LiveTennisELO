@@ -35,8 +35,25 @@ const latestRecord = async (token) => {
     },
   };
 
-  const loadLast = await axios.get(RECORD_URL, config); 
+  const loadLast = await axios.get(RECORD_URL, config);
   return loadLast.data;
+};
+
+//Upload record.
+// @http:   POST admin/imports
+const uploadRecord = async (payload, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const uploadedRecord = await axios.post(
+    RECORD_URL + "import",
+    payload,
+    config
+  );
+  return uploadedRecord.data;
 };
 
 //Update record.
@@ -94,6 +111,7 @@ const deleteIndRecord = async (payload, token) => {
 
 const recordsService = {
   loadRecord,
+  uploadRecord,
   deleteRecord,
   deleteIndRecord,
   latestRecord,

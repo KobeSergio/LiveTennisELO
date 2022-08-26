@@ -17,12 +17,12 @@ const getRecord = asyncHandler(async (req, res) => {
 
 const latestRecord = asyncHandler(async (req, res) => {
   const record = await Record.findOne({}, {}, { sort: { doc_date: -1 } });
-  const records = await Record.find().distinct("doc_date"); 
+  const records = await Record.find().distinct("doc_date");
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
   } else {
-    const payload = { record: record, records: records }; 
+    const payload = { record: record, records: records };
     res.status(200).json(payload);
   }
 });
@@ -52,6 +52,11 @@ const postRecord = asyncHandler(async (req, res) => {
       last_active: req.body.last_active,
       atp: req.body.atp,
       doc_date: req.body.doc_date,
+      overall_rank: req.body.overall_rank,
+      hard_rank: req.body.hard_rank,
+      clay_rank: req.body.clay_rank,
+      grass_rank: req.body.grass_rank,
+      atp_rank: req.body.atp_rank,
     });
     res.status(200).json(record);
   }

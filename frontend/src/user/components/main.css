@@ -522,20 +522,15 @@ li .pagination-button {
 
 .table-result-label {
     display: inline;
-    padding: .2em 12px .3em;
-
-
+    padding: .2em 10px .3em; 
     border-radius: 10px; 
-    color: #000;
-
+    color: #000; 
     width: 80px !important;
 
 }
 
 .table-result {
-    display: table-cell;
-
-
+    display: table-cell; 
     width: 40px;
 }
 
@@ -713,6 +708,25 @@ input:checked+.slider:before {
     color: #fff !important;
     background-color: #339966 !important;
     border-radius: 10px 10px 0 0 !important;
+}
+
+/* VIDEO WRAP */
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+}
+
+.iframe{
+    overflow: hidden;
+    border: 0;
+    align-self: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .gc-100-bg {
