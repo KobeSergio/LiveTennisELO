@@ -1,6 +1,7 @@
 import { BoxArrowUpRight } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
+import ATPAllocation from "../Redirect/ATPAllocation";
 
 export default function() {
     return (
@@ -124,10 +125,10 @@ export default function() {
                             <TwitterTimelineEmbed
                                 sourceType="profile"
                                 screenName="tennis"
-                                options={{ height: 600 }}
                                 noHeader="true"
                                 noFooter="true"
                                 noScrollbar="true"
+                                options={{height: 400}}
                             />
                         </div>
                     </div>
@@ -147,10 +148,7 @@ export default function() {
                                     <br />
 
 
-                                    <div>
-                                        <a href="#">See ATP Point allocation here</a>
-                                        <BoxArrowUpRight className="ms-2" size={12} color="blue" />
-                                    </div>
+                                    <ATPAllocation />
 
                                     <br />
                                     
