@@ -3,12 +3,11 @@ import bg_img from "../img/bg-liveratings.png";
 import LiveRatingsTable from "../components/Tables/LiveRatingsTable";
 import SideTables from "../components/Tables/SideTables";
 import Footer from "../components/Footer/Footer";
-
+ 
 import { loadData } from "../../features/api/apiSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";   
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 
