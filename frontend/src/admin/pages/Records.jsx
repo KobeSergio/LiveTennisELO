@@ -39,7 +39,7 @@ function Records() {
       dispatch(latestRecord());
     }
     if (doc_date === "null") {
-      dispatch(latestRecord()).then((e) => { 
+      dispatch(latestRecord()).then((e) => {
         navigate("/admin/" + e.payload.record.doc_date);
       });
     } else {
@@ -66,7 +66,7 @@ function Records() {
 
   const [data, setData] = useState(records[0]);
   const [len, setLen] = useState(0);
-  const onSearch = (e) => { 
+  const onSearch = (e) => {
     if (e.target.value != "") {
       setLen(e.target.value.length);
       setData(
@@ -118,9 +118,7 @@ function Records() {
           <RowsDropdown />
         </div>
       </div>
-
       {/* utilities */}
-
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
@@ -130,21 +128,18 @@ function Records() {
             <a href="#">
               <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
             </a>
-
             {/* <Download className="fs-6" /> */}
-          </div>
-
+          </div> 
           <div className="ms-auto d-flex align-items-start">
             <SurfaceLegend />
           </div>
         </div>
       </div>
-
       {/* tables */}
       <div
         className="p-3 mx-3 bg-white"
         style={{ borderRadius: "10px 10px 0 0" }}
-      > 
+      >
         {len > 0 ? (
           <RecordTable records={data} />
         ) : (

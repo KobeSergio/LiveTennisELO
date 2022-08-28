@@ -25,7 +25,7 @@ function Players() {
 
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ASC");
-  
+
   useEffect(() => {
     setData(players);
   }, [players]);
@@ -199,9 +199,7 @@ function Players() {
         style={{ borderRadius: "10px 10px 0 0" }}
       >
         <div className="input-group px-2">
-          <div className="py-1">
-            {/* <Download className="fs-6" /> */}
-          </div>
+          <div className="py-1">{/* <Download className="fs-6" /> */}</div>
 
           <div className="ms-auto d-flex align-items-start">
             <SurfaceLegend />
@@ -219,7 +217,7 @@ function Players() {
             <thead>
               <tr>
                 <th onClick={() => sorting("player_id")} scope="col">
-                  Player ID
+                  ID
                 </th>
                 <th scope="col">Country</th>
                 <th
@@ -236,7 +234,10 @@ function Players() {
                   Overall
                 </th>
                 <th onClick={() => sorting("overall_peak_rating")} scope="col">
-                  Peak
+                  Overall Peak
+                </th>
+                <th onClick={() => sorting("hard_rating")} scope="col">
+                  Hard
                 </th>
                 <th
                   onClick={() => sorting("hard_peak_rating")}
@@ -245,12 +246,18 @@ function Players() {
                 >
                   Hard Peak
                 </th>
+                <th onClick={() => sorting("clay_rating")} scope="col">
+                  Clay
+                </th>
                 <th
                   onClick={() => sorting("clay_peak_rating")}
                   className="text-start"
                   scope="col"
                 >
                   Clay Peak
+                </th>
+                <th onClick={() => sorting("grass_rating")} scope="col">
+                  Grass
                 </th>
                 <th
                   onClick={() => sorting("grass_peak_rating")}
@@ -291,7 +298,13 @@ function Players() {
                             player.overall_peak_rating_date.split(" ")[0] +
                             ")"}
                       </td>
-                      <td className="table-hard table-160px" id="hard">
+                      <td className="table-hard table-40px" id="hard_rating">
+                        {player.hard_rating}
+                      </td>
+                      <td
+                        className="table-hard table-120px"
+                        id="hard_peak_rating"
+                      >
                         {player.hard_peak_rating}
                         {player.hard_peak_rating_date == null
                           ? "\xa0"
@@ -299,8 +312,11 @@ function Players() {
                             player.hard_peak_rating_date.split(" ")[0] +
                             ")"}
                       </td>
+                      <td className="table-clay table-40px" id="clay_rating">
+                        {player.clay_rating}
+                      </td>
                       <td
-                        className="table-clay table-160px"
+                        className="table-clay table-120px"
                         id="clay_peak_rating"
                       >
                         {player.clay_peak_rating}
@@ -310,7 +326,10 @@ function Players() {
                             player.clay_peak_rating_date.split(" ")[0] +
                             ")"}
                       </td>
-                      <td className="table-grass table-160px" id="grass">
+                      <td className="table-grass table-40px" id="grass_rating">
+                        {player.grass_rating}
+                      </td>
+                      <td className="table-grass table-120px" id="grass">
                         {player.grass_peak_rating}
                         {player.grass_peak_rating_date == null
                           ? "\xa0"
