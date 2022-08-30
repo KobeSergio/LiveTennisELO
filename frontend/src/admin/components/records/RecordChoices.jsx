@@ -13,14 +13,17 @@ export function RecordChoices(choices) {
   var choicesCopy = [...choices.choices];
   choicesCopy = choicesCopy.reverse();
 
-  var years = [];
-  choicesCopy.forEach((choice) => years.push(choice.substring(0, 4)));
+  var years = []; 
+  choicesCopy.forEach((choice) =>
+    years.push(choice.toString().substring(0, 4))
+  );
   years = years.filter(onlyUnique);
 
   const [year, setyear] = useState(doc_date.substring(0, 4));
 
-  const recordIndex = choicesCopy.findIndex((x) => x === doc_date);
+  const recordIndex = choicesCopy.findIndex((x) => x == doc_date);
 
+  console.log(recordIndex)
   return (
     <div className="input-group">
       <div className="me-4">
@@ -41,7 +44,7 @@ export function RecordChoices(choices) {
         </Dropdown>
       </div>
       <span className="input-group-button">
-        <a href={choicesCopy[recordIndex-1]}>
+        <a href={choicesCopy[recordIndex - 1]}>
           <button className="btn btn-white border-0 dropdown rounded-3 me-2">
             <ChevronLeft color="gray" style={{ fontSize: "18px" }} />
           </button>
@@ -62,13 +65,13 @@ export function RecordChoices(choices) {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {choicesCopy.map((choice) =>
-            choice.substring(0, 4) === year ? (
-              <Dropdown.Item href={choice}>
-                {choice.substring(0, 4) +
+            choice.toString().substring(0, 4) === year ? (
+              <Dropdown.Item href={choice.toString()}>
+                {choice.toString().substring(0, 4) +
                   "/" +
-                  choice.substring(4, 6) +
+                  choice.toString().substring(4, 6) +
                   "/" +
-                  choice.substring(6, 8)}
+                  choice.toString().substring(6, 8)}
               </Dropdown.Item>
             ) : (
               console.log()

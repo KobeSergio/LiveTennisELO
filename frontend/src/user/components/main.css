@@ -757,3 +757,32 @@ input:checked+.slider:before {
     border: 10px !important;
     color: #fff;
 }
+
+ 
+.record_tbody {
+    display: block;
+    height: 1257px;
+    overflow: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.record_tbody::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.record_tbody {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+.record_thead, .record_tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;  
+}
+
+.record_thead {
+    width: calc( 100% ) 
+} 
+
