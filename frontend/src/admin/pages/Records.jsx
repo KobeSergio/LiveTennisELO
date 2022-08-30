@@ -113,10 +113,7 @@ function Records() {
               <Search color="white" className="fs-7" />
             </button>
           </span>
-        </div>
-        <div className="ms-auto me-5">
-          <RowsDropdown />
-        </div>
+        </div> 
       </div>
       {/* utilities */}
       <div

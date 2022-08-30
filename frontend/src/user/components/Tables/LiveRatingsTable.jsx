@@ -1,8 +1,9 @@
+import ClipLoader from "react-spinners/ClipLoader";
+
+import { loadData } from "../../../features/api/apiSlice";
 import SearchCountry from "../Search/SearchCountry";
 import ShowInactive from "../Toggle/ShowInactive";
 import SearchRecords from "../Search/SearchRecords";
-import ClipLoader from "react-spinners/ClipLoader";
-
 import Dropdown from "react-bootstrap/Dropdown";
 import { ArrowUp, ArrowDown } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
@@ -10,6 +11,12 @@ import { PositiveElo, NegativeElo } from "../Labels/ELO";
 import Pagination from "../Pagination";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 
 function alphabetically(ascending, col) {
   return function (a, b) {
@@ -45,36 +52,22 @@ function alphabetically(ascending, col) {
   };
 }
 
-function getAge(record, players) {
-  var birthdatestring = "";
-  for (var player in players) {
-    if (record.player_id == player.player_id) {
-      birthdatestring = player.birthdate;
-      break;
-    }
-  }
-
-  var birthdate = new Date(
-    birthdatestring.substring(0, 4),
-    birthdatestring.substring(4, 6),
-    birthdatestring.substring(6, 8)
-  );
-
-  var docdate = new Date(
-    record.doc_date.substring(0, 4),
-    record.doc_date.substring(4, 6),
-    record.doc_date.substring(6, 8)
-  );
-
-  var diff = birthdate.getFullYear() - docdate.getFullYear();
-  return Math.abs(diff);
-}
-
 export default function () {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (records.length == 0) {
+      dispatch(loadData());
+    }
+  }, []);
+
   //Main data
   const [data, setData] = useState(records);
   const [order, setOrder] = useState("ASC");
+
+  //Tabs
+  const [toggleRecords, setToggleRecords] = useState(1);
 
   useEffect(() => {
     setData([...records].sort(alphabetically(true, "overall_rank")));
@@ -125,18 +118,6 @@ export default function () {
     }
   };
 
-  //Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [DataPerPage, setDataPerPage] = useState(100);
-
-  //Get index of the last Data
-  const indexOfLastData = currentPage * DataPerPage;
-  const indexOfFirstData = indexOfLastData - DataPerPage;
-  const currentData = data.slice(indexOfFirstData, indexOfLastData);
-
-  //Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   //If loading
   const override = {
     margin: 0,
@@ -159,8 +140,27 @@ export default function () {
       </>
     );
   }
+
   return (
     <>
+      <div className="input-group">
+        {/* SEARCH BY COUNTRY */}
+        <span>
+          <SearchCountry />
+        </span>
+        {/* SEARCH IN RECORD */}
+        <span>
+          <SearchRecords />
+        </span>
+        {/* SHOW INACTIVE */}
+
+        <div className="row">
+          <span>
+            <ShowInactive />
+          </span>
+          <span>Show Inactive</span>
+        </div>
+      </div>
       <div className="w-75">
         <div className="row">
           <div className="col-lg-12">
@@ -171,135 +171,165 @@ export default function () {
                 role="tablist"
               >
                 <a
-                  className="nav-item nav-link table-tab-active"
-                  id="nav-home-tab"
-                  data-toggle="tab"
-                  href="#nav-home"
-                  role="tab"
-                  aria-controls="nav-home"
-                  aria-selected="true"
+                  href="#/"
+                  className={
+                    toggleRecords === 1
+                      ? "nav-item nav-link table-tab-active"
+                      : "nav-item nav-link"
+                  }
+                  onClick={() => {
+                    setToggleRecords(1);
+                    setData(
+                      [...records].sort(alphabetically(true, "overall_rank"))
+                    );
+                  }}
                 >
                   Overall
                 </a>
                 <a
-                  className="nav-item nav-link"
-                  id="nav-profile-tab"
-                  data-toggle="tab"
-                  href="#nav-profile"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
+                  href="#/"
+                  className={
+                    toggleRecords === 2
+                      ? "nav-item nav-link table-tab-active"
+                      : "nav-item nav-link"
+                  }
+                  onClick={() => {
+                    setToggleRecords(2);
+                    setData(
+                      [...records].sort(alphabetically(true, "hard_rank"))
+                    );
+                  }}
                 >
                   Hard
                 </a>
                 <a
-                  className="nav-item nav-link"
-                  id="nav-contact-tab"
-                  data-toggle="tab"
-                  href="#nav-contact"
-                  role="tab"
-                  aria-controls="nav-contact"
-                  aria-selected="false"
+                  href="#/"
+                  className={
+                    toggleRecords === 3
+                      ? "nav-item nav-link table-tab-active"
+                      : "nav-item nav-link"
+                  }
+                  onClick={() => {
+                    setToggleRecords(3);
+                    setData(
+                      [...records].sort(alphabetically(true, "clay_rank"))
+                    );
+                  }}
                 >
                   Clay
                 </a>
                 <a
-                  className="nav-item nav-link"
-                  id="nav-contact-tab"
-                  data-toggle="tab"
-                  href="#nav-contact"
-                  role="tab"
-                  aria-controls="nav-contact"
-                  aria-selected="false"
+                  href="#/"
+                  className={
+                    toggleRecords === 4
+                      ? "nav-item nav-link table-tab-active"
+                      : "nav-item nav-link"
+                  }
+                  onClick={() => {
+                    setToggleRecords(4);
+                    setData(
+                      [...records].sort(alphabetically(true, "grass_rank"))
+                    );
+                  }}
                 >
                   Grass
                 </a>
                 <a
-                  className="nav-item nav-link me-3"
-                  id="nav-contact-tab"
-                  data-toggle="tab"
-                  href="#nav-contact"
-                  role="tab"
-                  aria-controls="nav-contact"
-                  aria-selected="false"
+                  href="#/"
+                  className={
+                    toggleRecords === 5
+                      ? "nav-item nav-link table-tab-active"
+                      : "nav-item nav-link me-3"
+                  }
+                  onClick={() => {
+                    setToggleRecords(5);
+                    setData(
+                      [...records].sort(alphabetically(true, "atp_rank"))
+                    );
+                  }}
                 >
                   ATP
                 </a>
-                {/* SEARCH BY COUNTRY */}
-                <span className="">
-                  <SearchCountry />
-                </span>
-                <span className="ms-4">
-                  <Dropdown className="border rounded-3 ">
-                    <Dropdown.Toggle
-                      variant="white"
-                      id="dropdown-basic"
-                      size="sm"
-                    >
-                      10 per page
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/">15 per page</Dropdown.Item>
-                      <Dropdown.Item href="#/">20 per page</Dropdown.Item>
-                      <Dropdown.Item href="#/">25 per page</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </span>
-                {/* SEARCH IN RECORD */}
-                <span className="ms-4">
-                  <SearchRecords />
-                </span>
-                {/* SHOW INACTIVE */}
-                <span className="ms-4 mt-2">
-                  <ShowInactive />
-                </span>
-                <div className="ms-2 d-flex align-items-center">
-                  <span>Show Inactive</span>
-                </div>
               </div>
             </nav>
-            <div class="tab-content" id="nav-tabContent">
+            <div class="tab-content">
               <div
-                class="tab-pane fade show active bg-white rounded"
-                id="nav-home"
-                role="tabpanel"
-                aria-labelledby="nav-home-tab"
+                class={
+                  toggleRecords === 1
+                    ? "tab-pane fade bg-white rounded show active"
+                    : "tab-pane fade bg-white rounded"
+                }
               >
                 <table
                   class="table table-borderless table-responsive liverating-table-bg-white"
                   cellSpacing="0"
                 >
-                  <thead>
+                  <thead className="record_thead">
                     <tr className="text-center">
                       <th onClick={() => sorting("overall_rank")}>Rank</th>
-                      <th>
+                      <th onClick={() => sorting("overall_rank_diff")}>
                         <ArrowUp />
                         <ArrowDown />
                       </th>
-                      <th>Best Rank</th>
-                      <th>Country</th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("overall_best_rank")}
+                      >
+                        Best Rank
+                      </th>
+                      <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
                         Name
                       </th>
-                      <th onClick={() => sorting("ranking")}>ELO Rating</th>
-                      <th>+/-</th>
-                      <th onClick={() => sorting("record_high")}>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("ranking")}
+                      >
+                        ELO Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("overall_rating_diff")}
+                      >
+                        +/-
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("record_high")}
+                      >
                         Peak Elo Rating
                       </th>
-                      <th>Age</th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("age")}
+                      >
+                        Age
+                      </th>
                     </tr>
                   </thead>
-                  <tbody className="text-center">
+                  <tbody className="text-center record_tbody">
                     {data != null ? (
                       <>
                         {data.map((record) => (
                           <tr>
                             <td id="rank">{record.overall_rank}</td>
-                            <td id="updown">-</td>
-                            <td id="bestrank">{record.overall_peak_rank}</td>
+                            <td id="updown">
+                              {record.overall_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.overall_rank_diff}
+                                />
+                              ) : record.overall_rank_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.overall_rank_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="bestrank">{record.overall_best_rank}</td>
                             <td className="" id="country">
                               <ReactCountryFlag
                                 countryCode={record.player_id.substring(0, 2)}
@@ -313,15 +343,27 @@ export default function () {
                                 {record.player_id.substring(0, 2)}
                               </span>
                             </td>
-                            <td className="text-start" id="name">
-                              {record.name}
+                            <td className="w-25 text-start" id="name">
+                              <a href={`./` + record.player_id}>
+                                {toTitleCase(record.name)}
+                              </a>
                             </td>
                             <td id="ranking">{record.ranking}</td>
                             <td id="+/-">
-                              <PositiveElo />
+                              {record.overall_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.overall_rating_diff}
+                                />
+                              ) : record.overall_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.overall_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
                             </td>
                             <td id="record_high">{record.record_high}</td>
-                            <td id="age"> </td>
+                            <td id="age">{record.age}</td>
                           </tr>
                         ))}
                       </>
@@ -330,46 +372,464 @@ export default function () {
                     )}
                   </tbody>
                 </table>
-                <div className="d-flex justify-content-end">
-                  <Pagination />
-                </div>
               </div>
               <div
-                class="tab-pane fade"
-                id="nav-contact"
-                role="tabpanel"
-                aria-labelledby="nav-contact-tab"
+                class={
+                  toggleRecords === 2
+                    ? "tab-pane fade bg-white rounded show active"
+                    : "tab-pane fade bg-white rounded"
+                }
               >
-                <table class="table" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Contest Name</th>
-                      <th>Date</th>
-                      <th>Award Position</th>
+                <table
+                  class="table table-borderless table-responsive liverating-table-bg-white"
+                  cellSpacing="0"
+                >
+                  <thead className="record_thead">
+                    <tr className="text-center">
+                      <th onClick={() => sorting("hard_rank")}>Rank</th>
+                      <th onClick={() => sorting("hard_rank_diff")}>
+                        <ArrowUp />
+                        <ArrowDown />
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("hard_best_rank")}
+                      >
+                        Best Rank
+                      </th>
+                      <th className="text-center">Country</th>
+                      <th
+                        onClick={() => sorting("name")}
+                        className="w-25 text-start"
+                      >
+                        Name
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("hard")}
+                      >
+                        ELO Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("overall_rating_diff")}
+                      >
+                        +/-
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("hard_high")}
+                      >
+                        Peak Elo Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("age")}
+                      >
+                        Age
+                      </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <a href="#">Work 1</a>
-                      </td>
-                      <td>Doe</td>
-                      <td>john@example.com</td>
+                  <tbody className="text-center record_tbody">
+                    {data != null ? (
+                      <>
+                        {data.map((record) => (
+                          <tr>
+                            <td id="rank">{record.hard_rank}</td>
+                            <td id="updown">
+                              {record.hard_rating_diff > 0 ? (
+                                <PositiveElo content={record.hard_rank_diff} />
+                              ) : record.hard_rank_diff < 0 ? (
+                                <NegativeElo content={record.hard_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="bestrank">{record.hard_best_rank}</td>
+                            <td className="" id="country">
+                              <ReactCountryFlag
+                                countryCode={record.player_id.substring(0, 2)}
+                                style={{
+                                  filter: "drop-shadow(0 0 0.12rem black)",
+                                }}
+                                svg
+                              />
+                              <span id="country_code">
+                                {"\xa0\xa0\xa0"}
+                                {record.player_id.substring(0, 2)}
+                              </span>
+                            </td>
+                            <td className="w-25 text-start" id="name">
+                              <a href={`./` + record.player_id}>
+                                {toTitleCase(record.name)}
+                              </a>
+                            </td>
+                            <td id="ranking">{record.hard}</td>
+                            <td id="+/-">
+                              {record.hard_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.hard_rating_diff}
+                                />
+                              ) : record.hard_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.hard_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="record_high">{record.hard_high}</td>
+                            <td id="age">{record.age}</td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <h3>You have not set any goals</h3>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class={
+                  toggleRecords === 3
+                    ? "tab-pane fade bg-white rounded show active"
+                    : "tab-pane fade bg-white rounded"
+                }
+              >
+                <table
+                  class="table table-borderless table-responsive liverating-table-bg-white"
+                  cellSpacing="0"
+                >
+                  <thead className="record_thead">
+                    <tr className="text-center">
+                      <th onClick={() => sorting("clay_rank")}>Rank</th>
+                      <th onClick={() => sorting("clay_rank_diff")}>
+                        <ArrowUp />
+                        <ArrowDown />
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("clay_best_rank")}
+                      >
+                        Best Rank
+                      </th>
+                      <th className="text-center">Country</th>
+                      <th
+                        onClick={() => sorting("name")}
+                        className="w-25 text-start"
+                      >
+                        Name
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("clay")}
+                      >
+                        ELO Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("clay_rating_diff")}
+                      >
+                        +/-
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("clay_high")}
+                      >
+                        Peak Elo Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("age")}
+                      >
+                        Age
+                      </th>
                     </tr>
-                    <tr>
-                      <td>
-                        <a href="#">Work 2</a>
-                      </td>
-                      <td>Moe</td>
-                      <td>mary@example.com</td>
+                  </thead>
+                  <tbody className="text-center record_tbody">
+                    {data != null ? (
+                      <>
+                        {data.map((record) => (
+                          <tr>
+                            <td id="rank">{record.clay_rank}</td>
+                            <td id="updown">
+                              {record.clay_rating_diff > 0 ? (
+                                <PositiveElo content={record.clay_rank_diff} />
+                              ) : record.clay_rank_diff < 0 ? (
+                                <NegativeElo content={record.clay_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="bestrank">{record.clay_best_rank}</td>
+                            <td className="" id="country">
+                              <ReactCountryFlag
+                                countryCode={record.player_id.substring(0, 2)}
+                                style={{
+                                  filter: "drop-shadow(0 0 0.12rem black)",
+                                }}
+                                svg
+                              />
+                              <span id="country_code">
+                                {"\xa0\xa0\xa0"}
+                                {record.player_id.substring(0, 2)}
+                              </span>
+                            </td>
+                            <td className="w-25 text-start" id="name">
+                              <a href={`./` + record.player_id}>
+                                {toTitleCase(record.name)}
+                              </a>
+                            </td>
+                            <td id="ranking">{record.clay}</td>
+                            <td id="+/-">
+                              {record.clay_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.clay_rating_diff}
+                                />
+                              ) : record.clay_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.clay_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="record_high">{record.clay_high}</td>
+                            <td id="age">{record.age}</td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <h3>You have not set any goals</h3>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class={
+                  toggleRecords === 4
+                    ? "tab-pane fade bg-white rounded show active"
+                    : "tab-pane fade bg-white rounded"
+                }
+              >
+                <table
+                  class="table table-borderless table-responsive liverating-table-bg-white"
+                  cellSpacing="0"
+                >
+                  <thead className="record_thead">
+                    <tr className="text-center">
+                      <th onClick={() => sorting("grass_rank")}>Rank</th>
+                      <th onClick={() => sorting("grass_rank_diff")}>
+                        <ArrowUp />
+                        <ArrowDown />
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("grass_best_rank")}
+                      >
+                        Best Rank
+                      </th>
+                      <th className="text-center">Country</th>
+                      <th
+                        onClick={() => sorting("name")}
+                        className="w-25 text-start"
+                      >
+                        Name
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("grass")}
+                      >
+                        ELO Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("grass_rating_diff")}
+                      >
+                        +/-
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("grass_high")}
+                      >
+                        Peak Elo Rating
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("age")}
+                      >
+                        Age
+                      </th>
                     </tr>
-                    <tr>
-                      <td>
-                        <a href="#">Work 3</a>
-                      </td>
-                      <td>Dooley</td>
-                      <td>july@example.com</td>
+                  </thead>
+                  <tbody className="text-center record_tbody">
+                    {data != null ? (
+                      <>
+                        {data.map((record) => (
+                          <tr>
+                            <td id="rank">{record.grass_rank}</td>
+                            <td id="updown">
+                              {record.grass_rating_diff > 0 ? (
+                                <PositiveElo content={record.grass_rank_diff} />
+                              ) : record.grass_rank_diff < 0 ? (
+                                <NegativeElo content={record.grass_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="bestrank">{record.grass_best_rank}</td>
+                            <td className="" id="country">
+                              <ReactCountryFlag
+                                countryCode={record.player_id.substring(0, 2)}
+                                style={{
+                                  filter: "drop-shadow(0 0 0.12rem black)",
+                                }}
+                                svg
+                              />
+                              <span id="country_code">
+                                {"\xa0\xa0\xa0"}
+                                {record.player_id.substring(0, 2)}
+                              </span>
+                            </td>
+                            <td className="w-25 text-start" id="name">
+                              <a href={`./` + record.player_id}>
+                                {toTitleCase(record.name)}
+                              </a>
+                            </td>
+                            <td id="ranking">{record.grass}</td>
+                            <td id="+/-">
+                              {record.grass_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.grass_rating_diff}
+                                />
+                              ) : record.grass_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.grass_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="record_high">{record.grass_high}</td>
+                            <td id="age">{record.age}</td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <h3>You have not set any goals</h3>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class={
+                  toggleRecords === 5
+                    ? "tab-pane fade bg-white rounded show active"
+                    : "tab-pane fade bg-white rounded"
+                }
+              >
+                <table
+                  class="table table-borderless table-responsive liverating-table-bg-white"
+                  cellSpacing="0"
+                >
+                  <thead className="record_thead">
+                    <tr className="text-center">
+                      <th onClick={() => sorting("atp_rank")}>Rank</th>
+                      <th onClick={() => sorting("atp_rank_diff")}>
+                        <ArrowUp />
+                        <ArrowDown />
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("atp_best_rank")}
+                      >
+                        Best Rank
+                      </th>
+                      <th className="text-center">Country</th>
+                      <th
+                        onClick={() => sorting("name")}
+                        className="w-25 text-start"
+                      >
+                        Name
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("atp")}
+                      >
+                        ATP
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("atp_rating_diff")}
+                      >
+                        +/-
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("atp_best_rating")}
+                      >
+                        Peak ATP
+                      </th>
+                      <th
+                        className="text-center"
+                        onClick={() => sorting("age")}
+                      >
+                        Age
+                      </th>
                     </tr>
+                  </thead>
+                  <tbody className="text-center record_tbody">
+                    {data != null ? (
+                      <>
+                        {data.map((record) => (
+                          <tr>
+                            <td id="rank">{record.atp_rank}</td>
+                            <td id="updown">
+                              {record.atp_rating_diff > 0 ? (
+                                <PositiveElo content={record.atp_rank_diff} />
+                              ) : record.atp_rank_diff < 0 ? (
+                                <NegativeElo content={record.atp_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="bestrank">{record.atp_best_rank}</td>
+                            <td className="" id="country">
+                              <ReactCountryFlag
+                                countryCode={record.player_id.substring(0, 2)}
+                                style={{
+                                  filter: "drop-shadow(0 0 0.12rem black)",
+                                }}
+                                svg
+                              />
+                              <span id="country_code">
+                                {"\xa0\xa0\xa0"}
+                                {record.player_id.substring(0, 2)}
+                              </span>
+                            </td>
+                            <td className="w-25 text-start" id="name">
+                              <a href={`./` + record.player_id}>
+                                {toTitleCase(record.name)}
+                              </a>
+                            </td>
+                            <td id="ranking">{record.atp}</td>
+                            <td id="+/-">
+                              {record.atp_rating_diff > 0 ? (
+                                <PositiveElo content={record.atp_rating_diff} />
+                              ) : record.atp_rating_diff < 0 ? (
+                                <NegativeElo content={record.atp_rating_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </td>
+                            <td id="record_high">{record.atp_best_rating}</td>
+                            <td id="age">{record.age}</td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <h3>You have not set any goals</h3>
+                    )}
                   </tbody>
                 </table>
               </div>

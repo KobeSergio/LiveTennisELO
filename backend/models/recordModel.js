@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const recordSchema = new mongoose.Schema(
-  { 
+  {
     doc_date: String,
     player_id: String,
     name: String,
@@ -18,10 +18,37 @@ const recordSchema = new mongoose.Schema(
     clay_high: Number,
     date3: String,
     last_active: String,
-    atp: Number,
-    
+    atp: Number, 
+    overall_rank: Number,
+    hard_rank: Number,
+    clay_rank: Number,
+    grass_rank: Number,
+    atp_rank: Number,
+    doc_date: Number,
+    age: Number,
+    overall_ch: Boolean,
+    hard_ch: Boolean,
+    clay_ch: Boolean,
+    grass_ch: Boolean,
+    atp_ch: Boolean,
+    overall_best_rank: Number,
+    hard_best_rank: Number,
+    clay_best_rank: Number,
+    grass_best_rank: Number,
+    atp_best_rank: Number,
+    overall_rank_diff: Number,
+    hard_rank_diff: Number,
+    clay_rank_diff: Number,
+    grass_rank_diff: Number,
+    overall_rating_diff: Number,
+    hard_rating_diff: Number,
+    clay_rating_diff: Number,
+    grass_rating_diff: Number,
+    atp_best_rating: Number,
+    atp_rank_diff: Number,
+    atp_rating_diff: Number,
   },
-  { collection: "records", strictQuery: 'throw'}
+  { collection: "records", strictQuery: "throw" }
 );
 
 module.exports = mongoose.model("records", recordSchema);

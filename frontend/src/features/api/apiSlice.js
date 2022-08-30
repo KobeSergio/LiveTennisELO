@@ -9,7 +9,6 @@ const initialState = {
   records: [],
   choices: [],
   latest: null,
-  beforeLast: null,
   api_isError: false,
   api_isSuccess: false,
   api_isLoading: false,
@@ -28,6 +27,23 @@ export const loadData = createAsyncThunk("api/loadData", async (thunkAPI) => {
   }
 });
 
+export const loadRecord = createAsyncThunk(
+  "api/loadRecord",
+  async (record, thunkAPI) => {
+    try {
+      return await apiService.loadRecord(record); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
@@ -41,7 +57,6 @@ export const apiSlice = createSlice({
       state.records = [];
       state.choices = [];
       state.latest = null;
-      state.beforeLast = null;
       state.api_isError = false;
       state.api_isSuccess = false;
       state.api_isLoading = false;
@@ -64,11 +79,23 @@ export const apiSlice = createSlice({
         state.api_isSuccess = true;
         state.latest = action.payload.latest.record.doc_date;
         state.choices = action.payload.latest.records;
-        state.beforeLast = action.payload.beforeLatest;
         state.records = action.payload.loadData;
         state.players = action.payload.players;
       })
       .addCase(loadData.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadRecord.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadRecord.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.records = action.payload.loadData;
+      })
+      .addCase(loadRecord.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;

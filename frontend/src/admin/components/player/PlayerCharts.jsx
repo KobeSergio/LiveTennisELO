@@ -64,9 +64,9 @@ function pushToDatasets(player_records, player_details, filter) {
 
       if (tempCtr < 52) {
         var doc_X = new Date(
-          record.doc_date.substring(0, 4),
-          record.doc_date.substring(4, 6),
-          record.doc_date.substring(6, 8)
+          record.doc_date.toString().substring(0, 4),
+          record.doc_date.toString().substring(4, 6),
+          record.doc_date.toString().substring(6, 8)
         );
 
         var X = doc_X.toLocaleDateString("en-CA");
