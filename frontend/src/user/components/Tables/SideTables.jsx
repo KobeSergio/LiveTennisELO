@@ -7,12 +7,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function toTitleCase(str) {
-  return str.replace(
-    /\w\S*/g,
-    function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    }
-  );
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 function alphabetically(ascending, col) {
@@ -207,12 +204,12 @@ export default function () {
                 >
                   <thead>
                     <tr className="text-center">
-                      <th style={{ width: "15%" }}>Rank</th>
-                      <th style={{ width: "50%" }} className="text-start">
+                      <th style={{ width: "10%" }}>Rank</th>
+                      <th style={{ width: "45%" }} className="text-start">
                         Name
                       </th>
-                      <th style={{ width: "35%" }}>Peak Rating</th>
-                      <th style={{ width: "15%" }}>Date</th>
+                      <th style={{ width: "15%" }}>Peak</th>
+                      <th style={{ width: "45%" }}>Date</th>
                     </tr>
                   </thead>
                   {toggleRecords === 1 ? (
@@ -250,7 +247,7 @@ export default function () {
                                   {player.overall_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.overall_peak_rating_date.slice(0, 8)
+                                    player.overall_peak_rating_date.slice(0, 7)
                                   )}
                                 </td>
                               </tr>
@@ -296,7 +293,7 @@ export default function () {
                                   {player.hard_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.hard_peak_rating_date.slice(0, 8)
+                                    player.hard_peak_rating_date.slice(0, 7)
                                   )}
                                 </td>
                               </tr>
@@ -342,7 +339,7 @@ export default function () {
                                   {player.clay_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.clay_peak_rating_date.slice(0, 8)
+                                    player.clay_peak_rating_date.slice(0, 7)
                                   )}
                                 </td>
                               </tr>
@@ -388,7 +385,7 @@ export default function () {
                                   {player.grass_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.grass_peak_rating_date.slice(0, 8)
+                                    player.grass_peak_rating_date.slice(0, 7)
                                   )}
                                 </td>
                               </tr>

@@ -1,4 +1,9 @@
-import { BoxArrowUpRight } from "react-bootstrap-icons";
+import {
+  BoxArrowUpRight,
+  Paypal,
+  CreditCard,
+  CreditCard2Front,
+} from "react-bootstrap-icons";
 import ATPAllocation from "../Redirect/ATPAllocation";
 export default function () {
   return (
@@ -43,7 +48,10 @@ export default function () {
               </div>
             </div>
           </div>
-          <div className="text-center px-2 py-2">icons here</div>
+          <div className="text-center px-2 py-2">
+            <CreditCard size={30} className="me-2" />{" "}
+            <Paypal className="me-2" size={30} /> <CreditCard2Front size={30} />
+          </div>
           <span className="">
             If you enjoy the Live Tennis ELO Ratings website and would like to
             help it, please think about making a small donation to support our

@@ -54,10 +54,6 @@ export default function (props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  useEffect(() => {
     if (records.length == 0) {
       dispatch(loadData());
     }
@@ -74,6 +70,13 @@ export default function (props) {
   useEffect(() => {
     setData([...records].sort(alphabetically(true, sortBy)));
   }, [api_isLoading]);
+
+  useEffect(() => {
+    console.log(props);
+    if (props.data.length > 0) {
+      setData(props.data);
+    }
+  }, [props]);
 
   //Search
   const [len, setLen] = useState(0);
@@ -131,7 +134,7 @@ export default function (props) {
     transform: "translate(-45%, -45%)",
   };
 
-  if (data.length < 1 || api_isLoading) {
+  if (api_isLoading) {
     return (
       <>
         <div className="w-75">
