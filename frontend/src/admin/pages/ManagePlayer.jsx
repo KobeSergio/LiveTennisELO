@@ -35,7 +35,8 @@ function parseDate(dateString) {
       dateString.substring(6, 8)
     );
   } else {
-    var newdate = dateString.split(" ")[0].split("/");
+    var newdate = dateString.split(" ")[0].split("-");
+    console.log(newdate);
     mydate = new Date(
       newdate[2], //Year
       newdate[1], //Month
@@ -400,10 +401,10 @@ function ManagePlayer() {
                   </div>
                   <div className="col-sm-2">
                     <div id="atp">
-                      {player_details[0].atp_rank == null
+                      {player_details[0].atp_rating == null
                         ? "\xa0"
                         : player_details[0].atp_rank +
-                          " (" +
+                          " (" + 
                           player_details[0].atp_rating +
                           " pts) "}
                     </div>

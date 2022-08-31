@@ -31,7 +31,6 @@ export default function Charts() {
   const [year, setyear] = useState(years[0]);
   const [record, setRecord] = useState(choicesCopy[0]);
   useEffect(() => {
-    console.log(years.length);
     if (years.length != 0) {
       setyear(years[0]);
     }

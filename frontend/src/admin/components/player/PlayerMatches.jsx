@@ -233,7 +233,10 @@ export function PlayerMatches() {
   const [currentSurface, setCurrentSurface] = useState("All Surface");
   return (
     <>
-      <div style={{overflow:"auto"}} className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5">
+      <div
+        style={{ overflow: "auto" }}
+        className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5"
+      >
         <div className="row h-100 py-3 rounded">
           <h1 className="fs-4  mb-0">
             Last 10 matches of {player_details[0].player_name}
@@ -401,10 +404,7 @@ export function PlayerMatches() {
                       {Math.ceil(
                         getPerformance(
                           [...player_matches]
-                            .filter(
-                              (element) =>
-                                element.surface.toLowerCase() == "hard"
-                            )
+                            .filter((element) => element.surface == "Hard")
                             .sort(
                               (a, b) =>
                                 b.tourney_date - a.tourney_date ||
@@ -418,9 +418,7 @@ export function PlayerMatches() {
                     {Math.ceil(
                       getPerformance(
                         [...player_matches]
-                          .filter(
-                            (element) => element.surface.toLowerCase() == "hard"
-                          )
+                          .filter((element) => element.surface == "Hard")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -436,10 +434,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface.toLowerCase() == "hard"
-                              )
+                              .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -457,10 +452,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface.toLowerCase() == "hard"
-                              )
+                              .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -491,10 +483,7 @@ export function PlayerMatches() {
                       {Math.ceil(
                         getPerformance(
                           [...player_matches]
-                            .filter(
-                              (element) =>
-                                element.surface.toLowerCase() == "clay"
-                            )
+                            .filter((element) => element.surface == "Clay")
                             .sort(
                               (a, b) =>
                                 b.tourney_date - a.tourney_date ||
@@ -508,9 +497,7 @@ export function PlayerMatches() {
                     {Math.ceil(
                       getPerformance(
                         [...player_matches]
-                          .filter(
-                            (element) => element.surface.toLowerCase() == "clay"
-                          )
+                          .filter((element) => element.surface == "Clay")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -526,10 +513,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface.toLowerCase() == "clay"
-                              )
+                              .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -547,10 +531,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface.toLowerCase() == "clay"
-                              )
+                              .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -583,7 +564,7 @@ export function PlayerMatches() {
                           [...player_matches]
                             .filter(
                               (element) =>
-                                element.surface.toLowerCase() == "grass"
+                                element.surface  == "Grass"
                             )
                             .sort(
                               (a, b) =>
@@ -600,7 +581,7 @@ export function PlayerMatches() {
                         [...player_matches]
                           .filter(
                             (element) =>
-                              element.surface.toLowerCase() == "grass"
+                              element.surface == "Grass"
                           )
                           .sort(
                             (a, b) =>
@@ -619,7 +600,7 @@ export function PlayerMatches() {
                             [...player_matches]
                               .filter(
                                 (element) =>
-                                  element.surface.toLowerCase() == "grass"
+                                  element.surface  == "Grass"
                               )
                               .sort(
                                 (a, b) =>
@@ -640,7 +621,7 @@ export function PlayerMatches() {
                             [...player_matches]
                               .filter(
                                 (element) =>
-                                  element.surface.toLowerCase() == "grass"
+                                  element.surface  == "Grass"
                               )
                               .sort(
                                 (a, b) =>
@@ -692,7 +673,7 @@ export function PlayerMatches() {
                       setData(
                         [...player_matches]
                           .filter(
-                            (element) => element.surface.toLowerCase() == "hard"
+                            (element) => element.surface  == "Hard"
                           )
                           .sort(
                             (a, b) =>
@@ -712,7 +693,7 @@ export function PlayerMatches() {
                       setData(
                         [...player_matches]
                           .filter(
-                            (element) => element.surface.toLowerCase() == "clay"
+                            (element) => element.surface  == "Clay"
                           )
                           .sort(
                             (a, b) =>
@@ -733,7 +714,7 @@ export function PlayerMatches() {
                         [...player_matches]
                           .filter(
                             (element) =>
-                              element.surface.toLowerCase() == "grass"
+                              element.surface  == "Grass"
                           )
                           .sort(
                             (a, b) =>
@@ -891,7 +872,7 @@ export function PlayerMatches() {
                         {checkOpp(player_id, match).opp_surface_rating !=
                         2400 ? (
                           <>
-                            {match.surface.toLowerCase() == "grass" ? (
+                            {match.surface  == "Grass" ? (
                               <span
                                 style={{ backgroundColor: "#3EBA7C" }}
                                 className="table-surface-elo-label"
@@ -900,8 +881,8 @@ export function PlayerMatches() {
                                   checkOpp(player_id, match)
                                     .opp_surface_rating_gains}
                               </span>
-                            ) : match.surface.toLowerCase() == "hard" ||
-                              match.surface.toLowerCase() == "carpet" ? (
+                            ) : match.surface  == "Hard" ||
+                              match.surface  == "Carpet" ? (
                               <span
                                 style={{ backgroundColor: "#3B9FB9" }}
                                 className="table-surface-elo-label"
@@ -910,7 +891,7 @@ export function PlayerMatches() {
                                   checkOpp(player_id, match)
                                     .opp_surface_rating_gains}
                               </span>
-                            ) : match.surface.toLowerCase() == "clay" ? (
+                            ) : match.surface == "Clay" ? (
                               <span
                                 style={{ backgroundColor: "#E96513" }}
                                 className="table-surface-elo-label"
@@ -925,22 +906,22 @@ export function PlayerMatches() {
                           </>
                         ) : (
                           <>
-                            {match.surface.toLowerCase() == "grass" ? (
+                            {match.surface  == "Grass" ? (
                               <span
                                 style={{ backgroundColor: "#3EBA7C" }}
                                 className="table-surface-elo-label"
                               >
                                 {"< 2400"}
                               </span>
-                            ) : match.surface.toLowerCase() == "hard" ||
-                              match.surface.toLowerCase() == "carpet" ? (
+                            ) : match.surface  == "Hard" ||
+                              match.surface  == "Carpet" ? (
                               <span
                                 style={{ backgroundColor: "#3B9FB9" }}
                                 className="table-surface-elo-label"
                               >
                                 {"< 2400"}
                               </span>
-                            ) : match.surface.toLowerCase() == "clay" ? (
+                            ) : match.surface  == "Clay" ? (
                               <span
                                 style={{ backgroundColor: "#E96513" }}
                                 className="table-surface-elo-label"

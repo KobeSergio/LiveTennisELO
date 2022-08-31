@@ -17,11 +17,22 @@ const getPlayers = asyncHandler(async (req, res) => {
   res.status(200).json(players);
 });
 
+// @desc:       Get player
+// @route:      GET /admin/players
+// @access      Private
+const getPlayerRecs = asyncHandler(async (req, res) => {
+  const records = await Records.find({ player_id: { $eq: req.params.id } });
+  if (!records) {
+    res.status(400);
+    throw new Error("No players found.");
+  }
+  res.status(200).json(records);
+});
+
 // @desc:       Post player
 // @route:      POST /admin
 // @access      Private
 const postPlayer = asyncHandler(async (req, res) => {
-  console.log(req.body.text);
   if (!req.body.text) {
     res.status(400);
     throw new Error("Please add text");
@@ -42,7 +53,6 @@ const updatePlayer = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Player not found");
   } else {
-    console.log(updatedPlayer);
     res.status(200).json(updatedPlayer);
   }
 });
