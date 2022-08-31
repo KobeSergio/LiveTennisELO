@@ -203,7 +203,6 @@ export default function Charts() {
               </div>
             </div>
 
-            <div className="col-3"></div>
           </div>
           <div className="row">
             <LiveRatingsTable data={data} />
