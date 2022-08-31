@@ -50,6 +50,12 @@ h1 {
 .o40 {
     color: #AFAFAF !important;
 }
+ 
+.career-high-crown {
+    display: block;   
+    margin-left: auto;
+    margin-right: auto; 
+}
 
 .table {
     border-collapse: separate;

@@ -8,6 +8,7 @@ const initialState = {
   player_records: [],
   records: [],
   choices: [],
+  charts: [],
   latest: null,
   api_isError: false,
   api_isSuccess: false,
@@ -67,6 +68,9 @@ export const apiSlice = createSlice({
       state.api_isSuccess = false;
       state.api_isLoading = false;
       state.api_message = "";
+    },
+    clearCharts: (state) => {
+      state.charts = [];
     },
   },
   extraReducers: (builder) => {
