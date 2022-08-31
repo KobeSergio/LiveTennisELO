@@ -1,10 +1,7 @@
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { loadData } from "../../../features/api/apiSlice";
-import SearchCountry from "../Search/SearchCountry";
-import ShowInactive from "../Toggle/ShowInactive";
-import SearchRecords from "../Search/SearchRecords";
-import Dropdown from "react-bootstrap/Dropdown";
+import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
 import { ArrowUp, ArrowDown } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import { PositiveElo, NegativeElo } from "../Labels/ELO";
@@ -52,9 +49,13 @@ function alphabetically(ascending, col) {
   };
 }
 
-export default function () {
+export default function (props) {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setData(props.data);
+  }, [props]);
 
   useEffect(() => {
     if (records.length == 0) {
@@ -63,14 +64,15 @@ export default function () {
   }, []);
 
   //Main data
-  const [data, setData] = useState(records);
+  const [data, setData] = useState([]);
   const [order, setOrder] = useState("ASC");
 
   //Tabs
   const [toggleRecords, setToggleRecords] = useState(1);
+  const [sortBy, setsortBy] = useState("overall_rank");
 
   useEffect(() => {
-    setData([...records].sort(alphabetically(true, "overall_rank")));
+    setData([...records].sort(alphabetically(true, sortBy)));
   }, [api_isLoading]);
 
   //Search
@@ -92,7 +94,9 @@ export default function () {
   };
 
   //Sorting
+  const [column, setColumn] = useState("");
   const sorting = (col) => {
+    setColumn(col);
     if (order === "ASC") {
       var sorted = null;
       if (col === "name") {
@@ -127,7 +131,7 @@ export default function () {
     transform: "translate(-45%, -45%)",
   };
 
-  if (data.length <= 1 || api_isLoading) {
+  if (data.length < 1 || api_isLoading) {
     return (
       <>
         <div className="w-75">
@@ -143,24 +147,6 @@ export default function () {
 
   return (
     <>
-      <div className="input-group">
-        {/* SEARCH BY COUNTRY */}
-        <span>
-          <SearchCountry />
-        </span>
-        {/* SEARCH IN RECORD */}
-        <span>
-          <SearchRecords />
-        </span>
-        {/* SHOW INACTIVE */}
-
-        <div className="row">
-          <span>
-            <ShowInactive />
-          </span>
-          <span>Show Inactive</span>
-        </div>
-      </div>
       <div className="w-75">
         <div className="row">
           <div className="col-lg-12">
@@ -182,6 +168,7 @@ export default function () {
                     setData(
                       [...records].sort(alphabetically(true, "overall_rank"))
                     );
+                    setsortBy("overall_rank");
                   }}
                 >
                   Overall
@@ -198,6 +185,7 @@ export default function () {
                     setData(
                       [...records].sort(alphabetically(true, "hard_rank"))
                     );
+                    setsortBy("hard_rank");
                   }}
                 >
                   Hard
@@ -214,6 +202,7 @@ export default function () {
                     setData(
                       [...records].sort(alphabetically(true, "clay_rank"))
                     );
+                    setsortBy("clay_rank");
                   }}
                 >
                   Clay
@@ -230,6 +219,7 @@ export default function () {
                     setData(
                       [...records].sort(alphabetically(true, "grass_rank"))
                     );
+                    setsortBy("grass_rank");
                   }}
                 >
                   Grass
@@ -239,13 +229,14 @@ export default function () {
                   className={
                     toggleRecords === 5
                       ? "nav-item nav-link table-tab-active"
-                      : "nav-item nav-link me-3"
+                      : "nav-item nav-link"
                   }
                   onClick={() => {
                     setToggleRecords(5);
                     setData(
                       [...records].sort(alphabetically(true, "atp_rank"))
                     );
+                    setsortBy("atp_rank");
                   }}
                 >
                   ATP
@@ -266,47 +257,132 @@ export default function () {
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("overall_rank")}>Rank</th>
+                      <th onClick={() => sorting("overall_rank")}>
+                        <a style={{ color: "inherit" }} href="#/">
+                          Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "overall_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </th>
                       <th onClick={() => sorting("overall_rank_diff")}>
-                        <ArrowUp />
-                        <ArrowDown />
+                        <a style={{ color: "inherit" }} href="#/">
+                          <ArrowUp />
+                          <ArrowDown />
+                        </a>
+                        {"\xa0"}
+                        {column === "overall_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rank_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("overall_best_rank")}
                       >
-                        Best Rank
+                        <a style={{ color: "inherit" }} href="#/">
+                          Best Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "overall_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_best_rank" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
-                        Name
+                        <a style={{ color: "inherit" }} href="#/">
+                          Name
+                        </a>
+                        {"\xa0"}
+                        {column === "name" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "name" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("ranking")}
                       >
-                        ELO Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          ELO Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "ranking" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "ranking" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("overall_rating_diff")}
                       >
-                        +/-
+                        <a style={{ color: "inherit" }} href="#/">
+                          +/-
+                        </a>
+                        {"\xa0"}
+                        {column === "overall_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rating_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("record_high")}
                       >
-                        Peak Elo Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          Peak Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "record_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "record_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("age")}
                       >
-                        Age
+                        <a style={{ color: "inherit" }} href="#/">
+                          Age
+                        </a>
+                        {"\xa0"}
+                        {column === "age" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "age" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                     </tr>
                   </thead>
@@ -317,7 +393,7 @@ export default function () {
                           <tr>
                             <td id="rank">{record.overall_rank}</td>
                             <td id="updown">
-                              {record.overall_rating_diff > 0 ? (
+                              {record.overall_rank_diff > 0 ? (
                                 <PositiveElo
                                   content={record.overall_rank_diff}
                                 />
@@ -386,47 +462,129 @@ export default function () {
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("hard_rank")}>Rank</th>
+                      <th onClick={() => sorting("hard_rank")}>
+                        <a style={{ color: "inherit" }} href="#/">
+                          Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "hard_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </th>
                       <th onClick={() => sorting("hard_rank_diff")}>
-                        <ArrowUp />
-                        <ArrowDown />
+                        <a style={{ color: "inherit" }} href="#/">
+                          <ArrowUp />
+                          <ArrowDown />
+                        </a>
+                        {"\xa0"}
+                        {column === "hard_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("hard_best_rank")}
                       >
-                        Best Rank
+                        <a style={{ color: "inherit" }} href="#/">
+                          Best Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "hard_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
-                        Name
+                        <a style={{ color: "inherit" }} href="#/">
+                          Name
+                        </a>
+                        {"\xa0"}
+                        {column === "name" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "name" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("hard")}
                       >
-                        ELO Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          ELO Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "hard" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
-                        onClick={() => sorting("overall_rating_diff")}
+                        onClick={() => sorting("hard_rating_diff")}
                       >
-                        +/-
+                        <a style={{ color: "inherit" }} href="#/">
+                          +/-
+                        </a>
+                        {"\xa0"}
+                        {column === "hard_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("hard_high")}
                       >
-                        Peak Elo Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          Peak Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "hard_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("age")}
                       >
-                        Age
+                        <a style={{ color: "inherit" }} href="#/">
+                          Age
+                        </a>
+                        {"\xa0"}
+                        {column === "age" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "age" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                     </tr>
                   </thead>
@@ -437,7 +595,7 @@ export default function () {
                           <tr>
                             <td id="rank">{record.hard_rank}</td>
                             <td id="updown">
-                              {record.hard_rating_diff > 0 ? (
+                              {record.hard_rank_diff > 0 ? (
                                 <PositiveElo content={record.hard_rank_diff} />
                               ) : record.hard_rank_diff < 0 ? (
                                 <NegativeElo content={record.hard_rank_diff} />
@@ -502,47 +660,129 @@ export default function () {
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("clay_rank")}>Rank</th>
+                      <th onClick={() => sorting("clay_rank")}>
+                        <a style={{ color: "inherit" }} href="#/">
+                          Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "clay_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </th>
                       <th onClick={() => sorting("clay_rank_diff")}>
-                        <ArrowUp />
-                        <ArrowDown />
+                        <a style={{ color: "inherit" }} href="#/">
+                          <ArrowUp />
+                          <ArrowDown />
+                        </a>
+                        {"\xa0"}
+                        {column === "clay_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("clay_best_rank")}
                       >
-                        Best Rank
+                        <a style={{ color: "inherit" }} href="#/">
+                          Best Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "clay_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
-                        Name
+                        <a style={{ color: "inherit" }} href="#/">
+                          Name
+                        </a>
+                        {"\xa0"}
+                        {column === "name" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "name" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("clay")}
                       >
-                        ELO Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          ELO Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "clay" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("clay_rating_diff")}
                       >
-                        +/-
+                        <a style={{ color: "inherit" }} href="#/">
+                          +/-
+                        </a>
+                        {"\xa0"}
+                        {column === "clay_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("clay_high")}
                       >
-                        Peak Elo Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          Peak Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "clay_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("age")}
                       >
-                        Age
+                        <a style={{ color: "inherit" }} href="#/">
+                          Age
+                        </a>
+                        {"\xa0"}
+                        {column === "age" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "age" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                     </tr>
                   </thead>
@@ -553,7 +793,7 @@ export default function () {
                           <tr>
                             <td id="rank">{record.clay_rank}</td>
                             <td id="updown">
-                              {record.clay_rating_diff > 0 ? (
+                              {record.clay_rank_diff > 0 ? (
                                 <PositiveElo content={record.clay_rank_diff} />
                               ) : record.clay_rank_diff < 0 ? (
                                 <NegativeElo content={record.clay_rank_diff} />
@@ -618,47 +858,130 @@ export default function () {
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("grass_rank")}>Rank</th>
+                      <th onClick={() => sorting("grass_rank")}>
+                        <a style={{ color: "inherit" }} href="#/">
+                          Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "grass_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </th>
                       <th onClick={() => sorting("grass_rank_diff")}>
-                        <ArrowUp />
-                        <ArrowDown />
+                        <a style={{ color: "inherit" }} href="#/">
+                          <ArrowUp />
+                          <ArrowDown />
+                        </a>
+                        {"\xa0"}
+                        {column === "grass_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("grass_best_rank")}
                       >
-                        Best Rank
+                        <a style={{ color: "inherit" }} href="#/">
+                          Best Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "grass_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
-                        Name
+                        <a style={{ color: "inherit" }} href="#/">
+                          Name
+                        </a>
+                        {"\xa0"}
+                        {column === "name" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "name" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("grass")}
                       >
-                        ELO Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          ELO Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "grass" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("grass_rating_diff")}
                       >
-                        +/-
+                        <a style={{ color: "inherit" }} href="#/">
+                          +/-
+                        </a>
+                        {"\xa0"}
+                        {column === "grass_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rating_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("grass_high")}
                       >
-                        Peak Elo Rating
+                        <a style={{ color: "inherit" }} href="#/">
+                          Peak Rating
+                        </a>
+                        {"\xa0"}
+                        {column === "grass_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("age")}
                       >
-                        Age
+                        <a style={{ color: "inherit" }} href="#/">
+                          Age
+                        </a>
+                        {"\xa0"}
+                        {column === "age" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "age" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                     </tr>
                   </thead>
@@ -669,7 +992,7 @@ export default function () {
                           <tr>
                             <td id="rank">{record.grass_rank}</td>
                             <td id="updown">
-                              {record.grass_rating_diff > 0 ? (
+                              {record.grass_rank_diff > 0 ? (
                                 <PositiveElo content={record.grass_rank_diff} />
                               ) : record.grass_rank_diff < 0 ? (
                                 <NegativeElo content={record.grass_rank_diff} />
@@ -734,47 +1057,129 @@ export default function () {
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("atp_rank")}>Rank</th>
+                      <th onClick={() => sorting("atp_rank")}>
+                        <a style={{ color: "inherit" }} href="#/">
+                          Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "atp_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </th>
                       <th onClick={() => sorting("atp_rank_diff")}>
-                        <ArrowUp />
-                        <ArrowDown />
+                        <a style={{ color: "inherit" }} href="#/">
+                          <ArrowUp />
+                          <ArrowDown />
+                        </a>
+                        {"\xa0"}
+                        {column === "atp_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("atp_best_rank")}
                       >
-                        Best Rank
+                        <a style={{ color: "inherit" }} href="#/">
+                          Best Rank
+                        </a>
+                        {"\xa0"}
+                        {column === "atp_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th className="text-center">Country</th>
                       <th
                         onClick={() => sorting("name")}
                         className="w-25 text-start"
                       >
-                        Name
+                        <a style={{ color: "inherit" }} href="#/">
+                          Name
+                        </a>
+                        {"\xa0"}
+                        {column === "name" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "name" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("atp")}
                       >
-                        ATP
+                        <a style={{ color: "inherit" }} href="#/">
+                          ATP
+                        </a>
+                        {"\xa0"}
+                        {column === "atp" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("atp_rating_diff")}
                       >
-                        +/-
+                        <a style={{ color: "inherit" }} href="#/">
+                          +/-
+                        </a>
+                        {"\xa0"}
+                        {column === "atp_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("atp_best_rating")}
                       >
-                        Peak ATP
+                        <a style={{ color: "inherit" }} href="#/">
+                          Peak ATP
+                        </a>
+                        {"\xa0"}
+                        {column === "atp_best_rating" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_best_rating" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                       <th
                         className="text-center"
                         onClick={() => sorting("age")}
                       >
-                        Age
+                        <a style={{ color: "inherit" }} href="#/">
+                          Age
+                        </a>
+                        {"\xa0"}
+                        {column === "age" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "age" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </th>
                     </tr>
                   </thead>
@@ -785,7 +1190,7 @@ export default function () {
                           <tr>
                             <td id="rank">{record.atp_rank}</td>
                             <td id="updown">
-                              {record.atp_rating_diff > 0 ? (
+                              {record.atp_rank_diff > 0 ? (
                                 <PositiveElo content={record.atp_rank_diff} />
                               ) : record.atp_rank_diff < 0 ? (
                                 <NegativeElo content={record.atp_rank_diff} />

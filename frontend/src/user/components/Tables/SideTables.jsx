@@ -211,7 +211,7 @@ export default function () {
                       <th style={{ width: "50%" }} className="text-start">
                         Name
                       </th>
-                      <th style={{ width: "35%" }}>Rating</th>
+                      <th style={{ width: "35%" }}>Peak Rating</th>
                       <th style={{ width: "15%" }}>Date</th>
                     </tr>
                   </thead>
