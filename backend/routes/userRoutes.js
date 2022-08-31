@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { getRecord, latestRecord } = require("../controller/recordController");
-const { getPlayers, getPlayer } = require("../controller/playerController");
+const { getPlayers, getPlayerRecs } = require("../controller/playerController");
 
 router.route("/api/players").get(getPlayers);
-router.route("/api/players/:plyaer_id").get(getPlayer);
+router.route("/api/players/:player_id").get(getPlayerRecs);
 router.route("/api/records").get(latestRecord);
 router.route("/api/records/:doc_date").get(getRecord);
 

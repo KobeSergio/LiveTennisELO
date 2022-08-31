@@ -17,16 +17,17 @@ const getPlayers = asyncHandler(async (req, res) => {
   res.status(200).json(players);
 });
 
-// @desc:       Get player
-// @route:      GET /admin/players
-// @access      Private
+// @desc:       Get player for chart comparisons
+// @route:      GET api/players/:player_id
+// @access      Public
 const getPlayerRecs = asyncHandler(async (req, res) => {
-  const records = await Records.find({ player_id: { $eq: req.params.id } });
-  if (!records) {
+  const player = await Player.find({ player_id: { $eq: req.params.player_id } });
+  const records = await Records.find({ player_id: { $eq: req.params.player_id } });
+  if (player.length === 0 && records.length === 0) {
     res.status(400);
-    throw new Error("No players found.");
+    throw new Error("Data insufficient");
   }
-  res.status(200).json(records);
+  res.status(200).json({ player: player, records: records });
 });
 
 // @desc:       Post player
@@ -98,4 +99,5 @@ module.exports = {
   updatePlayer,
   deletePlayer,
   getIndPlayer,
+  getPlayerRecs,
 };

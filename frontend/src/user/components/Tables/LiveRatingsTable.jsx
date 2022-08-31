@@ -1,7 +1,11 @@
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { loadData } from "../../../features/api/apiSlice";
-import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
+import {
+  CaretUpFill,
+  CaretDownFill,
+  SuitDiamondFill,
+} from "react-bootstrap-icons";
 import { ArrowUp, ArrowDown } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import { PositiveElo, NegativeElo } from "../Labels/ELO";
@@ -394,7 +398,20 @@ export default function (props) {
                       <>
                         {data.map((record) => (
                           <tr>
-                            <td id="rank">{record.overall_rank}</td>
+                            <td id="rank">
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.overall_rank}
+                            </td>
                             <td id="updown">
                               {record.overall_rank_diff > 0 ? (
                                 <PositiveElo
@@ -596,7 +613,20 @@ export default function (props) {
                       <>
                         {data.map((record) => (
                           <tr>
-                            <td id="rank">{record.hard_rank}</td>
+                            <td id="rank">
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.hard_rank}
+                            </td>
                             <td id="updown">
                               {record.hard_rank_diff > 0 ? (
                                 <PositiveElo content={record.hard_rank_diff} />
@@ -794,7 +824,20 @@ export default function (props) {
                       <>
                         {data.map((record) => (
                           <tr>
-                            <td id="rank">{record.clay_rank}</td>
+                            <td id="rank">
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.clay_rank}
+                            </td>
                             <td id="updown">
                               {record.clay_rank_diff > 0 ? (
                                 <PositiveElo content={record.clay_rank_diff} />
@@ -993,7 +1036,20 @@ export default function (props) {
                       <>
                         {data.map((record) => (
                           <tr>
-                            <td id="rank">{record.grass_rank}</td>
+                            <td id="rank">
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.grass_rank}
+                            </td>
                             <td id="updown">
                               {record.grass_rank_diff > 0 ? (
                                 <PositiveElo content={record.grass_rank_diff} />
@@ -1191,7 +1247,20 @@ export default function (props) {
                       <>
                         {data.map((record) => (
                           <tr>
-                            <td id="rank">{record.atp_rank}</td>
+                            <td id="rank">
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.atp_rank}
+                            </td>
                             <td id="updown">
                               {record.atp_rank_diff > 0 ? (
                                 <PositiveElo content={record.atp_rank_diff} />
