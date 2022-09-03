@@ -242,9 +242,19 @@ export function PlayerMatches() {
             Last 10 matches of {player_details[0].player_name}
           </h1>
           <div className="container px-3 py-0 pt-3">
-            <h5>
-              <b>Match Performance:</b>
-            </h5>
+            <div className="row">
+              <div className="col-10">
+                <h5>
+                  <b>Match Performance:</b>
+                </h5>
+              </div>
+              <div className="col-2 align-items-end">
+                <div className="ms-auto d-flex align-items-end py-0">
+                  <SurfaceLegend />
+                </div>
+              </div>
+            </div>
+
             <hr></hr>
             <div className="row pb-2">
               <div className="col-3 text-start">
@@ -562,10 +572,7 @@ export function PlayerMatches() {
                       {Math.ceil(
                         getPerformance(
                           [...player_matches]
-                            .filter(
-                              (element) =>
-                                element.surface  == "Grass"
-                            )
+                            .filter((element) => element.surface == "Grass")
                             .sort(
                               (a, b) =>
                                 b.tourney_date - a.tourney_date ||
@@ -579,10 +586,7 @@ export function PlayerMatches() {
                     {Math.ceil(
                       getPerformance(
                         [...player_matches]
-                          .filter(
-                            (element) =>
-                              element.surface == "Grass"
-                          )
+                          .filter((element) => element.surface == "Grass")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -598,10 +602,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface  == "Grass"
-                              )
+                              .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -619,10 +620,7 @@ export function PlayerMatches() {
                         {Math.ceil(
                           getPerformance(
                             [...player_matches]
-                              .filter(
-                                (element) =>
-                                  element.surface  == "Grass"
-                              )
+                              .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -672,9 +670,7 @@ export function PlayerMatches() {
                       setCurrentSurface("Hard");
                       setData(
                         [...player_matches]
-                          .filter(
-                            (element) => element.surface  == "Hard"
-                          )
+                          .filter((element) => element.surface == "Hard")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -692,9 +688,7 @@ export function PlayerMatches() {
                       setCurrentSurface("Clay");
                       setData(
                         [...player_matches]
-                          .filter(
-                            (element) => element.surface  == "Clay"
-                          )
+                          .filter((element) => element.surface == "Clay")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -712,10 +706,7 @@ export function PlayerMatches() {
                       setCurrentSurface("Grass");
                       setData(
                         [...player_matches]
-                          .filter(
-                            (element) =>
-                              element.surface  == "Grass"
-                          )
+                          .filter((element) => element.surface == "Grass")
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -730,9 +721,6 @@ export function PlayerMatches() {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <div className="ms-auto d-flex align-items-start py-2">
-                <SurfaceLegend />
-              </div>
             </div>
             <table className="table table-borderless text-center mb-0">
               <thead>
@@ -872,7 +860,7 @@ export function PlayerMatches() {
                         {checkOpp(player_id, match).opp_surface_rating !=
                         2400 ? (
                           <>
-                            {match.surface  == "Grass" ? (
+                            {match.surface == "Grass" ? (
                               <span
                                 style={{ backgroundColor: "#3EBA7C" }}
                                 className="table-surface-elo-label"
@@ -881,8 +869,8 @@ export function PlayerMatches() {
                                   checkOpp(player_id, match)
                                     .opp_surface_rating_gains}
                               </span>
-                            ) : match.surface  == "Hard" ||
-                              match.surface  == "Carpet" ? (
+                            ) : match.surface == "Hard" ||
+                              match.surface == "Carpet" ? (
                               <span
                                 style={{ backgroundColor: "#3B9FB9" }}
                                 className="table-surface-elo-label"
@@ -906,22 +894,22 @@ export function PlayerMatches() {
                           </>
                         ) : (
                           <>
-                            {match.surface  == "Grass" ? (
+                            {match.surface == "Grass" ? (
                               <span
                                 style={{ backgroundColor: "#3EBA7C" }}
                                 className="table-surface-elo-label"
                               >
                                 {"< 2400"}
                               </span>
-                            ) : match.surface  == "Hard" ||
-                              match.surface  == "Carpet" ? (
+                            ) : match.surface == "Hard" ||
+                              match.surface == "Carpet" ? (
                               <span
                                 style={{ backgroundColor: "#3B9FB9" }}
                                 className="table-surface-elo-label"
                               >
                                 {"< 2400"}
                               </span>
-                            ) : match.surface  == "Clay" ? (
+                            ) : match.surface == "Clay" ? (
                               <span
                                 style={{ backgroundColor: "#E96513" }}
                                 className="table-surface-elo-label"

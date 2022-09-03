@@ -8,7 +8,7 @@ const initialState = {
   player_records: [],
   records: [],
   choices: [],
-  charts: [],
+  charts: null,
   latest: null,
   api_isError: false,
   api_isSuccess: false,
@@ -45,6 +45,23 @@ export const loadRecord = createAsyncThunk(
   }
 );
 
+export const drawChart = createAsyncThunk(
+  "api/drawChart",
+  async (players, thunkAPI) => {
+    try {
+      return await apiService.drawChart(players); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
@@ -68,9 +85,6 @@ export const apiSlice = createSlice({
       state.api_isSuccess = false;
       state.api_isLoading = false;
       state.api_message = "";
-    },
-    clearCharts: (state) => {
-      state.charts = [];
     },
   },
   extraReducers: (builder) => {
@@ -100,6 +114,19 @@ export const apiSlice = createSlice({
         state.records = action.payload.loadData;
       })
       .addCase(loadRecord.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(drawChart.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(drawChart.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.charts = action.payload;
+      })
+      .addCase(drawChart.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;

@@ -134,7 +134,7 @@ h1 {
 
 .hard-text {
     color: #015778 !important;
-}
+} 
 
 .clay-text {
     color: #E96513 !important;
@@ -167,8 +167,7 @@ h1 {
 }
 
 .nav-link:hover {
-    color: #646464;
-    background-color: #ABE3C7;
+    color: inherit; 
     border-radius: 10px;
 }
 
@@ -713,6 +712,30 @@ input:checked+.slider:before {
 .table-tab-active {
     color: #fff !important;
     background-color: #339966 !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table-tab-hard {
+    color: #fff !important;
+    background-color: #015778 !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table-tab-clay {
+    color: #fff !important;
+    background-color: #E96513  !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table-tab-grass {
+    color: #fff !important;
+    background-color: #3EBA7C  !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table-tab-gray {
+    color: #fff !important;
+    background-color: #383838 !important;
     border-radius: 10px 10px 0 0 !important;
 }
 

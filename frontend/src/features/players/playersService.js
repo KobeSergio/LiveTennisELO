@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const PLAYERS_URL = "http://localhost:5000/admin/players";
-const MATCHES_URL = "http://localhost:5000/admin/matches/";
+const port = process.env.PORT || 5000;
+const PLAYERS_URL = `http://localhost:${port}/admin/players`;
+const MATCHES_URL = `http://localhost:${port}/admin/matches/`;
 
 //Load record,
 // @http:   GET admin/:doc_date
