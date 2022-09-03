@@ -143,17 +143,17 @@ function ManagePlayer() {
                     {player_details[0].birthdate == null
                       ? "\xa0"
                       : parsebirthDate(player_details[0].birthdate) +
-                        " " +
-                        "(" +
-                        parseDate(player_details[0].birthdate) +
-                        ")"}
+                      " " +
+                      "(" +
+                      parseDate(player_details[0].birthdate) +
+                      ")"}
                   </div>
                   <div className="text-dark" id="country">
                     {player_details[0].player_id.substring(0, 2) === "UN"
                       ? "Unknown "
                       : parseCountry(
-                          player_details[0].player_id.substring(0, 2)
-                        )}
+                        player_details[0].player_id.substring(0, 2)
+                      )}
                   </div>
                   <div className="text-dark" id="birthplace">
                     {player_details[0].birthplace == null
@@ -218,8 +218,8 @@ function ManagePlayer() {
                     {player_details[0].hand == "L"
                       ? "Left-handed"
                       : player_details[0].hand == "R"
-                      ? "Right-handed"
-                      : "Unknown"}
+                        ? "Right-handed"
+                        : "Unknown"}
                   </div>
                   <div className="text-dark" id="backhand">
                     {player_details[0].backhand == null
@@ -262,27 +262,27 @@ function ManagePlayer() {
                       {player_details[0].overall_rank == null
                         ? "\xa0"
                         : player_details[0].overall_rank +
-                          " (" +
-                          player_details[0].overall_rating +
-                          ") "}
+                        " (" +
+                        player_details[0].overall_rating +
+                        ") "}
                     </div>
                     <div id="peak_rank">
                       {player_details[0].overall_peak_rank == null
                         ? "\xa0"
                         : player_details[0].overall_peak_rank +
-                          " (" +
-                          parseDate(player_details[0].overall_peak_rank_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].overall_peak_rank_date) +
+                        ") "}
                     </div>
                     <div id="peak_rating">
                       {player_details[0].overall_peak_rating == null
                         ? "\xa0"
                         : player_details[0].overall_peak_rating +
-                          " (" +
-                          parseDate(
-                            player_details[0].overall_peak_rating_date
-                          ) +
-                          ") "}
+                        " (" +
+                        parseDate(
+                          player_details[0].overall_peak_rating_date
+                        ) +
+                        ") "}
                     </div>
                   </div>
 
@@ -298,25 +298,25 @@ function ManagePlayer() {
                       {player_details[0].clay_rank == null
                         ? "\xa0"
                         : player_details[0].clay_rank +
-                          " (" +
-                          player_details[0].clay_rating +
-                          ") "}
+                        " (" +
+                        player_details[0].clay_rating +
+                        ") "}
                     </div>
                     <div className="clay-text" id="peak_rank">
                       {player_details[0].clay_peak_rank == null
                         ? "\xa0"
                         : player_details[0].clay_peak_rank +
-                          " (" +
-                          parseDate(player_details[0].clay_peak_rank_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].clay_peak_rank_date) +
+                        ") "}
                     </div>
                     <div className="clay-text" id="peak_rating">
                       {player_details[0].clay_peak_rating == null
                         ? "\xa0"
                         : player_details[0].clay_peak_rating +
-                          " (" +
-                          parseDate(player_details[0].clay_peak_rating_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].clay_peak_rating_date) +
+                        ") "}
                     </div>
                   </div>
                 </div>
@@ -334,25 +334,25 @@ function ManagePlayer() {
                       {player_details[0].hard_rank == null
                         ? "\xa0"
                         : player_details[0].hard_rank +
-                          " (" +
-                          player_details[0].hard_rating +
-                          ") "}
+                        " (" +
+                        player_details[0].hard_rating +
+                        ") "}
                     </div>
                     <div className="hard-text" id="hard_rank">
                       {player_details[0].hard_peak_rank == null
                         ? "\xa0"
                         : player_details[0].hard_peak_rank +
-                          " (" +
-                          parseDate(player_details[0].hard_peak_rank_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].hard_peak_rank_date) +
+                        ") "}
                     </div>
                     <div className="hard-text" id="hard_rating">
                       {player_details[0].hard_peak_rating == null
                         ? "\xa0"
                         : player_details[0].hard_peak_rating +
-                          " (" +
-                          parseDate(player_details[0].hard_peak_rating_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].hard_peak_rating_date) +
+                        ") "}
                     </div>
                   </div>
 
@@ -368,25 +368,25 @@ function ManagePlayer() {
                       {player_details[0].grass_rank == null
                         ? "\xa0"
                         : player_details[0].grass_rank +
-                          " (" +
-                          player_details[0].grass_rating +
-                          ") "}
+                        " (" +
+                        player_details[0].grass_rating +
+                        ") "}
                     </div>
                     <div className="grass-text" id="grass_rank">
                       {player_details[0].grass_peak_rank == null
                         ? "\xa0"
                         : player_details[0].grass_peak_rank +
-                          " (" +
-                          parseDate(player_details[0].grass_peak_rank_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].grass_peak_rank_date) +
+                        ") "}
                     </div>
                     <div className="grass-text" id="grass_rating">
                       {player_details[0].grass_peak_rating == null
                         ? "\xa0"
                         : player_details[0].grass_peak_rating +
-                          " (" +
-                          parseDate(player_details[0].grass_peak_rating_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].grass_peak_rating_date) +
+                        ") "}
                     </div>
                   </div>
                 </div>
@@ -404,25 +404,25 @@ function ManagePlayer() {
                       {player_details[0].atp_rating == null
                         ? "\xa0"
                         : player_details[0].atp_rank +
-                          " (" + 
-                          player_details[0].atp_rating +
-                          " pts) "}
+                        " (" +
+                        player_details[0].atp_rating +
+                        " pts) "}
                     </div>
                     <div id="peak_atp_rank">
                       {player_details[0].atp_peak_rank == null
                         ? "\xa0"
                         : player_details[0].atp_peak_rank +
-                          " (" +
-                          parseDate(player_details[0].atp_peak_rank_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].atp_peak_rank_date) +
+                        ") "}
                     </div>
                     <div id="peak_atp">
                       {player_details[0].atp_peak_rating == null
                         ? "\xa0"
                         : player_details[0].atp_peak_rating +
-                          " (" +
-                          parseDate(player_details[0].atp_peak_rating_date) +
-                          ") "}
+                        " (" +
+                        parseDate(player_details[0].atp_peak_rating_date) +
+                        ") "}
                     </div>
                   </div>
                 </div>
