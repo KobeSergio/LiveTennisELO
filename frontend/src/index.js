@@ -18,6 +18,7 @@ import ManagePlayer from "./admin/pages/ManagePlayer";
 
 // User
 import LiveRatings from "./user/pages/LiveRatings";
+import Player from "./user/pages/Player";
 import Charts from "./user/pages/Charts";
 import About from "./user/pages/About";
 import NoPage from "./user/pages/NoPage";
@@ -41,6 +42,7 @@ export default function App() {
           {/* User page routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<LiveRatings />} />
+            <Route path="player" element={<Player />} />
             <Route path="charts" element={<Charts />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NoPage />} />
