@@ -134,14 +134,14 @@ export function PlayerChart() {
                 <div className="row h-100">
                     <main className="col">
                         <div className='row gx-4 mb-3'>
-                            <div className='col-md me-2 shadow'>
+                            <div className='col-md me-2 shadow rounded-3'>
                                 <h1 className='fs-4 pt-2'>Overall Rating</h1>
                                 <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
                                 <div>
                                     <Line options={overall} data={overall_data} width={"500px"} height={"500px"} />
                                 </div>
                             </div>
-                            <div className='col-md me-2 shadow'>
+                            <div className='col-md me-2 shadow rounded-3'>
                                 <h1 className='fs-4 pt-2 clay-text'>Clay Rating</h1>
                                 <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
                                 <div>
@@ -150,14 +150,14 @@ export function PlayerChart() {
                             </div>
                         </div>
                         <div className='row gx-4'>
-                            <div className='col-md me-2 shadow'>
+                            <div className='col-md me-2 shadow rounded-3'>
                                 <h1 className='fs-4 pt-2 hard-text'>Hard Rating</h1>
                                 <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
                                 <div>
                                     <Line options={hard} data={hard_data} width={"500px"} height={"500px"} />
                                 </div>
                             </div>
-                            <div className='col-md me-2 shadow'>
+                            <div className='col-md me-2 shadow rounded-3'>
                                 <h1 className='fs-4 pt-2 grass-text'>Grass Rating</h1>
                                 <h2 className='fs-5'>From: <span id="years">2014-2022</span></h2>
                                 <div>
