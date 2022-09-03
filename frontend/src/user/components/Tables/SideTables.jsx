@@ -255,7 +255,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -301,7 +301,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -347,7 +347,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -393,7 +393,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -439,7 +439,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>

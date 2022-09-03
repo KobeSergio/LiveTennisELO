@@ -32,10 +32,16 @@ const drawChart = async (players) => {
     records: getPlayerRecs.data.records,
   };
 };
+
+const loadPlayer = async (player_id) => {
+  const player = await axios.get(API_URL + "players/" + player_id);
+  return player.data;
+};
 const apiService = {
   loadRecord,
   loadData,
   drawChart,
+  loadPlayer,
 };
 
 export default apiService;

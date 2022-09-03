@@ -440,7 +440,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -651,7 +651,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -862,7 +862,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -1074,7 +1074,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -1285,7 +1285,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>

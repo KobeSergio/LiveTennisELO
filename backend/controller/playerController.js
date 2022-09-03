@@ -68,9 +68,10 @@ const getIndPlayer = asyncHandler(async (req, res) => {
       { winner_local_id: { $eq: req.params.id } },
       { loser_local_id: { $eq: req.params.id } },
     ],
-  });
-  const records = await Records.find({ player_id: { $eq: req.params.id } });
-
+  })
+    .sort("-tourney_date")
+    .limit(150);
+  const records = await Records.find({ player_id: { $eq: req.params.id } }); 
   if (!player && !matches && !records) {
     res.status(400);
     throw new Error("Data insufficient");

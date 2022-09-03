@@ -42,7 +42,7 @@ export default function App() {
           {/* User page routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<LiveRatings />} />
-            <Route path="player" element={<Player />} />
+            <Route path="players/:player_id" element={<Player />} />
             <Route path="charts" element={<Charts />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NoPage />} />
