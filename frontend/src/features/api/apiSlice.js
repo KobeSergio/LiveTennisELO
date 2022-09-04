@@ -8,7 +8,7 @@ const initialState = {
   player_records: [],
   records: [],
   choices: [],
-  charts: [],
+  charts: null,
   latest: null,
   api_isError: false,
   api_isSuccess: false,
@@ -45,6 +45,43 @@ export const loadRecord = createAsyncThunk(
   }
 );
 
+export const drawChart = createAsyncThunk(
+  "api/drawChart",
+  async (players, thunkAPI) => {
+    try {
+      return await apiService.drawChart(players); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//Load players
+// @http:   GET /players/:id
+// @res:    players: json
+export const loadPlayer = createAsyncThunk(
+  "api/loadPlayer",
+  async (player_id, thunkAPI) => {
+    try {
+      return await apiService.loadPlayer(player_id); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
@@ -69,8 +106,10 @@ export const apiSlice = createSlice({
       state.api_isLoading = false;
       state.api_message = "";
     },
-    clearCharts: (state) => {
-      state.charts = [];
+    resetPlayer: (state) => {
+      state.player_details = [];
+      state.player_matches = [];
+      state.player_records = [];
     },
   },
   extraReducers: (builder) => {
@@ -103,8 +142,36 @@ export const apiSlice = createSlice({
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;
+      })
+      .addCase(drawChart.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(drawChart.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.charts = action.payload;
+      })
+      .addCase(drawChart.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadPlayer.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadPlayer.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true; 
+        state.player_details = action.payload.player;
+        state.player_matches = action.payload.matches;
+        state.player_records = action.payload.records;
+      })
+      .addCase(loadPlayer.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
       });
   },
 });
-export const { resetApi, resetMarkers } = apiSlice.actions;
+export const { resetApi, resetMarkers, resetPlayer } = apiSlice.actions;
 export default apiSlice.reducer;

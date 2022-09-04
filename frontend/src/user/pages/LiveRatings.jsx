@@ -190,7 +190,7 @@ export default function Charts() {
                       />
                       <span className="input-group-button">
                         <button
-                          className="btn btn-green search-btn px-3 py-1"
+                          className="btn btn-black search-btn px-3 py-1"
                           type="submit"
                         >
                           <Search color="white" className="fs-7" />
@@ -201,7 +201,6 @@ export default function Charts() {
                 </div>
               </div>
             </div>
-
           </div>
           <div className="row">
             <LiveRatingsTable data={data} />

@@ -8,8 +8,14 @@ import {
 } from "../components/Charts/Dropdowns";
 import { X, CaretDownFill, Plus, Pencil } from "react-bootstrap-icons";
 import Button from "react-bootstrap/esm/Button";
+import { useDispatch } from "react-redux";
 
 export default function Charts() {
+  const dispatch = useDispatch();
+
+  const onDraw = () => {
+    console.log("HEY")
+  };
   return (
     <>
       <div className="charts-bg" style={{ backgroundImage: `url(${bg_img})` }}>
@@ -33,6 +39,10 @@ export default function Charts() {
               {/* Select Rank Type */}
               <div className="d-flex mb-4">
                 <span className="me-2 col-form-label w-25">Rank Type:</span>
+                <RankTypeDropdown />
+              </div>
+              <div className="d-flex mb-4">
+                <span className="me-2 col-form-label w-25">Surface:</span>
                 <RankTypeDropdown />
               </div>
 
@@ -90,7 +100,13 @@ export default function Charts() {
               </div>
               {/* Draw Chart Button */}
               <Button className="d-flex-inline align-items-center gc-100-button w-100">
-                <Pencil color="white" className="me-2" size={18} /> Draw Chart
+                <Pencil
+                  color="white"
+                  className="me-2"
+                  size={18}
+                  onClick={onDraw}
+                />{" "}
+                Draw Chart
               </Button>
             </div>
             <div className="col w-50">

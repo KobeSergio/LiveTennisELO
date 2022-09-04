@@ -74,7 +74,7 @@ export default function () {
       <>
         <div className="w-25">
           {/* TOP 15 */}
-          <h2 className="fs-4">Top 15 of All Time:</h2>
+          <h2 className="fs-4">Top 15 Peak All-Time ELO:</h2>
           <div className="row">
             <div className="col">
               <ClipLoader cssOverride={override} size={70} />
@@ -90,7 +90,7 @@ export default function () {
     <>
       <div className="w-25">
         {/* TOP 15 */}
-        <h2 className="fs-4">Top 15 of All Time:</h2>
+        <h2 className="fs-4">Top 15 Peak All-Time ELO:</h2>
         <div className="row">
           <div className="col">
             <nav>
@@ -103,7 +103,7 @@ export default function () {
                   href="#/"
                   className={
                     toggleRecords === 1
-                      ? "px-2 nav-item nav-link table-tab-active"
+                      ? "px-2 nav-item nav-link table-tab-gray"
                       : "px-2 nav-item nav-link"
                   }
                   onClick={() => {
@@ -115,13 +115,13 @@ export default function () {
                     );
                   }}
                 >
-                  Overall
+                  Peak
                 </a>
                 <a
                   href="#/"
                   className={
                     toggleRecords === 2
-                      ? "px-2 nav-item nav-link table-tab-active"
+                      ? "px-2 nav-item nav-link table-tab-hard"
                       : "px-2 nav-item nav-link"
                   }
                   onClick={() => {
@@ -139,7 +139,7 @@ export default function () {
                   href="#/"
                   className={
                     toggleRecords === 3
-                      ? "px-2 nav-item nav-link table-tab-active"
+                      ? "px-2 nav-item nav-link table-tab-clay"
                       : "px-2 nav-item nav-link"
                   }
                   onClick={() => {
@@ -175,7 +175,7 @@ export default function () {
                   href="#/"
                   className={
                     toggleRecords === 5
-                      ? "px-2 nav-item nav-link table-tab-active"
+                      ? "px-2 nav-item nav-link table-tab-gray"
                       : "px-2 nav-item nav-link "
                   }
                   onClick={() => {
@@ -188,6 +188,24 @@ export default function () {
                   }}
                 >
                   ATP
+                </a>
+                <a
+                  href="#/"
+                  className={
+                    toggleRecords === 6
+                      ? "px-2 nav-item nav-link table-tab-gray"
+                      : "px-2 nav-item nav-link "
+                  }
+                  onClick={() => {
+                    setToggleRecords(6);
+                    setData(
+                      [...players].sort(
+                        alphabetically(false, "atp_peak_rating")
+                      )
+                    );
+                  }}
+                >
+                  Overall
                 </a>
               </div>
             </nav>
@@ -204,12 +222,14 @@ export default function () {
                 >
                   <thead>
                     <tr className="text-center">
-                      <th style={{ width: "10%" }}>Rank</th>
-                      <th style={{ width: "45%" }} className="text-start">
+                      <th className="px-0" style={{ width: "5%" }}>
+                        Rank
+                      </th>
+                      <th style={{ width: "65%" }} className="text-start">
                         Name
                       </th>
-                      <th style={{ width: "15%" }}>Peak</th>
-                      <th style={{ width: "45%" }}>Date</th>
+                      <th style={{ width: "5%" }}>Peak</th>
+                      <th style={{ width: "40%" }}>Date</th>
                     </tr>
                   </thead>
                   {toggleRecords === 1 ? (
@@ -235,7 +255,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -281,7 +301,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -327,7 +347,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -373,7 +393,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>
@@ -419,7 +439,7 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={player.player_id}>
+                                    <a href={`./players/` + player.player_id}>
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>

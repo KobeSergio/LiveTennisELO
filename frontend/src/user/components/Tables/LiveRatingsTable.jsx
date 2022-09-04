@@ -76,7 +76,7 @@ export default function (props) {
   }, [api_isLoading]);
 
   useEffect(() => {
-    console.log(props);
+    console.log(props.data);
     if (props.data.length > 0) {
       setData(props.data);
     }
@@ -167,7 +167,7 @@ export default function (props) {
                   href="#/"
                   className={
                     toggleRecords === 1
-                      ? "nav-item nav-link table-tab-active"
+                      ? "nav-item nav-link table-tab-gray"
                       : "nav-item nav-link"
                   }
                   onClick={() => {
@@ -184,7 +184,7 @@ export default function (props) {
                   href="#/"
                   className={
                     toggleRecords === 2
-                      ? "nav-item nav-link table-tab-active"
+                      ? "nav-item nav-link table-tab-hard"
                       : "nav-item nav-link"
                   }
                   onClick={() => {
@@ -201,7 +201,7 @@ export default function (props) {
                   href="#/"
                   className={
                     toggleRecords === 3
-                      ? "nav-item nav-link table-tab-active"
+                      ? "nav-item nav-link table-tab-clay"
                       : "nav-item nav-link"
                   }
                   onClick={() => {
@@ -235,7 +235,7 @@ export default function (props) {
                   href="#/"
                   className={
                     toggleRecords === 5
-                      ? "nav-item nav-link table-tab-active"
+                      ? "nav-item nav-link table-tab-gray"
                       : "nav-item nav-link"
                   }
                   onClick={() => {
@@ -440,7 +440,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -651,7 +651,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -862,7 +862,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -1074,7 +1074,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
@@ -1285,7 +1285,7 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./` + record.player_id}>
+                              <a href={`./players/` + record.player_id}>
                                 {toTitleCase(record.name)}
                               </a>
                             </td>

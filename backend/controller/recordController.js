@@ -6,7 +6,7 @@ const Record = require("../models/recordModel");
 const getRecord = asyncHandler(async (req, res) => {
   const record = await Record.find({
     doc_date: { $eq: req.params.doc_date },
-  }).exec();
+  });
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -74,8 +74,7 @@ const updateRecord = asyncHandler(async (req, res) => {
     const updatedRecord = await Record.findByIdAndUpdate(
       req.params.id,
       req.body
-    );
-    console.log(req.body);
+    ); 
     res.status(200).json(updatedRecord);
   }
 });

@@ -37,8 +37,7 @@ var clay_data = [];
 var atp_data = [];
 
 function calculate_age(dob, currDate) {
-  var diff_ms = currDate.getTime() - dob.getTime();
-
+  var diff_ms = currDate.getTime() - dob.getTime(); 
   return Math.abs(diff_ms / (365 * 86400000));
 }
 
@@ -416,85 +415,6 @@ export function PlayerCharts() {
             </div>
           </div>
           <div className="card bg-white col me-2 shadow rounded mb-2">
-            <h1 className="mt-2 fs-4">Clay {filter}</h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {clay_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(clay_data[0].x)} -{" "}
-                        {Math.floor(clay_data[clay_data.length - 1].x)} years
-                      </>
-                    ) : (
-                      <>
-                        {clay_data[0].x.length > 2 ? (
-                          <>
-                            {clay_data[0].x.substring(0, 4)} -{" "}
-                            {clay_data[clay_data.length - 1].x.substring(0, 4)}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                onClick={handleShow}
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
-                      },
-                    },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
-                    },
-                  },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                    title: {
-                      display: false,
-                    },
-                  },
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: clay_data,
-                      borderColor: "#E96513",
-                      backgroundColor: "#E96513",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="card bg-white col me-2 shadow rounded mb-2">
             <h1 className="mt-2 fs-4 hard-text">Hard {filter}</h1>
             <h2 className="fs-5">
               From:{" "}
@@ -559,6 +479,85 @@ export function PlayerCharts() {
                       data: hard_data,
                       borderColor: "#015778",
                       backgroundColor: "#015778",
+                      borderWidth: 2,
+                      pointBorderWidth: 2,
+                      pointRadius: 0,
+                      pointHoverRadius: 5,
+                    },
+                  ],
+                }}
+                height={"500px"}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="card bg-white col me-2 shadow rounded mb-2">
+            <h1 className="mt-2 fs-4">Clay {filter}</h1>
+            <h2 className="fs-5">
+              From:{" "}
+              <span id="years">
+                {clay_data[0] != null ? (
+                  <>
+                    {filter.toLowerCase() == "elo ratings by age" ||
+                    filter.toLowerCase() == "elo rankings by age" ? (
+                      <>
+                        {Math.floor(clay_data[0].x)} -{" "}
+                        {Math.floor(clay_data[clay_data.length - 1].x)} years
+                      </>
+                    ) : (
+                      <>
+                        {clay_data[0].x.length > 2 ? (
+                          <>
+                            {clay_data[0].x.substring(0, 4)} -{" "}
+                            {clay_data[clay_data.length - 1].x.substring(0, 4)}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </span>
+            </h2>
+            <div>
+              <Line
+                onClick={handleShow}
+                options={{
+                  scales: {
+                    xAxes: {
+                      type: type,
+                      time: {
+                        unit: "year",
+                        tooltipFormat: "YYYY-MM-DD",
+                      },
+                    },
+                    yAxes: {
+                      position: "right",
+                      reverse: invert,
+                    },
+                  },
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                    title: {
+                      display: false,
+                    },
+                  },
+                  maintainAspectRatio: false,
+                }}
+                data={{
+                  datasets: [
+                    {
+                      data: clay_data,
+                      borderColor: "#E96513",
+                      backgroundColor: "#E96513",
                       borderWidth: 2,
                       pointBorderWidth: 2,
                       pointRadius: 0,

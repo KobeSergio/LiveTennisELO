@@ -21,9 +21,12 @@ const getPlayers = asyncHandler(async (req, res) => {
 // @route:      GET api/players/:player_id
 // @access      Public
 const getPlayerRecs = asyncHandler(async (req, res) => {
-  const player = await Player.find({ player_id: { $eq: req.params.player_id } });
-  const records = await Records.find({ player_id: { $eq: req.params.player_id } });
-  if (player.length === 0 && records.length === 0) {
+  const player_ids = req.query.player_ids.split(",");
+  const player = await Player.find({ player_id: { $in: player_ids } });
+  const records = await Records.find({ player_id: { $in: player_ids } }).select(
+    "player_id ranking hard grass clay atp overall_rank hard_rank clay_rank grass_rank atp_rank doc_date age"
+  );
+  if (player.length !== player_ids.length || records.length === 0) {
     res.status(400);
     throw new Error("Data insufficient");
   }
@@ -65,9 +68,10 @@ const getIndPlayer = asyncHandler(async (req, res) => {
       { winner_local_id: { $eq: req.params.id } },
       { loser_local_id: { $eq: req.params.id } },
     ],
-  });
-  const records = await Records.find({ player_id: { $eq: req.params.id } });
-
+  })
+    .sort("-tourney_date")
+    .limit(150);
+  const records = await Records.find({ player_id: { $eq: req.params.id } }); 
   if (!player && !matches && !records) {
     res.status(400);
     throw new Error("Data insufficient");
