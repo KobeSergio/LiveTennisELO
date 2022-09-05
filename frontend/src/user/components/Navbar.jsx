@@ -6,11 +6,6 @@ import Select from "react-select";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
 const customStyles = {
   control: (base, state) => ({
     ...base,
@@ -92,14 +87,14 @@ export default function Navbar() {
               <div className="input-group">
                 <Select
                   options={showOptions ? playerOptions : []}
+                  menuIsOpen={showOptions ? true : false}
+                  onInputChange={handleInputChange}
                   name="language"
                   placeholder="Search Player"
                   styles={customStyles}
                   components={{
                     IndicatorsContainer: () => null,
                   }}
-                  menuIsOpen={showOptions ? true : false}
-                  onInputChange={handleInputChange}
                   onChange={handleSelect}
                   search
                 />

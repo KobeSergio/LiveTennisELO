@@ -17,7 +17,39 @@ import Dropdown from "react-bootstrap/Dropdown";
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
+function alphabetically(ascending, col) {
+  return function (a, b) {
+    a = a[col];
+    b = b[col];
 
+    if (a == null) {
+      a = 0;
+    }
+    if (b == null) {
+      a = 0;
+    }
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
+}
 export default function Charts() {
   const dispatch = useDispatch();
 
@@ -40,7 +72,7 @@ export default function Charts() {
   }, [latest]);
   const recordIndex = choicesCopy.findIndex((x) => x == record);
 
-  const [data, setData] = useState(records);
+  const [data, setData] = useState([...records]);
   const [len, setLen] = useState(0);
   const onSearch = (e) => {
     if (e.target.value != "") {
