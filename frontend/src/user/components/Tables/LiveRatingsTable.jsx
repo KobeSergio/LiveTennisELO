@@ -12,6 +12,7 @@ import { PositiveElo, NegativeElo } from "../Labels/ELO";
 import Pagination from "../Pagination";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
@@ -56,7 +57,7 @@ function alphabetically(ascending, col) {
 export default function (props) {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (records.length == 0) {
       dispatch(loadData());
@@ -76,9 +77,11 @@ export default function (props) {
   }, [api_isLoading]);
 
   useEffect(() => {
-    console.log(props.data);
-    if (props.data.length > 0) {
-      setData(props.data);
+    if (props.data != null) {
+      if (props.data.length > 0) {
+        console.log(props.data);
+        setData(props.data.sort(alphabetically(true, sortBy)));
+      }
     }
   }, [props]);
 
@@ -440,7 +443,12 @@ export default function (props) {
                               </span>
                             </td>
                             <td className="w-25 text-start" id="name">
-                              <a href={`./players/` + record.player_id}>
+                              <a
+                                href="#/"
+                                onClick={() =>
+                                  navigate(`./players/` + record.player_id)
+                                }
+                              >
                                 {toTitleCase(record.name)}
                               </a>
                             </td>

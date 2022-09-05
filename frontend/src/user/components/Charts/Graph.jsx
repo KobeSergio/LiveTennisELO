@@ -31,18 +31,15 @@ ChartJS.register(
 );
 //======================================================================
 
-var overall_data = [];
-var hard_data = [];
-var grass_data = [];
-var clay_data = [];
-var atp_data = [];
+var p1_data = [];
+var p2_data = [];
 
 function calculate_age(dob, currDate) {
   var diff_ms = currDate.getTime() - dob.getTime();
   return Math.abs(diff_ms / (365 * 86400000));
 }
 
-function pushToDatasets(player_records, player_details, filter) {
+function pushToDatasets(player_records, player_details, filter, surface) {
   //Doc date or Age = x
   //Ranking or rating = y
 
@@ -71,90 +68,130 @@ function pushToDatasets(player_records, player_details, filter) {
 
         var X = doc_X.toLocaleDateString("en-CA");
 
-        if (
-          filter === "elo ratings by age" ||
-          filter === "elo rankings by age"
-        ) {
-          const dob = new Date(
-            player_details.birthdate.substring(0, 4),
-            player_details.birthdate.substring(4, 6),
-            player_details.birthdate.substring(6, 8)
-          );
-          //Subtract birthdate by doc_date
-          X = calculate_age(dob, doc_X);
-        }
-
         if (filter === "elo ratings" || filter === "elo ratings by age") {
-          overall_data.push({
-            x: X,
-            y: record.ranking,
-          });
-          clay_data.push({
-            x: X,
-            y: record.clay,
-          });
-          grass_data.push({
-            x: X,
-            y: record.grass,
-          });
-          hard_data.push({
-            x: X,
-            y: record.hard,
-          });
-          atp_data.push({
-            x: X,
-            y: record.atp,
-          });
+          if (record.player_id === player_details[0].player_id) {
+            if (filter.slice(-6) === "by age") {
+              const dob = new Date(
+                player_details[0].birthdate.substring(0, 4),
+                player_details[0].birthdate.substring(4, 6),
+                player_details[0].birthdate.substring(6, 8)
+              );
+              //Subtract birthdate by doc_date
+              X = calculate_age(dob, doc_X);
+            }
+            //P1 records
+            p1_data.push({
+              x: X,
+              y:
+                surface === "Overall"
+                  ? record.ranking
+                  : surface === "Hard"
+                  ? record.hard
+                  : surface === "Clay"
+                  ? record.clay
+                  : surface === "Grass"
+                  ? record.grass
+                  : record.atp,
+            });
+          } else {
+            if (filter.slice(-6) === "by age") {
+              const dob = new Date(
+                player_details[1].birthdate.substring(0, 4),
+                player_details[1].birthdate.substring(4, 6),
+                player_details[1].birthdate.substring(6, 8)
+              );
+              //Subtract birthdate by doc_date
+              X = calculate_age(dob, doc_X);
+            }
+            //p2 records
+            p2_data.push({
+              x: X,
+              y:
+                surface === "Overall"
+                  ? record.ranking
+                  : surface === "Hard"
+                  ? record.hard
+                  : surface === "Clay"
+                  ? record.clay
+                  : surface === "Grass"
+                  ? record.grass
+                  : record.atp,
+            });
+          }
         } else if (
           filter === "elo rankings" ||
           filter === "elo rankings by age"
         ) {
-          overall_data.push({
-            x: X,
-            y: record.overall_rank,
-          });
-          clay_data.push({
-            x: X,
-            y: record.clay_rank,
-          });
-          grass_data.push({
-            x: X,
-            y: record.grass_rank,
-          });
-          hard_data.push({
-            x: X,
-            y: record.hard_rank,
-          });
-          atp_data.push({
-            x: X,
-            y: record.atp_rank,
-          });
+          if (record.player_id === player_details[0].player_id) {
+            if (filter.slice(-6) === "by age") {
+              const dob = new Date(
+                player_details[0].birthdate.substring(0, 4),
+                player_details[0].birthdate.substring(4, 6),
+                player_details[0].birthdate.substring(6, 8)
+              );
+              //Subtract birthdate by doc_date
+              X = calculate_age(dob, doc_X);
+            }
+            //P1 records
+            p1_data.push({
+              x: X,
+              y:
+                surface === "Overall"
+                  ? record.overall_rank
+                  : surface === "Hard"
+                  ? record.hard_rank
+                  : surface === "Clay"
+                  ? record.clay_rank
+                  : surface === "Grass"
+                  ? record.grass_rank
+                  : record.atp_rank,
+            });
+          } else {
+            if (filter.slice(-6) === "by age") {
+              const dob = new Date(
+                player_details[1].birthdate.substring(0, 4),
+                player_details[1].birthdate.substring(4, 6),
+                player_details[1].birthdate.substring(6, 8)
+              );
+              //Subtract birthdate by doc_date
+              X = calculate_age(dob, doc_X);
+            }
+            //p2 records
+            p2_data.push({
+              x: X,
+              y:
+                surface === "Overall"
+                  ? record.overall_rank
+                  : surface === "Hard"
+                  ? record.hard_rank
+                  : surface === "Clay"
+                  ? record.clay_rank
+                  : surface === "Grass"
+                  ? record.grass_rank
+                  : record.atp_rank,
+            });
+          }
         }
       }
     });
 }
 
-export default function () {
+export default function ({ invert, filter, type, surface }) {
   const { charts, api_isLoading } = useSelector((state) => state.api);
-  const dispatch = useDispatch();
   //Data
   const [data, setData] = useState([]);
-  const [filter, setFilter] = useState("ELO Ratings");
-  const [invert, setInvert] = useState(false);
-  const [type, setType] = useState("time");
-
+  const dispatch = useDispatch();
   //Empty data on load to be pushed below.
   useEffect(() => {
-    overall_data = [];
-    hard_data = [];
-    grass_data = [];
-    clay_data = [];
-    atp_data = [];
-    dispatch(drawChart("AT0002,AT0003"));
-  }, [filter]);
+    p1_data = [];
+    p2_data = [];
+    if (charts != null) {
+      setData(charts.records);
+    }
+  }, [filter, surface, api_isLoading]);
 
-  if (overall_data.length === 0 && data.length !== 0) {
-    pushToDatasets(data, charts.player, filter.toLowerCase());
+  if (p1_data.length === 0 && p2_data.length === 0 && charts != null) {
+    pushToDatasets(data, charts.players, filter.toLowerCase(), surface);
   }
 
   //If loading
@@ -271,7 +308,28 @@ export default function () {
                       maintainAspectRatio: false,
                     }}
                     data={{
-                      datasets: [],
+                      datasets: [
+                        {
+                          label: charts.players[0].player_name,
+                          data: p1_data,
+                          borderColor: "black",
+                          backgroundColor: "black",
+                          borderWidth: 2,
+                          pointBorderWidth: 2,
+                          pointRadius: 0,
+                          pointHoverRadius: 5,
+                        },
+                        {
+                          label: charts.players[1].player_name,
+                          data: p2_data,
+                          borderColor: "#015778",
+                          backgroundColor: "#015778",
+                          borderWidth: 2,
+                          pointBorderWidth: 2,
+                          pointRadius: 0,
+                          pointHoverRadius: 5,
+                        },
+                      ],
                     }}
                     width={"500px"}
                     height={"700em"}
