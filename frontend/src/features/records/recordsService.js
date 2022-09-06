@@ -4,7 +4,7 @@
 
 import axios from "axios";
 
-const RECORD_URL = "http://localhost:5000/admin/";
+const RECORD_URL = "admin/";
 
 //Load record,
 // @http:   GET admin/:doc_date

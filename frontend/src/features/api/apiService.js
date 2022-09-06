@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const API_URL = `/api/`;
+const API_URL = `api/`;
 
 const loadRecord = async (payload) => {
   const loadData = await axios.get(API_URL + "records/" + payload);
