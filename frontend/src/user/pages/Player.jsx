@@ -68,7 +68,7 @@ export default function Player() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (player_details.length == 0 || player_isLoading) {
+  if (player_details == 0 || player_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
   return (
