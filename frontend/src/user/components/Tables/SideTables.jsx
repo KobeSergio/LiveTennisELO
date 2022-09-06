@@ -46,6 +46,52 @@ function alphabetically(ascending, col) {
   };
 }
 
+function alph_average(ascending) {
+  return function (a, b) {
+    a =
+      (a["overall_rating"] +
+        a["hard_rating"] +
+        a["clay_rating"] +
+        a["grass_rating"]) /
+      4;
+    b =
+      (b["overall_rating"] +
+        b["hard_rating"] +
+        b["clay_rating"] +
+        b["grass_rating"]) /
+      4;
+
+    console.log(a);
+
+    if (a == null) {
+      a = 0;
+    }
+    if (b == null) {
+      a = 0;
+    }
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
+}
+
 export default function () {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
 
@@ -74,7 +120,7 @@ export default function () {
       <>
         <div className="w-25">
           {/* TOP 15 */}
-          <h2 className="fs-4">Top 15 Peak All-Time ELO:</h2>
+          <h2 className="fs-4">Top 15s:</h2>
           <div className="row">
             <div className="col">
               <ClipLoader cssOverride={override} size={70} />
@@ -90,7 +136,7 @@ export default function () {
     <>
       <div className="w-25">
         {/* TOP 15 */}
-        <h2 className="fs-4">Top 15 Peak All-Time ELO:</h2>
+        <h2 className="fs-4">Top 15s:</h2>
         <div className="row">
           <div className="col">
             <nav>
@@ -115,7 +161,7 @@ export default function () {
                     );
                   }}
                 >
-                  Peak
+                  Overall
                 </a>
                 <a
                   href="#/"
@@ -198,14 +244,10 @@ export default function () {
                   }
                   onClick={() => {
                     setToggleRecords(6);
-                    setData(
-                      [...players].sort(
-                        alphabetically(false, "atp_peak_rating")
-                      )
-                    );
+                    setData([...players].sort(alph_average(false)));
                   }}
                 >
-                  Overall
+                  Average
                 </a>
               </div>
             </nav>
@@ -222,14 +264,14 @@ export default function () {
                 >
                   <thead>
                     <tr className="text-center">
-                      <th className="px-0" style={{ width: "5%" }}>
+                      <th className="px-0" style={{ width: "1%" }}>
                         Rank
                       </th>
-                      <th style={{ width: "65%" }} className="text-start">
+                      <th style={toggleRecords === 6 ? ({ width: "45%" }) : ({width: "65%"})} className="text-start">
                         Name
                       </th>
-                      <th style={{ width: "5%" }}>Peak</th>
-                      <th style={{ width: "40%" }}>Date</th>
+                      <th style={{ width: "5%" }}>{toggleRecords === 6 ? (<>Average</>) : (<>Peak</>)}</th>
+                      <th style={toggleRecords === 6 ? ({ width: "5%" }) : ({width: "45%"})}>{toggleRecords === 6 ? (<>Peak</>) : (<>Date</>)}</th>
                     </tr>
                   </thead>
                   {toggleRecords === 1 ? (
@@ -454,6 +496,60 @@ export default function () {
                                     player.atp_peak_rating_date.slice(0, 4) +
                                     "-" +
                                     player.atp_peak_rating_date.slice(4, 6)
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </>
+                        ) : (
+                          <h3>No data.</h3>
+                        )}
+                      </tbody>
+                    </>
+                  ) : toggleRecords === 6 ? (
+                    <>
+                      <tbody className="text-center">
+                        {data != null ? (
+                          <>
+                            {data.slice(0, 15).map((player) => (
+                              <tr>
+                                <td id="rank">{ctr++}</td>
+                                <td className="text-start" id="name">
+                                  <ReactCountryFlag
+                                    countryCode={player.player_id.substring(
+                                      0,
+                                      2
+                                    )}
+                                    style={{
+                                      filter: "drop-shadow(0 0 0.12rem black)",
+                                    }}
+                                    svg
+                                  />{" "}
+                                  {"\xa0"}
+                                  {"\xa0"}
+                                  {"\xa0"}
+                                  <span className="table-country">
+                                    <a href={`./players/` + player.player_id}>
+                                      {toTitleCase(player.player_name)}
+                                    </a>
+                                  </span>
+                                </td>
+                                <td id="elo_rating">
+                                  {Math.floor(
+                                    (player.overall_rating +
+                                      player.hard_rating +
+                                      player.clay_rating +
+                                      player.grass_rating) /
+                                      4
+                                  )}
+                                </td>
+                                <td id="date">
+                                  {Math.floor(
+                                    (player.overall_peak_rating +
+                                      player.hard_peak_rating +
+                                      player.clay_peak_rating +
+                                      player.grass_peak_rating) /
+                                      4
                                   )}
                                 </td>
                               </tr>

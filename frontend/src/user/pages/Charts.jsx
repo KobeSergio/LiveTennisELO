@@ -209,8 +209,7 @@ export default function Charts() {
                   {charts != null ? (
                     <>
                       <div className="card border-0 w-50">
-                        <div className="card-header rounded-top-3 gc-100-bg border-0 h-25">
-                          <div className="d-flex align-items-center h-100"></div>
+                        <div className="card-header rounded-top-3 p1-100-bg border-0 h-25"> 
                         </div>
                         <div className="card-body px-3  py-2">
                           <h5 className="card-title">
@@ -230,8 +229,7 @@ export default function Charts() {
                         </div>
                       </div>
                       <div className="card border-0 w-50">
-                        <div className="card-header rounded-top-3 gc-100-bg border-0 h-25">
-                          <div className="d-flex align-items-center h-100"></div>
+                        <div className="card-header rounded-top-3 p2-100-bg border-0 h-25"> 
                         </div>
                         <div className="card-body px-3  py-2">
                           <h5 className="card-title">
