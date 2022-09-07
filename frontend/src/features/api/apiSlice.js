@@ -161,7 +161,7 @@ export const apiSlice = createSlice({
       })
       .addCase(loadPlayer.fulfilled, (state, action) => {
         state.api_isLoading = false;
-        state.api_isSuccess = true; 
+        state.api_isSuccess = true;
         state.player_details = action.payload.player;
         state.player_matches = action.payload.matches;
         state.player_records = action.payload.records;
