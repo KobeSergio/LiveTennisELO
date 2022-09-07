@@ -31,7 +31,7 @@ export default function Navbar() {
   }, [api_isLoading]);
 
   const handleSelect = (selectedOption) => {
-    window.location.href = "players/" + selectedOption.value;
+    navigate("players/" + selectedOption.value);
   };
 
   const [showOptions, setShowOptions] = useState(false);

@@ -52,11 +52,16 @@ export default function Player() {
   const { player_details, player_matches, player_isLoading, player_records } =
     useSelector((state) => state.api);
   const { player_id } = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(resetPlayer());
     dispatch(loadPlayer(player_id));
   }, []);
+
+  useEffect(() => {
+    dispatch(resetPlayer());
+    dispatch(loadPlayer(player_id));
+  }, [navigate]);
 
   const dispatch = useDispatch();
 
