@@ -17,7 +17,7 @@ export default function UploadBox() {
         data.append("file", file);
         console.log(data);
 
-        dispatch(uploadRecord(data));
+        //dispatch(uploadRecord(data));
       } else {
         console.log("Error not CSV");
       }

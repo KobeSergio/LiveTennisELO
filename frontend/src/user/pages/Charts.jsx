@@ -1,4 +1,4 @@
-import bg_img from "../img/bg-charts.png";
+import bg_img from "../img/bg-charts2.png";
 
 import Dropdown from "react-bootstrap/Dropdown";
 import { drawChart } from "../../features/api/apiSlice";
