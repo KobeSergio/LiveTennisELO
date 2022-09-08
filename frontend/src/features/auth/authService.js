@@ -5,7 +5,7 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const LOGIN_URL = `./admin-login`;
+const LOGIN_URL = `/admin-login`;
 
 //Login user
 const login = async (userData) => {
