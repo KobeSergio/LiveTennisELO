@@ -30,7 +30,7 @@ router
 //Imports
 var multer = require("multer");
 var upload = multer();
-router.route("/import").post(upload.single("file"), parseCSV);
+//router.route("/import").post(upload.single("file"), parseCSV);
 
 //Records
 router.route("/").get(protect, latestRecord);

@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
 var cors = require("cors");
 app.use(cors()); // Use this after the variable declaration
 
-app.use("/admin", require("./routes/adminRoutes"));
+app.use("/admin-api", require("./routes/adminRoutes"));
 app.use("/admin-login", require("./routes/loginRoutes"));
 app.use("/", require("./routes/userRoutes"));
 
