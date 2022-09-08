@@ -275,11 +275,19 @@ function Players() {
                     <tr onClick={() => navigate(player.player_id)}>
                       <th scope="row">{player.player_id}</th>
                       <th className="table-40px" scope="row">
-                        <ReactCountryFlag
-                          countryCode={player.player_id.substring(0, 2)}
-                          style={{ filter: "drop-shadow(0 0 0.12rem black)" }}
-                          svg
-                        />
+                        {player.player_id == null ? (
+                          <></>
+                        ) : (
+                          <>
+                            <ReactCountryFlag
+                              countryCode={player.player_id.substring(0, 2)}
+                              style={{
+                                filter: "drop-shadow(0 0 0.12rem black)",
+                              }}
+                              svg
+                            />
+                          </>
+                        )}
                       </th>
                       <td className="text-start" id="player_name">
                         {player.player_name}
