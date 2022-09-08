@@ -50,7 +50,7 @@ function Players() {
       var sorted = null;
       if (col === "player_id" || col === "name") {
         sorted = [...data].sort((a, b) =>
-          a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+          a[col] > b[col] ? 1 : -1
         );
       } else {
         sorted = [...data].sort(alphabetically(true, col));
@@ -61,7 +61,7 @@ function Players() {
       var sorted = null;
       if (col === "player_id" || col === "name") {
         sorted = [...data].sort((a, b) =>
-          a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+          a[col] < b[col] ? 1 : -1
         );
       } else {
         sorted = [...data].sort(alphabetically(false, col));
