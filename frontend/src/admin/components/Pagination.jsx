@@ -13,7 +13,7 @@ export default function Pagination({ DataPerPage, totalData, paginate }) {
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <a onClick={() => paginate(number)} className="page-link" href="#">
-              {number}
+              {number+1}
             </a>
           </li>
         ))} 

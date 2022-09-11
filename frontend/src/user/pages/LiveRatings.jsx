@@ -73,6 +73,7 @@ export default function Charts() {
   const recordIndex = choicesCopy.findIndex((x) => x == record);
 
   const [data, setData] = useState([...records]);
+  const [DataPerPage, setDataPerPage] = useState(20);
   const [len, setLen] = useState(0);
   const onSearch = (e) => {
     if (e.target.value != "") {
@@ -210,9 +211,47 @@ export default function Charts() {
                       </button>
                     </a>
                   </span>
+                  <div className="ms-auto me-5">
+                    <Dropdown className="border-0 dropdown rounded-3">
+                      <Dropdown.Toggle
+                        className="o40"
+                        variant="white"
+                        id="dropdown-basic"
+                        size="sm"
+                      >
+                        {DataPerPage} per page
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => setDataPerPage(20)}
+                          href="#"
+                        >
+                          20 per page
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => setDataPerPage(50)}
+                          href="#"
+                        >
+                          50 per page
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => setDataPerPage(100)}
+                          href="#"
+                        >
+                          100 per page
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => setDataPerPage(data.length)}
+                          href="#"
+                        >
+                          All
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
                   {/* SEARCH IN RECORD */}
                   <span>
-                    <div className="input-group" style={{ width: "210%" }}>
+                    <div className="input-group">
                       <input
                         className="form-control border-0 dropdown rounded-3"
                         type="text"
@@ -235,7 +274,7 @@ export default function Charts() {
             </div>
           </div>
           <div className="row">
-            <LiveRatingsTable data={data} />
+            <LiveRatingsTable data={data} dataPerPage={DataPerPage} />
             <SideTables />
           </div>
         </div>

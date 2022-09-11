@@ -72,6 +72,18 @@ export default function (props) {
   const [toggleRecords, setToggleRecords] = useState(1);
   const [sortBy, setsortBy] = useState("overall_rank");
 
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DataPerPage, setDataPerPage] = useState(20);
+
+  //Get index of the last Data
+  const indexOfLastData = currentPage * DataPerPage;
+  const indexOfFirstData = indexOfLastData - DataPerPage;
+  const currentData = data.slice(indexOfFirstData, indexOfLastData);
+
+  //Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   useEffect(() => {
     setData([...records].sort(alphabetically(true, sortBy)));
   }, [api_isLoading]);
@@ -79,10 +91,11 @@ export default function (props) {
   useEffect(() => {
     if (props.data != null) {
       if (props.data.length > 0) {
-        console.log(props.data);
         setData(props.data.sort(alphabetically(true, sortBy)));
       }
     }
+    setDataPerPage(props.dataPerPage);
+    setCurrentPage(1);
   }, [props]);
 
   //Search
@@ -254,60 +267,248 @@ export default function (props) {
               </div>
             </nav>
             <div class="tab-content">
-              <div
-                class={
-                  toggleRecords === 1
-                    ? "tab-pane fade bg-white rounded show active"
-                    : "tab-pane fade bg-white rounded"
-                }
-              >
+              <div class="tab-pane fade bg-white rounded show active">
                 <table
                   class="table table-borderless table-responsive liverating-table-bg-white"
                   cellSpacing="0"
                 >
                   <thead className="record_thead">
                     <tr className="text-center">
-                      <th onClick={() => sorting("overall_rank")}>
+                      <th
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("overall_rank")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard_rank")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay_rank")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass_rank")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp_rank")
+                          ) : (
+                            <></>
+                          )
+                        }
+                      >
                         <a style={{ color: "inherit" }} href="#/">
                           Rank
                         </a>
                         {"\xa0"}
-                        {column === "overall_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "overall_rank" && order === "DSC" ? (
-                          <CaretUpFill />
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "overall_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "overall_rank" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard_rank" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay_rank" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass_rank" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp_rank" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
                       </th>
-                      <th onClick={() => sorting("overall_rank_diff")}>
+                      <th
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("overall_rank_diff")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard_rank_diff")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay_rank_diff")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass_rank_diff")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp_rank_diff")
+                          ) : (
+                            <></>
+                          )
+                        }
+                      >
                         <a style={{ color: "inherit" }} href="#/">
                           <ArrowUp />
                           <ArrowDown />
                         </a>
                         {"\xa0"}
-                        {column === "overall_rank_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "overall_rank_diff" &&
-                          order === "DSC" ? (
-                          <CaretUpFill />
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "overall_rank_diff" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "overall_rank_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard_rank_diff" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard_rank_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay_rank_diff" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay_rank_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass_rank_diff" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass_rank_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp_rank_diff" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp_rank_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
                       </th>
                       <th
                         className="text-center"
-                        onClick={() => sorting("overall_best_rank")}
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("overall_best_rank")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard_best_rank")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay_best_rank")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass_best_rank")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp_best_rank")
+                          ) : (
+                            <></>
+                          )
+                        }
                       >
                         <a style={{ color: "inherit" }} href="#/">
                           Best Rank
                         </a>
                         {"\xa0"}
-                        {column === "overall_best_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "overall_best_rank" &&
-                          order === "DSC" ? (
-                          <CaretUpFill />
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "overall_best_rank" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "overall_best_rank" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard_best_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard_best_rank" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay_best_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay_best_rank" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass_best_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass_best_rank" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp_best_rank" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp_best_rank" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
@@ -331,49 +532,238 @@ export default function (props) {
                       </th>
                       <th
                         className="text-center"
-                        onClick={() => sorting("ranking")}
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("ranking")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp")
+                          ) : (
+                            <></>
+                          )
+                        }
                       >
                         <a style={{ color: "inherit" }} href="#/">
                           ELO Rating
                         </a>
                         {"\xa0"}
-                        {column === "ranking" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "ranking" && order === "DSC" ? (
-                          <CaretUpFill />
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "ranking" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "ranking" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
                       </th>
                       <th
                         className="text-center"
-                        onClick={() => sorting("overall_rating_diff")}
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("overall_rating_diff")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard_rating_diff")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay_rating_diff")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass_rating_diff")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp_rating_diff")
+                          ) : (
+                            <></>
+                          )
+                        }
                       >
                         <a style={{ color: "inherit" }} href="#/">
                           +/-
                         </a>
                         {"\xa0"}
-                        {column === "overall_rating_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "overall_rating_diff" &&
-                          order === "DSC" ? (
-                          <CaretUpFill />
+
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "overall_rating_diff" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "overall_rating_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard_rating_diff" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard_rating_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay_rating_diff" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay_rating_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass_rating_diff" &&
+                            order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass_rating_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp_rating_diff" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp_rating_diff" &&
+                              order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
                       </th>
                       <th
                         className="text-center"
-                        onClick={() => sorting("record_high")}
+                        onClick={() =>
+                          toggleRecords === 1 ? (
+                            sorting("record_high")
+                          ) : toggleRecords === 2 ? (
+                            sorting("hard_high")
+                          ) : toggleRecords === 3 ? (
+                            sorting("clay_high")
+                          ) : toggleRecords === 4 ? (
+                            sorting("grass_high")
+                          ) : toggleRecords === 5 ? (
+                            sorting("atp_high")
+                          ) : (
+                            <></>
+                          )
+                        }
                       >
                         <a style={{ color: "inherit" }} href="#/">
                           Peak Rating
                         </a>
                         {"\xa0"}
-                        {column === "record_high" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "record_high" && order === "DSC" ? (
-                          <CaretUpFill />
+                        {toggleRecords === 1 ? (
+                          <>
+                            {column === "record_high" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "record_high" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 2 ? (
+                          <>
+                            {column === "hard_high" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "hard_high" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 3 ? (
+                          <>
+                            {column === "clay_high" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "clay_high" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 4 ? (
+                          <>
+                            {column === "grass_high" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "grass_high" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ) : toggleRecords === 5 ? (
+                          <>
+                            {column === "atp_high" && order === "ASC" ? (
+                              <CaretDownFill />
+                            ) : column === "atp_high" && order === "DSC" ? (
+                              <CaretUpFill />
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         ) : (
                           <></>
                         )}
@@ -397,38 +787,180 @@ export default function (props) {
                     </tr>
                   </thead>
                   <tbody className="text-center record_tbody">
-                    {data != null ? (
+                    {currentData != null ? (
                       <>
-                        {data.map((record) => (
+                        {currentData.map((record) => (
                           <tr>
                             <td id="rank">
-                              {record.overall_ch == true ? (
+                              {toggleRecords === 1 ? (
                                 <>
-                                  <SuitDiamondFill
-                                    size={10}
-                                    color="#ffbb00"
-                                    className="career-high-crown"
-                                  />
+                                  {record.overall_ch == true ? (
+                                    <>
+                                      <SuitDiamondFill
+                                        size={10}
+                                        color="#ffbb00"
+                                        className="career-high-crown"
+                                      />
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                  {record.overall_rank}
+                                </>
+                              ) : toggleRecords === 2 ? (
+                                <>
+                                  {record.hard_ch == true ? (
+                                    <>
+                                      <SuitDiamondFill
+                                        size={10}
+                                        color="#ffbb00"
+                                        className="career-high-crown"
+                                      />
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                  {record.hard_rank}
+                                </>
+                              ) : toggleRecords === 3 ? (
+                                <>
+                                  {record.clay_ch == true ? (
+                                    <>
+                                      <SuitDiamondFill
+                                        size={10}
+                                        color="#ffbb00"
+                                        className="career-high-crown"
+                                      />
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                  {record.clay_rank}
+                                </>
+                              ) : toggleRecords === 4 ? (
+                                <>
+                                  {record.grass_ch == true ? (
+                                    <>
+                                      <SuitDiamondFill
+                                        size={10}
+                                        color="#ffbb00"
+                                        className="career-high-crown"
+                                      />
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                  {record.grass_rank}
+                                </>
+                              ) : toggleRecords === 5 ? (
+                                <>
+                                  {record.atp_ch == true ? (
+                                    <>
+                                      <SuitDiamondFill
+                                        size={10}
+                                        color="#ffbb00"
+                                        className="career-high-crown"
+                                      />
+                                    </>
+                                  ) : (
+                                    <> </>
+                                  )}
+                                  {record.atp_rank}
                                 </>
                               ) : (
-                                <> </>
+                                <></>
                               )}
-                              {record.overall_rank}
                             </td>
                             <td id="updown">
-                              {record.overall_rank_diff > 0 ? (
-                                <PositiveElo
-                                  content={record.overall_rank_diff}
-                                />
-                              ) : record.overall_rank_diff < 0 ? (
-                                <NegativeElo
-                                  content={record.overall_rank_diff}
-                                />
+                              {toggleRecords === 1 ? (
+                                <>
+                                  {record.overall_rank_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.overall_rank_diff}
+                                    />
+                                  ) : record.overall_rank_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.overall_rank_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 2 ? (
+                                <>
+                                  {record.hard_rank_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.hard_rank_diff}
+                                    />
+                                  ) : record.hard_rank_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.hard_rank_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 3 ? (
+                                <>
+                                  {record.clay_rank_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.clay_rank_diff}
+                                    />
+                                  ) : record.clay_rank_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.clay_rank_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 4 ? (
+                                <>
+                                  {record.grass_rank_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.grass_rank_diff}
+                                    />
+                                  ) : record.grass_rank_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.grass_rank_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 5 ? (
+                                <>
+                                  {record.atp_rank_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.atp_rank_diff}
+                                    />
+                                  ) : record.atp_rank_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.atp_rank_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
                               ) : (
-                                <>{"\xa0"}</>
+                                <></>
                               )}
                             </td>
-                            <td id="bestrank">{record.overall_best_rank}</td>
+                            <td id="bestrank">
+                              {toggleRecords === 1 ? (
+                                <>{record.overall_best_rank}</>
+                              ) : toggleRecords === 2 ? (
+                                <>{record.hard_best_rank}</>
+                              ) : toggleRecords === 3 ? (
+                                <>{record.clay_best_rank}</>
+                              ) : toggleRecords === 4 ? (
+                                <>{record.grass_best_rank}</>
+                              ) : toggleRecords === 5 ? (
+                                <>{record.atp_best_rank}</>
+                              ) : (
+                                <></>
+                              )}
+                            </td>
                             <td className="" id="country">
                               <ReactCountryFlag
                                 countryCode={record.player_id.substring(0, 2)}
@@ -452,232 +984,111 @@ export default function (props) {
                                 {toTitleCase(record.name)}
                               </a>
                             </td>
-                            <td id="ranking">{record.ranking}</td>
-                            <td id="+/-">
-                              {record.overall_rating_diff > 0 ? (
-                                <PositiveElo
-                                  content={record.overall_rating_diff}
-                                />
-                              ) : record.overall_rating_diff < 0 ? (
-                                <NegativeElo
-                                  content={record.overall_rating_diff}
-                                />
+                            <td id="ranking">
+                              {toggleRecords === 1 ? (
+                                <>{record.ranking}</>
+                              ) : toggleRecords === 2 ? (
+                                <>{record.hard}</>
+                              ) : toggleRecords === 3 ? (
+                                <>{record.clay}</>
+                              ) : toggleRecords === 4 ? (
+                                <>{record.grass}</>
+                              ) : toggleRecords === 5 ? (
+                                <>{record.atp}</>
                               ) : (
-                                <>{"\xa0"}</>
+                                <></>
                               )}
                             </td>
-                            <td id="record_high">{record.record_high}</td>
-                            <td id="age">{record.age}</td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <h3>You have not set any goals</h3>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              <div
-                class={
-                  toggleRecords === 2
-                    ? "tab-pane fade bg-white rounded show active"
-                    : "tab-pane fade bg-white rounded"
-                }
-              >
-                <table
-                  class="table table-borderless table-responsive liverating-table-bg-white"
-                  cellSpacing="0"
-                >
-                  <thead className="record_thead">
-                    <tr className="text-center">
-                      <th onClick={() => sorting("hard_rank")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "hard_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th onClick={() => sorting("hard_rank_diff")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          <ArrowUp />
-                          <ArrowDown />
-                        </a>
-                        {"\xa0"}
-                        {column === "hard_rank_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard_rank_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("hard_best_rank")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Best Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "hard_best_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard_best_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th className="text-center">Country</th>
-                      <th
-                        onClick={() => sorting("name")}
-                        className="w-25 text-start"
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Name
-                        </a>
-                        {"\xa0"}
-                        {column === "name" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "name" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("hard")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          ELO Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "hard" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("hard_rating_diff")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          +/-
-                        </a>
-                        {"\xa0"}
-                        {column === "hard_rating_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard_rating_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("hard_high")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Peak Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "hard_high" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "hard_high" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("age")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Age
-                        </a>
-                        {"\xa0"}
-                        {column === "age" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "age" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-center record_tbody">
-                    {data != null ? (
-                      <>
-                        {data.map((record) => (
-                          <tr>
-                            <td id="rank">
-                              {record.overall_ch == true ? (
+                            <td id="+/-">
+                              {toggleRecords === 1 ? (
                                 <>
-                                  <SuitDiamondFill
-                                    size={10}
-                                    color="#ffbb00"
-                                    className="career-high-crown"
-                                  />
+                                  {record.overall_rating_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.overall_rating_diff}
+                                    />
+                                  ) : record.overall_rating_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.overall_rating_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 2 ? (
+                                <>
+                                  {record.hard_rating_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.hard_rating_diff}
+                                    />
+                                  ) : record.hard_rating_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.hard_rating_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 3 ? (
+                                <>
+                                  {record.clay_rating_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.clay_rating_diff}
+                                    />
+                                  ) : record.clay_rating_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.clay_rating_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 4 ? (
+                                <>
+                                  {record.grass_rating_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.grass_rating_diff}
+                                    />
+                                  ) : record.grass_rating_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.grass_rating_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
+                                </>
+                              ) : toggleRecords === 5 ? (
+                                <>
+                                  {record.atp_rating_diff > 0 ? (
+                                    <PositiveElo
+                                      content={record.atp_rating_diff}
+                                    />
+                                  ) : record.atp_rating_diff < 0 ? (
+                                    <NegativeElo
+                                      content={record.atp_rating_diff}
+                                    />
+                                  ) : (
+                                    <>{"\xa0"}</>
+                                  )}
                                 </>
                               ) : (
-                                <> </>
+                                <></>
                               )}
-                              {record.hard_rank}
                             </td>
-                            <td id="updown">
-                              {record.hard_rank_diff > 0 ? (
-                                <PositiveElo content={record.hard_rank_diff} />
-                              ) : record.hard_rank_diff < 0 ? (
-                                <NegativeElo content={record.hard_rank_diff} />
+                            <td id="record_high">
+                              {toggleRecords === 1 ? (
+                                <>{record.record_high}</>
+                              ) : toggleRecords === 2 ? (
+                                <>{record.hard_high}</>
+                              ) : toggleRecords === 3 ? (
+                                <>{record.clay_high}</>
+                              ) : toggleRecords === 4 ? (
+                                <>{record.grass_high}</>
+                              ) : toggleRecords === 5 ? (
+                                <>{record.atp_high}</>
                               ) : (
-                                <>{"\xa0"}</>
+                                <></>
                               )}
                             </td>
-                            <td id="bestrank">{record.hard_best_rank}</td>
-                            <td className="" id="country">
-                              <ReactCountryFlag
-                                countryCode={record.player_id.substring(0, 2)}
-                                style={{
-                                  filter: "drop-shadow(0 0 0.12rem black)",
-                                }}
-                                svg
-                              />
-                              <span id="country_code">
-                                {"\xa0\xa0\xa0"}
-                                {record.player_id.substring(0, 2)}
-                              </span>
-                            </td>
-                            <td className="w-25 text-start" id="name">
-                              <a href={`./players/` + record.player_id}>
-                                {toTitleCase(record.name)}
-                              </a>
-                            </td>
-                            <td id="ranking">{record.hard}</td>
-                            <td id="+/-">
-                              {record.hard_rating_diff > 0 ? (
-                                <PositiveElo
-                                  content={record.hard_rating_diff}
-                                />
-                              ) : record.hard_rating_diff < 0 ? (
-                                <NegativeElo
-                                  content={record.hard_rating_diff}
-                                />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="record_high">{record.hard_high}</td>
                             <td id="age">{record.age}</td>
                           </tr>
                         ))}
@@ -687,636 +1098,21 @@ export default function (props) {
                     )}
                   </tbody>
                 </table>
-              </div>
-              <div
-                class={
-                  toggleRecords === 3
-                    ? "tab-pane fade bg-white rounded show active"
-                    : "tab-pane fade bg-white rounded"
-                }
-              >
-                <table
-                  class="table table-borderless table-responsive liverating-table-bg-white"
-                  cellSpacing="0"
-                >
-                  <thead className="record_thead">
-                    <tr className="text-center">
-                      <th onClick={() => sorting("clay_rank")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "clay_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th onClick={() => sorting("clay_rank_diff")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          <ArrowUp />
-                          <ArrowDown />
-                        </a>
-                        {"\xa0"}
-                        {column === "clay_rank_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay_rank_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("clay_best_rank")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Best Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "clay_best_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay_best_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th className="text-center">Country</th>
-                      <th
-                        onClick={() => sorting("name")}
-                        className="w-25 text-start"
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Name
-                        </a>
-                        {"\xa0"}
-                        {column === "name" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "name" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("clay")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          ELO Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "clay" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("clay_rating_diff")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          +/-
-                        </a>
-                        {"\xa0"}
-                        {column === "clay_rating_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay_rating_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("clay_high")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Peak Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "clay_high" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "clay_high" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("age")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Age
-                        </a>
-                        {"\xa0"}
-                        {column === "age" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "age" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-center record_tbody">
-                    {data != null ? (
-                      <>
-                        {data.map((record) => (
-                          <tr>
-                            <td id="rank">
-                              {record.overall_ch == true ? (
-                                <>
-                                  <SuitDiamondFill
-                                    size={10}
-                                    color="#ffbb00"
-                                    className="career-high-crown"
-                                  />
-                                </>
-                              ) : (
-                                <> </>
-                              )}
-                              {record.clay_rank}
-                            </td>
-                            <td id="updown">
-                              {record.clay_rank_diff > 0 ? (
-                                <PositiveElo content={record.clay_rank_diff} />
-                              ) : record.clay_rank_diff < 0 ? (
-                                <NegativeElo content={record.clay_rank_diff} />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="bestrank">{record.clay_best_rank}</td>
-                            <td className="" id="country">
-                              <ReactCountryFlag
-                                countryCode={record.player_id.substring(0, 2)}
-                                style={{
-                                  filter: "drop-shadow(0 0 0.12rem black)",
-                                }}
-                                svg
-                              />
-                              <span id="country_code">
-                                {"\xa0\xa0\xa0"}
-                                {record.player_id.substring(0, 2)}
-                              </span>
-                            </td>
-                            <td className="w-25 text-start" id="name">
-                              <a href={`./players/` + record.player_id}>
-                                {toTitleCase(record.name)}
-                              </a>
-                            </td>
-                            <td id="ranking">{record.clay}</td>
-                            <td id="+/-">
-                              {record.clay_rating_diff > 0 ? (
-                                <PositiveElo
-                                  content={record.clay_rating_diff}
-                                />
-                              ) : record.clay_rating_diff < 0 ? (
-                                <NegativeElo
-                                  content={record.clay_rating_diff}
-                                />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="record_high">{record.clay_high}</td>
-                            <td id="age">{record.age}</td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <h3>You have not set any goals</h3>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              <div
-                class={
-                  toggleRecords === 4
-                    ? "tab-pane fade bg-white rounded show active"
-                    : "tab-pane fade bg-white rounded"
-                }
-              >
-                <table
-                  class="table table-borderless table-responsive liverating-table-bg-white"
-                  cellSpacing="0"
-                >
-                  <thead className="record_thead">
-                    <tr className="text-center">
-                      <th onClick={() => sorting("grass_rank")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "grass_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th onClick={() => sorting("grass_rank_diff")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          <ArrowUp />
-                          <ArrowDown />
-                        </a>
-                        {"\xa0"}
-                        {column === "grass_rank_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass_rank_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("grass_best_rank")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Best Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "grass_best_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass_best_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th className="text-center">Country</th>
-                      <th
-                        onClick={() => sorting("name")}
-                        className="w-25 text-start"
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Name
-                        </a>
-                        {"\xa0"}
-                        {column === "name" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "name" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("grass")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          ELO Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "grass" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("grass_rating_diff")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          +/-
-                        </a>
-                        {"\xa0"}
-                        {column === "grass_rating_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass_rating_diff" &&
-                          order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("grass_high")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Peak Rating
-                        </a>
-                        {"\xa0"}
-                        {column === "grass_high" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "grass_high" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("age")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Age
-                        </a>
-                        {"\xa0"}
-                        {column === "age" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "age" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-center record_tbody">
-                    {data != null ? (
-                      <>
-                        {data.map((record) => (
-                          <tr>
-                            <td id="rank">
-                              {record.overall_ch == true ? (
-                                <>
-                                  <SuitDiamondFill
-                                    size={10}
-                                    color="#ffbb00"
-                                    className="career-high-crown"
-                                  />
-                                </>
-                              ) : (
-                                <> </>
-                              )}
-                              {record.grass_rank}
-                            </td>
-                            <td id="updown">
-                              {record.grass_rank_diff > 0 ? (
-                                <PositiveElo content={record.grass_rank_diff} />
-                              ) : record.grass_rank_diff < 0 ? (
-                                <NegativeElo content={record.grass_rank_diff} />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="bestrank">{record.grass_best_rank}</td>
-                            <td className="" id="country">
-                              <ReactCountryFlag
-                                countryCode={record.player_id.substring(0, 2)}
-                                style={{
-                                  filter: "drop-shadow(0 0 0.12rem black)",
-                                }}
-                                svg
-                              />
-                              <span id="country_code">
-                                {"\xa0\xa0\xa0"}
-                                {record.player_id.substring(0, 2)}
-                              </span>
-                            </td>
-                            <td className="w-25 text-start" id="name">
-                              <a href={`./players/` + record.player_id}>
-                                {toTitleCase(record.name)}
-                              </a>
-                            </td>
-                            <td id="ranking">{record.grass}</td>
-                            <td id="+/-">
-                              {record.grass_rating_diff > 0 ? (
-                                <PositiveElo
-                                  content={record.grass_rating_diff}
-                                />
-                              ) : record.grass_rating_diff < 0 ? (
-                                <NegativeElo
-                                  content={record.grass_rating_diff}
-                                />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="record_high">{record.grass_high}</td>
-                            <td id="age">{record.age}</td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <h3>You have not set any goals</h3>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              <div
-                class={
-                  toggleRecords === 5
-                    ? "tab-pane fade bg-white rounded show active"
-                    : "tab-pane fade bg-white rounded"
-                }
-              >
-                <table
-                  class="table table-borderless table-responsive liverating-table-bg-white"
-                  cellSpacing="0"
-                >
-                  <thead className="record_thead">
-                    <tr className="text-center">
-                      <th onClick={() => sorting("atp_rank")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "atp_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th onClick={() => sorting("atp_rank_diff")}>
-                        <a style={{ color: "inherit" }} href="#/">
-                          <ArrowUp />
-                          <ArrowDown />
-                        </a>
-                        {"\xa0"}
-                        {column === "atp_rank_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp_rank_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("atp_best_rank")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Best Rank
-                        </a>
-                        {"\xa0"}
-                        {column === "atp_best_rank" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp_best_rank" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th className="text-center">Country</th>
-                      <th
-                        onClick={() => sorting("name")}
-                        className="w-25 text-start"
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Name
-                        </a>
-                        {"\xa0"}
-                        {column === "name" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "name" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("atp")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          ATP
-                        </a>
-                        {"\xa0"}
-                        {column === "atp" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("atp_rating_diff")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          +/-
-                        </a>
-                        {"\xa0"}
-                        {column === "atp_rating_diff" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp_rating_diff" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("atp_best_rating")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Peak ATP
-                        </a>
-                        {"\xa0"}
-                        {column === "atp_best_rating" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "atp_best_rating" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("age")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Age
-                        </a>
-                        {"\xa0"}
-                        {column === "age" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "age" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-center record_tbody">
-                    {data != null ? (
-                      <>
-                        {data.map((record) => (
-                          <tr>
-                            <td id="rank">
-                              {record.overall_ch == true ? (
-                                <>
-                                  <SuitDiamondFill
-                                    size={10}
-                                    color="#ffbb00"
-                                    className="career-high-crown"
-                                  />
-                                </>
-                              ) : (
-                                <> </>
-                              )}
-                              {record.atp_rank}
-                            </td>
-                            <td id="updown">
-                              {record.atp_rank_diff > 0 ? (
-                                <PositiveElo content={record.atp_rank_diff} />
-                              ) : record.atp_rank_diff < 0 ? (
-                                <NegativeElo content={record.atp_rank_diff} />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="bestrank">{record.atp_best_rank}</td>
-                            <td className="" id="country">
-                              <ReactCountryFlag
-                                countryCode={record.player_id.substring(0, 2)}
-                                style={{
-                                  filter: "drop-shadow(0 0 0.12rem black)",
-                                }}
-                                svg
-                              />
-                              <span id="country_code">
-                                {"\xa0\xa0\xa0"}
-                                {record.player_id.substring(0, 2)}
-                              </span>
-                            </td>
-                            <td className="w-25 text-start" id="name">
-                              <a href={`./players/` + record.player_id}>
-                                {toTitleCase(record.name)}
-                              </a>
-                            </td>
-                            <td id="ranking">{record.atp}</td>
-                            <td id="+/-">
-                              {record.atp_rating_diff > 0 ? (
-                                <PositiveElo content={record.atp_rating_diff} />
-                              ) : record.atp_rating_diff < 0 ? (
-                                <NegativeElo content={record.atp_rating_diff} />
-                              ) : (
-                                <>{"\xa0"}</>
-                              )}
-                            </td>
-                            <td id="record_high">{record.atp_best_rating}</td>
-                            <td id="age">{record.age}</td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <h3>You have not set any goals</h3>
-                    )}
-                  </tbody>
-                </table>
+                {DataPerPage > 100 ? (
+                  <></>
+                ) : (
+                  <>
+                    <nav className="pagination-outer">
+                      <ul className="pagination">
+                        <Pagination
+                          DataPerPage={DataPerPage}
+                          totalData={data.length}
+                          paginate={paginate}
+                        />
+                      </ul>
+                    </nav>
+                  </>
+                )}
               </div>
             </div>
           </div>

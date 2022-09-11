@@ -171,8 +171,7 @@ function Players() {
               size="sm"
             >
               {DataPerPage} per page
-            </Dropdown.Toggle>
-
+            </Dropdown.Toggle> 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
                 100 per page

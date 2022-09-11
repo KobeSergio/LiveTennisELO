@@ -7,7 +7,9 @@ const Records = require("../models/recordModel");
 // @route:      GET /admin/players
 // @access      Private
 const getPlayers = asyncHandler(async (req, res) => {
-  const players = await Player.find();
+  const players = await Player.find().select(
+    "player_id player_name overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date"
+  );
 
   if (!players) {
     res.status(400);
@@ -71,7 +73,7 @@ const getIndPlayer = asyncHandler(async (req, res) => {
   })
     .sort("-tourney_date")
     .limit(150);
-  const records = await Records.find({ player_id: { $eq: req.params.id } }); 
+  const records = await Records.find({ player_id: { $eq: req.params.id } });
   if (!player && !matches && !records) {
     res.status(400);
     throw new Error("Data insufficient");

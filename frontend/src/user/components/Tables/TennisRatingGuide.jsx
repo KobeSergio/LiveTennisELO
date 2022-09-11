@@ -25,14 +25,7 @@ export default function () {
                 </span>
                 <br />
                 <br />
-                <ATPAllocation />
-                <br />
-                <br />
-                <div>
-                  <a href="#">See ATP Point allocation here</a>
-                  <BoxArrowUpRight className="ms-2" size={12} color="blue" />
-                </div>
-                <br />
+                {/* <ATPAllocation /> */} 
                 <h5 className="card-title">ELO Ranking:</h5>
                 <span className="card-text">
                   The principle behind any Elo system is that each player’s
@@ -48,7 +41,7 @@ export default function () {
               </div>
             </div>
           </div>
-          <div className="text-center px-2 py-2">
+          {/* <div className="text-center px-2 py-2">
             <CreditCard size={30} className="me-2" />{" "}
             <Paypal className="me-2" size={30} /> <CreditCard2Front size={30} />
           </div>
@@ -56,7 +49,7 @@ export default function () {
             If you enjoy the Live Tennis ELO Ratings website and would like to
             help it, please think about making a small donation to support our
             project. Thanks!
-          </span>
+          </span> */}
         </div>
       </div>
     </>

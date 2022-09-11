@@ -1,30 +1,34 @@
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons'
+import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { useState } from "react";
+export default function Pagination({ DataPerPage, totalData, paginate }) {
+  const pageNumbers = [];
 
-export default function Pagination() {
-    return (
-        <nav className='pagination-outer'>
-            <ul className="pagination">
-                <li className='page-item'>
-                    <a href="" className='pagination-button'>
-                        <ChevronLeft />
-                        Previous
-                    </a>
-                </li>
+  for (let i = 1; i <= Math.ceil(totalData / DataPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item"><a className="page-link" href="#">...</a></li>
-                <li className="page-item"><a className="page-link" href="#">188</a></li>
-
-                <li className='page-item'>
-                    <a href="" className='pagination-button'>
-                        Next
-                        <ChevronRight />
-
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    )
+  const [selected, setSelected] = useState(0);
+  return (
+    <nav className="pagination-outer">
+      <ul className="pagination">
+        {pageNumbers.map((number) => (
+          <li
+            key={number}
+            className={selected === number ? "page-item active" : "page-item"}
+          >
+            <a
+              onClick={() => {
+                paginate(number);
+                setSelected(number);
+              }}
+              className="page-link"
+              href="#/"
+            >
+              {number}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }

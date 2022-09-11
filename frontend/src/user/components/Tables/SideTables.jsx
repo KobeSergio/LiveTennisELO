@@ -49,16 +49,16 @@ function alphabetically(ascending, col) {
 function alph_average(ascending) {
   return function (a, b) {
     a =
-      (a["overall_rating"] +
-        a["hard_rating"] +
-        a["clay_rating"] +
-        a["grass_rating"]) /
+      (a["overall_peak_rating"] +
+        a["hard_peak_rating"] +
+        a["clay_peak_rating"] +
+        a["grass_peak_rating"]) /
       4;
     b =
-      (b["overall_rating"] +
-        b["hard_rating"] +
-        b["clay_rating"] +
-        b["grass_rating"]) /
+      (b["overall_peak_rating"] +
+        b["hard_peak_rating"] +
+        b["clay_peak_rating"] +
+        b["grass_peak_rating"]) /
       4;
 
     console.log(a);
@@ -267,11 +267,28 @@ export default function () {
                       <th className="px-0" style={{ width: "1%" }}>
                         Rank
                       </th>
-                      <th style={toggleRecords === 6 ? ({ width: "45%" }) : ({width: "65%"})} className="text-start">
+                      <th
+                        style={
+                          toggleRecords === 6
+                            ? { width: "45%" }
+                            : { width: "65%" }
+                        }
+                        className="text-start"
+                      >
                         Name
                       </th>
-                      <th style={{ width: "5%" }}>{toggleRecords === 6 ? (<>Average</>) : (<>Peak</>)}</th>
-                      <th style={toggleRecords === 6 ? ({ width: "5%" }) : ({width: "45%"})}>{toggleRecords === 6 ? (<>Peak</>) : (<>Date</>)}</th>
+                      <th style={{ width: "5%" }}>
+                        {toggleRecords === 6 ? <>ELO</> : <>Peak</>}
+                      </th>
+                      <th
+                        style={
+                          toggleRecords === 6
+                            ? { width: "0%" }
+                            : { width: "45%" }
+                        }
+                      >
+                        {toggleRecords === 6 ? <></> : <>Date</>}
+                      </th>
                     </tr>
                   </thead>
                   {toggleRecords === 1 ? (
@@ -309,7 +326,9 @@ export default function () {
                                   {player.overall_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.overall_peak_rating_date.slice(0, 7)
+                                    player.overall_peak_rating_date.split(
+                                      " "
+                                    )[0]
                                   )}
                                 </td>
                               </tr>
@@ -355,7 +374,7 @@ export default function () {
                                   {player.hard_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.hard_peak_rating_date.slice(0, 7)
+                                    player.hard_peak_rating_date.split(" ")[0]
                                   )}
                                 </td>
                               </tr>
@@ -401,7 +420,7 @@ export default function () {
                                   {player.clay_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.clay_peak_rating_date.slice(0, 7)
+                                    player.clay_peak_rating_date.split(" ")[0]
                                   )}
                                 </td>
                               </tr>
@@ -447,7 +466,7 @@ export default function () {
                                   {player.grass_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.grass_peak_rating_date.slice(0, 7)
+                                    player.grass_peak_rating_date.split(" ")[0]
                                   )}
                                 </td>
                               </tr>
@@ -535,15 +554,6 @@ export default function () {
                                   </span>
                                 </td>
                                 <td id="elo_rating">
-                                  {Math.floor(
-                                    (player.overall_rating +
-                                      player.hard_rating +
-                                      player.clay_rating +
-                                      player.grass_rating) /
-                                      4
-                                  )}
-                                </td>
-                                <td id="date">
                                   {Math.floor(
                                     (player.overall_peak_rating +
                                       player.hard_peak_rating +
