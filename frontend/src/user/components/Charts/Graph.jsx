@@ -288,6 +288,61 @@ export default function ({ invert, filter, type, surface }) {
                       },
                       responsive: true,
                       plugins: {
+                        tooltip: {
+                          callbacks: {
+                            // We'll edit the `title` string
+                            title: function (tooltipItem) {
+                              // 0.079 - 0.165 : JAN
+                              // 0.166 - 0.248: FEB
+                              // 0.249 - 0.331 : MAR
+                              // 0.332 - 0.414: APR
+                              // 0.415 - 0.497 : MAY
+                              // 0.498 - 0.580 : JUN
+                              // 0.581 - 0.663 : JUL
+                              // 0.664 - 0.746 : AUG
+                              // 0.747 - 0.829: SEP
+                              // 0.83 - 0.912: OCT
+                              // 0.913 - 0.995: NOV
+                              // 0.996 - 0.078 : DEC
+
+                              // The following returns the full string
+                              if (type === "linear") {
+                                const quo = Math.floor(
+                                  parseFloat(tooltipItem[0].label)
+                                );
+                                const rem =
+                                  parseFloat(tooltipItem[0].label) % quo;
+
+                                var ageDate = "";
+                                if (rem >= 0.079 && rem <= 0.165) {
+                                  ageDate = "and 1 Month";
+                                } else if (rem >= 0.166 && rem <= 0.248) {
+                                  ageDate = "and 2 Months";
+                                } else if (rem >= 0.249 && rem <= 0.331) {
+                                  ageDate = "and 3 Months";
+                                } else if (rem >= 0.332 && rem <= 0.414) {
+                                  ageDate = "and 4 Months";
+                                } else if (rem >= 0.415 && rem <= 0.497) {
+                                  ageDate = "and 5 Months";
+                                } else if (rem >= 0.498 && rem <= 0.58) {
+                                  ageDate = "and 6 Months";
+                                } else if (rem >= 0.581 && rem <= 0.663) {
+                                  ageDate = "and 7 Months";
+                                } else if (rem >= 0.664 && rem <= 0.746) {
+                                  ageDate = "and 8 Months";
+                                } else if (rem >= 0.747 && rem <= 0.829) {
+                                  ageDate = "and 9 Months";
+                                } else if (rem >= 0.83 && rem <= 0.912) {
+                                  ageDate = "and 10 Months";
+                                } else if (rem >= 0.913 && rem <= 0.995) {
+                                  ageDate = "and 11 Months";
+                                }
+                                return `${quo} ${ageDate}`;
+                              }
+                              return tooltipItem[0].label;
+                            },
+                          },
+                        },
                         legend: {
                           position: "top",
                         },

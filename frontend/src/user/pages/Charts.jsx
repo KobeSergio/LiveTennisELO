@@ -203,17 +203,29 @@ export default function Charts() {
                 onChange={handleSelect}
                 isOptionDisabled={() => selectedPlayers.length >= 2}
               />
+              <p className="pt-2 m-1" style={{ color: "gray" }}>
+                Search for a player by typing their names above. Only 2 players
+                can be compared.
+              </p>
               {/* Add Players */}
               <div className="d-grid my-3 gap-2">
                 <div className="d-flex gap-2">
                   {charts != null ? (
                     <>
                       <div className="card border-0 w-50">
-                        <div className="card-header rounded-top-3 p1-100-bg border-0 h-25"> 
-                        </div>
+                        <div className="card-header rounded-top-3 p1-100-bg border-0 h-25"></div>
                         <div className="card-body px-3  py-2">
                           <h5 className="card-title">
-                            {charts.players[0].player_name}
+                            <a
+                              href="#/"
+                              onClick={() => {
+                                navigate(
+                                  "/players/" + charts.players[0].player_id
+                                );
+                              }}
+                            >
+                              {charts.players[0].player_name}
+                            </a>
                           </h5>
                           <p className="card-text fw-normal">
                             {parseCountry(
@@ -229,11 +241,19 @@ export default function Charts() {
                         </div>
                       </div>
                       <div className="card border-0 w-50">
-                        <div className="card-header rounded-top-3 p2-100-bg border-0 h-25"> 
-                        </div>
+                        <div className="card-header rounded-top-3 p2-100-bg border-0 h-25"></div>
                         <div className="card-body px-3  py-2">
                           <h5 className="card-title">
-                            {charts.players[1].player_name}
+                            <a
+                              href="#/"
+                              onClick={() => {
+                                navigate(
+                                  "/players/" + charts.players[1].player_id
+                                );
+                              }}
+                            >
+                              {charts.players[1].player_name}
+                            </a>
                           </h5>
                           <p className="card-text fw-normal">
                             {parseCountry(
