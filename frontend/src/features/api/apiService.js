@@ -35,7 +35,22 @@ const drawChart = async (players) => {
 
 const loadPlayer = async (player_id) => {
   const player = await axios.get(API_URL + "players/" + player_id);
-  return player.data;
+
+  var matchContainer = [];
+
+  if (player.data.matches.length != 0) {
+    player.data.matches.forEach((surface) => {
+      surface.mostRecentGames.forEach((game) => {
+        matchContainer.push(game);
+      });
+    });
+  }
+
+  return {
+    player: player.data.player,
+    matches: matchContainer,
+    records: player.data.records,
+  };
 };
 const apiService = {
   loadRecord,

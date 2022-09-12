@@ -81,50 +81,72 @@ function pushToDatasets(player_records, player_details, filter) {
         }
 
         if (filter == "elo ratings" || filter == "elo ratings by age") {
-          overall_data.push({
-            x: X,
-            y: record.ranking,
-          });
-          clay_data.push({
-            x: X,
-            y: record.clay,
-          });
-          grass_data.push({
-            x: X,
-            y: record.grass,
-          });
-          hard_data.push({
-            x: X,
-            y: record.hard,
-          });
-          atp_data.push({
-            x: X,
-            y: record.atp,
-          });
+          if (overall_data != null) {
+            overall_data.push({
+              x: X,
+              y: record.ranking,
+            });
+          }
+          if (clay_data != null) {
+            clay_data.push({
+              x: X,
+              y: record.clay,
+            });
+          }
+          if (grass_data != null) {
+            grass_data.push({
+              x: X,
+              y: record.grass,
+            });
+          }
+
+          if (record.hard != null) {
+            hard_data.push({
+              x: X,
+              y: record.hard,
+            });
+          }
+
+          if (record.atp != null) {
+            atp_data.push({
+              x: X,
+              y: record.atp,
+            });
+          }
         } else if (
           filter == "elo rankings" ||
           filter == "elo rankings by age"
         ) {
-          overall_data.push({
-            x: X,
-            y: record.overall_rank,
-          });
-          clay_data.push({
-            x: X,
-            y: record.clay_rank,
-          });
-          grass_data.push({
-            x: X,
-            y: record.grass_rank,
-          });
-          hard_data.push({
-            x: X,
-            y: record.hard_rank,
-          });
-          atp_data.push({
-            x: X,
-            y: record.atp_rank,
-          });
+          if (record.overall_rank != null) {
+            overall_data.push({
+              x: X,
+              y: record.overall_rank,
+            });
+          }
+          if (record.clay_rank != null) {
+            clay_data.push({
+              x: X,
+              y: record.clay_rank,
+            });
+          }
+          if (record.grass_rank != null) {
+            grass_data.push({
+              x: X,
+              y: record.grass_rank,
+            });
+          }
+          if (record.hard_rank != null) {
+            hard_data.push({
+              x: X,
+              y: record.hard_rank,
+            });
+          }
+          if (record.atp_rank != null) {
+            atp_data.push({
+              x: X,
+              y: record.atp_rank,
+            });
+          }
         }
       }
     });

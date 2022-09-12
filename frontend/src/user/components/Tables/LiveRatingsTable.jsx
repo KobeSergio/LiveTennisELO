@@ -15,7 +15,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function (txt) {
+  var parsed = str;
+
+  if (parsed.slice(0, 3).toLowerCase() === "zz_") {
+    parsed = parsed.slice(3);
+  }
+
+  if (parsed.toLowerCase() === "mcenroe john") {
+    return "McEnroe John";
+  }
+
+  return parsed.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
@@ -266,855 +276,811 @@ export default function (props) {
                 </a>
               </div>
             </nav>
-            <div class="tab-content">
-              <div class="tab-pane fade bg-white rounded show active">
-                <table
-                  class="table table-borderless table-responsive liverating-table-bg-white"
-                  cellSpacing="0"
-                >
-                  <thead className="record_thead">
-                    <tr className="text-center">
-                      <th
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("overall_rank")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard_rank")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay_rank")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass_rank")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp_rank")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Rank
-                        </a>
-                        {"\xa0"}
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "overall_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "overall_rank" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard_rank" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay_rank" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass_rank" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp_rank" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("overall_rank_diff")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard_rank_diff")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay_rank_diff")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass_rank_diff")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp_rank_diff")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          <ArrowUp />
-                          <ArrowDown />
-                        </a>
-                        {"\xa0"}
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "overall_rank_diff" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "overall_rank_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard_rank_diff" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard_rank_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay_rank_diff" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay_rank_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass_rank_diff" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass_rank_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp_rank_diff" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp_rank_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("overall_best_rank")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard_best_rank")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay_best_rank")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass_best_rank")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp_best_rank")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Best Rank
-                        </a>
-                        {"\xa0"}
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "overall_best_rank" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "overall_best_rank" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard_best_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard_best_rank" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay_best_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay_best_rank" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass_best_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass_best_rank" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp_best_rank" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp_best_rank" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th className="text-center">Country</th>
-                      <th
-                        onClick={() => sorting("name")}
-                        className="w-25 text-start"
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Name
-                        </a>
-                        {"\xa0"}
-                        {column === "name" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "name" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("ranking")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          ELO Rating
-                        </a>
-                        {"\xa0"}
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "ranking" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "ranking" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("overall_rating_diff")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard_rating_diff")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay_rating_diff")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass_rating_diff")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp_rating_diff")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          +/-
-                        </a>
-                        {"\xa0"}
-
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "overall_rating_diff" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "overall_rating_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard_rating_diff" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard_rating_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay_rating_diff" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay_rating_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass_rating_diff" &&
-                            order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass_rating_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp_rating_diff" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp_rating_diff" &&
-                              order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() =>
-                          toggleRecords === 1 ? (
-                            sorting("record_high")
-                          ) : toggleRecords === 2 ? (
-                            sorting("hard_high")
-                          ) : toggleRecords === 3 ? (
-                            sorting("clay_high")
-                          ) : toggleRecords === 4 ? (
-                            sorting("grass_high")
-                          ) : toggleRecords === 5 ? (
-                            sorting("atp_high")
-                          ) : (
-                            <></>
-                          )
-                        }
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Peak Rating
-                        </a>
-                        {"\xa0"}
-                        {toggleRecords === 1 ? (
-                          <>
-                            {column === "record_high" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "record_high" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 2 ? (
-                          <>
-                            {column === "hard_high" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "hard_high" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 3 ? (
-                          <>
-                            {column === "clay_high" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "clay_high" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 4 ? (
-                          <>
-                            {column === "grass_high" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "grass_high" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : toggleRecords === 5 ? (
-                          <>
-                            {column === "atp_high" && order === "ASC" ? (
-                              <CaretDownFill />
-                            ) : column === "atp_high" && order === "DSC" ? (
-                              <CaretUpFill />
-                            ) : (
-                              <></>
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                      <th
-                        className="text-center"
-                        onClick={() => sorting("age")}
-                      >
-                        <a style={{ color: "inherit" }} href="#/">
-                          Age
-                        </a>
-                        {"\xa0"}
-                        {column === "age" && order === "ASC" ? (
-                          <CaretDownFill />
-                        ) : column === "age" && order === "DSC" ? (
-                          <CaretUpFill />
-                        ) : (
-                          <></>
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-center record_tbody">
-                    {currentData != null ? (
+            <table
+              class="table table-borderless table-responsive liverating-table-bg-white"
+              cellSpacing="0"
+            >
+              <thead className="record_thead">
+                <tr className="text-center">
+                  <th
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("overall_rank")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard_rank")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay_rank")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass_rank")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp_rank")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      Rank
+                    </a>
+                    {"\xa0"}
+                    {toggleRecords === 1 ? (
                       <>
-                        {currentData.map((record) => (
-                          <tr>
-                            <td id="rank">
-                              {toggleRecords === 1 ? (
-                                <>
-                                  {record.overall_ch == true ? (
-                                    <>
-                                      <SuitDiamondFill
-                                        size={10}
-                                        color="#ffbb00"
-                                        className="career-high-crown"
-                                      />
-                                    </>
-                                  ) : (
-                                    <> </>
-                                  )}
-                                  {record.overall_rank}
-                                </>
-                              ) : toggleRecords === 2 ? (
-                                <>
-                                  {record.hard_ch == true ? (
-                                    <>
-                                      <SuitDiamondFill
-                                        size={10}
-                                        color="#ffbb00"
-                                        className="career-high-crown"
-                                      />
-                                    </>
-                                  ) : (
-                                    <> </>
-                                  )}
-                                  {record.hard_rank}
-                                </>
-                              ) : toggleRecords === 3 ? (
-                                <>
-                                  {record.clay_ch == true ? (
-                                    <>
-                                      <SuitDiamondFill
-                                        size={10}
-                                        color="#ffbb00"
-                                        className="career-high-crown"
-                                      />
-                                    </>
-                                  ) : (
-                                    <> </>
-                                  )}
-                                  {record.clay_rank}
-                                </>
-                              ) : toggleRecords === 4 ? (
-                                <>
-                                  {record.grass_ch == true ? (
-                                    <>
-                                      <SuitDiamondFill
-                                        size={10}
-                                        color="#ffbb00"
-                                        className="career-high-crown"
-                                      />
-                                    </>
-                                  ) : (
-                                    <> </>
-                                  )}
-                                  {record.grass_rank}
-                                </>
-                              ) : toggleRecords === 5 ? (
-                                <>
-                                  {record.atp_ch == true ? (
-                                    <>
-                                      <SuitDiamondFill
-                                        size={10}
-                                        color="#ffbb00"
-                                        className="career-high-crown"
-                                      />
-                                    </>
-                                  ) : (
-                                    <> </>
-                                  )}
-                                  {record.atp_rank}
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td id="updown">
-                              {toggleRecords === 1 ? (
-                                <>
-                                  {record.overall_rank_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.overall_rank_diff}
-                                    />
-                                  ) : record.overall_rank_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.overall_rank_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 2 ? (
-                                <>
-                                  {record.hard_rank_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.hard_rank_diff}
-                                    />
-                                  ) : record.hard_rank_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.hard_rank_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 3 ? (
-                                <>
-                                  {record.clay_rank_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.clay_rank_diff}
-                                    />
-                                  ) : record.clay_rank_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.clay_rank_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 4 ? (
-                                <>
-                                  {record.grass_rank_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.grass_rank_diff}
-                                    />
-                                  ) : record.grass_rank_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.grass_rank_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 5 ? (
-                                <>
-                                  {record.atp_rank_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.atp_rank_diff}
-                                    />
-                                  ) : record.atp_rank_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.atp_rank_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td id="bestrank">
-                              {toggleRecords === 1 ? (
-                                <>{record.overall_best_rank}</>
-                              ) : toggleRecords === 2 ? (
-                                <>{record.hard_best_rank}</>
-                              ) : toggleRecords === 3 ? (
-                                <>{record.clay_best_rank}</>
-                              ) : toggleRecords === 4 ? (
-                                <>{record.grass_best_rank}</>
-                              ) : toggleRecords === 5 ? (
-                                <>{record.atp_best_rank}</>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td className="" id="country">
-                              <ReactCountryFlag
-                                countryCode={record.player_id.substring(0, 2)}
-                                style={{
-                                  filter: "drop-shadow(0 0 0.12rem black)",
-                                }}
-                                svg
-                              />
-                              <span id="country_code">
-                                {"\xa0\xa0\xa0"}
-                                {record.player_id.substring(0, 2)}
-                              </span>
-                            </td>
-                            <td className="w-25 text-start" id="name">
-                              <a
-                                href="#/"
-                                onClick={() =>
-                                  navigate(`./players/` + record.player_id)
-                                }
-                              >
-                                {toTitleCase(record.name)}
-                              </a>
-                            </td>
-                            <td id="ranking">
-                              {toggleRecords === 1 ? (
-                                <>{record.ranking}</>
-                              ) : toggleRecords === 2 ? (
-                                <>{record.hard}</>
-                              ) : toggleRecords === 3 ? (
-                                <>{record.clay}</>
-                              ) : toggleRecords === 4 ? (
-                                <>{record.grass}</>
-                              ) : toggleRecords === 5 ? (
-                                <>{record.atp}</>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td id="+/-">
-                              {toggleRecords === 1 ? (
-                                <>
-                                  {record.overall_rating_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.overall_rating_diff}
-                                    />
-                                  ) : record.overall_rating_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.overall_rating_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 2 ? (
-                                <>
-                                  {record.hard_rating_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.hard_rating_diff}
-                                    />
-                                  ) : record.hard_rating_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.hard_rating_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 3 ? (
-                                <>
-                                  {record.clay_rating_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.clay_rating_diff}
-                                    />
-                                  ) : record.clay_rating_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.clay_rating_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 4 ? (
-                                <>
-                                  {record.grass_rating_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.grass_rating_diff}
-                                    />
-                                  ) : record.grass_rating_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.grass_rating_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : toggleRecords === 5 ? (
-                                <>
-                                  {record.atp_rating_diff > 0 ? (
-                                    <PositiveElo
-                                      content={record.atp_rating_diff}
-                                    />
-                                  ) : record.atp_rating_diff < 0 ? (
-                                    <NegativeElo
-                                      content={record.atp_rating_diff}
-                                    />
-                                  ) : (
-                                    <>{"\xa0"}</>
-                                  )}
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td id="record_high">
-                              {toggleRecords === 1 ? (
-                                <>{record.record_high}</>
-                              ) : toggleRecords === 2 ? (
-                                <>{record.hard_high}</>
-                              ) : toggleRecords === 3 ? (
-                                <>{record.clay_high}</>
-                              ) : toggleRecords === 4 ? (
-                                <>{record.grass_high}</>
-                              ) : toggleRecords === 5 ? (
-                                <>{record.atp_high}</>
-                              ) : (
-                                <></>
-                              )}
-                            </td>
-                            <td id="age">{record.age}</td>
-                          </tr>
-                        ))}
+                        {column === "overall_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
                       </>
                     ) : (
-                      <h3>You have not set any goals</h3>
+                      <></>
                     )}
-                  </tbody>
-                </table>
-                {DataPerPage > 100 ? (
-                  <></>
-                ) : (
+                  </th>
+                  <th
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("overall_rank_diff")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard_rank_diff")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay_rank_diff")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass_rank_diff")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp_rank_diff")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      <ArrowUp />
+                      <ArrowDown />
+                    </a>
+                    {"\xa0"}
+                    {toggleRecords === 1 ? (
+                      <>
+                        {column === "overall_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rank_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp_rank_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rank_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th
+                    className="text-center"
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("overall_best_rank")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard_best_rank")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay_best_rank")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass_best_rank")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp_best_rank")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      Best Rank
+                    </a>
+                    {"\xa0"}
+                    {toggleRecords === 1 ? (
+                      <>
+                        {column === "overall_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_best_rank" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp_best_rank" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_best_rank" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th className="text-center">Country</th>
+                  <th
+                    onClick={() => sorting("name")}
+                    className="w-25 text-start"
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      Name
+                    </a>
+                    {"\xa0"}
+                    {column === "name" && order === "ASC" ? (
+                      <CaretDownFill />
+                    ) : column === "name" && order === "DSC" ? (
+                      <CaretUpFill />
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th
+                    className="text-center"
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("ranking")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      ELO Rating
+                    </a>
+                    {"\xa0"}
+                    {toggleRecords === 1 ? (
+                      <>
+                        {column === "ranking" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "ranking" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th
+                    className="text-center"
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("overall_rating_diff")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard_rating_diff")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay_rating_diff")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass_rating_diff")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp_rating_diff")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      +/-
+                    </a>
+                    {"\xa0"}
+
+                    {toggleRecords === 1 ? (
+                      <>
+                        {column === "overall_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "overall_rating_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_rating_diff" &&
+                          order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp_rating_diff" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_rating_diff" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th
+                    className="text-center"
+                    onClick={() =>
+                      toggleRecords === 1 ? (
+                        sorting("record_high")
+                      ) : toggleRecords === 2 ? (
+                        sorting("hard_high")
+                      ) : toggleRecords === 3 ? (
+                        sorting("clay_high")
+                      ) : toggleRecords === 4 ? (
+                        sorting("grass_high")
+                      ) : toggleRecords === 5 ? (
+                        sorting("atp_high")
+                      ) : (
+                        <></>
+                      )
+                    }
+                  >
+                    <a style={{ color: "inherit" }} href="#/">
+                      Peak Rating
+                    </a>
+                    {"\xa0"}
+                    {toggleRecords === 1 ? (
+                      <>
+                        {column === "record_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "record_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 2 ? (
+                      <>
+                        {column === "hard_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "hard_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 3 ? (
+                      <>
+                        {column === "clay_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "clay_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 4 ? (
+                      <>
+                        {column === "grass_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "grass_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : toggleRecords === 5 ? (
+                      <>
+                        {column === "atp_high" && order === "ASC" ? (
+                          <CaretDownFill />
+                        ) : column === "atp_high" && order === "DSC" ? (
+                          <CaretUpFill />
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                  <th className="text-center" onClick={() => sorting("age")}>
+                    <a style={{ color: "inherit" }} href="#/">
+                      Age
+                    </a>
+                    {"\xa0"}
+                    {column === "age" && order === "ASC" ? (
+                      <CaretDownFill />
+                    ) : column === "age" && order === "DSC" ? (
+                      <CaretUpFill />
+                    ) : (
+                      <></>
+                    )}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="text-center record_tbody">
+                {currentData != null ? (
                   <>
-                    <nav className="pagination-outer">
-                      <ul className="pagination">
-                        <Pagination
-                          DataPerPage={DataPerPage}
-                          totalData={data.length}
-                          paginate={paginate}
-                        />
-                      </ul>
-                    </nav>
+                    {currentData.map((record) => (
+                      <tr>
+                        <td id="rank">
+                          {toggleRecords === 1 ? (
+                            <>
+                              {record.overall_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.overall_rank}
+                            </>
+                          ) : toggleRecords === 2 ? (
+                            <>
+                              {record.hard_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.hard_rank}
+                            </>
+                          ) : toggleRecords === 3 ? (
+                            <>
+                              {record.clay_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.clay_rank}
+                            </>
+                          ) : toggleRecords === 4 ? (
+                            <>
+                              {record.grass_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.grass_rank}
+                            </>
+                          ) : toggleRecords === 5 ? (
+                            <>
+                              {record.atp_ch == true ? (
+                                <>
+                                  <SuitDiamondFill
+                                    size={10}
+                                    color="#ffbb00"
+                                    className="career-high-crown"
+                                  />
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              {record.atp_rank}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td id="updown">
+                          {toggleRecords === 1 ? (
+                            <>
+                              {record.overall_rank_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.overall_rank_diff}
+                                />
+                              ) : record.overall_rank_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.overall_rank_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 2 ? (
+                            <>
+                              {record.hard_rank_diff > 0 ? (
+                                <PositiveElo content={record.hard_rank_diff} />
+                              ) : record.hard_rank_diff < 0 ? (
+                                <NegativeElo content={record.hard_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 3 ? (
+                            <>
+                              {record.clay_rank_diff > 0 ? (
+                                <PositiveElo content={record.clay_rank_diff} />
+                              ) : record.clay_rank_diff < 0 ? (
+                                <NegativeElo content={record.clay_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 4 ? (
+                            <>
+                              {record.grass_rank_diff > 0 ? (
+                                <PositiveElo content={record.grass_rank_diff} />
+                              ) : record.grass_rank_diff < 0 ? (
+                                <NegativeElo content={record.grass_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 5 ? (
+                            <>
+                              {record.atp_rank_diff > 0 ? (
+                                <PositiveElo content={record.atp_rank_diff} />
+                              ) : record.atp_rank_diff < 0 ? (
+                                <NegativeElo content={record.atp_rank_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td id="bestrank">
+                          {toggleRecords === 1 ? (
+                            <>{record.overall_best_rank}</>
+                          ) : toggleRecords === 2 ? (
+                            <>{record.hard_best_rank}</>
+                          ) : toggleRecords === 3 ? (
+                            <>{record.clay_best_rank}</>
+                          ) : toggleRecords === 4 ? (
+                            <>{record.grass_best_rank}</>
+                          ) : toggleRecords === 5 ? (
+                            <>{record.atp_best_rank}</>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td className="" id="country">
+                          <ReactCountryFlag
+                            countryCode={record.player_id.substring(0, 2)}
+                            style={{
+                              filter: "drop-shadow(0 0 0.12rem black)",
+                            }}
+                            svg
+                          />
+                          <span id="country_code">
+                            {"\xa0\xa0\xa0"}
+                            {record.player_id.substring(0, 2)}
+                          </span>
+                        </td>
+                        <td className="w-25 text-start" id="name">
+                          <a
+                            href="#/"
+                            onClick={() =>
+                              navigate(`./players/` + record.player_id)
+                            }
+                          >
+                            {toTitleCase(record.name)}
+                          </a>
+                        </td>
+                        <td id="ranking">
+                          {toggleRecords === 1 ? (
+                            <>{record.ranking}</>
+                          ) : toggleRecords === 2 ? (
+                            <>{record.hard}</>
+                          ) : toggleRecords === 3 ? (
+                            <>{record.clay}</>
+                          ) : toggleRecords === 4 ? (
+                            <>{record.grass}</>
+                          ) : toggleRecords === 5 ? (
+                            <>{record.atp}</>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td id="+/-">
+                          {toggleRecords === 1 ? (
+                            <>
+                              {record.overall_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.overall_rating_diff}
+                                />
+                              ) : record.overall_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.overall_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 2 ? (
+                            <>
+                              {record.hard_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.hard_rating_diff}
+                                />
+                              ) : record.hard_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.hard_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 3 ? (
+                            <>
+                              {record.clay_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.clay_rating_diff}
+                                />
+                              ) : record.clay_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.clay_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 4 ? (
+                            <>
+                              {record.grass_rating_diff > 0 ? (
+                                <PositiveElo
+                                  content={record.grass_rating_diff}
+                                />
+                              ) : record.grass_rating_diff < 0 ? (
+                                <NegativeElo
+                                  content={record.grass_rating_diff}
+                                />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : toggleRecords === 5 ? (
+                            <>
+                              {record.atp_rating_diff > 0 ? (
+                                <PositiveElo content={record.atp_rating_diff} />
+                              ) : record.atp_rating_diff < 0 ? (
+                                <NegativeElo content={record.atp_rating_diff} />
+                              ) : (
+                                <>{"\xa0"}</>
+                              )}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td id="record_high">
+                          {toggleRecords === 1 ? (
+                            <>{record.record_high}</>
+                          ) : toggleRecords === 2 ? (
+                            <>{record.hard_high}</>
+                          ) : toggleRecords === 3 ? (
+                            <>{record.clay_high}</>
+                          ) : toggleRecords === 4 ? (
+                            <>{record.grass_high}</>
+                          ) : toggleRecords === 5 ? (
+                            <>{record.atp_high}</>
+                          ) : (
+                            <></>
+                          )}
+                        </td>
+                        <td id="age">{record.age}</td>
+                      </tr>
+                    ))}
                   </>
+                ) : (
+                  <h3>You have not set any goals</h3>
                 )}
-              </div>
-            </div>
+              </tbody>
+            </table>
+            {DataPerPage > 100 ? (
+              <></>
+            ) : (
+              <>
+                <nav className="pagination-outer">
+                  <ul className="pagination">
+                    <Pagination
+                      DataPerPage={DataPerPage}
+                      totalData={data.length}
+                      paginate={paginate}
+                    />
+                  </ul>
+                </nav>
+              </>
+            )}
           </div>
         </div>
       </div>

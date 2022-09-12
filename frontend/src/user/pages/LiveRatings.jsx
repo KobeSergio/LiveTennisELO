@@ -211,7 +211,7 @@ export default function Charts() {
                       </button>
                     </a>
                   </span>
-                  <div className="ms-auto me-5">
+                  <div className="me-5">
                     <Dropdown className="border-0 dropdown rounded-3">
                       <Dropdown.Toggle
                         className="o40"

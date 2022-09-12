@@ -65,14 +65,51 @@ const updatePlayer = asyncHandler(async (req, res) => {
 
 const getIndPlayer = asyncHandler(async (req, res) => {
   const player = await Player.find({ player_id: { $eq: req.params.id } });
-  const matches = await Matches.find({
-    $or: [
-      { winner_local_id: { $eq: req.params.id } },
-      { loser_local_id: { $eq: req.params.id } },
-    ],
-  })
-    .sort("-tourney_date")
-    .limit(150);
+  const matches = await Matches.aggregate([
+    { $sort: { tourney_date: -1 } },
+    {
+      $match: {
+        $or: [
+          { winner_local_id: { $eq: req.params.id } },
+          { loser_local_id: { $eq: req.params.id } },
+        ],
+      },
+    },
+
+    {
+      $group: {
+        _id: "$surface",
+        game: {
+          $push: {
+            tourney_name: "$tourney_name",
+            tourney_date: "$tourney_date",
+            surface: "$surface",
+            match_num: "$match_num",
+            winner_local_id: "$winner_local_id",
+            winner_name: "$winner_name",
+            loser_local_id: "$loser_local_id",
+            loser_name: "$loser_name",
+            score: "$score",
+            round: "$round",
+            winner_elo: "$winner_elo",
+            winner_elo_gains: "$winner_elo_gains",
+            winner_elo_surface: "$winner_elo_surface",
+            winner_elo_surface_gains: "$winner_elo_surface_gains",
+            loser_elo: "$loser_elo",
+            loser_elo_gains: "$loser_elo_gains",
+            loser_elo_surface: "$loser_elo_surface",
+            loser_elo_surface_gains: "$loser_elo_surface_gains",
+            highlight: "$highlight",
+          },
+        },
+      },
+    },
+    {
+      $project: { 
+        mostRecentGames: { $slice: ["$game", 0, 10] },
+      },
+    },
+  ]);
   const records = await Records.find({ player_id: { $eq: req.params.id } });
   if (!player && !matches && !records) {
     res.status(400);
