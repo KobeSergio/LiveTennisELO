@@ -18,12 +18,11 @@ export default function About() {
         style={{ backgroundImage: `url(${bg_img})` }}
       >
         <div className="px-5 py-4">
-          <div className="p-2 w-50">
-            <h1 className="fs-3">About this site:</h1>
-          </div>
           <div className="row">
-            <AboutContent />
-            <div className="w-25">
+            <div className="col-lg-9 col-sm-12 col-12">
+              <AboutContent />
+            </div>
+            <div className="col-lg-3 col-sm-12 col-12">
               <TennisRatingGuide />
             </div>
           </div>

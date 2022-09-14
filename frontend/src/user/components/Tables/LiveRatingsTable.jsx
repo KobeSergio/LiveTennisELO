@@ -492,8 +492,8 @@ export default function (props) {
                   <></>
                 )}
               </th>
-              <th className="text-center">Country</th>
-              <th onClick={() => sorting("name")} className="w-25 text-start">
+              <th className="text-center" >Country</th>
+              <th onClick={() => sorting("name")} style={{ width:'25%' }}className="text-start">
                 <a style={{ color: "inherit" }} href="#/">
                   Name
                 </a>
