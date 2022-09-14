@@ -5,7 +5,7 @@ const PLAYERS_URL = `/admin-api/players`;
 const MATCHES_URL = `/admin-api/matches/`;
 
 //const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
-//const MATCHES_URL = `http://localhost:5000/admin-api/matches/`; 
+//const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;
 
 //Load record,
 // @http:   GET admin/:doc_date
@@ -34,9 +34,22 @@ const loadPlayer = async (player_id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
+  const player = await axios.get(PLAYERS_URL + "/" + player_id, config);
+  var matchContainer = [];
+  if (player.data.matches.length != 0) {
+    player.data.matches.forEach((surface) => {
+      surface.mostRecentGames.forEach((game) => {
+        matchContainer.push(game);
+      });
+    });
+  }
 
-  const response = await axios.get(PLAYERS_URL + "/" + player_id, config);
-  return response.data;
+  console.log(matchContainer);
+  return {
+    player: player.data.player,
+    matches: matchContainer,
+    records: player.data.records,
+  };
 };
 
 //Update Player

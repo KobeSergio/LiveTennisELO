@@ -118,7 +118,7 @@ export const playerSlice = createSlice({
       .addCase(loadPlayer.fulfilled, (state, action) => {
         state.player_isLoading = false;
         state.player_isSuccess = true;
-        state.player_details = action.payload.player;
+        state.player_details = action.payload.player; 
         state.player_matches = action.payload.matches;
         state.player_records = action.payload.records;
       })

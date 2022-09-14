@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 const customStyles = {
   control: (base, state) => ({
@@ -16,7 +17,7 @@ const customStyles = {
     // You can also use state.isFocused to conditionally style based on the focus state
   }),
 };
-export default function Navbar() {
+export default function ClientNavbar() {
   const navigate = useNavigate();
 
   const { players, api_isLoading } = useSelector((state) => state.api);
@@ -43,76 +44,78 @@ export default function Navbar() {
     }
   }, []);
 
-  return [
-    <nav
-      className="navbar navbar-expand-md px-3 py-3 navbar-light bg-light border-bottom border-2 rounded-bottom"
-      aria-label="Fourth navbar example"
-    >
-      <div className="container-fluid">
-        <a className="navbar-brand fw-bold">Live Tennis ELO Ratings</a>
-        <div className="navbar-nav me-auto ms-5">
-          <NavLink
-            className="nav-link me-4"
-            activeclassname="nav-link active add_underline"
-            to="/"
-          >
-            <a data-toggle="pill" role="tab" aria-selected="false">
-              Live Ratings
-            </a>
-          </NavLink>
-          <NavLink
-            className="nav-link me-4"
-            activeclassname="nav-link active"
-            to="/charts"
-          >
-            <a data-toggle="pill" role="tab" aria-selected="false">
-              Charts
-            </a>
-          </NavLink>
-          <NavLink
-            className="nav-link"
-            activeclassname="nav-link active"
-            to="/about"
-          >
-            <a data-toggle="pill" aria-selected="false">
-              About
-            </a>
-          </NavLink>
-        </div>
-        {api_isLoading ? (
-          <></>
-        ) : (
-          <>
-            <form>
-              <div className="input-group">
-                <Select
-                  options={showOptions ? playerOptions : []}
-                  menuIsOpen={showOptions ? true : false}
-                  onInputChange={handleInputChange}
-                  name="language"
-                  placeholder="Search Player"
-                  styles={customStyles}
-                  components={{
-                    IndicatorsContainer: () => null,
-                  }}
-                  onChange={handleSelect}
-                  search
-                />
-                <div className="input-group-prepend">
-                  <span class="input-group-button">
-                    <button
-                      className="btn btn-green search-btn px-3 py-1"
-                      type="submit"
-                    >
-                      <Search color="white" className="fs-7" />
-                    </button>
-                  </span>
+  return (
+    <>
+      <Navbar className="px-4 py-3" bg="light" expand="lg">
+        <Navbar.Brand className="fw-bold" href="#">
+          Live Tennis ELO Ratings
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-4 me-auto">
+            <NavLink
+              className="nav-link me-4"
+              activeclassname="nav-link active add_underline"
+              to="/"
+            >
+              <a data-toggle="pill" role="tab" aria-selected="false">
+                Live Ratings
+              </a>
+            </NavLink>
+            <NavLink
+              className="nav-link me-4"
+              activeclassname="nav-link active"
+              to="/charts"
+            >
+              <a data-toggle="pill" role="tab" aria-selected="false">
+                Charts
+              </a>
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              activeclassname="nav-link active"
+              to="/about"
+            >
+              <a data-toggle="pill" aria-selected="false">
+                About
+              </a>
+            </NavLink>
+          </Nav>
+          {api_isLoading ? (
+            <></>
+          ) : (
+            <>
+              <form>
+                <div className="ms-3 input-group">
+                  <Select
+                    options={showOptions ? playerOptions : []}
+                    menuIsOpen={showOptions ? true : false}
+                    onInputChange={handleInputChange}
+                    name="language"
+                    placeholder="Search Player"
+                    styles={customStyles}
+                    components={{
+                      IndicatorsContainer: () => null,
+                    }}
+                    onChange={handleSelect}
+                    search
+                  />
+                  <div className="input-group-prepend">
+                    <span class="input-group-button">
+                      <button
+                        className="btn btn-green search-btn px-3 py-1"
+                        type="submit"
+                      >
+                        <Search color="white" className="fs-7" />
+                      </button>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-    </nav>,
-  ];
+              </form>
+            </>
+          )}
+        </Navbar.Collapse>
+      </Navbar>
+    </>
+  );
 }
