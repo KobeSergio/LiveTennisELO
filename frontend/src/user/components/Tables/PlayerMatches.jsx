@@ -323,8 +323,10 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Overall Performance:{"\xa0"}
-                      {"\xa0"}</b>
+                    <b>
+                      Overall Performance:{"\xa0"}
+                      {"\xa0"}
+                    </b>
                   </div>
                   <div className="col">
                     <span
@@ -726,13 +728,13 @@ export function PlayerMatches() {
           >
             <thead>
               <tr>
-                <th style={{ minWidth: 85 }}className="table-date" scope="col">
+                <th style={{ minWidth: 85 }} className="table-date" scope="col">
                   <b>Date</b>
                 </th>
                 <th style={{ minWidth: 85 }} scope="col">
                   <b>Result</b>
                 </th>
-                <th className="text-start"scope="col">
+                <th className="text-start" scope="col">
                   <b>Opponent</b>
                 </th>
                 <th style={{ minWidth: 120 }} scope="col">
@@ -969,9 +971,17 @@ export function PlayerMatches() {
                   {Math.ceil(getStats(data, player_id).ave_ELO)}
                 </td>
                 <td>
-                  <b>Ave. Opp Surface ELO:</b>
-                  <br /> <br />
-                  {Math.ceil(getStats(data, player_id).ave_surface_ELO)}
+                  (
+                  {currentSurface != "All Surface" ? (
+                    <>
+                      <b>Ave. Opp Surface ELO:</b>
+                      <br /> <br />
+                      {Math.ceil(getStats(data, player_id).ave_surface_ELO)}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  )
                 </td>
                 <td></td>
                 <td></td>

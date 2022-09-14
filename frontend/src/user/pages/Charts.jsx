@@ -191,7 +191,18 @@ export default function Charts() {
                 menuIsOpen={showOptions ? true : false}
                 onInputChange={handleInputChange}
                 onChange={handleSelect}
-                isOptionDisabled={() => selectedPlayers.length >= 2}
+                isOptionDisabled={() => selectedPlayers.length >= 1}
+              />
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                defaultValue={[]}
+                isMulti
+                options={showOptions ? playerOptions : []}
+                menuIsOpen={showOptions ? true : false}
+                onInputChange={handleInputChange}
+                onChange={handleSelect}
+                isOptionDisabled={() => selectedPlayers.length >= 1}
               />
               <p className="pt-2 m-1" style={{ color: "gray" }}>
                 Search for a player by typing their names above. Only 2 players
@@ -204,7 +215,7 @@ export default function Charts() {
                     <>
                       <div className="card border-0 w-50">
                         <div className="card-header rounded-top-3 p1-100-bg border-0 h-25"></div>
-                        <div className="card-body px-3  py-2">
+                        <div className="card-body px-3 py-2">
                           <h5 className="card-title">
                             <a
                               href="#/"
