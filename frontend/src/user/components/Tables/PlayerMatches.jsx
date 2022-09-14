@@ -636,8 +636,10 @@ export function PlayerMatches() {
             <hr></hr>
           </div>
           <h1 className="fs-4  mb-0">
-            Last 10 matches of {player_details[0].player_name} <br></br>
+            Last 10 matches of {player_details[0].player_name} 
           </h1>
+          <br/>
+          <br/>
           <h5>
             <b>Match History:</b>
           </h5>
