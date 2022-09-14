@@ -100,7 +100,7 @@ export default function Charts() {
         <div className="px-3 py-4">
           <div className="p-2 col-6-lg ">
             <h1 className="fs-3">
-              <b>Welcome to Live Tennis ELO Ratings!</b>
+              <b>Welcome to TenELOs - Live Tennis ELO Ratings!</b>
             </h1>
             <p>
               Your go-to place for men's professional tennis statistics! Track
