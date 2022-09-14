@@ -281,6 +281,61 @@ export function PlayerChart() {
                     },
                     responsive: true,
                     plugins: {
+                      tooltip: {
+                        callbacks: {
+                          // We'll edit the `title` string
+                          title: function (tooltipItem) {
+                            // 0.079 - 0.165 : JAN
+                            // 0.166 - 0.248: FEB
+                            // 0.249 - 0.331 : MAR
+                            // 0.332 - 0.414: APR
+                            // 0.415 - 0.497 : MAY
+                            // 0.498 - 0.580 : JUN
+                            // 0.581 - 0.663 : JUL
+                            // 0.664 - 0.746 : AUG
+                            // 0.747 - 0.829: SEP
+                            // 0.83 - 0.912: OCT
+                            // 0.913 - 0.995: NOV
+                            // 0.996 - 0.078 : DEC
+
+                            // The following returns the full string
+                            if (type === "linear") {
+                              const quo = Math.floor(
+                                parseFloat(tooltipItem[0].label)
+                              );
+                              const rem =
+                                parseFloat(tooltipItem[0].label) % quo;
+
+                              var ageDate = "";
+                              if (rem >= 0.079 && rem <= 0.165) {
+                                ageDate = "and 1 Month";
+                              } else if (rem >= 0.166 && rem <= 0.248) {
+                                ageDate = "and 2 Months";
+                              } else if (rem >= 0.249 && rem <= 0.331) {
+                                ageDate = "and 3 Months";
+                              } else if (rem >= 0.332 && rem <= 0.414) {
+                                ageDate = "and 4 Months";
+                              } else if (rem >= 0.415 && rem <= 0.497) {
+                                ageDate = "and 5 Months";
+                              } else if (rem >= 0.498 && rem <= 0.58) {
+                                ageDate = "and 6 Months";
+                              } else if (rem >= 0.581 && rem <= 0.663) {
+                                ageDate = "and 7 Months";
+                              } else if (rem >= 0.664 && rem <= 0.746) {
+                                ageDate = "and 8 Months";
+                              } else if (rem >= 0.747 && rem <= 0.829) {
+                                ageDate = "and 9 Months";
+                              } else if (rem >= 0.83 && rem <= 0.912) {
+                                ageDate = "and 10 Months";
+                              } else if (rem >= 0.913 && rem <= 0.995) {
+                                ageDate = "and 11 Months";
+                              }
+                              return `${quo} ${ageDate}`;
+                            }
+                            return tooltipItem[0].label;
+                          },
+                        },
+                      },
                       legend: {
                         position: "top",
                       },
@@ -352,411 +407,675 @@ export function PlayerChart() {
           </div>
         </Modal.Body>
       </Modal>
-      <div className="ms-0 mb-3">
-        <div className="row">
-          <div className="card bg-white col me-2 shadow rounded mb-2">
-            <h1 className="mt-2 fs-4">Overall {filter}</h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {overall_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(overall_data[0].x)} -{" "}
-                        {Math.floor(overall_data[overall_data.length - 1].x)}{" "}
-                        years
-                      </>
-                    ) : (
-                      <>
-                        {overall_data[0].x.length > 2 ? (
-                          <>
-                            {overall_data[0].x.substring(0, 4)} -{" "}
-                            {overall_data[overall_data.length - 1].x.substring(
-                              0,
-                              4
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                onClick={handleShow}
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
-                      },
-                    },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
+      <div className="row">
+        <div className="card bg-white col-lg-3 col-sm-12 col-12  rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4">Overall {filter}</h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {overall_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(overall_data[0].x)} -{" "}
+                      {Math.floor(overall_data[overall_data.length - 1].x)}{" "}
+                      years
+                    </>
+                  ) : (
+                    <>
+                      {overall_data[0].x.length > 2 ? (
+                        <>
+                          {overall_data[0].x.substring(0, 4)} -{" "}
+                          {overall_data[overall_data.length - 1].x.substring(
+                            0,
+                            4
+                          )}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              onClick={handleShow}
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
                     },
                   },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                    title: {
-                      display: false,
-                    },
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
                   },
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: overall_data,
-                      borderColor: "black",
-                      backgroundColor: "black",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
-          </div>
-          <div className="card bg-white col me-2 shadow rounded mb-2">
-            <h1 className="mt-2 fs-4 hard-text">Hard {filter}</h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {hard_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(hard_data[0].x)} -{" "}
-                        {Math.floor(hard_data[hard_data.length - 1].x)} years
-                      </>
-                    ) : (
-                      <>
-                        {hard_data[0].x.length > 2 ? (
-                          <>
-                            {hard_data[0].x.substring(0, 4)} -{" "}
-                            {hard_data[hard_data.length - 1].x.substring(0, 4)}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                onClick={handleShow}
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
-                      },
-                    },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
-                    },
-                  },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                    title: {
-                      display: false,
-                    },
-                  },
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: hard_data,
-                      borderColor: "#015778",
-                      backgroundColor: "#015778",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
-          </div>
-        </div>
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
 
-        <div className="row">
-          <div className="card bg-white col me-2 shadow rounded mb-2">
-            <h1 className="mt-2 fs-4">Clay {filter}</h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {clay_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(clay_data[0].x)} -{" "}
-                        {Math.floor(clay_data[clay_data.length - 1].x)} years
-                      </>
-                    ) : (
-                      <>
-                        {clay_data[0].x.length > 2 ? (
-                          <>
-                            {clay_data[0].x.substring(0, 4)} -{" "}
-                            {clay_data[clay_data.length - 1].x.substring(0, 4)}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                onClick={handleShow}
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
                       },
                     },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
-                    },
                   },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                    title: {
-                      display: false,
-                    },
+                  legend: {
+                    display: false,
                   },
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: clay_data,
-                      borderColor: "#E96513",
-                      backgroundColor: "#E96513",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
-          </div>
-          <div className="card bg-white col shadow rounded mb-2">
-            <h1 className="mt-2 fs-4 grass-text">Grass {filter}</h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {grass_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(grass_data[0].x)} -{" "}
-                        {Math.floor(grass_data[grass_data.length - 1].x)} years
-                      </>
-                    ) : (
-                      <>
-                        {grass_data[0].x.length > 2 ? (
-                          <>
-                            {grass_data[0].x.substring(0, 4)} -{" "}
-                            {grass_data[grass_data.length - 1].x.substring(
-                              0,
-                              4
-                            )}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                onClick={handleShow}
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
-                      },
-                    },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
-                    },
+                  title: {
+                    display: false,
                   },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
-                    },
-                    title: {
-                      display: false,
-                    },
+                },
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: overall_data,
+                    borderColor: "black",
+                    backgroundColor: "black",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
                   },
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: grass_data,
-                      borderColor: "#339966",
-                      backgroundColor: "#339966",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
+                ],
+              }}
+              height={"250px"}
+              width={"auto"}
+            />
           </div>
         </div>
-        <div className="row">
-          <div className="card bg-white col me-2 shadow rounded mb-2">
-            <h1 className="mt-2 fs-4">
-              ATP {filter.substring(3, filter.length)}
-            </h1>
-            <h2 className="fs-5">
-              From:{" "}
-              <span id="years">
-                {hard_data[0] != null ? (
-                  <>
-                    {filter.toLowerCase() == "elo ratings by age" ||
-                    filter.toLowerCase() == "elo rankings by age" ? (
-                      <>
-                        {Math.floor(hard_data[0].x)} -{" "}
-                        {Math.floor(hard_data[hard_data.length - 1].x)} years
-                      </>
-                    ) : (
-                      <>
-                        {hard_data[0].x.length > 2 ? (
-                          <>
-                            {hard_data[0].x.substring(0, 4)} -{" "}
-                            {hard_data[hard_data.length - 1].x.substring(0, 4)}
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </span>
-            </h2>
-            <div>
-              <Line
-                options={{
-                  scales: {
-                    xAxes: {
-                      type: type,
-                      time: {
-                        unit: "year",
-                        tooltipFormat: "YYYY-MM-DD",
-                      },
-                    },
-                    yAxes: {
-                      position: "right",
-                      reverse: invert,
+        <div className="card bg-white col-lg-3 col-sm-12 col-12  rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4 hard-text">Hard {filter}</h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {hard_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(hard_data[0].x)} -{" "}
+                      {Math.floor(hard_data[hard_data.length - 1].x)} years
+                    </>
+                  ) : (
+                    <>
+                      {hard_data[0].x.length > 2 ? (
+                        <>
+                          {hard_data[0].x.substring(0, 4)} -{" "}
+                          {hard_data[hard_data.length - 1].x.substring(0, 4)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              onClick={handleShow}
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
                     },
                   },
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
+                  },
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
+
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
+                      },
                     },
-                    title: {
-                      display: false,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: false,
+                  },
+                },
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: hard_data,
+                    borderColor: "#015778",
+                    backgroundColor: "#015778",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                  },
+                ],
+              }}
+              height={"250px"}
+              width={"auto"}
+            />
+          </div>
+        </div>
+        <div className="card bg-white col-lg-3 col-sm-12 col-12  rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4">Clay {filter}</h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {clay_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(clay_data[0].x)} -{" "}
+                      {Math.floor(clay_data[clay_data.length - 1].x)} years
+                    </>
+                  ) : (
+                    <>
+                      {clay_data[0].x.length > 2 ? (
+                        <>
+                          {clay_data[0].x.substring(0, 4)} -{" "}
+                          {clay_data[clay_data.length - 1].x.substring(0, 4)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              onClick={handleShow}
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
                     },
+                  },
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
+                  },
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
+
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
+                      },
+                    },
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: false,
+                  },
+                },
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: clay_data,
+                    borderColor: "#E96513",
+                    backgroundColor: "#E96513",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                  },
+                ],
+              }}
+              height={"250px"}
+            />
+          </div>
+        </div>
+        <div className="card bg-white col-lg-3 col-sm-12 col-12  rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4 grass-text">Grass {filter}</h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {grass_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(grass_data[0].x)} -{" "}
+                      {Math.floor(grass_data[grass_data.length - 1].x)} years
+                    </>
+                  ) : (
+                    <>
+                      {grass_data[0].x.length > 2 ? (
+                        <>
+                          {grass_data[0].x.substring(0, 4)} -{" "}
+                          {grass_data[grass_data.length - 1].x.substring(0, 4)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              onClick={handleShow}
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
+                    },
+                  },
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
+                  },
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
+
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
+                      },
+                    },
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: false,
+                  },
+                },
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: grass_data,
+                    borderColor: "#339966",
+                    backgroundColor: "#339966",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                  },
+                ],
+              }}
+              height={"250px"}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="card bg-white me-1 shadow rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4">
+            ATP {filter.substring(3, filter.length)}
+          </h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {hard_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(hard_data[0].x)} -{" "}
+                      {Math.floor(hard_data[hard_data.length - 1].x)} years
+                    </>
+                  ) : (
+                    <>
+                      {hard_data[0].x.length > 2 ? (
+                        <>
+                          {hard_data[0].x.substring(0, 4)} -{" "}
+                          {hard_data[hard_data.length - 1].x.substring(0, 4)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
+                    },
+                  },
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
+                  },
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
+
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
+                      },
+                    },
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: false,
+                  },
+                  zoom: {
                     zoom: {
-                      zoom: {
-                        drag: {
-                          enabled: true,
-                        },
-                        wheel: {
-                          enabled: true,
-                        },
+                      drag: {
+                        enabled: true,
+                      },
+                      wheel: {
+                        enabled: true,
                       },
                     },
                   },
+                },
 
-                  maintainAspectRatio: false,
-                }}
-                data={{
-                  datasets: [
-                    {
-                      data: atp_data,
-                      borderColor: "#4C5454",
-                      backgroundColor: "#4C5454",
-                      borderWidth: 2,
-                      pointBorderWidth: 2,
-                      pointRadius: 0,
-                      pointHoverRadius: 5,
-                    },
-                  ],
-                }}
-                height={"500px"}
-              />
-            </div>
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: atp_data,
+                    borderColor: "#4C5454",
+                    backgroundColor: "#4C5454",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                  },
+                ],
+              }}
+              height={"250px"}
+            />
           </div>
         </div>
       </div>

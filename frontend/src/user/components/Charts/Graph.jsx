@@ -250,9 +250,8 @@ export default function ({ invert, filter, type, surface }) {
                       }}
                       data={{
                         datasets: [],
-                      }}
-                      width={"500px"}
-                      height={"700em"}
+                      }} 
+                      height={"600em"}
                     />
                   </div>
                 </div>
@@ -386,8 +385,7 @@ export default function ({ invert, filter, type, surface }) {
                         },
                       ],
                     }}
-                    width={"500px"}
-                    height={"700em"}
+                    height={"600em"}
                   />
                 </div>
               </div>

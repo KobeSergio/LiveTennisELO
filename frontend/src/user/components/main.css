@@ -524,21 +524,17 @@ a {
 }
 
 .table-surface-elo {
-    display: table-cell;
-
+    display: table-cell; 
     border-radius: 10px;
-    color: #000;
-
+    color: #000; 
     width: 80px;
 }
 
 .table-surface-elo-label {
     display: inline;
-    padding: .2em .6em .3em; 
+    padding: 0.1em 0.4em; 
     border-radius: 10px; 
-    color: #ffffff;
-
-    width: 40px;
+    color: #ffffff; 
 }
 
 .positive-elo {
@@ -806,4 +802,13 @@ scrollbar-width: none;  /* Firefox */
 .record_thead th{
     padding: 10px 0px;
     
+}
+
+.match-stats td{
+    padding: 8px 0px;
+    margin: 0px;
+}
+
+hr {
+    margin: 10px;
 }

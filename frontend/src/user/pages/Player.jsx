@@ -78,13 +78,12 @@ export default function Player() {
   }
   return (
     <>
-      <div className="p-5">
-        <h1>Player Profile</h1>
+      <div className="p-3">
         <div className="rounded-3 bg-white">
-          <div className="container-fluid h-100 rounded-3 shadow p-5 mb-5">
-            <div className="row h-100 py-3">
-              <aside className="col-sm-2">
-                <div className="mb-3">
+          <div className="container-fluid h-100 rounded-3 shadow p-2 px-4 mb-2">
+            <div className="row py-3">
+              <div className="col-lg-2 col-sm-12 ">
+                <div class="d-flex justify-content-center">
                   <img
                     className="player_pfpic bg-transparent border-0 img-responsive img-thumbnail"
                     id="player-pfpic"
@@ -93,194 +92,283 @@ export default function Player() {
                         ? `https://i.ibb.co/dBb6xnR/no-player.png`
                         : player_details[0].img_link
                     }
-                  ></img>
-                  <div>
-                    <h1 className="fs-3 fw-bold" id="player-name">
-                      {player_details[0].player_name}
-                    </h1>
-                  </div>
+                  />
                 </div>
-              </aside>
-              <main class="col ms-3">
-                <div className="lh-lg">
-                  <div>
-                    <h1 className="fs-5 fw-bold pb-2">Player Information</h1>
-                  </div>
-                  <div className="row mb-4">
-                    <div className="col-sm-2">
-                      {" "}
-                      {/* age, country, bithplace, height weight, socials */}
-                      <div>Age:</div>
-                      <div>Country:</div>
-                      <div>Birthplace:</div>
-                      <div>Height:</div>
-                      <div>Weight:</div>
-                      <div>Socials:</div>
+                <div class="d-flex justify-content-center mb-3">
+                  <h1 className="fs-3 fw-bold" id="player-name">
+                    {player_details[0].player_name}
+                  </h1>
+                </div>
+              </div>
+              <div class="col-lg-10 col-sm-12">
+                <div className="row mb-4">
+                  <div className="col-lg-3 col-sm-12">
+                    <div className="row">
+                      <h1 className="fs-5 fw-bold pb-2">Player Information</h1>
                     </div>
-                    <div className="col-sm-2">
-                      {" "}
-                      {/* age, country, bithplace, height weight, socials */}
-                      <div className="text-dark" id="age">
-                        {player_details[0].birthdate == null
-                          ? "\xa0"
-                          : parsebirthDate(player_details[0].birthdate) +
+                    <div className="row">
+                      <div className="col-6">
+                        {/* age, country, bithplace, height weight, socials */}
+                        {player_details[0].birthdate == null ? (
+                          <></>
+                        ) : (
+                          <div>Age:</div>
+                        )}
+                        <div>Country:</div>
+                        {player_details[0].birthplace == null ? (
+                          <></>
+                        ) : (
+                          <div>Birthplace:</div>
+                        )}
+                        {player_details[0].height == null ? (
+                          <></>
+                        ) : (
+                          <div>Height:</div>
+                        )}
+                        {player_details[0].weight == null ? (
+                          <></>
+                        ) : (
+                          <div>Weight:</div>
+                        )}
+                        {player_details[0].hand == null ? (
+                          <></>
+                        ) : (
+                          <div>Plays:</div>
+                        )}
+                        {player_details[0].backhand == null ? (
+                          <></>
+                        ) : (
+                          <div>Backhand:</div>
+                        )}
+                        {player_details[0].favorite_surface == null ? (
+                          <></>
+                        ) : (
+                          <div>Favorite Surface:</div>
+                        )}
+                        {player_details[0].website == null ? (
+                          <></>
+                        ) : (
+                          <div>Website:</div>
+                        )}
+                        {player_details[0].last_match == null ? (
+                          <></>
+                        ) : (
+                          <div>Last Active:</div>
+                        )}
+                        {player_details[0].instagram == null &&
+                        player_details[0].facebook == null &&
+                        player_details[0].twitter == null ? (
+                          <></>
+                        ) : (
+                          <div>Socials:</div>
+                        )}
+                      </div>
+                      <div className="col">
+                        {" "}
+                        {/* age, country, bithplace, height weight, socials */}
+                        <div className="text-dark" id="age">
+                          {player_details[0].birthdate == null ? (
+                            <></>
+                          ) : (
+                            parsebirthDate(player_details[0].birthdate) +
                             " " +
                             "(" +
                             parseDate(player_details[0].birthdate) +
-                            ")"}
-                      </div>
-                      <div className="text-dark" id="country">
-                        {player_details[0].player_id.substring(0, 2) === "UN"
-                          ? "Unknown "
-                          : parseCountry(
-                              player_details[0].player_id.substring(0, 2)
+                            ")"
+                          )}
+                        </div>
+                        <div className="text-dark" id="country">
+                          {player_details[0].player_id.substring(0, 2) === "UN"
+                            ? "Unknown "
+                            : parseCountry(
+                                player_details[0].player_id.substring(0, 2)
+                              )}
+                        </div>
+                        <div className="text-dark" id="birthplace">
+                          {player_details[0].birthplace == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].birthplace
+                          )}
+                        </div>
+                        <div className="text-dark">
+                          <span className="text-dark" id="height">
+                            {player_details[0].height == null ? (
+                              <></>
+                            ) : (
+                              player_details[0].height + " cm"
                             )}
-                      </div>
-                      <div className="text-dark" id="birthplace">
-                        {player_details[0].birthplace == null
-                          ? "\xa0"
-                          : player_details[0].birthplace}
-                      </div>
-                      <div className="text-dark">
-                        <span className="text-dark" id="height">
-                          {player_details[0].height == null
-                            ? "\xa0"
-                            : player_details[0].height + " cm"}
-                        </span>
-                      </div>
-                      <div className="text-dark">
-                        <span className="text-dark" id="weight">
-                          {player_details[0].weight == null
-                            ? "\xa0"
-                            : player_details[0].weight + " kg"}
-                        </span>
-                      </div>
-                      <div className="text-dark" id="social">
-                        {player_details[0].facebook == null ? (
-                          "\xa0"
-                        ) : (
-                          <a href={"https:/" + player_details[0].facebook}>
-                            <Facebook />
-                          </a>
-                        )}
-                        {"\xa0"}
-                        {player_details[0].twitter == null ? (
-                          "\xa0"
-                        ) : (
-                          <a href={"https:/" + player_details[0].twitter}>
-                            <Twitter />
-                          </a>
-                        )}
-                        {"\xa0"}
-                        {player_details[0].instagram == null ? (
-                          "\xa0"
-                        ) : (
-                          <a href={"https:/" + player_details[0].instagram}>
-                            <Instagram />
-                          </a>
-                        )}
-                        {"\xa0"}
-                      </div>
-                    </div>
-                    <div className="col-sm-2">
-                      {" "}
-                      {/* plays, backhand, surface, website, last active */}
-                      <div>Plays:</div>
-                      <div>Backhand:</div>
-                      <div>Favorite Surface:</div>
-                      <div>Website:</div>
-                      <div>Last Active:</div>
-                    </div>
-                    <div className="col-sm-2">
-                      {" "}
-                      {/* plays, backhand, surface, website, last active */}
-                      <div className="text-dark" id="plays">
-                        {player_details[0].hand == "L"
-                          ? "Left-handed"
-                          : player_details[0].hand == "R"
-                          ? "Right-handed"
-                          : "Unknown"}
-                      </div>
-                      <div className="text-dark" id="backhand">
-                        {player_details[0].backhand == null
-                          ? "\xa0"
-                          : player_details[0].backhand}
-                      </div>
-                      <div className="text-dark gc-100" id="surface">
-                        {player_details[0].favorite_surface == null
-                          ? "\xa0"
-                          : player_details[0].favorite_surface}
-                      </div>
-                      <div className="text-dark" id="website">
-                        {player_details[0].website == null
-                          ? "\xa0"
-                          : player_details[0].website}
-                      </div>
-                      <div className="text-dark">
-                        {player_details[0].last_match == null
-                          ? "\xa0"
-                          : parseDate(player_details[0].last_match)}
+                          </span>
+                        </div>
+                        <div className="text-dark">
+                          <span className="text-dark" id="weight">
+                            {player_details[0].weight == null ? (
+                              <></>
+                            ) : (
+                              player_details[0].weight + " kg"
+                            )}
+                          </span>
+                        </div>
+                        <div className="text-dark" id="social">
+                          {player_details[0].facebook == null ? (
+                            <></>
+                          ) : (
+                            <a href={"https:/" + player_details[0].facebook}>
+                              <Facebook />
+                            </a>
+                          )}
+                          {player_details[0].twitter == null ? (
+                            <></>
+                          ) : (
+                            <a href={"https:/" + player_details[0].twitter}>
+                              <Twitter />
+                            </a>
+                          )}
+                          {player_details[0].instagram == null ? (
+                            <></>
+                          ) : (
+                            <a href={"https:/" + player_details[0].instagram}>
+                              <Instagram />
+                            </a>
+                          )}
+                        </div>
+                        {/* plays, backhand, surface, website, last active */}
+                        <div className="text-dark" id="plays">
+                          {player_details[0].hand == "L"
+                            ? "Left-handed"
+                            : player_details[0].hand == "R"
+                            ? "Right-handed"
+                            : "Unknown"}
+                        </div>
+                        <div className="text-dark" id="backhand">
+                          {player_details[0].backhand == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].backhand
+                          )}
+                        </div>
+                        <div className="text-dark gc-100" id="surface">
+                          {player_details[0].favorite_surface == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].favorite_surface
+                          )}
+                        </div>
+                        <div className="text-dark" id="website">
+                          {player_details[0].website == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].website
+                          )}
+                        </div>
+                        <div className="text-dark">
+                          {player_details[0].last_match == null ? (
+                            <></>
+                          ) : (
+                            parseDate(player_details[0].last_match)
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div>
+
+                  <div className="col-lg-9 col-sm-12">
                     <h1 className="fs-5 fw-bold pb-2">ELO Rankings</h1>
-                  </div>
-                  <div className="row">
                     <div className="row mb-3">
-                      <div className="col-sm-2">
-                        {" "}
-                        {/* overall rank */}
-                        <div>Overall Rank:</div>
-                        <div>Peak Overall Rank:</div>
-                        <div>Peak Overall Rating:</div>
+                      <div className="col-lg-3 col-sm-6 col-6">
+                        {player_details[0].overall_rank == null ? (
+                          <></>
+                        ) : (
+                          <div>Overall Rank:</div>
+                        )}
+
+                        {player_details[0].overall_peak_rank == null ? (
+                          <></>
+                        ) : (
+                          <div>Peak Overall Rank:</div>
+                        )}
+
+                        {player_details[0].overall_peak_rating == null ? (
+                          <></>
+                        ) : (
+                          <div>Peak Overall Rating:</div>
+                        )}
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-lg-3 col-sm-6 col-6">
                         <div id="overall">
-                          {player_details[0].overall_rank == null
-                            ? "\xa0"
-                            : player_details[0].overall_rank +
+                          <span
+                            style={{ backgroundColor: "#000000" }}
+                            className="table-surface-elo-label"
+                          >
+                            {" "}
+                            {player_details[0].overall_rank == null ? (
+                              <></>
+                            ) : (
+                              player_details[0].overall_rank +
                               " (" +
                               player_details[0].overall_rating +
-                              ") "}
+                              ") "
+                            )}
+                          </span>
                         </div>
                         <div id="peak_rank">
-                          {player_details[0].overall_peak_rank == null
-                            ? "\xa0"
-                            : player_details[0].overall_peak_rank +
-                              " (" +
-                              parseDate(
-                                player_details[0].overall_peak_rank_date
-                              ) +
-                              ") "}
+                          {player_details[0].overall_peak_rank == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].overall_peak_rank +
+                            " (" +
+                            parseDate(
+                              player_details[0].overall_peak_rank_date
+                            ) +
+                            ") "
+                          )}
                         </div>
                         <div id="peak_rating">
-                          {player_details[0].overall_peak_rating == null
-                            ? "\xa0"
-                            : player_details[0].overall_peak_rating +
-                              " (" +
-                              parseDate(
-                                player_details[0].overall_peak_rating_date
-                              ) +
-                              ") "}
+                          {player_details[0].overall_peak_rating == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].overall_peak_rating +
+                            " (" +
+                            parseDate(
+                              player_details[0].overall_peak_rating_date
+                            ) +
+                            ") "
+                          )}
                         </div>
                       </div>
+                      {/* clay rank */}
+                      <div className="col-lg-3 col-sm-6 col-6">
+                        {player_details[0].clay_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="clay-text">Clay Rank:</div>
+                        )}
 
-                      <div className="col-sm-2">
-                        {" "}
-                        {/* clay rank */}
-                        <div className="clay-text">Clay Rank:</div>
-                        <div className="clay-text">Peak Clay Rank:</div>
-                        <div className="clay-text">Peak Clay Rating:</div>
+                        {player_details[0].clay_peak_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="clay-text">Peak Clay Rank:</div>
+                        )}
+
+                        {player_details[0].clay_peak_rating == null ? (
+                          <></>
+                        ) : (
+                          <div className="clay-text">Peak Clay Rating:</div>
+                        )}
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-lg-3 col-sm-6 col-6">
                         <div className="clay-text" id="clay">
-                          {player_details[0].clay_rank == null
-                            ? "\xa0"
-                            : player_details[0].clay_rank +
-                              " (" +
-                              player_details[0].clay_rating +
-                              ") "}
+                          <span
+                            style={{ backgroundColor: "#E96513" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player_details[0].clay_rank == null
+                              ? "\xa0"
+                              : player_details[0].clay_rank +
+                                " (" +
+                                player_details[0].clay_rating +
+                                ") "}
+                          </span>
                         </div>
                         <div className="clay-text" id="peak_rank">
                           {player_details[0].clay_peak_rank == null
@@ -302,23 +390,39 @@ export default function Player() {
                         </div>
                       </div>
                     </div>
-
                     <div className="row mb-3">
-                      <div className="col-sm-2">
-                        {" "}
-                        {/* hard rank */}
-                        <div className="hard-text">Hard Rank:</div>
-                        <div className="hard-text">Peak Hard Rank:</div>
-                        <div className="hard-text">Peak Hard Rating:</div>
+                      <div className="col-lg-3 col-sm-6 col-6">
+                        {player_details[0].hard_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="hard-text">Hard Rank:</div>
+                        )}
+
+                        {player_details[0].hard_peak_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="hard-text">Peak Hard Rank:</div>
+                        )}
+
+                        {player_details[0].hard_peak_rating == null ? (
+                          <></>
+                        ) : (
+                          <div className="hard-text">Peak Hard Rating:</div>
+                        )}
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-lg-3 col-sm-6 col-6">
                         <div className="hard-text" id="hard">
-                          {player_details[0].hard_rank == null
-                            ? "\xa0"
-                            : player_details[0].hard_rank +
-                              " (" +
-                              player_details[0].hard_rating +
-                              ") "}
+                          <span
+                            style={{ backgroundColor: "#015778" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player_details[0].hard_rank == null
+                              ? "\xa0"
+                              : player_details[0].hard_rank +
+                                " (" +
+                                player_details[0].hard_rating +
+                                ") "}
+                          </span>
                         </div>
                         <div className="hard-text" id="hard_rank">
                           {player_details[0].hard_peak_rank == null
@@ -339,22 +443,38 @@ export default function Player() {
                               ") "}
                         </div>
                       </div>
+                      <div className="col-lg-3 col-sm-6 col-6">
+                        {player_details[0].grass_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="grass-text">Grass Rank:</div>
+                        )}
 
-                      <div className="col-sm-2">
-                        {" "}
-                        {/* grass rank */}
-                        <div className="grass-text">Grass Rank:</div>
-                        <div className="grass-text">Peak Grass Rank:</div>
-                        <div className="grass-text">Peak Grass Rating:</div>
+                        {player_details[0].grass_peak_rank == null ? (
+                          <></>
+                        ) : (
+                          <div className="grass-text">Peak Grass Rank:</div>
+                        )}
+
+                        {player_details[0].grass_peak_rating == null ? (
+                          <></>
+                        ) : (
+                          <div className="grass-text">Peak Grass Rating:</div>
+                        )}
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col">
                         <div className="grass-text" id="grass">
-                          {player_details[0].grass_rank == null
-                            ? "\xa0"
-                            : player_details[0].grass_rank +
-                              " (" +
-                              player_details[0].grass_rating +
-                              ") "}
+                          <span
+                            style={{ backgroundColor: "#3EBA7C" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player_details[0].grass_rank == null
+                              ? "\xa0"
+                              : player_details[0].grass_rank +
+                                " (" +
+                                player_details[0].grass_rating +
+                                ") "}
+                          </span>
                         </div>
                         <div className="grass-text" id="grass_rank">
                           {player_details[0].grass_peak_rank == null
@@ -378,23 +498,39 @@ export default function Player() {
                         </div>
                       </div>
                     </div>
-
                     <div className="row">
-                      <div className="col-sm-2">
-                        {" "}
-                        {/* atp points */}
-                        <div>ATP Rank:</div>
-                        <div>Peak ATP Rank:</div>
-                        <div>Peak ATP Points:</div>
+                      <div className="col-lg-3 col-sm-6 col-6">
+                        {player_details[0].atp_rank == null ? (
+                          <></>
+                        ) : (
+                          <div>ATP Rank:</div>
+                        )}
+
+                        {player_details[0].atp_peak_rank == null ? (
+                          <></>
+                        ) : (
+                          <div>Peak ATP Rank:</div>
+                        )}
+
+                        {player_details[0].atp_peak_rating == null ? (
+                          <></>
+                        ) : (
+                          <div>Peak ATP Rating:</div>
+                        )}
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col">
                         <div id="atp">
-                          {player_details[0].atp_rating == null
-                            ? "\xa0"
-                            : player_details[0].atp_rank +
-                              " (" +
-                              player_details[0].atp_rating +
-                              " pts) "}
+                          <span
+                            style={{ backgroundColor: "#000000" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player_details[0].atp_rating == null
+                              ? "\xa0"
+                              : player_details[0].atp_rank +
+                                " (" +
+                                player_details[0].atp_rating +
+                                " pts) "}
+                          </span>
                         </div>
                         <div id="peak_atp_rank">
                           {player_details[0].atp_peak_rank == null
@@ -418,7 +554,7 @@ export default function Player() {
                     </div>
                   </div>
                 </div>
-              </main>
+              </div>
             </div>
           </div>
         </div>

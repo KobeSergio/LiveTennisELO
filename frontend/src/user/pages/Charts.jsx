@@ -66,24 +66,14 @@ export default function Charts() {
   return (
     <>
       <div className="charts-bg" style={{ backgroundImage: `url(${bg_img})` }}>
-        <div className="px-5 py-4">
-          <div className="p-2 w-50">
-            <h1 className="fs-3">Chart Comparison</h1>
-            <p>
-              You can compare players’ ELO Rating and ranking charts by clicking
-              "Add Player".
-            </p>
-          </div>
+        <div className="px-4 py-4">
           <div className="row">
-            <div className="w-25 me-4">
-              {/* Select Player */}
-              {/* <div className="d-flex">
-                <span className="me-2 col-form-label w-25">
-                  Search Players:
-                </span>
-                <SearchPlayersDropdown />
-              </div> */}
-              {/* Select Rank Type */}
+            <div className="col-lg-3 col-sm-12 col-12 p2">
+              <h1 className="fs-3">Chart Comparison</h1>
+              <p>
+                You can compare players’ ELO Rating and ranking charts by
+                clicking "Add Player".
+              </p>
               <div className="d-flex mb-4">
                 <span className="me-2 col-form-label w-25">Rank Type:</span>
                 <Dropdown className="border-0 dropdown mx-2 rounded-3">
@@ -282,8 +272,7 @@ export default function Charts() {
                 <Pencil color="white" className="me-2" size={18} /> Draw Chart
               </Button>
             </div>
-            <div className="col w-50">
-              {/* Player Chart */}
+            <div className="col-lg-9 col-sm-12 col-12">
               <Graph
                 invert={invert}
                 filter={filter}
@@ -293,8 +282,8 @@ export default function Charts() {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 }
