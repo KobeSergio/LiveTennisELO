@@ -408,6 +408,150 @@ export function PlayerChart() {
         </Modal.Body>
       </Modal>
       <div className="row">
+        <div className="card bg-white me-1 shadow rounded mb-2 d-flex align-items-stretch">
+          <h1 className="mt-2 fs-4">
+            ATP {filter.substring(3, filter.length)}
+          </h1>
+          <h2 className="fs-5">
+            From:{" "}
+            <span id="years">
+              {hard_data[0] != null ? (
+                <>
+                  {filter.toLowerCase() == "elo ratings by age" ||
+                  filter.toLowerCase() == "elo rankings by age" ? (
+                    <>
+                      {Math.floor(hard_data[0].x)} -{" "}
+                      {Math.floor(hard_data[hard_data.length - 1].x)} years
+                    </>
+                  ) : (
+                    <>
+                      {hard_data[0].x.length > 2 ? (
+                        <>
+                          {hard_data[0].x.substring(0, 4)} -{" "}
+                          {hard_data[hard_data.length - 1].x.substring(0, 4)}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
+          </h2>
+          <div>
+            <Line
+              options={{
+                scales: {
+                  xAxes: {
+                    type: type,
+                    time: {
+                      unit: "year",
+                      tooltipFormat: "YYYY-MM-DD",
+                    },
+                  },
+                  yAxes: {
+                    position: "right",
+                    reverse: invert,
+                  },
+                },
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      // We'll edit the `title` string
+                      title: function (tooltipItem) {
+                        // 0.079 - 0.165 : JAN
+                        // 0.166 - 0.248: FEB
+                        // 0.249 - 0.331 : MAR
+                        // 0.332 - 0.414: APR
+                        // 0.415 - 0.497 : MAY
+                        // 0.498 - 0.580 : JUN
+                        // 0.581 - 0.663 : JUL
+                        // 0.664 - 0.746 : AUG
+                        // 0.747 - 0.829: SEP
+                        // 0.83 - 0.912: OCT
+                        // 0.913 - 0.995: NOV
+                        // 0.996 - 0.078 : DEC
+
+                        // The following returns the full string
+                        if (type === "linear") {
+                          const quo = Math.floor(
+                            parseFloat(tooltipItem[0].label)
+                          );
+                          const rem = parseFloat(tooltipItem[0].label) % quo;
+
+                          var ageDate = "";
+                          if (rem >= 0.079 && rem <= 0.165) {
+                            ageDate = "and 1 Month";
+                          } else if (rem >= 0.166 && rem <= 0.248) {
+                            ageDate = "and 2 Months";
+                          } else if (rem >= 0.249 && rem <= 0.331) {
+                            ageDate = "and 3 Months";
+                          } else if (rem >= 0.332 && rem <= 0.414) {
+                            ageDate = "and 4 Months";
+                          } else if (rem >= 0.415 && rem <= 0.497) {
+                            ageDate = "and 5 Months";
+                          } else if (rem >= 0.498 && rem <= 0.58) {
+                            ageDate = "and 6 Months";
+                          } else if (rem >= 0.581 && rem <= 0.663) {
+                            ageDate = "and 7 Months";
+                          } else if (rem >= 0.664 && rem <= 0.746) {
+                            ageDate = "and 8 Months";
+                          } else if (rem >= 0.747 && rem <= 0.829) {
+                            ageDate = "and 9 Months";
+                          } else if (rem >= 0.83 && rem <= 0.912) {
+                            ageDate = "and 10 Months";
+                          } else if (rem >= 0.913 && rem <= 0.995) {
+                            ageDate = "and 11 Months";
+                          }
+                          return `${quo} ${ageDate}`;
+                        }
+                        return tooltipItem[0].label;
+                      },
+                    },
+                  },
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: false,
+                  },
+                  zoom: {
+                    zoom: {
+                      drag: {
+                        enabled: true,
+                      },
+                      wheel: {
+                        enabled: true,
+                      },
+                    },
+                  },
+                },
+
+                maintainAspectRatio: false,
+              }}
+              data={{
+                datasets: [
+                  {
+                    data: atp_data,
+                    borderColor: "#4C5454",
+                    backgroundColor: "#4C5454",
+                    borderWidth: 2,
+                    pointBorderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                  },
+                ],
+              }}
+              height={"250px"}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="row">
         <div className="card bg-white col-lg-3 col-sm-12 col-12  rounded mb-2 d-flex align-items-stretch">
           <h1 className="mt-2 fs-4">Overall {filter}</h1>
           <h2 className="fs-5">
@@ -923,150 +1067,6 @@ export function PlayerChart() {
                     data: grass_data,
                     borderColor: "#339966",
                     backgroundColor: "#339966",
-                    borderWidth: 2,
-                    pointBorderWidth: 2,
-                    pointRadius: 0,
-                    pointHoverRadius: 5,
-                  },
-                ],
-              }}
-              height={"250px"}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card bg-white me-1 shadow rounded mb-2 d-flex align-items-stretch">
-          <h1 className="mt-2 fs-4">
-            ATP {filter.substring(3, filter.length)}
-          </h1>
-          <h2 className="fs-5">
-            From:{" "}
-            <span id="years">
-              {hard_data[0] != null ? (
-                <>
-                  {filter.toLowerCase() == "elo ratings by age" ||
-                  filter.toLowerCase() == "elo rankings by age" ? (
-                    <>
-                      {Math.floor(hard_data[0].x)} -{" "}
-                      {Math.floor(hard_data[hard_data.length - 1].x)} years
-                    </>
-                  ) : (
-                    <>
-                      {hard_data[0].x.length > 2 ? (
-                        <>
-                          {hard_data[0].x.substring(0, 4)} -{" "}
-                          {hard_data[hard_data.length - 1].x.substring(0, 4)}
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
-            </span>
-          </h2>
-          <div>
-            <Line
-              options={{
-                scales: {
-                  xAxes: {
-                    type: type,
-                    time: {
-                      unit: "year",
-                      tooltipFormat: "YYYY-MM-DD",
-                    },
-                  },
-                  yAxes: {
-                    position: "right",
-                    reverse: invert,
-                  },
-                },
-                responsive: true,
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      // We'll edit the `title` string
-                      title: function (tooltipItem) {
-                        // 0.079 - 0.165 : JAN
-                        // 0.166 - 0.248: FEB
-                        // 0.249 - 0.331 : MAR
-                        // 0.332 - 0.414: APR
-                        // 0.415 - 0.497 : MAY
-                        // 0.498 - 0.580 : JUN
-                        // 0.581 - 0.663 : JUL
-                        // 0.664 - 0.746 : AUG
-                        // 0.747 - 0.829: SEP
-                        // 0.83 - 0.912: OCT
-                        // 0.913 - 0.995: NOV
-                        // 0.996 - 0.078 : DEC
-
-                        // The following returns the full string
-                        if (type === "linear") {
-                          const quo = Math.floor(
-                            parseFloat(tooltipItem[0].label)
-                          );
-                          const rem = parseFloat(tooltipItem[0].label) % quo;
-
-                          var ageDate = "";
-                          if (rem >= 0.079 && rem <= 0.165) {
-                            ageDate = "and 1 Month";
-                          } else if (rem >= 0.166 && rem <= 0.248) {
-                            ageDate = "and 2 Months";
-                          } else if (rem >= 0.249 && rem <= 0.331) {
-                            ageDate = "and 3 Months";
-                          } else if (rem >= 0.332 && rem <= 0.414) {
-                            ageDate = "and 4 Months";
-                          } else if (rem >= 0.415 && rem <= 0.497) {
-                            ageDate = "and 5 Months";
-                          } else if (rem >= 0.498 && rem <= 0.58) {
-                            ageDate = "and 6 Months";
-                          } else if (rem >= 0.581 && rem <= 0.663) {
-                            ageDate = "and 7 Months";
-                          } else if (rem >= 0.664 && rem <= 0.746) {
-                            ageDate = "and 8 Months";
-                          } else if (rem >= 0.747 && rem <= 0.829) {
-                            ageDate = "and 9 Months";
-                          } else if (rem >= 0.83 && rem <= 0.912) {
-                            ageDate = "and 10 Months";
-                          } else if (rem >= 0.913 && rem <= 0.995) {
-                            ageDate = "and 11 Months";
-                          }
-                          return `${quo} ${ageDate}`;
-                        }
-                        return tooltipItem[0].label;
-                      },
-                    },
-                  },
-                  legend: {
-                    display: false,
-                  },
-                  title: {
-                    display: false,
-                  },
-                  zoom: {
-                    zoom: {
-                      drag: {
-                        enabled: true,
-                      },
-                      wheel: {
-                        enabled: true,
-                      },
-                    },
-                  },
-                },
-
-                maintainAspectRatio: false,
-              }}
-              data={{
-                datasets: [
-                  {
-                    data: atp_data,
-                    borderColor: "#4C5454",
-                    backgroundColor: "#4C5454",
                     borderWidth: 2,
                     pointBorderWidth: 2,
                     pointRadius: 0,
