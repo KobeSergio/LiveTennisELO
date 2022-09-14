@@ -411,7 +411,7 @@ export function PlayerChart() {
         <div className="card bg-white me-1 shadow rounded mb-2 d-flex align-items-stretch">
           <h1 className="mt-2 fs-4">
             ATP{" "}
-            {filter.substring(3, filter.length) == "Ratings" ? (
+            {filter.substring(3, filter.length) == " Ratings" ? (
               <>Points</>
             ) : (
               filter.substring(3, filter.length)
