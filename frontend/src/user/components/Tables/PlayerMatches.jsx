@@ -324,7 +324,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Overall Performance:{"\xa0"}
+                      Overall Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -402,7 +402,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Hard Performance: {"\xa0"}
+                      Hard Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -481,7 +481,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Clay Performance: {"\xa0"}
+                      Clay Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -560,7 +560,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Grass Performance: {"\xa0"}
+                      Grass Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -971,7 +971,6 @@ export function PlayerMatches() {
                   {Math.ceil(getStats(data, player_id).ave_ELO)}
                 </td>
                 <td>
-                  (
                   {currentSurface != "All Surface" ? (
                     <>
                       <b>Ave. Opp Surface ELO:</b>
@@ -981,7 +980,6 @@ export function PlayerMatches() {
                   ) : (
                     <></>
                   )}
-                  )
                 </td>
                 <td></td>
                 <td></td>

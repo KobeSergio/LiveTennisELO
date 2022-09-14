@@ -193,17 +193,6 @@ export default function Charts() {
                 onChange={handleSelect}
                 isOptionDisabled={() => selectedPlayers.length >= 1}
               />
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                defaultValue={[]}
-                isMulti
-                options={showOptions ? playerOptions : []}
-                menuIsOpen={showOptions ? true : false}
-                onInputChange={handleInputChange}
-                onChange={handleSelect}
-                isOptionDisabled={() => selectedPlayers.length >= 1}
-              />
               <p className="pt-2 m-1" style={{ color: "gray" }}>
                 Search for a player by typing their names above. Only 2 players
                 can be compared.
