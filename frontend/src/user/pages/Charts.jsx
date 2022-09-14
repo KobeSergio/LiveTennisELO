@@ -192,7 +192,7 @@ export default function Charts() {
                 menuIsOpen={showOptions ? true : false}
                 onInputChange={handleInputChange}
                 onChange={handleSelect}
-                isOptionDisabled={() => selectedPlayers.length >= 1}
+                isOptionDisabled={() => selectedPlayers.length >= 2}
               />
               <p className="pt-2 m-1" style={{ color: "gray" }}>
                 Search for a player by typing their names above. Only 2 players
