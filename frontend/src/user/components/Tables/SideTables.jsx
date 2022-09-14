@@ -121,7 +121,7 @@ export default function () {
   if (data.length < 1) {
     return (
       <>
-        <div className="w-25">
+        <div className="col-lg-4">
           {/* TOP 15 */}
           <h2 className="fs-4">Top 15s:</h2>
           <div className="row">
@@ -137,7 +137,7 @@ export default function () {
 
   return (
     <>
-      <div className="w-25">
+      <div className="col-lg-4">
         {/* TOP 15 */}
         <h2 className="fs-4">Top 15s:</h2>
         <div className="row">

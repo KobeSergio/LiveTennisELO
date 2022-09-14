@@ -97,8 +97,8 @@ export default function Charts() {
         className="liverating-bg"
         style={{ backgroundImage: `url(${bg_img})` }}
       >
-        <div className="px-5 py-4">
-          <div className="p-2 w-50">
+        <div className="px-3 py-4">
+          <div className="p-2 col-6-lg ">
             <h1 className="fs-3">
               <b>Welcome to Live Tennis ELO Ratings!</b>
             </h1>
@@ -109,167 +109,146 @@ export default function Charts() {
             </p>
           </div>
           <div className="row">
-            <div className="col-10">
-              <div className="input-group pt-3 pb-3">
-                <div className="input-group">
-                  <div className="me-4">
-                    <Dropdown className="border rounded-3">
-                      <Dropdown.Toggle
-                        className="o40"
-                        variant="white"
-                        id="dropdown-basic"
-                        size="sm"
-                      >
-                        {year}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {years.map((year) => (
-                          <Dropdown.Item
-                            onClick={() => setyear(year)}
-                            href="#/"
-                          >
-                            {year}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                  <span className="input-group-button">
-                    <a
-                      onClick={() => {
-                        if (recordIndex != choicesCopy.length) {
-                          dispatch(loadRecord(choicesCopy[recordIndex + 1]));
-                          setRecord(choicesCopy[recordIndex + 1]);
-                        } else {
-                          console.log("REACHED END OF RECORDS");
-                        }
-                      }}
-                      href="#/"
-                    >
-                      <button className="btn btn-white border-0 dropdown rounded-3 me-2">
-                        <ChevronLeft
-                          color="gray"
-                          style={{ fontSize: "18px" }}
-                        />
-                      </button>
-                    </a>
-                  </span>
-                  <Dropdown className="border rounded-3">
+            <div className="col-sm-12 col-xl-4">
+              <div className="input-group">
+                <div className="me-2">
+                  <Dropdown className="rounded-3">
                     <Dropdown.Toggle
                       className="o40"
                       variant="white"
                       id="dropdown-basic"
                       size="sm"
                     >
-                      {Math.floor(record / 10000).toString() +
-                        "/" +
-                        Math.floor((record % 10000) / 100).toString() +
-                        "/" +
-                        Math.floor(((record % 10000) % 100) / 1).toString()}
+                      {year}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {choicesCopy.map((choice) =>
-                        Math.floor(choice / 10000) === year ? (
-                          <Dropdown.Item
-                            onClick={() => {
-                              dispatch(loadRecord(choice));
-                              setRecord(choice);
-                            }}
-                            href="#/"
-                          >
-                            {Math.floor(choice / 10000).toString() +
-                              "/" +
-                              Math.floor((choice % 10000) / 100).toString() +
-                              "/" +
-                              Math.floor(
-                                ((choice % 10000) % 100) / 1
-                              ).toString()}
-                          </Dropdown.Item>
-                        ) : (
-                          console.log()
-                        )
-                      )}
+                      {years.map((year) => (
+                        <Dropdown.Item onClick={() => setyear(year)} href="#/">
+                          {year}
+                        </Dropdown.Item>
+                      ))}
                     </Dropdown.Menu>
                   </Dropdown>
-                  <span className="input-group-button me-5">
-                    <a
-                      onClick={() => {
-                        if (recordIndex != 0) {
-                          dispatch(loadRecord(choicesCopy[recordIndex - 1]));
-                          setRecord(choicesCopy[recordIndex - 1]);
-                        } else {
-                          console.log("REACHED END OF RECORDS");
-                        }
-                      }}
-                      href="#/"
-                    >
-                      <button className="btn btn-white border-0 dropdown rounded-3 me-2">
-                        <ChevronRight
-                          color="gray"
-                          style={{ fontSize: "18px" }}
-                        />
-                      </button>
-                    </a>
-                  </span>
-                  <div className="me-5">
-                    <Dropdown className="border-0 dropdown rounded-3">
-                      <Dropdown.Toggle
-                        className="o40"
-                        variant="white"
-                        id="dropdown-basic"
-                        size="sm"
-                      >
-                        {DataPerPage} per page
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          onClick={() => setDataPerPage(20)}
-                          href="#"
-                        >
-                          20 per page
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => setDataPerPage(50)}
-                          href="#"
-                        >
-                          50 per page
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => setDataPerPage(100)}
-                          href="#"
-                        >
-                          100 per page
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => setDataPerPage(data.length)}
-                          href="#"
-                        >
-                          All
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                  {/* SEARCH IN RECORD */}
-                  <span>
-                    <div className="input-group">
-                      <input
-                        className="form-control border-0 dropdown rounded-3"
-                        type="text"
-                        placeholder="Search in Record"
-                        aria-label="Search in Record"
-                        onChange={onSearch}
-                      />
-                      <span className="input-group-button">
-                        <button
-                          className="btn btn-black search-btn px-3 py-1"
-                          type="submit"
-                        >
-                          <Search color="white" className="fs-7" />
-                        </button>
-                      </span>
-                    </div>
-                  </span>
                 </div>
+                <span className="input-group-button">
+                  <a
+                    onClick={() => {
+                      if (recordIndex != choicesCopy.length) {
+                        dispatch(loadRecord(choicesCopy[recordIndex + 1]));
+                        setRecord(choicesCopy[recordIndex + 1]);
+                        setDataPerPage(20);
+                      } else {
+                        console.log("REACHED END OF RECORDS");
+                      }
+                    }}
+                    href="#/"
+                  >
+                    <button className="btn border-0 dropdown rounded-3 me-1">
+                      <ChevronLeft color="gray" style={{ fontSize: "18px" }} />
+                    </button>
+                  </a>
+                </span>
+                <Dropdown className="rounded-3">
+                  <Dropdown.Toggle
+                    className="o40"
+                    variant="white"
+                    id="dropdown-basic"
+                    size="sm"
+                  >
+                    {Math.floor(record / 10000).toString() +
+                      "/" +
+                      Math.floor((record % 10000) / 100).toString() +
+                      "/" +
+                      Math.floor(((record % 10000) % 100) / 1).toString()}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {choicesCopy.map((choice) =>
+                      Math.floor(choice / 10000) === year ? (
+                        <Dropdown.Item
+                          onClick={() => {
+                            dispatch(loadRecord(choice));
+                            setRecord(choice);
+                            setDataPerPage(20);
+                          }}
+                          href="#/"
+                        >
+                          {Math.floor(choice / 10000).toString() +
+                            "/" +
+                            Math.floor((choice % 10000) / 100).toString() +
+                            "/" +
+                            Math.floor(((choice % 10000) % 100) / 1).toString()}
+                        </Dropdown.Item>
+                      ) : (
+                        console.log()
+                      )
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+                <span className="input-group-button">
+                  <a
+                    onClick={() => {
+                      if (recordIndex != 0) {
+                        dispatch(loadRecord(choicesCopy[recordIndex - 1]));
+                        setRecord(choicesCopy[recordIndex - 1]);
+                        setDataPerPage(20);
+                      } else {
+                        console.log("REACHED END OF RECORDS");
+                      }
+                    }}
+                    href="#/"
+                  >
+                    <button className="btn dropdown rounded-3 ms-1">
+                      <ChevronRight color="gray" style={{ fontSize: "18px" }} />
+                    </button>
+                  </a>
+                </span>
+                <Dropdown className="border-0 dropdown rounded-3">
+                  <Dropdown.Toggle
+                    className="o40"
+                    variant="white"
+                    id="dropdown-basic"
+                    size="sm"
+                  >
+                    {DataPerPage} per page
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => setDataPerPage(20)} href="#">
+                      20 per page
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => setDataPerPage(50)} href="#">
+                      50 per page
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
+                      100 per page
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => setDataPerPage(records.length)}
+                      href="#"
+                    >
+                      All
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            </div>
+            {/* SEARCH IN RECORD */}
+            <div className="col-xl-4 col-sm-12 my-2">
+              <div className="input-group">
+                <input
+                  className="form-control border-0 dropdown rounded-3"
+                  type="text"
+                  placeholder="Search in Record"
+                  aria-label="Search in Record"
+                  onChange={onSearch}
+                />
+                <span className="input-group-button">
+                  <button
+                    className="btn btn-black search-btn px-3 py-1"
+                    type="submit"
+                  >
+                    <Search color="white" className="fs-7" />
+                  </button>
+                </span>
               </div>
             </div>
           </div>

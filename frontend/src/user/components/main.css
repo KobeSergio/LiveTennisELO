@@ -2,7 +2,7 @@
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 600;
     letter-spacing: -0.8px;
-    color: #000;
+    color: #000; 
 }
 
 .box__dragndrop,
@@ -58,8 +58,10 @@ h1 {
 }
 
 .table {
+    max-height: 200px;
     border-collapse: separate;
-    border-spacing: 10px 6px;
+    border-spacing: 10px 0px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 .table-hard {
@@ -164,6 +166,7 @@ h1 {
 
 .nav-link {
     color: #878787;
+    padding: 0.2rem 0.5rem;
 }
 
 .nav-link:hover {
@@ -172,26 +175,9 @@ h1 {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none; 
 }
-
-li .pagination-button {
-    color: #2c3e50;
-    background: #fff;
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 38px;
-    height: 38px;
-    width: 80px;
-    padding: 0;
-    margin: 0 10px;
-    border: none;
-    border-radius: 10px;
-    position: relative;
-    z-index: 1;
-    transition: all 0.3s ease 0s;
-}
-
+ 
 .pagination-outer {
     text-align: center;
 }
@@ -199,16 +185,17 @@ li .pagination-button {
 .pagination {
     font-family: 'Source Sans Pro', sans-serif;
     position: relative;
+    
 }
 
 .pagination li a.page-link {
     color: #2c3e50;
-    background: #fff;
-    font-size: 22px;
+    background: inherit;
+    font-size: 18px;
     font-weight: 500;
     line-height: 38px;
     height: 38px;
-    width: 38px;
+    min-width: 38px;
     padding: 0;
     margin: 0 5px;
     border: none;
@@ -223,7 +210,7 @@ li .pagination-button {
 .pagination li.active a.page-link:hover,
 .pagination li.active a.page-link {
     color: #27ae60;
-    background: #fff;
+    background: inherit;
     border-color: transparent;
 }
 
@@ -392,7 +379,7 @@ li .pagination-button {
 }
 
 .btn {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .btn:focus {
@@ -507,21 +494,18 @@ li .pagination-button {
 }
 
 .table-ratings {
-    display: table-cell;
-
+    display: table-cell; 
     width: 80px;
 }
 
 .table-name {
-    display: table-cell;
-
+    display: table-cell; 
     width: 250px;
 }
 
 
 .table-score {
-    display: table-cell;
-
+    display: table-cell; 
     width: 120px;
 }
 
@@ -793,7 +777,8 @@ input:checked+.slider:before {
  
 .record_tbody {
     display: block;
-    height: 1257px;
+    height: auto;
+    max-height: 1250px;
     overflow: auto;
 }
 
@@ -814,7 +799,11 @@ scrollbar-width: none;  /* Firefox */
     table-layout: fixed;  
 }
 
-.record_thead {
+.record_thead { 
     width: calc( 100% ) 
 } 
 
+.record_thead th{
+    padding: 10px 0px;
+    
+}

@@ -85,9 +85,9 @@ const getIndPlayer = asyncHandler(async (req, res) => {
             tourney_date: "$tourney_date",
             surface: "$surface",
             match_num: "$match_num",
-            winner_local_id: "$winner_local_id",
+            winner_local_id: "$winner_local_id", //LOCAL ID
             winner_name: "$winner_name",
-            loser_local_id: "$loser_local_id",
+            loser_local_id: "$loser_local_id", //LOCAL ID
             loser_name: "$loser_name",
             score: "$score",
             round: "$round",
@@ -105,7 +105,7 @@ const getIndPlayer = asyncHandler(async (req, res) => {
       },
     },
     {
-      $project: { 
+      $project: {
         mostRecentGames: { $slice: ["$game", 0, 10] },
       },
     },
