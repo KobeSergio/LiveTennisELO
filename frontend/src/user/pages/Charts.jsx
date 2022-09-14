@@ -183,6 +183,7 @@ export default function Charts() {
                 </Dropdown>
               </div>
               <Select
+                placeholder={"Select Players..."}
                 closeMenuOnSelect={false}
                 components={animatedComponents}
                 defaultValue={[]}
