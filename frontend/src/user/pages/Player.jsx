@@ -24,13 +24,23 @@ function parseDate(dateString) {
       dateString.substring(6, 8)
     );
   } else {
-    var newdate = dateString.split(" ")[0].split("-");
-    console.log(newdate);
-    mydate = new Date(
-      newdate[2], //Year
-      newdate[1], //Month
-      newdate[0] // Day
-    );
+    if (dateString.includes("-")) {
+      var newdate = dateString.split(" ")[0].split("-");
+      console.log(newdate);
+      mydate = new Date(
+        newdate[2], //Year
+        newdate[1], //Month
+        newdate[0] // Day
+      );
+    } else {
+      var newdate = dateString.split(" ")[0].split("/");
+      console.log(newdate);
+      mydate = new Date(
+        newdate[2], //Year
+        newdate[1], //Month
+        newdate[0] // Day
+      );
+    }
   }
 
   var dateStr = mydate.toDateString();
@@ -296,20 +306,22 @@ export default function Player() {
                       </div>
                       <div className="col-lg-3 col-sm-6 col-6">
                         <div id="overall">
-                          <span
-                            style={{ backgroundColor: "#000000" }}
-                            className="table-surface-elo-label"
-                          >
-                            {" "}
-                            {player_details[0].overall_rank == null ? (
-                              <></>
-                            ) : (
-                              player_details[0].overall_rank +
-                              " (" +
-                              player_details[0].overall_rating +
-                              ") "
-                            )}
-                          </span>
+                          {" "}
+                          {player_details[0].overall_rank == null ? (
+                            <></>
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#000000" }}
+                                className="table-surface-elo-label"
+                              >
+                                {player_details[0].overall_rank +
+                                  " (" +
+                                  player_details[0].overall_rating +
+                                  ") "}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <div id="peak_rank">
                           {player_details[0].overall_peak_rank == null ? (
@@ -358,17 +370,21 @@ export default function Player() {
                       </div>
                       <div className="col-lg-3 col-sm-6 col-6">
                         <div className="clay-text" id="clay">
-                          <span
-                            style={{ backgroundColor: "#E96513" }}
-                            className="table-surface-elo-label"
-                          >
-                            {player_details[0].clay_rank == null
-                              ? "\xa0"
-                              : player_details[0].clay_rank +
-                                " (" +
-                                player_details[0].clay_rating +
-                                ") "}
-                          </span>
+                          {player_details[0].clay_rank == null ? (
+                            "\xa0"
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#E96513" }}
+                                className="table-surface-elo-label"
+                              >
+                                {player_details[0].clay_rank +
+                                  " (" +
+                                  player_details[0].clay_rating +
+                                  ") "}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <div className="clay-text" id="peak_rank">
                           {player_details[0].clay_peak_rank == null
@@ -412,17 +428,21 @@ export default function Player() {
                       </div>
                       <div className="col-lg-3 col-sm-6 col-6">
                         <div className="hard-text" id="hard">
-                          <span
-                            style={{ backgroundColor: "#015778" }}
-                            className="table-surface-elo-label"
-                          >
-                            {player_details[0].hard_rank == null
-                              ? "\xa0"
-                              : player_details[0].hard_rank +
-                                " (" +
-                                player_details[0].hard_rating +
-                                ") "}
-                          </span>
+                          {player_details[0].hard_rank == null ? (
+                            "\xa0"
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#015778" }}
+                                className="table-surface-elo-label"
+                              >
+                                {player_details[0].hard_rank +
+                                  " (" +
+                                  player_details[0].hard_rating +
+                                  ") "}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <div className="hard-text" id="hard_rank">
                           {player_details[0].hard_peak_rank == null
@@ -464,17 +484,21 @@ export default function Player() {
                       </div>
                       <div className="col">
                         <div className="grass-text" id="grass">
-                          <span
-                            style={{ backgroundColor: "#3EBA7C" }}
-                            className="table-surface-elo-label"
-                          >
-                            {player_details[0].grass_rank == null
-                              ? "\xa0"
-                              : player_details[0].grass_rank +
-                                " (" +
-                                player_details[0].grass_rating +
-                                ") "}
-                          </span>
+                          {player_details[0].grass_rank == null ? (
+                            "\xa0"
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#3EBA7C" }}
+                                className="table-surface-elo-label"
+                              >
+                                {player_details[0].grass_rank +
+                                  " (" +
+                                  player_details[0].grass_rating +
+                                  ") "}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <div className="grass-text" id="grass_rank">
                           {player_details[0].grass_peak_rank == null
@@ -520,17 +544,21 @@ export default function Player() {
                       </div>
                       <div className="col">
                         <div id="atp">
-                          <span
-                            style={{ backgroundColor: "#000000" }}
-                            className="table-surface-elo-label"
-                          >
-                            {player_details[0].atp_rating == null
-                              ? "\xa0"
-                              : player_details[0].atp_rank +
-                                " (" +
-                                player_details[0].atp_rating +
-                                " pts) "}
-                          </span>
+                          {player_details[0].atp_rating == null ? (
+                            "\xa0"
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#000000" }}
+                                className="table-surface-elo-label"
+                              >
+                                {player_details[0].atp_rank +
+                                  " (" +
+                                  player_details[0].atp_rating +
+                                  " pts) "}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <div id="peak_atp_rank">
                           {player_details[0].atp_peak_rank == null

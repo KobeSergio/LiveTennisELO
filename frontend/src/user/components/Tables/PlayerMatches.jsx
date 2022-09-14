@@ -235,9 +235,6 @@ export function PlayerMatches() {
         className="bg-white container-fluid shadow rounded my-2"
       >
         <div className="row h-100 py-3 rounded">
-          <h1 className="fs-4  mb-0">
-            Last 10 matches of {player_details[0].player_name}
-          </h1>
           <div className="container px-3 py-0 pt-3">
             <div className="row">
               <div className="col-10">
@@ -638,7 +635,9 @@ export function PlayerMatches() {
             </div>
             <hr></hr>
           </div>
-
+          <h1 className="fs-4  mb-0">
+            Last 10 matches of {player_details[0].player_name}
+          </h1>
           <h5>
             <b>Match History:</b>
           </h5>
@@ -744,7 +743,7 @@ export function PlayerMatches() {
                   <b>Opp. Surface ELO</b>
                 </th>
                 <th
-                  style={{ minWidth: 200 }}
+                  style={{ minWidth: 150 }}
                   className="text-start"
                   scope="col"
                 >
