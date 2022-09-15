@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
-
+import Pagination from "../Pagination";
 String.prototype.replaceAt = function (index, replacement) {
   return (
     this.substring(0, index) +
@@ -214,14 +214,24 @@ export function PlayerMatches() {
 
   const [data, setData] = useState(player_matches);
 
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DataPerPage, setDataPerPage] = useState(10);
+
+  //Get index of the last Data
+  const indexOfLastData = currentPage * DataPerPage;
+  const indexOfFirstData = indexOfLastData - DataPerPage;
+  const currentData = data.slice(indexOfFirstData, indexOfLastData);
+
+  //Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   useEffect(() => {
     //Sort table by latest matches and in the proper order.
     setData(
-      [...data]
-        .sort(
-          (a, b) => b.tourney_date - a.tourney_date || b.match_num - a.match_num
-        )
-        .splice(0, 10)
+      [...data].sort(
+        (a, b) => b.tourney_date - a.tourney_date || b.match_num - a.match_num
+      )
     );
   }, []);
 
@@ -336,7 +346,7 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          [...currentData]
                             .sort(
                               (a, b) =>
                                 b.tourney_date - a.tourney_date ||
@@ -349,7 +359,7 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        [...currentData]
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -363,7 +373,7 @@ export function PlayerMatches() {
                         <CaretUpFill size={10} color="green" /> {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            [...currentData]
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -380,7 +390,7 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            [...currentData]
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -410,7 +420,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Hard"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Hard")
                             .sort(
                               (a, b) =>
@@ -424,7 +437,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Hard"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Hard")
                           .sort(
                             (a, b) =>
@@ -440,7 +456,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Hard"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
@@ -458,7 +477,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Hard"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
@@ -489,7 +511,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Clay"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Clay")
                             .sort(
                               (a, b) =>
@@ -503,7 +528,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Clay"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Clay")
                           .sort(
                             (a, b) =>
@@ -519,7 +547,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Clay"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
@@ -537,7 +568,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Clay"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
@@ -568,7 +602,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Grass"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Grass")
                             .sort(
                               (a, b) =>
@@ -582,7 +619,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Grass"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Grass")
                           .sort(
                             (a, b) =>
@@ -598,7 +638,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Grass"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
@@ -616,7 +659,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Grass"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
@@ -636,10 +682,10 @@ export function PlayerMatches() {
             <hr></hr>
           </div>
           <h1 className="fs-4  mb-0">
-            Last 10 matches of {player_details[0].player_name} 
+            Last 10 matches of {player_details[0].player_name}
           </h1>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <h5>
             <b>Match History:</b>
           </h5>
@@ -653,13 +699,11 @@ export function PlayerMatches() {
                   onClick={() => {
                     setCurrentSurface("All Surface");
                     setData(
-                      [...player_matches]
-                        .sort(
-                          (a, b) =>
-                            b.tourney_date - a.tourney_date ||
-                            b.match_num - a.match_num
-                        )
-                        .splice(0, 10)
+                      [...player_matches].sort(
+                        (a, b) =>
+                          b.tourney_date - a.tourney_date ||
+                          b.match_num - a.match_num
+                      )
                     );
                   }}
                   href="#/"
@@ -677,7 +721,6 @@ export function PlayerMatches() {
                             b.tourney_date - a.tourney_date ||
                             b.match_num - a.match_num
                         )
-                        .splice(0, 10)
                     );
                   }}
                   href="#/"
@@ -695,7 +738,6 @@ export function PlayerMatches() {
                             b.tourney_date - a.tourney_date ||
                             b.match_num - a.match_num
                         )
-                        .splice(0, 10)
                     );
                   }}
                   href="#/"
@@ -713,7 +755,6 @@ export function PlayerMatches() {
                             b.tourney_date - a.tourney_date ||
                             b.match_num - a.match_num
                         )
-                        .splice(0, 10)
                     );
                   }}
                   href="#/"
@@ -735,23 +776,27 @@ export function PlayerMatches() {
                 <th style={{ minWidth: 85 }} scope="col">
                   <b>Result</b>
                 </th>
-                <th className="text-start" scope="col">
-                  <b>Opponent</b>
-                </th>
-                <th style={{ minWidth: 120 }} scope="col">
-                  <b>Opp. Overall Rating</b>
-                </th>
-                <th style={{ minWidth: 120 }} scope="col">
-                  <b>Opp. Surface ELO</b>
-                </th>
                 <th
                   style={{ minWidth: 150 }}
                   className="text-start"
                   scope="col"
                 >
+                  <b>Opponent</b>
+                </th>
+                <th style={{ minWidth: 110 }} scope="col">
+                  <b>Opp. Overall Rating</b>
+                </th>
+                <th style={{ minWidth: 110 }} scope="col">
+                  <b>Opp. Surface ELO</b>
+                </th>
+                <th
+                  style={{ minWidth: 120 }}
+                  className="text-start"
+                  scope="col"
+                >
                   <b>Score</b>
                 </th>
-                <th style={{ minWidth: 200 }} scope="col">
+                <th style={{ minWidth: 100 }} scope="col">
                   <b>Tournament</b>
                 </th>
                 <th scope="col">
@@ -760,7 +805,7 @@ export function PlayerMatches() {
               </tr>
             </thead>
             <tbody className="match-stats">
-              {data.map((match) => (
+              {currentData.map((match) => (
                 <>
                   {currentMatch.toLowerCase() ==
                     match.tourney_name.toLowerCase() &&
@@ -968,15 +1013,16 @@ export function PlayerMatches() {
                 <td></td>
                 <td></td>
                 <td>
-                  <b>Ave. Opp Overall ELO:</b> <br /> <br />
-                  {Math.ceil(getStats(data, player_id).ave_ELO)}
+                  <b>Ave. Opp Overall ELO:</b> <br />
+                  {Math.ceil(getStats(currentData, player_id).ave_ELO)}
                 </td>
                 <td>
                   {currentSurface != "All Surface" ? (
                     <>
-                      <b>Ave. Opp Surface ELO:</b>
-                      <br /> <br />
-                      {Math.ceil(getStats(data, player_id).ave_surface_ELO)}
+                      <b>Ave. Opp Surface ELO:</b> <br />
+                      {Math.ceil(
+                        getStats(currentData, player_id).ave_surface_ELO
+                      )}
                     </>
                   ) : (
                     <></>
@@ -988,6 +1034,17 @@ export function PlayerMatches() {
               </tr>
             </tbody>
           </table>
+          <div className="d-flex flex-row-reverse">
+            <nav className="pagination-outer">
+              <ul className="pagination">
+                <Pagination
+                  DataPerPage={DataPerPage}
+                  totalData={data.length}
+                  paginate={paginate}
+                />
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </>

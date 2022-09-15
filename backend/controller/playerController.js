@@ -64,8 +64,8 @@ const updatePlayer = asyncHandler(async (req, res) => {
 });
 
 const getIndPlayer = asyncHandler(async (req, res) => {
-  const player = await Player.find({ player_id: { $eq: req.params.id } });
-  const matches = await Matches.aggregate([
+  const player = Player.find({ player_id: { $eq: req.params.id } });
+  const matches = Matches.aggregate([
     { $sort: { tourney_date: -1 } },
     {
       $match: {
@@ -106,16 +106,18 @@ const getIndPlayer = asyncHandler(async (req, res) => {
     },
     {
       $project: {
-        mostRecentGames: { $slice: ["$game", 0, 10] },
+        mostRecentGames: "$game",
       },
     },
   ]);
-  const records = await Records.find({ player_id: { $eq: req.params.id } });
-  if (!player && !matches && !records) {
+  const records = Records.find({ player_id: { $eq: req.params.id } });
+
+  const response = await Promise.all([player,matches,records]);
+  if (!response) {
     res.status(400);
     throw new Error("Data insufficient");
   }
-  const container = { player: player, matches: matches, records: records };
+  const container = { player: response[0], matches: response[1], records: response[2] };
   res.status(200).json(container);
 });
 

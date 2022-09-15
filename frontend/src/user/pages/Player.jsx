@@ -58,6 +58,46 @@ function parsebirthDate(dateString) {
   var diff = birthdate.getFullYear() - dateToday.getFullYear();
   return Math.abs(diff);
 }
+
+function computeStatus(dateString) {
+  var mydate = new Date();
+
+  if (dateString.length == 8) {
+    mydate = new Date(
+      dateString.substring(0, 4),
+      dateString.substring(4, 6),
+      dateString.substring(6, 8)
+    );
+  } else {
+    if (dateString.includes("-")) {
+      var newdate = dateString.split(" ")[0].split("-");
+      console.log(newdate);
+      mydate = new Date(
+        newdate[2], //Year
+        newdate[1], //Month
+        newdate[0] // Day
+      );
+    } else {
+      var newdate = dateString.split(" ")[0].split("/");
+      console.log(newdate);
+      mydate = new Date(
+        newdate[2], //Year
+        newdate[1], //Month
+        newdate[0] // Day
+      );
+    }
+  }
+
+  var dateToday = new Date();
+  var diff = dateToday.getFullYear() - mydate.getFullYear();
+  console.log(diff);
+  return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
+    ? "Inactive"
+    : Math.abs(diff) < 1
+    ? "Active"
+    : "Retired";
+}
+
 export default function Player() {
   const { player_details, player_matches, player_isLoading, player_records } =
     useSelector((state) => state.api);
@@ -104,10 +144,44 @@ export default function Player() {
                     }
                   />
                 </div>
-                <div class="d-flex justify-content-center mb-3">
+                <div class="d-flex justify-content-center">
                   <h1 className="fs-3 fw-bold" id="player-name">
                     {player_details[0].player_name}
                   </h1>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div className="text-dark" id="social">
+                    {player_details[0].facebook == null ? (
+                      <></>
+                    ) : (
+                      <a
+                        className="me-2"
+                        href={"https:/" + player_details[0].facebook}
+                      >
+                        <Facebook />
+                      </a>
+                    )}
+                    {player_details[0].twitter == null ? (
+                      <></>
+                    ) : (
+                      <a
+                        className="me-2"
+                        href={"https:/" + player_details[0].twitter}
+                      >
+                        <Twitter />
+                      </a>
+                    )}
+                    {player_details[0].instagram == null ? (
+                      <></>
+                    ) : (
+                      <a
+                        className="me-2"
+                        href={"https:/" + player_details[0].instagram}
+                      >
+                        <Instagram />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
               <div class="col-lg-10 col-sm-12">
@@ -165,12 +239,10 @@ export default function Player() {
                         ) : (
                           <div>Last Active:</div>
                         )}
-                        {player_details[0].instagram == null &&
-                        player_details[0].facebook == null &&
-                        player_details[0].twitter == null ? (
+                        {player_details[0].last_match == null ? (
                           <></>
                         ) : (
-                          <div>Socials:</div>
+                          <div>Status:</div>
                         )}
                       </div>
                       <div className="col">
@@ -219,30 +291,6 @@ export default function Player() {
                             )}
                           </span>
                         </div>
-                        <div className="text-dark" id="social">
-                          {player_details[0].facebook == null ? (
-                            <></>
-                          ) : (
-                            <a href={"https:/" + player_details[0].facebook}>
-                              <Facebook />
-                            </a>
-                          )}
-                          {player_details[0].twitter == null ? (
-                            <></>
-                          ) : (
-                            <a href={"https:/" + player_details[0].twitter}>
-                              <Twitter />
-                            </a>
-                          )}
-                          {player_details[0].instagram == null ? (
-                            <></>
-                          ) : (
-                            <a href={"https:/" + player_details[0].instagram}>
-                              <Instagram />
-                            </a>
-                          )}
-                        </div>
-                        {/* plays, backhand, surface, website, last active */}
                         <div className="text-dark" id="plays">
                           {player_details[0].hand == "L"
                             ? "Left-handed"
@@ -276,6 +324,40 @@ export default function Player() {
                             <></>
                           ) : (
                             parseDate(player_details[0].last_match)
+                          )}
+                        </div>
+                        <div className="text-dark">
+                          {player_details[0].last_match == null ? (
+                            <></>
+                          ) : computeStatus(player_details[0].last_match) ===
+                            "Retired" ? (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#000000" }}
+                                className="table-surface-elo-label"
+                              >
+                                {computeStatus(player_details[0].last_match)}
+                              </span>
+                            </>
+                          ) : computeStatus(player_details[0].last_match) ===
+                            "Inactive" ? (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#808080" }}
+                                className="table-surface-elo-label"
+                              >
+                                {computeStatus(player_details[0].last_match)}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span
+                                style={{ backgroundColor: "#22BC22" }}
+                                className="table-surface-elo-label"
+                              >
+                                {computeStatus(player_details[0].last_match)}
+                              </span>
+                            </>
                           )}
                         </div>
                       </div>

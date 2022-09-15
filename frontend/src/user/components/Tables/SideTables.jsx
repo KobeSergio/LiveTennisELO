@@ -581,6 +581,11 @@ export default function () {
             </div>
           </div>
           <TennisRatingGuide />
+          <TwitterTimelineEmbed
+            sourceType="profile"
+            screenName="tennis"
+            options={{ height: 400 }}
+          />
         </div>
       </div>
     </>
