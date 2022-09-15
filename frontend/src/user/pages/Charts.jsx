@@ -76,7 +76,7 @@ export default function Charts() {
               </p>
               <div className="d-flex mb-4">
                 <span className="me-2 col-form-label w-25">Rank Type:</span>
-                <Dropdown className="border-0 dropdown mx-2 rounded-3">
+                <Dropdown className="border bg-white dropdown mx-2 rounded-3">
                   <Dropdown.Toggle
                     variant="white"
                     id="dropdown-basic"
@@ -130,7 +130,7 @@ export default function Charts() {
               </div>
               <div className="d-flex mb-4">
                 <span className="me-2 col-form-label w-25">Surface:</span>
-                <Dropdown className="border-0 dropdown mx-2 rounded-3">
+                <Dropdown className="border bg-white dropdown mx-2 rounded-3">
                   <Dropdown.Toggle
                     variant="white"
                     id="dropdown-basic"
