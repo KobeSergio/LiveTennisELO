@@ -184,9 +184,9 @@ function getPerformance(data, player_id) {
 
   return {
     perf_overall:
-      sumOfAll.reduce((a, b) => a + b, 0) / (data.length - uncounted),
+      sumOfAll.reduce((a, b) => a + b, 0) / (sumOfAll.length),
     perf_surface:
-      sumOfAllSurface.reduce((a, b) => a + b, 0) / (data.length - uncounted),
+      sumOfAllSurface.reduce((a, b) => a + b, 0) / (sumOfAll.length),
   };
 }
 
@@ -217,10 +217,10 @@ function getStats(data, player_id) {
   });
   return {
     ave_ELO:
-      opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length - uncounted),
+      opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length),
     ave_surface_ELO:
       opp_surface_ratings.reduce((a, b) => a + b, 0) /
-      (opp_surface_ratings.length - uncounted),
+      (opp_surface_ratings.length ),
   };
 }
 
