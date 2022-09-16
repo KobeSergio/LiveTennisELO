@@ -8,7 +8,7 @@ const Records = require("../models/recordModel");
 // @access      Private
 const getPlayers = asyncHandler(async (req, res) => {
   const players = await Player.find().select(
-    "player_id player_name overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date"
+    "player_id player_name overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date hard_rating clay_rating overall_rating grass_rating atp_rating"
   );
 
   if (!players) {

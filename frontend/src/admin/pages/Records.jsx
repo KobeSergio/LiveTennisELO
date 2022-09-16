@@ -106,43 +106,30 @@ function Records() {
             onR
           />
           <span className="input-group-button">
-            <button
-              className="btn btn-green search-btn px-3 py-1"
-              type="submit"
-            >
+            <button className="btn btn-green search-btn px-3 py-1">
               <Search color="white" className="fs-7" />
             </button>
           </span>
-        </div> 
+        </div>
       </div>
       {/* utilities */}
-      <div
-        className="p-3 mx-3 bg-white"
-        style={{ borderRadius: "10px 10px 0 0" }}
-      >
-        <div className="input-group px-2">
-          <div className="py-1">
-            <a href="#">
-              <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
-            </a>
-            {/* <Download className="fs-6" /> */}
-          </div> 
-          <div className="ms-auto d-flex align-items-start">
-            <SurfaceLegend />
-          </div>
+      <div className="input-group px-2">
+        <div className="py-1">
+          <a href="#">
+            <TrashFill className="fs-6 me-3" color="red" onClick={onDelete} />
+          </a>
+          {/* <Download className="fs-6" /> */}
+        </div>
+        <div className="ms-auto d-flex align-items-start">
+          <SurfaceLegend />
         </div>
       </div>
       {/* tables */}
-      <div
-        className="p-3 mx-3 bg-white"
-        style={{ borderRadius: "10px 10px 0 0" }}
-      >
-        {len > 0 ? (
-          <RecordTable records={data} />
-        ) : (
-          <RecordTable records={records[0]} />
-        )}
-      </div>
+      {len > 0 ? (
+        <RecordTable records={data} />
+      ) : (
+        <RecordTable records={records[0]} />
+      )}
     </>
   );
 }

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
-import e from "cors";
+import Pagination from "../../../user/components/Pagination";
 
 String.prototype.replaceAt = function (index, replacement) {
   return (
@@ -216,6 +216,17 @@ export function PlayerMatches() {
   );
 
   const [data, setData] = useState(player_matches);
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DataPerPage, setDataPerPage] = useState(10);
+
+  //Get index of the last Data
+  const indexOfLastData = currentPage * DataPerPage;
+  const indexOfFirstData = indexOfLastData - DataPerPage;
+  const currentData = data.slice(indexOfFirstData, indexOfLastData);
+
+  //Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     //Sort table by latest matches and in the proper order.
@@ -235,12 +246,9 @@ export function PlayerMatches() {
     <>
       <div
         style={{ overflow: "auto" }}
-        className="bg-white container-fluid h-100 shadow rounded pt-1 mb-5 mt-5"
+        className="bg-white container-fluid shadow rounded my-2"
       >
         <div className="row h-100 py-3 rounded">
-          <h1 className="fs-4  mb-0">
-            Last 10 matches of {player_details[0].player_name}
-          </h1>
           <div className="container px-3 py-0 pt-3">
             <div className="row">
               <div className="col-10">
@@ -326,7 +334,10 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Overall Performance:</b>
+                    <b>
+                      Overall Last 10: {"\xa0"}
+                      {"\xa0"}
+                    </b>
                   </div>
                   <div className="col">
                     <span
@@ -339,7 +350,7 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          [...currentData]
                             .sort(
                               (a, b) =>
                                 b.tourney_date - a.tourney_date ||
@@ -352,7 +363,7 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        [...currentData]
                           .sort(
                             (a, b) =>
                               b.tourney_date - a.tourney_date ||
@@ -366,7 +377,7 @@ export function PlayerMatches() {
                         <CaretUpFill size={10} color="green" /> {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            [...currentData]
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -383,7 +394,7 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            [...currentData]
                               .sort(
                                 (a, b) =>
                                   b.tourney_date - a.tourney_date ||
@@ -402,7 +413,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Hard Performance: {"\xa0"}
+                      Hard Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -413,7 +424,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Hard"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Hard")
                             .sort(
                               (a, b) =>
@@ -427,7 +441,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Hard"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Hard")
                           .sort(
                             (a, b) =>
@@ -443,7 +460,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Hard"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
@@ -461,7 +481,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Hard"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Hard")
                               .sort(
                                 (a, b) =>
@@ -481,7 +504,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Clay Performance: {"\xa0"}
+                      Clay Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -492,7 +515,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Clay"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Clay")
                             .sort(
                               (a, b) =>
@@ -506,7 +532,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Clay"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Clay")
                           .sort(
                             (a, b) =>
@@ -522,7 +551,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Clay"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
@@ -540,7 +572,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Clay"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Clay")
                               .sort(
                                 (a, b) =>
@@ -560,7 +595,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Grass Performance: {"\xa0"}
+                      Grass Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -571,7 +606,10 @@ export function PlayerMatches() {
                     >
                       {Math.ceil(
                         getPerformance(
-                          [...player_matches]
+                          (currentSurface === "Grass"
+                            ? [...currentData]
+                            : [...player_matches]
+                          )
                             .filter((element) => element.surface == "Grass")
                             .sort(
                               (a, b) =>
@@ -585,7 +623,10 @@ export function PlayerMatches() {
                     </span>
                     {Math.ceil(
                       getPerformance(
-                        [...player_matches]
+                        (currentSurface === "Grass"
+                          ? [...currentData]
+                          : [...player_matches]
+                        )
                           .filter((element) => element.surface == "Grass")
                           .sort(
                             (a, b) =>
@@ -601,7 +642,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Grass"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
@@ -619,7 +663,10 @@ export function PlayerMatches() {
                         {"\xa0"}
                         {Math.ceil(
                           getPerformance(
-                            [...player_matches]
+                            (currentSurface === "Grass"
+                              ? [...currentData]
+                              : [...player_matches]
+                            )
                               .filter((element) => element.surface == "Grass")
                               .sort(
                                 (a, b) =>
@@ -638,357 +685,372 @@ export function PlayerMatches() {
             </div>
             <hr></hr>
           </div>
-          <main className="ms-2">
-            <h5>
-              <b>Match History:</b>
-            </h5>
-            <div className="ms-auto d-flex">
-              <Dropdown className="border-0 dropdown mx-2 rounded-3">
-                <Dropdown.Toggle variant="white" id="dropdown-basic" size="lg">
-                  {currentSurface}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setCurrentSurface("All Surface");
-                      setData(
-                        [...player_matches]
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10)
-                      );
-                    }}
-                    href="#/"
-                  >
-                    All Surface
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setCurrentSurface("Hard");
-                      setData(
-                        [...player_matches]
-                          .filter((element) => element.surface == "Hard")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10)
-                      );
-                    }}
-                    href="#/"
-                  >
-                    Hard
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setCurrentSurface("Clay");
-                      setData(
-                        [...player_matches]
-                          .filter((element) => element.surface == "Clay")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10)
-                      );
-                    }}
-                    href="#/"
-                  >
-                    Clay
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setCurrentSurface("Grass");
-                      setData(
-                        [...player_matches]
-                          .filter((element) => element.surface == "Grass")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10)
-                      );
-                    }}
-                    href="#/"
-                  >
-                    Grass
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <table className="table table-borderless text-center mb-0">
-              <thead>
-                <tr>
-                  <th className="table-date" scope="col">
-                    <b>Date</b>
-                  </th>
-                  <th style={{ minWidth: 85 }} scope="col">
-                    <b>Result</b>
-                  </th>
-                  <th scope="col">
-                    <b>Opponent</b>
-                  </th>
-                  <th style={{ minWidth: 100 }} scope="col">
-                    <b>Opp. Overall Rating</b>
-                  </th>
-                  <th style={{ minWidth: 100 }} scope="col">
-                    <b>Opp. Surface ELO</b>
-                  </th>
-                  <th
-                    style={{ minWidth: 200 }}
-                    className="text-start"
-                    scope="col"
-                  >
-                    <b>Score</b>
-                  </th>
-                  <th style={{ minWidth: 200 }} scope="col">
-                    <b>Tournament</b>
-                  </th>
-                  <th scope="col">
-                    <b>Round</b>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((match) => (
-                  <>
-                    {currentMatch.toLowerCase() ==
-                      match.tourney_name.toLowerCase() &&
-                    currentDate == match.tourney_date ? (
-                      <></>
-                    ) : (
-                      <>
-                        <div hidden={true}>
-                          {(currentMatch = match.tourney_name)}
-                          {(currentDate = match.tourney_date)}
-                        </div>
-                        <tr>
-                          <td colSpan={100}>
-                            <hr />
-                          </td>
-                        </tr>
-                      </>
-                    )}
-
-                    <tr>
-                      <td scope="row" id="date">
-                        {parseDate(match.tourney_date)}
-                      </td>
-                      <td className="table-result" id="result">
-                        <span className="me-2 highlights-button">
-                          {match.highlight != "" ? (
-                            <ShowHighlight
-                              props={match._id}
-                              src={match.highlight}
-                            />
-                          ) : (
-                            <AddHighlight props={match._id} />
-                          )}
+          <h1 className="fs-4  mb-0">
+            Last 10 matches of {player_details[0].player_name}
+          </h1>
+          <br />
+          <br />
+          <h5>
+            <b>Match History:</b>
+          </h5>
+          <div className="ms-auto d-flex">
+            <Dropdown className="border-0 dropdown mx-2 rounded-3">
+              <Dropdown.Toggle variant="white" id="dropdown-basic" size="lg">
+                {currentSurface}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    setCurrentSurface("All Surface");
+                    setData(
+                      [...player_matches].sort(
+                        (a, b) =>
+                          b.tourney_date - a.tourney_date ||
+                          b.match_num - a.match_num
+                      )
+                    );
+                  }}
+                  href="#/"
+                >
+                  All Surface
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setCurrentSurface("Hard");
+                    setData(
+                      [...player_matches]
+                        .filter((element) => element.surface == "Hard")
+                        .sort(
+                          (a, b) =>
+                            b.tourney_date - a.tourney_date ||
+                            b.match_num - a.match_num
+                        )
+                    );
+                  }}
+                  href="#/"
+                >
+                  Hard
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setCurrentSurface("Clay");
+                    setData(
+                      [...player_matches]
+                        .filter((element) => element.surface == "Clay")
+                        .sort(
+                          (a, b) =>
+                            b.tourney_date - a.tourney_date ||
+                            b.match_num - a.match_num
+                        )
+                    );
+                  }}
+                  href="#/"
+                >
+                  Clay
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setCurrentSurface("Grass");
+                    setData(
+                      [...player_matches]
+                        .filter((element) => element.surface == "Grass")
+                        .sort(
+                          (a, b) =>
+                            b.tourney_date - a.tourney_date ||
+                            b.match_num - a.match_num
+                        )
+                    );
+                  }}
+                  href="#/"
+                >
+                  Grass
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <table
+            style={{ boxShadow: "none" }}
+            className="table table-borderless text-center mb-0"
+          >
+            <thead>
+              <tr>
+                <th style={{ minWidth: 85 }} className="table-date" scope="col">
+                  <b>Date</b>
+                </th>
+                <th style={{ minWidth: 85 }} scope="col">
+                  <b>Result</b>
+                </th>
+                <th
+                  style={{ minWidth: 130 }}
+                  className="text-start"
+                  scope="col"
+                >
+                  <b>Opponent</b>
+                </th>
+                <th style={{ minWidth: 110 }} scope="col">
+                  <b>Opp. Overall Rating</b>
+                </th>
+                <th style={{ minWidth: 110 }} scope="col">
+                  <b>Opp. Surface ELO</b>
+                </th>
+                <th
+                  style={{ minWidth: 120 }}
+                  className="text-start"
+                  scope="col"
+                >
+                  <b>Score</b>
+                </th>
+                <th style={{ minWidth: 120 }} scope="col">
+                  <b>Tournament</b>
+                </th>
+                <th scope="col">
+                  <b>Round</b>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="match-stats">
+              {currentData.map((match) => (
+                <>
+                  {currentMatch.toLowerCase() ==
+                    match.tourney_name.toLowerCase() &&
+                  currentDate == match.tourney_date ? (
+                    <></>
+                  ) : (
+                    <>
+                      <div hidden={true}>
+                        {(currentMatch = match.tourney_name)}
+                        {(currentDate = match.tourney_date)}
+                      </div>
+                      <tr>
+                        <td colSpan={100}>
+                          <hr />
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                  <tr>
+                    <td scope="row" id="date">
+                      {parseDate(match.tourney_date)}
+                    </td>
+                    <td className="table-result" id="result">
+                      <span className="me-2 highlights-button">
+                        {match.highlight != "" ? (
+                          <ShowHighlight
+                            props={match._id}
+                            src={match.highlight}
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </span>
+                      {checkOpp(player_id, match).result === "W" ? (
+                        //GREEN SPAN
+                        <span
+                          style={{
+                            backgroundColor: "#9DDEBD",
+                            padding: ".2em 8px .3em",
+                          }}
+                          className="table-result-label"
+                        >
+                          {checkOpp(player_id, match).result}
                         </span>
-                        {checkOpp(player_id, match).result === "W" ? (
-                          //GREEN SPAN
-                          <span
-                            style={{
-                              backgroundColor: "#9DDEBD",
-                              padding: ".2em 8px .3em",
-                            }}
-                            className="table-result-label"
+                      ) : (
+                        //RED SPAN
+                        <span
+                          style={{ backgroundColor: "#F38689" }}
+                          className="table-result-label"
+                        >
+                          {checkOpp(player_id, match).result}
+                        </span>
+                      )}
+                    </td>
+                    <td className="text-start table-name" id="name">
+                      {checkOpp(player_id, match).opponent_id != null ? (
+                        <>
+                          <a
+                            href={`./` + checkOpp(player_id, match).opponent_id}
                           >
-                            {checkOpp(player_id, match).result}
+                            {checkOpp(player_id, match).opponent}
+                          </a>
+                        </>
+                      ) : (
+                        <>{checkOpp(player_id, match).opponent}</>
+                      )}
+                    </td>
+                    <td className="table-ratings" id="opp-rating">
+                      {checkOpp(player_id, match).opp_rating != 2400 &&
+                      checkOpp(player_id, match).opp_rating != null &&
+                      checkOpp(player_id, match).opp_rating > 1
+                        ? checkOpp(player_id, match).opp_rating -
+                          checkOpp(player_id, match).opp_rating_gains
+                        : "< 2400"}
+                      {checkOpp(player_id, match).opp_rating_gains > 0 ? (
+                        <span className="ms-2 positive-elo">
+                          <CaretUpFill size={10} color="green" />
+                          <br />
+                          {checkOpp(player_id, match).opp_rating_gains}
+                        </span>
+                      ) : checkOpp(player_id, match).opp_rating_gains < 0 ? (
+                        <span className="ms-2 negative-elo">
+                          <CaretDownFill size={10} color="red" />
+                          <br />
+                          {checkOpp(player_id, match).opp_rating_gains}
+                        </span>
+                      ) : (
+                        <>
+                          <span className="ms-2 negative-elo">
+                            <CaretDownFill size={10} color="white" />
+                            <br />
+                            {"\xa0"}
                           </span>
-                        ) : (
-                          //RED SPAN
-                          <span
-                            style={{ backgroundColor: "#F38689" }}
-                            className="table-result-label"
-                          >
-                            {checkOpp(player_id, match).result}
-                          </span>
-                        )}
-                      </td>
-                      <td className="text-start table-name" id="name">
-                        {checkOpp(player_id, match).opponent_id != null ? (
-                          <>
-                            <a
-                              href={
-                                `./` + checkOpp(player_id, match).opponent_id
-                              }
+                        </>
+                      )}
+                    </td>
+                    <td className="table-surface-elo" id="opp-surface-elo">
+                      {checkOpp(player_id, match).opp_surface_rating != 2400 &&
+                      checkOpp(player_id, match).opp_rating != null &&
+                      checkOpp(player_id, match).opp_rating > 1 ? (
+                        <>
+                          {match.surface == "Grass" ? (
+                            <span
+                              style={{ backgroundColor: "#3EBA7C" }}
+                              className="table-surface-elo-label"
                             >
-                              {checkOpp(player_id, match).opponent}
-                            </a>
-                          </>
-                        ) : (
-                          <>{checkOpp(player_id, match).opponent}</>
-                        )}
-                      </td>
-                      <td className="table-ratings" id="opp-rating">
-                        {checkOpp(player_id, match).opp_rating != 2400 &&
-                        checkOpp(player_id, match).opp_rating != null &&
-                        checkOpp(player_id, match).opp_rating > 1
-                          ? checkOpp(player_id, match).opp_rating -
-                            checkOpp(player_id, match).opp_rating_gains
-                          : "< 2400"}
-                        {checkOpp(player_id, match).opp_rating_gains > 0 ? (
-                          <span className="ms-2 positive-elo">
-                            <CaretUpFill size={10} color="green" />
-                            <br />
-                            {checkOpp(player_id, match).opp_rating_gains}
-                          </span>
-                        ) : checkOpp(player_id, match).opp_rating_gains < 0 ? (
-                          <span className="ms-2 negative-elo">
-                            <CaretDownFill size={10} color="red" />
-                            <br />
-                            {checkOpp(player_id, match).opp_rating_gains}
-                          </span>
-                        ) : (
-                          <>
-                            <span className="ms-2 negative-elo">
-                              <CaretDownFill size={10} color="white" />
-                              <br />
-                              {"\xa0"}
+                              {checkOpp(player_id, match).opp_surface_rating -
+                                checkOpp(player_id, match)
+                                  .opp_surface_rating_gains}
                             </span>
-                          </>
-                        )}
-                      </td>
-                      <td className="table-surface-elo" id="opp-surface-elo">
-                        {checkOpp(player_id, match).opp_surface_rating !=
-                        2400 ? (
-                          <>
-                            {match.surface == "Grass" ? (
-                              <span
-                                style={{ backgroundColor: "#3EBA7C" }}
-                                className="table-surface-elo-label"
-                              >
-                                {checkOpp(player_id, match).opp_surface_rating -
-                                  checkOpp(player_id, match)
-                                    .opp_surface_rating_gains}
-                              </span>
-                            ) : match.surface == "Hard" ||
-                              match.surface == "Carpet" ? (
-                              <span
-                                style={{ backgroundColor: "#3B9FB9" }}
-                                className="table-surface-elo-label"
-                              >
-                                {checkOpp(player_id, match).opp_surface_rating -
-                                  checkOpp(player_id, match)
-                                    .opp_surface_rating_gains}
-                              </span>
-                            ) : match.surface == "Clay" ? (
-                              <span
-                                style={{ backgroundColor: "#E96513" }}
-                                className="table-surface-elo-label"
-                              >
-                                {checkOpp(player_id, match).opp_surface_rating -
-                                  checkOpp(player_id, match)
-                                    .opp_surface_rating_gains}
-                              </span>
-                            ) : (
-                              <> </>
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {match.surface == "Grass" ? (
-                              <span
-                                style={{ backgroundColor: "#3EBA7C" }}
-                                className="table-surface-elo-label"
-                              >
-                                {"< 2400"}
-                              </span>
-                            ) : match.surface == "Hard" ||
-                              match.surface == "Carpet" ? (
-                              <span
-                                style={{ backgroundColor: "#3B9FB9" }}
-                                className="table-surface-elo-label"
-                              >
-                                {"< 2400"}
-                              </span>
-                            ) : match.surface == "Clay" ? (
-                              <span
-                                style={{ backgroundColor: "#E96513" }}
-                                className="table-surface-elo-label"
-                              >
-                                {"< 2400"}
-                              </span>
-                            ) : (
-                              <> </>
-                            )}
-                          </>
-                        )}
+                          ) : match.surface == "Hard" ||
+                            match.surface == "Carpet" ? (
+                            <span
+                              style={{ backgroundColor: "#3B9FB9" }}
+                              className="table-surface-elo-label"
+                            >
+                              {checkOpp(player_id, match).opp_surface_rating -
+                                checkOpp(player_id, match)
+                                  .opp_surface_rating_gains}
+                            </span>
+                          ) : match.surface == "Clay" ? (
+                            <span
+                              style={{ backgroundColor: "#E96513" }}
+                              className="table-surface-elo-label"
+                            >
+                              {checkOpp(player_id, match).opp_surface_rating -
+                                checkOpp(player_id, match)
+                                  .opp_surface_rating_gains}
+                            </span>
+                          ) : (
+                            <> </>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          {match.surface == "Grass" ? (
+                            <span
+                              style={{ backgroundColor: "#3EBA7C" }}
+                              className="table-surface-elo-label"
+                            >
+                              {"< 2400"}
+                            </span>
+                          ) : match.surface == "Hard" ||
+                            match.surface == "Carpet" ? (
+                            <span
+                              style={{ backgroundColor: "#3B9FB9" }}
+                              className="table-surface-elo-label"
+                            >
+                              {"< 2400"}
+                            </span>
+                          ) : match.surface == "Clay" ? (
+                            <span
+                              style={{ backgroundColor: "#E96513" }}
+                              className="table-surface-elo-label"
+                            >
+                              {"< 2400"}
+                            </span>
+                          ) : (
+                            <> </>
+                          )}
+                        </>
+                      )}
 
-                        {checkOpp(player_id, match).opp_rating_gains > 0 ? (
-                          <span className="ms-2 positive-elo">
-                            <CaretUpFill size={10} color="green" />
-                            <br />
-                            {
-                              checkOpp(player_id, match)
-                                .opp_surface_rating_gains
-                            }
-                          </span>
-                        ) : checkOpp(player_id, match)
-                            .opp_surface_rating_gains < 0 ? (
+                      {checkOpp(player_id, match).opp_rating_gains > 0 ? (
+                        <span className="ms-2 positive-elo">
+                          <CaretUpFill size={10} color="green" />
+                          <br />
+                          {checkOpp(player_id, match).opp_surface_rating_gains}
+                        </span>
+                      ) : checkOpp(player_id, match).opp_surface_rating_gains <
+                        0 ? (
+                        <span className="ms-2 negative-elo">
+                          <CaretDownFill size={10} color="red" />
+                          <br />
+                          {checkOpp(player_id, match).opp_surface_rating_gains}
+                        </span>
+                      ) : (
+                        <>
                           <span className="ms-2 negative-elo">
-                            <CaretDownFill size={10} color="red" />
+                            <CaretDownFill size={10} color="white" />
                             <br />
-                            {
-                              checkOpp(player_id, match)
-                                .opp_surface_rating_gains
-                            }
+                            {"\xa0"}
                           </span>
-                        ) : (
-                          <>
-                            <span className="ms-2 negative-elo">
-                              <CaretDownFill size={10} color="white" />
-                              <br />
-                              {"\xa0"}
-                            </span>
-                          </>
-                        )}
-                      </td>
-                      <td className="text-start table-score" id="score">
-                        {arrangeScore(player_id, match)}
-                      </td>
-                      <td className="table-tournament" id="tournament">
-                        {match.tourney_name}
-                      </td>
-                      <td className="table-round" id="round">
-                        {match.round}
-                      </td>
-                    </tr>
-                  </>
-                ))}
-                <tr>
-                  <td className="text-start" colSpan={100}>
-                    <hr className="mb-0" />
-                    {/* <h1 className="fs-5 fw-bold pb-2">Match Stats:</h1> */}
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <b>Ave. Opp Overall ELO:</b> <br /> <br />
-                    {Math.ceil(getStats(data, player_id).ave_ELO)}
-                  </td>
-                  <td>
-                    <b>Ave. Opp Surface ELO:</b>
-                    <br /> <br />
-                    {Math.ceil(getStats(data, player_id).ave_surface_ELO)}
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </main>
+                        </>
+                      )}
+                    </td>
+                    <td className="text-start table-score" id="score">
+                      {arrangeScore(player_id, match)}
+                    </td>
+                    <td className="table-tournament" id="tournament">
+                      {match.tourney_name}
+                    </td>
+                    <td className="table-round" id="round">
+                      {match.round}
+                    </td>
+                  </tr>
+                </>
+              ))}
+              <tr>
+                <td className="text-start" colSpan={100}>
+                  <hr className="mb-0" />
+                  {/* <h1 className="fs-5 fw-bold pb-2">Match Stats:</h1> */}
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <b>Ave. Opp Overall ELO:</b> <br />
+                  {Math.ceil(getStats(currentData, player_id).ave_ELO)}
+                </td>
+                <td>
+                  {currentSurface != "All Surface" ? (
+                    <>
+                      <b>Ave. Opp Surface ELO:</b> <br />
+                      {Math.ceil(
+                        getStats(currentData, player_id).ave_surface_ELO
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="d-flex flex-row-reverse">
+          <nav className="pagination-outer">
+            <ul className="pagination">
+              <Pagination
+                DataPerPage={DataPerPage}
+                totalData={data.length}
+                paginate={paginate}
+              />
+            </ul>
+          </nav>
         </div>
       </div>
     </>

@@ -504,6 +504,11 @@ a {
 .tbody tr:hover {
     background: rgb(219, 219, 219);
 }
+.tbody td{
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
 
 .table-ratings {
     display: table-cell; 
@@ -824,3 +829,4 @@ scrollbar-width: none;  /* Firefox */
 hr {
     margin: 5px;
 }
+ 

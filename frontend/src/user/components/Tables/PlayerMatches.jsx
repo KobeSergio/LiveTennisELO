@@ -197,14 +197,17 @@ function getStats(data, player_id) {
           );
         }
       }
+    } else {
+      uncounted++;
     }
   });
 
   return {
-    ave_ELO: opp_ratings.reduce((a, b) => a + b, 0) / opp_ratings.length,
+    ave_ELO:
+      opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length - uncounted),
     ave_surface_ELO:
       opp_surface_ratings.reduce((a, b) => a + b, 0) /
-      opp_surface_ratings.length,
+      (opp_surface_ratings.length - uncounted),
   };
 }
 
@@ -777,7 +780,7 @@ export function PlayerMatches() {
                   <b>Result</b>
                 </th>
                 <th
-                  style={{ minWidth: 150 }}
+                  style={{ minWidth: 130 }}
                   className="text-start"
                   scope="col"
                 >
@@ -796,7 +799,7 @@ export function PlayerMatches() {
                 >
                   <b>Score</b>
                 </th>
-                <th style={{ minWidth: 100 }} scope="col">
+                <th style={{ minWidth: 120 }} scope="col">
                   <b>Tournament</b>
                 </th>
                 <th scope="col">
@@ -903,7 +906,9 @@ export function PlayerMatches() {
                       )}
                     </td>
                     <td className="table-surface-elo" id="opp-surface-elo">
-                      {checkOpp(player_id, match).opp_surface_rating != 2400 ? (
+                      {checkOpp(player_id, match).opp_surface_rating != 2400 &&
+                      checkOpp(player_id, match).opp_rating != null &&
+                      checkOpp(player_id, match).opp_rating > 1 ? (
                         <>
                           {match.surface == "Grass" ? (
                             <span
@@ -1034,17 +1039,17 @@ export function PlayerMatches() {
               </tr>
             </tbody>
           </table>
-          <div className="d-flex flex-row-reverse">
-            <nav className="pagination-outer">
-              <ul className="pagination">
-                <Pagination
-                  DataPerPage={DataPerPage}
-                  totalData={data.length}
-                  paginate={paginate}
-                />
-              </ul>
-            </nav>
-          </div>
+        </div>
+        <div className="d-flex flex-row-reverse">
+          <nav className="pagination-outer">
+            <ul className="pagination">
+              <Pagination
+                DataPerPage={DataPerPage}
+                totalData={data.length}
+                paginate={paginate}
+              />
+            </ul>
+          </nav>
         </div>
       </div>
     </>

@@ -1,14 +1,26 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination";
-import {
-  deleteIndRecord,
-  loadRecord,
-  resetRecords,
-} from "../../../features/records/recordsSlice";
+import { deleteIndRecord } from "../../../features/records/recordsSlice";
 import { EditRecord } from "../records/EditModal";
 import { TrashFill } from "react-bootstrap-icons";
 import { useEffect } from "react";
+
+function toTitleCase(str) {
+  var parsed = str;
+
+  if (parsed.slice(0, 3).toLowerCase() === "zz_") {
+    parsed = parsed.slice(3);
+  }
+
+  if (parsed.toLowerCase() === "mcenroe john") {
+    return "McEnroe John";
+  }
+
+  return parsed.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 
 export default function RecordItem(recs) {
   const [data, setData] = useState(recs.records);
@@ -80,7 +92,7 @@ export default function RecordItem(recs) {
     };
   }
   return (
-    <div className="input-group px-2">
+    <>
       <table className="table table-borderless text-center">
         <thead>
           <tr>
@@ -122,19 +134,78 @@ export default function RecordItem(recs) {
                 <tr>
                   <th scope="row">{record.player_id}</th>
                   <td className="text-start" id="name">
-                    {record.name}
+                    {toTitleCase(record.name)}
                   </td>
-                  <td id="overall">{record.ranking}</td>
-                  <td className="table-hard" id="hard">
-                    {record.hard}
+                  <td id="overall">
+                    {record.ranking != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#080808" }}
+                          className="table-surface-elo-label"
+                        >
+                          {record.ranking}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </td>
-                  <td className="table-clay" id="clay">
-                    {record.clay}
+                  <td id="hard">
+                    {record.hard != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#015778" }}
+                          className="table-surface-elo-label"
+                        >
+                          {record.hard}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </td>
-                  <td className="table-grass" id="grass">
-                    {record.grass}
+                  <td id="clay">
+                    {record.clay != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#E96513" }}
+                          className="table-surface-elo-label"
+                        >
+                          {record.clay}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </td>
-                  <td id="atp">{record.atp}</td>
+                  <td id="grass">
+                    {record.grass != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#3EBA7C" }}
+                          className="table-surface-elo-label"
+                        >
+                          {record.grass}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </td>
+                  <td id="atp">
+                    {record.atp != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#808080" }}
+                          className="table-surface-elo-label"
+                        >
+                          {record.atp}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}{" "}
+                  </td>
                   <td id="lactive">{record.last_active.split(" ")[0]}</td>
                   <td id="edit">
                     <EditRecord props={record} /> &nbsp;
@@ -164,7 +235,7 @@ export default function RecordItem(recs) {
       <div></div>
       <div className="ms-auto">
         <Pagination />
-      </div>
-    </div>
+      </div>{" "}
+    </>
   );
 }
