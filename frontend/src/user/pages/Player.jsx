@@ -393,15 +393,25 @@ export default function Player() {
                             <></>
                           ) : (
                             <>
-                              <span
-                                style={{ backgroundColor: "#000000" }}
-                                className="table-surface-elo-label"
-                              >
-                                {player_details[0].overall_rank +
-                                  " (" +
-                                  player_details[0].overall_rating +
-                                  ") "}
-                              </span>
+                              {player_details[0].last_match == null ? (
+                                <></>
+                              ) : computeStatus(
+                                  player_details[0].last_match
+                                ) === "Retired" ? (
+                                <>{"\xa0"}</>
+                              ) : (
+                                <>
+                                  <span
+                                    style={{ backgroundColor: "#000000" }}
+                                    className="table-surface-elo-label"
+                                  >
+                                    {player_details[0].overall_rank +
+                                      " (" +
+                                      player_details[0].overall_rating +
+                                      ") "}
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </div>
@@ -456,15 +466,25 @@ export default function Player() {
                             "\xa0"
                           ) : (
                             <>
-                              <span
-                                style={{ backgroundColor: "#E96513" }}
-                                className="table-surface-elo-label"
-                              >
-                                {player_details[0].clay_rank +
-                                  " (" +
-                                  player_details[0].clay_rating +
-                                  ") "}
-                              </span>
+                              {player_details[0].last_match == null ? (
+                                <></>
+                              ) : computeStatus(
+                                  player_details[0].last_match
+                                ) === "Retired" ? (
+                                <>{"\xa0"}</>
+                              ) : (
+                                <>
+                                  <span
+                                    style={{ backgroundColor: "#E96513" }}
+                                    className="table-surface-elo-label"
+                                  >
+                                    {player_details[0].clay_rank +
+                                      " (" +
+                                      player_details[0].clay_rating +
+                                      ") "}
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </div>
@@ -514,15 +534,25 @@ export default function Player() {
                             "\xa0"
                           ) : (
                             <>
-                              <span
-                                style={{ backgroundColor: "#015778" }}
-                                className="table-surface-elo-label"
-                              >
-                                {player_details[0].hard_rank +
-                                  " (" +
-                                  player_details[0].hard_rating +
-                                  ") "}
-                              </span>
+                              {player_details[0].last_match == null ? (
+                                <></>
+                              ) : computeStatus(
+                                  player_details[0].last_match
+                                ) === "Retired" ? (
+                                <>{"\xa0"}</>
+                              ) : (
+                                <>
+                                  <span
+                                    style={{ backgroundColor: "#015778" }}
+                                    className="table-surface-elo-label"
+                                  >
+                                    {player_details[0].hard_rank +
+                                      " (" +
+                                      player_details[0].hard_rating +
+                                      ") "}
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </div>
@@ -570,15 +600,25 @@ export default function Player() {
                             "\xa0"
                           ) : (
                             <>
-                              <span
-                                style={{ backgroundColor: "#3EBA7C" }}
-                                className="table-surface-elo-label"
-                              >
-                                {player_details[0].grass_rank +
-                                  " (" +
-                                  player_details[0].grass_rating +
-                                  ") "}
-                              </span>
+                              {player_details[0].last_match == null ? (
+                                <></>
+                              ) : computeStatus(
+                                  player_details[0].last_match
+                                ) === "Retired" ? (
+                                <>{"\xa0"}</>
+                              ) : (
+                                <>
+                                  <span
+                                    style={{ backgroundColor: "#3EBA7C" }}
+                                    className="table-surface-elo-label"
+                                  >
+                                    {player_details[0].grass_rank +
+                                      " (" +
+                                      player_details[0].grass_rating +
+                                      ") "}
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </div>
@@ -630,15 +670,25 @@ export default function Player() {
                             "\xa0"
                           ) : (
                             <>
-                              <span
-                                style={{ backgroundColor: "#000000" }}
-                                className="table-surface-elo-label"
-                              >
-                                {player_details[0].atp_rank +
-                                  " (" +
-                                  player_details[0].atp_rating +
-                                  " pts) "}
-                              </span>
+                              {player_details[0].last_match == null ? (
+                                <></>
+                              ) : computeStatus(
+                                  player_details[0].last_match
+                                ) === "Retired" ? (
+                                <>{"\xa0"}</>
+                              ) : (
+                                <>
+                                  <span
+                                    style={{ backgroundColor: "#000000" }}
+                                    className="table-surface-elo-label"
+                                  >
+                                    {player_details[0].atp_rank +
+                                      " (" +
+                                      player_details[0].atp_rating +
+                                      " pts) "}
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </div>

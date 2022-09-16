@@ -100,8 +100,9 @@ export function AddHighlight(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(insertHighlight([matchData, props.props]));
-    window.location.reload(false);
+    dispatch(insertHighlight([matchData, props.props])).then(() => {
+      window.location.reload(false);
+    });
   };
 
   return (

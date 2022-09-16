@@ -1,7 +1,7 @@
 import { SurfaceLegend } from "../Legend/SurfaceLegend";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
+import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -55,8 +55,8 @@ function checkOpp(player_id, match) {
   var result = "L";
   var opponent = "";
   var opponent_id = "";
-  var opp_rating = 2400;
-  var opp_surface_rating = 2400;
+  var opp_rating = 2350;
+  var opp_surface_rating = 2350;
   var opp_rating_gains = 0;
   var opp_surface_rating_gains = 0;
 
@@ -96,12 +96,13 @@ function checkOpp(player_id, match) {
 }
 
 function getPerformance(data, player_id) {
-  var performanceELO = 0;
-  var sumOfAll = 0;
-  var sumOfAllSurface = 0;
+  var sumOfAll = [];
+  var sumOfAllSurface = [];
   var uncounted = 0;
+  var wins = 0;
 
   data.forEach((match) => {
+    var performanceELO = 0;
     var p1 = 0;
     var p2 = 0;
 
@@ -131,14 +132,17 @@ function getPerformance(data, player_id) {
         }
 
         //Add sumOfAll
-        if (match.loser_elo == null) {
-          sumOfAll += 2400;
-          sumOfAllSurface += 2400;
-        } else {
-          sumOfAll += match.loser_elo - match.loser_elo_gains;
-          sumOfAllSurface +=
-            match.loser_elo_surface - match.loser_elo_surface_gains;
+        if (match.loser_elo != null) {
+          sumOfAll.push(
+            match.loser_elo - match.loser_elo_gains + performanceELO
+          );
+          sumOfAllSurface.push(
+            match.loser_elo_surface -
+              match.loser_elo_surface_gains +
+              performanceELO
+          );
         }
+        wins++;
       } else if (match.loser_local_id == player_id) {
         performanceELO -= 300;
         //Add bonus
@@ -149,24 +153,40 @@ function getPerformance(data, player_id) {
         }
 
         //Add sumOfAll
-        if (match.winner_elo == null) {
-          sumOfAll += 2400;
-          sumOfAllSurface += 2400;
-        } else {
-          sumOfAll += match.winner_elo - match.winner_elo_gains;
-          sumOfAllSurface +=
-            match.winner_elo_surface - match.winner_elo_surface_gains;
+        if (match.winner_elo != null) {
+          sumOfAll.push(
+            match.winner_elo - match.winner_elo_gains - performanceELO
+          );
+          sumOfAllSurface.push(
+            match.winner_elo_surface -
+              match.winner_elo_surface_gains -
+              performanceELO
+          );
         }
+        wins--;
       }
     } else {
       uncounted++;
     }
   });
 
+  if (wins === 10) {
+    return {
+      perf_overall: Math.max(...sumOfAll),
+      perf_surface: Math.max(...sumOfAllSurface),
+    };
+  } else if (wins === 0) {
+    return {
+      perf_overall: Math.min(...sumOfAll),
+      perf_surface: Math.min(...sumOfAllSurface),
+    };
+  }
+
   return {
-    perf_overall: (sumOfAll + performanceELO) / (data.length - uncounted),
+    perf_overall:
+      sumOfAll.reduce((a, b) => a + b, 0) / (data.length - uncounted),
     perf_surface:
-      (sumOfAllSurface + performanceELO) / (data.length - uncounted),
+      sumOfAllSurface.reduce((a, b) => a + b, 0) / (data.length - uncounted),
   };
 }
 
@@ -177,9 +197,7 @@ function getStats(data, player_id) {
   data.forEach((match) => {
     if (match.score != "W/O") {
       if (match.winner_local_id == player_id) {
-        if (match.loser_elo == null) {
-          opp_ratings.push(2400);
-          opp_surface_ratings.push(2400);
+        if (match.loser_elo == null || match.loser_elo < 2350) {
         } else {
           opp_ratings.push(match.loser_elo - match.loser_elo_gains);
           opp_surface_ratings.push(
@@ -187,9 +205,7 @@ function getStats(data, player_id) {
           );
         }
       } else if (match.loser_local_id == player_id) {
-        if (match.winner_elo == null) {
-          opp_ratings.push(2400);
-          opp_surface_ratings.push(2400);
+        if (match.winner_elo == null || match.loser_elo < 2350) {
         } else {
           opp_ratings.push(match.winner_elo - match.winner_elo_gains);
           opp_surface_ratings.push(
@@ -201,7 +217,6 @@ function getStats(data, player_id) {
       uncounted++;
     }
   });
-
   return {
     ave_ELO:
       opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length - uncounted),
@@ -684,12 +699,9 @@ export function PlayerMatches() {
             </div>
             <hr></hr>
           </div>
-          <h1 className="fs-4  mb-0">
-            Last 10 matches of {player_details[0].player_name}
-          </h1>
           <br />
           <br />
-          <h5>
+          <h5 className="mt-3 ms-1">
             <b>Match History:</b>
           </h5>
           <div className="ms-auto d-flex">
@@ -832,36 +844,42 @@ export function PlayerMatches() {
                       {parseDate(match.tourney_date)}
                     </td>
                     <td className="table-result" id="result">
-                      <span className="me-2 highlights-button">
-                        {match.highlight != "" ? (
-                          <ShowHighlight
-                            props={match._id}
-                            src={match.highlight}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </span>
-                      {checkOpp(player_id, match).result === "W" ? (
-                        //GREEN SPAN
-                        <span
-                          style={{
-                            backgroundColor: "#9DDEBD",
-                            padding: ".2em 8px .3em",
-                          }}
-                          className="table-result-label"
-                        >
-                          {checkOpp(player_id, match).result}
+                      <div className="d-flex justify-content-center">
+                        <span className="me-2 highlights-button">
+                          {match.highlight != "" ? (
+                            <ShowHighlight
+                              props={match._id}
+                              src={match.highlight}
+                            />
+                          ) : (
+                            <>
+                              <CameraVideo color="white" />
+                            </>
+                          )}
                         </span>
-                      ) : (
-                        //RED SPAN
-                        <span
-                          style={{ backgroundColor: "#F38689" }}
-                          className="table-result-label"
-                        >
-                          {checkOpp(player_id, match).result}
-                        </span>
-                      )}
+                        <div>
+                          {checkOpp(player_id, match).result === "W" ? (
+                            //GREEN SPAN
+                            <span
+                              style={{
+                                backgroundColor: "#9DDEBD",
+                                padding: ".2em 8px .3em",
+                              }}
+                              className="table-result-label"
+                            >
+                              {checkOpp(player_id, match).result}
+                            </span>
+                          ) : (
+                            //RED SPAN
+                            <span
+                              style={{ backgroundColor: "#F38689" }}
+                              className="table-result-label"
+                            >
+                              {checkOpp(player_id, match).result}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </td>
                     <td className="text-start table-name" id="name">
                       {checkOpp(player_id, match).opponent_id != null ? (
@@ -877,12 +895,12 @@ export function PlayerMatches() {
                       )}
                     </td>
                     <td className="table-ratings" id="opp-rating">
-                      {checkOpp(player_id, match).opp_rating != 2400 &&
+                      {checkOpp(player_id, match).opp_rating != 2350 &&
                       checkOpp(player_id, match).opp_rating != null &&
                       checkOpp(player_id, match).opp_rating > 1
                         ? checkOpp(player_id, match).opp_rating -
                           checkOpp(player_id, match).opp_rating_gains
-                        : "< 2400"}
+                        : "< 2350"}
                       {checkOpp(player_id, match).opp_rating_gains > 0 ? (
                         <span className="ms-2 positive-elo">
                           <CaretUpFill size={10} color="green" />
@@ -906,7 +924,7 @@ export function PlayerMatches() {
                       )}
                     </td>
                     <td className="table-surface-elo" id="opp-surface-elo">
-                      {checkOpp(player_id, match).opp_surface_rating != 2400 &&
+                      {checkOpp(player_id, match).opp_surface_rating != 2350 &&
                       checkOpp(player_id, match).opp_rating != null &&
                       checkOpp(player_id, match).opp_rating > 1 ? (
                         <>
@@ -949,7 +967,7 @@ export function PlayerMatches() {
                               style={{ backgroundColor: "#3EBA7C" }}
                               className="table-surface-elo-label"
                             >
-                              {"< 2400"}
+                              {"< 2350"}
                             </span>
                           ) : match.surface == "Hard" ||
                             match.surface == "Carpet" ? (
@@ -957,14 +975,14 @@ export function PlayerMatches() {
                               style={{ backgroundColor: "#3B9FB9" }}
                               className="table-surface-elo-label"
                             >
-                              {"< 2400"}
+                              {"< 2350"}
                             </span>
                           ) : match.surface == "Clay" ? (
                             <span
                               style={{ backgroundColor: "#E96513" }}
                               className="table-surface-elo-label"
                             >
-                              {"< 2400"}
+                              {"< 2350"}
                             </span>
                           ) : (
                             <> </>

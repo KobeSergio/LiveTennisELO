@@ -29,7 +29,7 @@ export function ShowHighlight(props) {
 
       <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton className="mx-4">
-          <Modal.Title>Highlights</Modal.Title>
+          <Modal.Title>Video:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row px-5 rounded">

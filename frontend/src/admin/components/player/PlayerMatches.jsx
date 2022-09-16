@@ -1,13 +1,13 @@
 import { SurfaceLegend } from "../Legend";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { CaretUpFill, CaretDownFill } from "react-bootstrap-icons";
+import { CaretUpFill, CaretDownFill, TrashFill } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
 import Pagination from "../../../user/components/Pagination";
-
+import { EditMatch } from "./EditContent";
 String.prototype.replaceAt = function (index, replacement) {
   return (
     this.substring(0, index) +
@@ -46,12 +46,6 @@ function arrangeScore(player_id, match) {
     }
   }
 }
-
-function parseDate(date) {
-  var dateString = date.toString();
-  return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
-}
-
 function checkOpp(player_id, match) {
   var result = "L";
   var opponent = "";
@@ -96,13 +90,19 @@ function checkOpp(player_id, match) {
   };
 }
 
+function parseDate(date) {
+  var dateString = date.toString();
+  return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
+}
+
 function getPerformance(data, player_id) {
-  var performanceELO = 0;
-  var sumOfAll = 0;
-  var sumOfAllSurface = 0;
+  var sumOfAll = [];
+  var sumOfAllSurface = [];
   var uncounted = 0;
+  var wins = 0;
 
   data.forEach((match) => {
+    var performanceELO = 0;
     var p1 = 0;
     var p2 = 0;
 
@@ -132,14 +132,17 @@ function getPerformance(data, player_id) {
         }
 
         //Add sumOfAll
-        if (match.loser_elo == null) {
-          sumOfAll += 2400;
-          sumOfAllSurface += 2400;
-        } else {
-          sumOfAll += match.loser_elo - match.loser_elo_gains;
-          sumOfAllSurface +=
-            match.loser_elo_surface - match.loser_elo_surface_gains;
+        if (match.loser_elo != null) {
+          sumOfAll.push(
+            match.loser_elo - match.loser_elo_gains + performanceELO
+          );
+          sumOfAllSurface.push(
+            match.loser_elo_surface -
+              match.loser_elo_surface_gains +
+              performanceELO
+          );
         }
+        wins++;
       } else if (match.loser_local_id == player_id) {
         performanceELO -= 300;
         //Add bonus
@@ -150,24 +153,43 @@ function getPerformance(data, player_id) {
         }
 
         //Add sumOfAll
-        if (match.winner_elo == null) {
-          sumOfAll += 2400;
-          sumOfAllSurface += 2400;
-        } else {
-          sumOfAll += match.winner_elo - match.winner_elo_gains;
-          sumOfAllSurface +=
-            match.winner_elo_surface - match.winner_elo_surface_gains;
+        if (match.winner_elo != null) {
+          sumOfAll.push(
+            match.winner_elo - match.winner_elo_gains - performanceELO
+          );
+          sumOfAllSurface.push(
+            match.winner_elo_surface -
+              match.winner_elo_surface_gains -
+              performanceELO
+          );
         }
+        wins--;
       }
     } else {
       uncounted++;
     }
   });
 
+
+  console.log("HEY")
+
+  if (wins === 10) {
+    return {
+      perf_overall: Math.max(sumOfAll),
+      perf_surface: Math.max(sumOfAllSurface),
+    };
+  } else if (wins === 0) {
+    return {
+      perf_overall: Math.min(sumOfAll),
+      perf_surface: Math.min(sumOfAllSurface),
+    };
+  }
+
   return {
-    perf_overall: (sumOfAll + performanceELO) / (data.length - uncounted),
+    perf_overall:
+      sumOfAll.reduce((a, b) => a + b, 0) / (data.length - uncounted),
     perf_surface:
-      (sumOfAllSurface + performanceELO) / (data.length - uncounted),
+      sumOfAllSurface.reduce((a, b) => a + b, 0) / (data.length - uncounted),
   };
 }
 
@@ -202,10 +224,11 @@ function getStats(data, player_id) {
   });
 
   return {
-    ave_ELO: opp_ratings.reduce((a, b) => a + b, 0) / opp_ratings.length,
+    ave_ELO:
+      opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length - uncounted),
     ave_surface_ELO:
       opp_surface_ratings.reduce((a, b) => a + b, 0) /
-      opp_surface_ratings.length,
+      (opp_surface_ratings.length - uncounted),
   };
 }
 
@@ -806,6 +829,9 @@ export function PlayerMatches() {
                 <th scope="col">
                   <b>Round</b>
                 </th>
+                <th scope="col">
+                  <b>{"\xa0"}</b>
+                </th>
               </tr>
             </thead>
             <tbody className="match-stats">
@@ -840,7 +866,7 @@ export function PlayerMatches() {
                             src={match.highlight}
                           />
                         ) : (
-                          <></>
+                          <AddHighlight props={match._id} />
                         )}
                       </span>
                       {checkOpp(player_id, match).result === "W" ? (
@@ -1004,6 +1030,15 @@ export function PlayerMatches() {
                     </td>
                     <td className="table-round" id="round">
                       {match.round}
+                    </td>
+                    <td id="edit">
+                      <EditMatch
+                        props={{ match: match, player_id: player_id }}
+                      />{" "}
+                      &nbsp;
+                      <a href="#" onClick={() => {}}>
+                        <TrashFill />
+                      </a>
                     </td>
                   </tr>
                 </>

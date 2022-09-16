@@ -376,8 +376,8 @@ export default function ({ invert, filter, type, surface }) {
                         {
                           label: charts.players[1].player_name,
                           data: p2_data,
-                          borderColor: "#015778",
-                          backgroundColor: "#015778",
+                          borderColor: "red",
+                          backgroundColor: "red",
                           borderWidth: 2,
                           pointBorderWidth: 2,
                           pointRadius: 0,

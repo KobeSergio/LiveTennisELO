@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 
+import { Pencil } from "react-bootstrap-icons";
 //Backend
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -47,7 +48,6 @@ export function EditContent(player) {
   } = formData;
 
   const onSubmit = (e) => {
-    console.log("CLICKED");
     e.preventDefault();
     const PlayerData = {
       img_link,
@@ -316,6 +316,287 @@ export function EditContent(player) {
               Cancel
             </Button>
 
+            <Button
+              type="Submit"
+              className="ms-2 btn btn-green btn-sm me-4"
+              style={{
+                fontSize: "16px",
+                borderWidth: "0px",
+                width: "80px",
+                height: "30px",
+                fontWeight: "500",
+              }}
+            >
+              {" "}
+              {/* handle data here */}
+              Save
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
+  );
+}
+
+function arrangeScore(player_id, match) {
+  try {
+    var set = match.score.split(" ");
+  } catch (error) {
+    var set = match.score;
+  }
+  var fixed = [];
+  if (match.winner_local_id == player_id) {
+    return match.score;
+  } else {
+    try {
+      if (set.length > 1) {
+        set.forEach((score) => {
+          var temp = "";
+          temp = score[0];
+          try {
+            score = score.replaceAt(0, score[2]);
+            score = score.replaceAt(2, temp);
+          } catch {
+            console.log("ha");
+          }
+          fixed.push(score);
+        });
+        return fixed.join([" "]);
+      }
+    } catch (error) {
+      return match.score;
+    }
+  }
+}
+
+function parseDate(date) {
+  var dateString = date.toString();
+  return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
+}
+function checkOpp(player_id, match) {
+  var result = "L";
+  var opponent = "";
+  var opponent_id = "";
+  var opp_rating = 2400;
+  var opp_surface_rating = 2400;
+  var opp_rating_gains = 0;
+  var opp_surface_rating_gains = 0;
+
+  if (match.winner_local_id == player_id) {
+    if (match.loser_elo != null) {
+      opp_rating = match.loser_elo;
+      opp_surface_rating = match.loser_elo_surface;
+    }
+    result = "W";
+    opponent = match.loser_name;
+    opponent_id = match.loser_local_id;
+    opp_rating_gains = match.loser_elo_gains;
+    opp_surface_rating_gains = match.loser_elo_surface_gains;
+  } else if (match.loser_local_id == player_id) {
+    if (match.winner_elo != null) {
+      opp_rating = match.loser_elo;
+      opp_surface_rating = match.winner_elo_surface;
+    }
+    result = "L";
+    opponent = match.winner_name;
+    opponent_id = match.winner_local_id;
+    opp_rating = match.winner_elo;
+    opp_rating_gains = match.winner_elo_gains;
+    opp_surface_rating_gains = match.winner_elo_surface_gains;
+  } else {
+    //Player not found
+  }
+  return {
+    result: result,
+    opponent: opponent,
+    opponent_id: opponent_id,
+    opp_rating: opp_rating,
+    opp_rating_gains: opp_rating_gains,
+    opp_surface_rating: opp_surface_rating,
+    opp_surface_rating_gains: opp_surface_rating_gains,
+  };
+}
+
+export function EditMatch(props) {
+  const { match, player_id } = props.props;
+  //Frontend stuff
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // const PlayerData = {
+    //   img_link,
+    //   birthdate,
+    //   birthplace,
+    //   height,
+    //   weight,
+    //   hand,
+    //   backhand,
+    //   wiki,
+    //   twitter,
+    //   facebook,
+    //   instagram,
+    //   nicknames,
+    // };
+    // const routeDetails = {
+    //   _id: player.player._id,
+    //   player_id: player_id,
+    // };
+    // dispatch(updatePlayer([routeDetails, PlayerData])).then(() => {
+    //   window.location.reload(false);
+    // });
+  };
+  const [formData, setFormData] = useState({
+    ranking: props.props.ranking,
+    hard: props.props.hard,
+    clay: props.props.clay,
+    grass: props.props.grass,
+    atp: props.props.atp,
+    lactive: props.props.last_active,
+  });
+
+  const { ranking, hard, clay, grass, atp, lactive } = formData;
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <>
+      <a href="#/" onClick={handleShow} className="color-1">
+        <Pencil />
+      </a>
+      <Modal show={show} onHide={handleClose} size="xl" centered>
+        <form onSubmit={onSubmit}>
+          <div
+            className="py-2 rounded"
+            style={{ borderRadius: "10px 10px 0 0" }}
+          >
+            <div className="input-group">
+              <table className="table shadow-none table-borderless text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <b>Date</b>
+                    </th>
+                    <th scope="col">
+                      <b>Result</b>
+                    </th>
+                    <th scope="col">
+                      <b>Opponent</b>
+                    </th>
+                    <th scope="col">
+                      <b>Opp. Overall Rating</b>
+                    </th>
+                    <th scope="col">
+                      <b>Gains</b>
+                    </th>
+                    <th scope="col">
+                      <b>Opp. Surface ELO</b>
+                    </th>
+                    <th scope="col">
+                      <b>Gains</b>
+                    </th>
+                    <th scope="col">
+                      <b>Score</b>
+                    </th>
+                    <th scope="col">
+                      <b>Tournament</b>
+                    </th>
+                    <th scope="col">
+                      <b>Round</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="col" id="date">
+                      {parseDate(match.tourney_date)}
+                    </td>
+                    <td scope="col" id="result">
+                      {checkOpp(player_id, match).result}
+                    </td>
+                    <td scope="col" id="opponent">
+                      {checkOpp(player_id, match).opponent}
+                    </td>
+                    <td scope="col" id="opp_rating">
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="ranking"
+                        name="ranking"
+                        placeholder={checkOpp(player_id, match).opp_rating}
+                        onChange={onChange}
+                      />
+                    </td>
+                    <td scope="col" id="opp_rating_gains">
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="ranking"
+                        name="ranking"
+                        placeholder={
+                          checkOpp(player_id, match).opp_rating_gains
+                        }
+                        onChange={onChange}
+                      />
+                    </td>
+                    <td scope="col" id="opp_surface_rating">
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="ranking"
+                        name="ranking"
+                        placeholder={
+                          checkOpp(player_id, match).opp_surface_rating
+                        }
+                        onChange={onChange}
+                      />
+                    </td>
+                    <td scope="col" id="opp_surface_rating_gains">
+                      <input
+                        className="w-100 form-input"
+                        type="text"
+                        id="ranking"
+                        name="ranking"
+                        placeholder={
+                          checkOpp(player_id, match).opp_surface_rating_gains
+                        }
+                        onChange={onChange}
+                      />
+                    </td>
+                    <td scope="col" id="opp_surface_rating_gains">
+                      {arrangeScore(player_id, match)}
+                    </td>
+                    <td className="col" id="tournament">
+                      {match.tourney_name}
+                    </td>
+                    <td className="table-round" id="round">
+                      {match.round}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <Modal.Footer>
+            <Button
+              onClick={handleClose}
+              className="btn btn-gray btn-sm"
+              style={{
+                fontSize: "16px",
+                borderWidth: "0px",
+                width: "100px",
+                height: "30px",
+                fontWeight: "500",
+              }}
+            >
+              Cancel
+            </Button>
             <Button
               type="Submit"
               className="ms-2 btn btn-green btn-sm me-4"

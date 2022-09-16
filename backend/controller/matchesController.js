@@ -14,6 +14,16 @@ const updateMatch = asyncHandler(async (req, res) => {
   res.status(200).json(match);
 });
 
+const deleteMatch = asyncHandler(async (req, res) => {
+  const match = await Matches.findByIdAndDelete(req.params.id);
+  if (!match) {
+    res.status(400);
+    throw new Error("Match not found");
+  }
+  res.status(200).json({ message: "Match Deleted" });
+});
+
 module.exports = {
   updateMatch,
+  deleteMatch,
 };

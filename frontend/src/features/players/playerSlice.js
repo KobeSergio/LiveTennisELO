@@ -146,6 +146,7 @@ export const playerSlice = createSlice({
       .addCase(insertHighlight.fulfilled, (state, action) => {
         state.player_isLoading = false;
         state.player_isSuccess = true;
+        state.player_message = action.payload;
       })
       .addCase(insertHighlight.rejected, (state, action) => {
         state.player_isLoading = false;

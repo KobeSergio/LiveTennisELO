@@ -25,11 +25,13 @@ export function EditRecord(props) {
     atp: props.props.atp,
     lactive: props.props.last_active,
   });
+ 
+  const { ranking, hard, clay, grass, atp, lactive } = formData;
+  
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
-  const { ranking, hard, clay, grass, atp, lactive } = formData;
 
   useEffect(() => {
     if (isError) {

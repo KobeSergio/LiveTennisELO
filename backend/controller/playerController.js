@@ -81,6 +81,7 @@ const getIndPlayer = asyncHandler(async (req, res) => {
         _id: "$surface",
         game: {
           $push: {
+            _id: "$_id",
             tourney_name: "$tourney_name",
             tourney_date: "$tourney_date",
             surface: "$surface",

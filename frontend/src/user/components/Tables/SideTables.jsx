@@ -99,14 +99,14 @@ export default function () {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
 
   //Default data
-  useEffect(() => {
-    setData([...players].sort(alphabetically(false, "overall_peak_rating")));
+  useEffect(() => { 
+    setData([...players].sort(alph_average(false)));
   }, [api_isLoading]);
 
   //Tabs
-  const [toggleRecords, setToggleRecords] = useState(1);
+  const [toggleRecords, setToggleRecords] = useState(6);
   //Main data
-  const [data, setData] = useState(players);
+  const [data, setData] = useState([...players].sort(alph_average(false)));
   var ctr = 1;
 
   //If loading
@@ -123,7 +123,7 @@ export default function () {
       <>
         <div className="col-lg-4">
           {/* TOP 15 */}
-          <h2 className="fs-4">Top 15s:</h2>
+          <h2 className="fs-4">Top 15's All-time:</h2>
           <div className="row">
             <div className="col">
               <ClipLoader cssOverride={override} size={70} />
@@ -139,7 +139,7 @@ export default function () {
     <>
       <div className="col-lg-4">
         {/* TOP 15 */}
-        <h2 className="fs-4">Top 15s:</h2>
+        <h2 className="fs-4">Top 15's All-time:</h2>
         <div className="row">
           <div className="col">
             <nav>
@@ -148,6 +148,20 @@ export default function () {
                 id="nav-tab"
                 role="tablist"
               >
+                <a
+                  href="#/"
+                  className={
+                    toggleRecords === 6
+                      ? "px-2 nav-item nav-link table-tab-gray"
+                      : "px-2 nav-item nav-link "
+                  }
+                  onClick={() => {
+                    setToggleRecords(6);
+                    setData([...players].sort(alph_average(false)));
+                  }}
+                >
+                  Average
+                </a>
                 <a
                   href="#/"
                   className={
@@ -237,20 +251,6 @@ export default function () {
                   }}
                 >
                   ATP
-                </a>
-                <a
-                  href="#/"
-                  className={
-                    toggleRecords === 6
-                      ? "px-2 nav-item nav-link table-tab-gray"
-                      : "px-2 nav-item nav-link "
-                  }
-                  onClick={() => {
-                    setToggleRecords(6);
-                    setData([...players].sort(alph_average(false)));
-                  }}
-                >
-                  Average
                 </a>
               </div>
             </nav>
