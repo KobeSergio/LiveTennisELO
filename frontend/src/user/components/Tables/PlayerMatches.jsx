@@ -170,7 +170,7 @@ function getPerformance(data, player_id) {
     }
   });
 
-  if (wins === 10) {
+  if (wins === 10 - uncounted) {
     return {
       perf_overall: Math.max(...sumOfAll),
       perf_surface: Math.max(...sumOfAllSurface),
@@ -197,16 +197,14 @@ function getStats(data, player_id) {
   data.forEach((match) => {
     if (match.score != "W/O") {
       if (match.winner_local_id == player_id) {
-        if (match.loser_elo == null || match.loser_elo < 2350) {
-        } else {
+        if (match.loser_elo != null && match.loser_elo > 2350) {
           opp_ratings.push(match.loser_elo - match.loser_elo_gains);
           opp_surface_ratings.push(
             match.loser_elo_surface - match.loser_elo_surface_gains
           );
         }
       } else if (match.loser_local_id == player_id) {
-        if (match.winner_elo == null || match.loser_elo < 2350) {
-        } else {
+        if (match.winner_elo != null || match.winner_elo > 2350) {
           opp_ratings.push(match.winner_elo - match.winner_elo_gains);
           opp_surface_ratings.push(
             match.winner_elo_surface - match.winner_elo_surface_gains
