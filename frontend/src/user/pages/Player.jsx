@@ -25,16 +25,14 @@ function parseDate(dateString) {
     );
   } else {
     if (dateString.includes("-")) {
-      var newdate = dateString.split(" ")[0].split("-");
-      console.log(newdate);
+      var newdate = dateString.split(" ")[0].split("-"); 
       mydate = new Date(
         newdate[2], //Year
         newdate[1], //Month
         newdate[0] // Day
       );
     } else {
-      var newdate = dateString.split(" ")[0].split("/");
-      console.log(newdate);
+      var newdate = dateString.split(" ")[0].split("/"); 
       mydate = new Date(
         newdate[2], //Year
         newdate[1], //Month
@@ -70,16 +68,14 @@ function computeStatus(dateString) {
     );
   } else {
     if (dateString.includes("-")) {
-      var newdate = dateString.split(" ")[0].split("-");
-      console.log(newdate);
+      var newdate = dateString.split(" ")[0].split("-"); 
       mydate = new Date(
         newdate[2], //Year
         newdate[1], //Month
         newdate[0] // Day
       );
     } else {
-      var newdate = dateString.split(" ")[0].split("/");
-      console.log(newdate);
+      var newdate = dateString.split(" ")[0].split("/"); 
       mydate = new Date(
         newdate[2], //Year
         newdate[1], //Month
@@ -89,8 +85,7 @@ function computeStatus(dateString) {
   }
 
   var dateToday = new Date();
-  var diff = dateToday.getFullYear() - mydate.getFullYear();
-  console.log(diff);
+  var diff = dateToday.getFullYear() - mydate.getFullYear(); 
   return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
     ? "Inactive"
     : Math.abs(diff) < 1

@@ -99,7 +99,7 @@ export default function () {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
 
   //Default data
-  useEffect(() => { 
+  useEffect(() => {
     setData([...players].sort(alph_average(false)));
   }, [api_isLoading]);
 
@@ -329,9 +329,19 @@ export default function () {
                                   {player.overall_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.overall_peak_rating_date.split(
-                                      " "
-                                    )[0]
+                                    <>
+                                      {
+                                        player.overall_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[0]
+                                      }{" "}
+                                      -
+                                      {
+                                        player.overall_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[1]
+                                      }
+                                    </>
                                   )}
                                 </td>
                               </tr>
@@ -377,7 +387,19 @@ export default function () {
                                   {player.hard_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.hard_peak_rating_date.split(" ")[0]
+                                    <>
+                                      {
+                                        player.hard_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[0]
+                                      }{" "}
+                                      -
+                                      {
+                                        player.hard_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[1]
+                                      }
+                                    </>
                                   )}
                                 </td>
                               </tr>
@@ -423,7 +445,19 @@ export default function () {
                                   {player.clay_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.clay_peak_rating_date.split(" ")[0]
+                                    <>
+                                      {
+                                        player.clay_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[0]
+                                      }{" "}
+                                      -
+                                      {
+                                        player.clay_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[1]
+                                      }
+                                    </>
                                   )}
                                 </td>
                               </tr>
@@ -469,7 +503,19 @@ export default function () {
                                   {player.grass_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.grass_peak_rating_date.split(" ")[0]
+                                    <>
+                                      {
+                                        player.grass_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[0]
+                                      }{" "}
+                                      -
+                                      {
+                                        player.grass_peak_rating_date
+                                          .split(" ")[0]
+                                          .split("-")[1]
+                                      }
+                                    </>
                                   )}
                                 </td>
                               </tr>

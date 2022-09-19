@@ -34,7 +34,7 @@ function arrangeScore(player_id, match) {
             score = score.replaceAt(0, score[2]);
             score = score.replaceAt(2, temp);
           } catch {
-            console.log("ha");
+            console.log("");
           }
           fixed.push(score);
         });
@@ -155,11 +155,11 @@ function getPerformance(data, player_id) {
         //Add sumOfAll
         if (match.winner_elo != null) {
           sumOfAll.push(
-            match.winner_elo - match.winner_elo_gains - performanceELO
+            match.winner_elo - match.winner_elo_gains + performanceELO
           );
           sumOfAllSurface.push(
             match.winner_elo_surface -
-              match.winner_elo_surface_gains -
+              match.winner_elo_surface_gains +
               performanceELO
           );
         }
@@ -181,12 +181,9 @@ function getPerformance(data, player_id) {
       perf_surface: Math.min(...sumOfAllSurface),
     };
   }
-
   return {
-    perf_overall:
-      sumOfAll.reduce((a, b) => a + b, 0) / (sumOfAll.length),
-    perf_surface:
-      sumOfAllSurface.reduce((a, b) => a + b, 0) / (sumOfAll.length),
+    perf_overall: sumOfAll.reduce((a, b) => a + b, 0) / sumOfAll.length,
+    perf_surface: sumOfAllSurface.reduce((a, b) => a + b, 0) / sumOfAll.length,
   };
 }
 
@@ -216,11 +213,10 @@ function getStats(data, player_id) {
     }
   });
   return {
-    ave_ELO:
-      opp_ratings.reduce((a, b) => a + b, 0) / (opp_ratings.length),
+    ave_ELO: opp_ratings.reduce((a, b) => a + b, 0) / opp_ratings.length,
     ave_surface_ELO:
       opp_surface_ratings.reduce((a, b) => a + b, 0) /
-      (opp_surface_ratings.length ),
+      opp_surface_ratings.length,
   };
 }
 
@@ -254,6 +250,11 @@ export function PlayerMatches() {
   var currentMatch = "";
   var currentDate = "";
   const [currentSurface, setCurrentSurface] = useState("All Surface");
+
+  if (player_matches.length === 0) {
+    return 
+  }
+
   return (
     <>
       <div
@@ -274,7 +275,6 @@ export function PlayerMatches() {
                 </div>
               </div>
             </div>
-
             <hr></hr>
             <div className="row pb-2">
               <div className="col-3 text-start">

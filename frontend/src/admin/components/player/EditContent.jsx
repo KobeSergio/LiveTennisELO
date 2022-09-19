@@ -406,7 +406,7 @@ function checkOpp(player_id, match) {
   } else {
     //Player not found
   }
-  return {
+  return { 
     result: result,
     opponent: opponent,
     opponent_id: opponent_id,
