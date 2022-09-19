@@ -27,16 +27,16 @@ function parseDate(dateString) {
     if (dateString.includes("-")) {
       var newdate = dateString.split(" ")[0].split("-"); 
       mydate = new Date(
-        newdate[2], //Year
+        newdate[0], //Year
         newdate[1], //Month
-        newdate[0] // Day
+        newdate[2] // Day
       );
     } else {
       var newdate = dateString.split(" ")[0].split("/"); 
       mydate = new Date(
-        newdate[2], //Year
+        newdate[0], //Year
         newdate[1], //Month
-        newdate[0] // Day
+        newdate[2] // Day
       );
     }
   }
@@ -70,9 +70,9 @@ function computeStatus(dateString) {
     if (dateString.includes("-")) {
       var newdate = dateString.split(" ")[0].split("-"); 
       mydate = new Date(
-        newdate[2], //Year
+        newdate[0], //Year
         newdate[1], //Month
-        newdate[0] // Day
+        newdate[2] // Day
       );
     } else {
       var newdate = dateString.split(" ")[0].split("/"); 
