@@ -47,7 +47,11 @@ export default function ClientNavbar() {
   return (
     <>
       <Navbar className="px-4 py-3" bg="light" expand="lg">
-        <Navbar.Brand className="fw-bold" href="#">
+        <Navbar.Brand
+          className="fw-bold"
+          href="#"
+          onClick={() => navigate("/")}
+        >
           Live Tennis ELO Ratings
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
