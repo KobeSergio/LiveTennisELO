@@ -164,15 +164,7 @@ export default function (props) {
     transform: "translate(-45%, -45%)",
   };
 
-  if (api_isLoading) {
-    return (
-      <>
-        <div className="col-lg-8">
-          <ClipLoader cssOverride={override} size={70} />
-        </div>
-      </>
-    );
-  }
+  
 
   return (
     <>

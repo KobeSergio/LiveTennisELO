@@ -15,6 +15,26 @@ function toTitleCase(str) {
   });
 }
 
+function parseDate(dateString) {
+  var mydate = new Date();
+
+  if (dateString.length == 8) {
+    return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
+  } else {
+    if (dateString.includes("-")) {
+      var newdate = dateString.split(" ")[0].split("-");
+      return newdate[0] + "-" + newdate[1];
+    } else {
+      var newdate = dateString.split(" ")[0].split("/");
+      if (newdate[0].length != 2) {
+        newdate[0] = "0" + newdate[0];
+      }
+
+      return newdate[2] + "-" + newdate[0];
+    }
+  }
+}
+
 function alphabetically(ascending, col) {
   return function (a, b) {
     a = a[col];
@@ -62,9 +82,7 @@ function alph_average(ascending) {
         b["hard_peak_rating"] +
         b["clay_peak_rating"] +
         b["grass_peak_rating"]) /
-      4;
-
-    console.log(a);
+      4; 
 
     if (a == null) {
       a = 0;
@@ -330,17 +348,9 @@ export default function () {
                                     <></>
                                   ) : (
                                     <>
-                                      {
+                                      {parseDate(
                                         player.overall_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[0]
-                                      }{" "}
-                                      -
-                                      {
-                                        player.overall_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[1]
-                                      }
+                                      )}
                                     </>
                                   )}
                                 </td>
@@ -388,17 +398,7 @@ export default function () {
                                     <></>
                                   ) : (
                                     <>
-                                      {
-                                        player.hard_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[0]
-                                      }{" "}
-                                      -
-                                      {
-                                        player.hard_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[1]
-                                      }
+                                      {parseDate(player.hard_peak_rating_date)}
                                     </>
                                   )}
                                 </td>
@@ -446,17 +446,7 @@ export default function () {
                                     <></>
                                   ) : (
                                     <>
-                                      {
-                                        player.clay_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[0]
-                                      }{" "}
-                                      -
-                                      {
-                                        player.clay_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[1]
-                                      }
+                                      {parseDate(player.clay_peak_rating_date)}
                                     </>
                                   )}
                                 </td>
@@ -504,17 +494,7 @@ export default function () {
                                     <></>
                                   ) : (
                                     <>
-                                      {
-                                        player.grass_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[0]
-                                      }{" "}
-                                      -
-                                      {
-                                        player.grass_peak_rating_date
-                                          .split(" ")[0]
-                                          .split("-")[1]
-                                      }
+                                      {parseDate(player.grass_peak_rating_date)}
                                     </>
                                   )}
                                 </td>
@@ -561,9 +541,7 @@ export default function () {
                                   {player.atp_peak_rating_date == null ? (
                                     <></>
                                   ) : (
-                                    player.atp_peak_rating_date.slice(0, 4) +
-                                    "-" +
-                                    player.atp_peak_rating_date.slice(4, 6)
+                                    parseDate(player.atp_peak_rating_date)
                                   )}
                                 </td>
                               </tr>
