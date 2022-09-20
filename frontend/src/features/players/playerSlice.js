@@ -39,7 +39,7 @@ export const updatePlayer = createAsyncThunk(
   "player/updatePlayer",
   async (payload, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token; 
+      const token = thunkAPI.getState().auth.user.token;
       return await playersService.updatePlayer(payload, token); //SERVICE
     } catch (error) {
       const message =
@@ -59,9 +59,45 @@ export const updatePlayer = createAsyncThunk(
 export const insertHighlight = createAsyncThunk(
   "player/insertHighlight",
   async (payload, thunkAPI) => {
-    try { 
+    try {
       const token = thunkAPI.getState().auth.user.token;
       return await playersService.insertHighlight(payload, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateMatch = createAsyncThunk(
+  "matches/updateMatch",
+  async (payload, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await playersService.updateMatch(payload, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteMatch = createAsyncThunk(
+  "matches/deleteMatch",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await playersService.deleteMatch(id, token); //SERVICE
     } catch (error) {
       const message =
         (error.response &&
@@ -81,7 +117,7 @@ export const deletePlayer = createAsyncThunk(
   "player/deletePlayer",
   async (player_id, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token; 
+      const token = thunkAPI.getState().auth.user.token;
       return await playersService.deletePlayer(player_id, token); //SERVICE
     } catch (error) {
       const message =
@@ -118,7 +154,7 @@ export const playerSlice = createSlice({
       .addCase(loadPlayer.fulfilled, (state, action) => {
         state.player_isLoading = false;
         state.player_isSuccess = true;
-        state.player_details = action.payload.player; 
+        state.player_details = action.payload.player;
         state.player_matches = action.payload.matches;
         state.player_records = action.payload.records;
       })
@@ -149,6 +185,32 @@ export const playerSlice = createSlice({
         state.player_message = action.payload;
       })
       .addCase(insertHighlight.rejected, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isError = true;
+        state.player_message = action.payload;
+      })
+      .addCase(updateMatch.pending, (state) => {
+        state.player_isLoading = true;
+      })
+      .addCase(updateMatch.fulfilled, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isSuccess = true;
+        state.player_message = action.payload;
+      })
+      .addCase(updateMatch.rejected, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isError = true;
+        state.player_message = action.payload;
+      })
+      .addCase(deleteMatch.pending, (state) => {
+        state.player_isLoading = true;
+      })
+      .addCase(deleteMatch.fulfilled, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isSuccess = true;
+        state.player_message = action.payload;
+      })
+      .addCase(deleteMatch.rejected, (state, action) => {
         state.player_isLoading = false;
         state.player_isError = true;
         state.player_message = action.payload;

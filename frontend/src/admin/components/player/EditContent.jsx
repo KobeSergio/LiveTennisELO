@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 
-import { Pencil } from "react-bootstrap-icons";
+import { Pencil, Windows } from "react-bootstrap-icons";
 //Backend
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { updatePlayer } from "../../../features/players/playerSlice";
+import {
+  updateMatch,
+  updatePlayer,
+} from "../../../features/players/playerSlice";
 export function EditContent(player) {
   //Frontend stuff
   const [show, setShow] = useState(false);
@@ -406,7 +409,7 @@ function checkOpp(player_id, match) {
   } else {
     //Player not found
   }
-  return { 
+  return {
     result: result,
     opponent: opponent,
     opponent_id: opponent_id,
@@ -418,51 +421,56 @@ function checkOpp(player_id, match) {
 }
 
 export function EditMatch(props) {
+  const dispatch = useDispatch();
   const { match, player_id } = props.props;
   //Frontend stuff
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // const PlayerData = {
-    //   img_link,
-    //   birthdate,
-    //   birthplace,
-    //   height,
-    //   weight,
-    //   hand,
-    //   backhand,
-    //   wiki,
-    //   twitter,
-    //   facebook,
-    //   instagram,
-    //   nicknames,
-    // };
-    // const routeDetails = {
-    //   _id: player.player._id,
-    //   player_id: player_id,
-    // };
-    // dispatch(updatePlayer([routeDetails, PlayerData])).then(() => {
-    //   window.location.reload(false);
-    // });
-  };
+
   const [formData, setFormData] = useState({
-    ranking: props.props.ranking,
-    hard: props.props.hard,
-    clay: props.props.clay,
-    grass: props.props.grass,
-    atp: props.props.atp,
-    lactive: props.props.last_active,
+    winner_elo: props.props.match.winner_elo,
+    winner_elo_gains: props.props.match.winner_elo_gains,
+    winner_elo_surface: props.props.match.winner_elo_surface,
+    winner_elo_surface_gains: props.props.match.winner_elo_surface_gains,
+    loser_elo: props.props.match.loser_elo,
+    loser_elo_gains: props.props.match.loser_elo_gains,
+    loser_elo_surface: props.props.match.loser_elo_surface,
+    loser_elo_surface_gains: props.props.match.loser_elo_surface_gains,
   });
 
-  const { ranking, hard, clay, grass, atp, lactive } = formData;
+  const {
+    winner_elo,
+    winner_elo_gains,
+    winner_elo_surface,
+    winner_elo_surface_gains,
+    loser_elo,
+    loser_elo_gains,
+    loser_elo_surface,
+    loser_elo_surface_gains,
+  } = formData;
 
-  const onChange = (e) => {
+  const onChange = (e) => { 
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const MatchData = {
+      winner_elo,
+      winner_elo_gains,
+      winner_elo_surface,
+      winner_elo_surface_gains,
+      loser_elo,
+      loser_elo_gains,
+      loser_elo_surface,
+      loser_elo_surface_gains,
+    };
+    dispatch(updateMatch([props.props.match._id, MatchData]));
+    window.location.reload(false);
   };
 
   return (
@@ -527,46 +535,92 @@ export function EditMatch(props) {
                       <input
                         className="w-100 form-input"
                         type="text"
-                        id="ranking"
-                        name="ranking"
-                        placeholder={checkOpp(player_id, match).opp_rating}
+                        id={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo"
+                            : "winner_elo"
+                        }
+                        name={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo"
+                            : "winner_elo"
+                        }
+                        placeholder={
+                          checkOpp(player_id, match).result === "W"
+                            ? props.props.match.loser_elo
+                            : props.props.match.winner_elo
+                        }
                         onChange={onChange}
+                        required
                       />
                     </td>
                     <td scope="col" id="opp_rating_gains">
                       <input
                         className="w-100 form-input"
                         type="text"
-                        id="ranking"
-                        name="ranking"
+                        id={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_gains"
+                            : "winner_elo_gains"
+                        }
+                        name={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_gains"
+                            : "winner_elo_gains"
+                        }
                         placeholder={
-                          checkOpp(player_id, match).opp_rating_gains
+                          checkOpp(player_id, match).result === "W"
+                            ? props.props.match.loser_elo_gains
+                            : props.props.match.winner_elo_gains
                         }
                         onChange={onChange}
+                        required
                       />
                     </td>
                     <td scope="col" id="opp_surface_rating">
                       <input
                         className="w-100 form-input"
                         type="text"
-                        id="ranking"
-                        name="ranking"
+                        id={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_surface"
+                            : "winner_elo_surface"
+                        }
+                        name={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_surface"
+                            : "winner_elo_surface"
+                        }
                         placeholder={
-                          checkOpp(player_id, match).opp_surface_rating
+                          checkOpp(player_id, match).result === "W"
+                            ? props.props.match.loser_elo_surface
+                            : props.props.match.winner_elo_surface
                         }
                         onChange={onChange}
+                        required
                       />
                     </td>
                     <td scope="col" id="opp_surface_rating_gains">
                       <input
                         className="w-100 form-input"
                         type="text"
-                        id="ranking"
-                        name="ranking"
+                        id={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_surface_gains"
+                            : "winner_elo_surface_gains"
+                        }
+                        name={
+                          checkOpp(player_id, match).result === "W"
+                            ? "loser_elo_surface_gains"
+                            : "winner_elo_surface_gains"
+                        }
                         placeholder={
-                          checkOpp(player_id, match).opp_surface_rating_gains
+                          checkOpp(player_id, match).result === "W"
+                            ? props.props.match.loser_elo_surface_gains
+                            : props.props.match.winner_elo_surface_gains
                         }
                         onChange={onChange}
+                        required
                       />
                     </td>
                     <td scope="col" id="opp_surface_rating_gains">

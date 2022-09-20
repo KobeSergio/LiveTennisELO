@@ -252,7 +252,7 @@ export function PlayerMatches() {
   const [currentSurface, setCurrentSurface] = useState("All Surface");
 
   if (player_matches.length === 0) {
-    return 
+    return;
   }
 
   return (
@@ -283,16 +283,22 @@ export function PlayerMatches() {
                     <b>Overall ELO:</b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{
-                        backgroundColor: "#FFFFFF",
-                        color: "black",
-                        outline: "1px solid black",
-                      }}
-                      className="table-surface-elo-label"
-                    >
-                      {player_details[0].overall_rating}
-                    </span>
+                    {player_details[0].overall_rating != null ? (
+                      <>
+                        <span
+                          style={{
+                            backgroundColor: "#FFFFFF",
+                            color: "black",
+                            outline: "1px solid black",
+                          }}
+                          className="table-surface-elo-label"
+                        >
+                          {player_details[0].overall_rating}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -302,12 +308,18 @@ export function PlayerMatches() {
                     <b>Hard ELO:</b>{" "}
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#3B9FB9" }}
-                      className="table-surface-elo-label"
-                    >
-                      {player_details[0].hard_rating}
-                    </span>
+                    {player_details[0].hard_rating != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#3B9FB9" }}
+                          className="table-surface-elo-label"
+                        >
+                          {player_details[0].hard_rating}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -317,12 +329,18 @@ export function PlayerMatches() {
                     <b>Clay ELO:</b>{" "}
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#E96513" }}
-                      className="table-surface-elo-label"
-                    >
-                      {player_details[0].clay_rating}
-                    </span>
+                    {player_details[0].clay_rating != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#E96513" }}
+                          className="table-surface-elo-label"
+                        >
+                          {player_details[0].clay_rating}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -332,12 +350,18 @@ export function PlayerMatches() {
                     <b>Grass ELO:</b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#3EBA7C" }}
-                      className="table-surface-elo-label"
-                    >
-                      {player_details[0].grass_rating}
-                    </span>
+                    {player_details[0].grass_rating != null ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#3EBA7C" }}
+                          className="table-surface-elo-label"
+                        >
+                          {player_details[0].grass_rating}
+                        </span>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
@@ -352,15 +376,8 @@ export function PlayerMatches() {
                     </b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{
-                        backgroundColor: "#FFFFFF",
-                        color: "black",
-                        outline: "1px solid black",
-                      }}
-                      className="table-surface-elo-label"
-                    >
-                      {Math.ceil(
+                    {isFinite(
+                      Math.ceil(
                         getPerformance(
                           [...currentData]
                             .sort(
@@ -371,22 +388,30 @@ export function PlayerMatches() {
                             .splice(0, 10),
                           player_id
                         ).perf_overall
-                      )}
-                    </span>
-                    {Math.ceil(
-                      getPerformance(
-                        [...currentData]
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10),
-                        player_id
-                      ).perf_overall
-                    ) > player_details[0].overall_rating ? (
-                      <span className="ms-2 positive-elo">
-                        <CaretUpFill size={10} color="green" /> {"\xa0"}
+                      )
+                    ) ? (
+                      <>
+                        <span
+                          style={{
+                            backgroundColor: "#FFFFFF",
+                            color: "black",
+                            outline: "1px solid black",
+                          }}
+                          className="table-surface-elo-label"
+                        >
+                          {Math.ceil(
+                            getPerformance(
+                              [...currentData]
+                                .sort(
+                                  (a, b) =>
+                                    b.tourney_date - a.tourney_date ||
+                                    b.match_num - a.match_num
+                                )
+                                .splice(0, 10),
+                              player_id
+                            ).perf_overall
+                          )}
+                        </span>
                         {Math.ceil(
                           getPerformance(
                             [...currentData]
@@ -398,25 +423,43 @@ export function PlayerMatches() {
                               .splice(0, 10),
                             player_id
                           ).perf_overall
-                        ) - player_details[0].overall_rating}
-                      </span>
+                        ) > player_details[0].overall_rating ? (
+                          <span className="ms-2 positive-elo">
+                            <CaretUpFill size={10} color="green" /> {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                [...currentData]
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_overall
+                            ) - player_details[0].overall_rating}
+                          </span>
+                        ) : (
+                          <span className="ms-2 negative-elo">
+                            <CaretDownFill size={10} color="red" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                [...currentData]
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_overall
+                            ) - player_details[0].overall_rating}
+                          </span>
+                        )}
+                      </>
                     ) : (
-                      <span className="ms-2 negative-elo">
-                        <CaretDownFill size={10} color="red" />
-                        {"\xa0"}
-                        {Math.ceil(
-                          getPerformance(
-                            [...currentData]
-                              .sort(
-                                (a, b) =>
-                                  b.tourney_date - a.tourney_date ||
-                                  b.match_num - a.match_num
-                              )
-                              .splice(0, 10),
-                            player_id
-                          ).perf_overall
-                        ) - player_details[0].overall_rating}
-                      </span>
+                      <></>
                     )}
                   </div>
                 </div>
@@ -430,11 +473,8 @@ export function PlayerMatches() {
                     </b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#3B9FB9" }}
-                      className="table-surface-elo-label"
-                    >
-                      {Math.ceil(
+                    {isFinite(
+                      Math.ceil(
                         getPerformance(
                           (currentSurface === "Hard"
                             ? [...currentData]
@@ -449,27 +489,30 @@ export function PlayerMatches() {
                             .splice(0, 10),
                           player_id
                         ).perf_surface
-                      )}
-                    </span>
-                    {Math.ceil(
-                      getPerformance(
-                        (currentSurface === "Hard"
-                          ? [...currentData]
-                          : [...player_matches]
-                        )
-                          .filter((element) => element.surface == "Hard")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10),
-                        player_id
-                      ).perf_surface
-                    ) > player_details[0].hard_rating ? (
-                      <span className="ms-2 positive-elo">
-                        <CaretUpFill size={10} color="green" />
-                        {"\xa0"}
+                      )
+                    ) ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#3B9FB9" }}
+                          className="table-surface-elo-label"
+                        >
+                          {Math.ceil(
+                            getPerformance(
+                              (currentSurface === "Hard"
+                                ? [...currentData]
+                                : [...player_matches]
+                              )
+                                .filter((element) => element.surface == "Hard")
+                                .sort(
+                                  (a, b) =>
+                                    b.tourney_date - a.tourney_date ||
+                                    b.match_num - a.match_num
+                                )
+                                .splice(0, 10),
+                              player_id
+                            ).perf_surface
+                          )}
+                        </span>
                         {Math.ceil(
                           getPerformance(
                             (currentSurface === "Hard"
@@ -485,29 +528,56 @@ export function PlayerMatches() {
                               .splice(0, 10),
                             player_id
                           ).perf_surface
-                        ) - player_details[0].hard_rating}
-                      </span>
+                        ) > player_details[0].hard_rating ? (
+                          <span className="ms-2 positive-elo">
+                            <CaretUpFill size={10} color="green" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Hard"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Hard"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].hard_rating}
+                          </span>
+                        ) : (
+                          <span className="ms-2 negative-elo">
+                            <CaretDownFill size={10} color="red" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Hard"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Hard"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].hard_rating}
+                          </span>
+                        )}
+                      </>
                     ) : (
-                      <span className="ms-2 negative-elo">
-                        <CaretDownFill size={10} color="red" />
-                        {"\xa0"}
-                        {Math.ceil(
-                          getPerformance(
-                            (currentSurface === "Hard"
-                              ? [...currentData]
-                              : [...player_matches]
-                            )
-                              .filter((element) => element.surface == "Hard")
-                              .sort(
-                                (a, b) =>
-                                  b.tourney_date - a.tourney_date ||
-                                  b.match_num - a.match_num
-                              )
-                              .splice(0, 10),
-                            player_id
-                          ).perf_surface
-                        ) - player_details[0].hard_rating}
-                      </span>
+                      <></>
                     )}
                   </div>
                 </div>
@@ -521,11 +591,8 @@ export function PlayerMatches() {
                     </b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#E96513" }}
-                      className="table-surface-elo-label"
-                    >
-                      {Math.ceil(
+                    {isFinite(
+                      Math.ceil(
                         getPerformance(
                           (currentSurface === "Clay"
                             ? [...currentData]
@@ -540,27 +607,30 @@ export function PlayerMatches() {
                             .splice(0, 10),
                           player_id
                         ).perf_surface
-                      )}
-                    </span>
-                    {Math.ceil(
-                      getPerformance(
-                        (currentSurface === "Clay"
-                          ? [...currentData]
-                          : [...player_matches]
-                        )
-                          .filter((element) => element.surface == "Clay")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10),
-                        player_id
-                      ).perf_surface
-                    ) > player_details[0].clay_rating ? (
-                      <span className="ms-2 positive-elo">
-                        <CaretUpFill size={10} color="green" />
-                        {"\xa0"}
+                      )
+                    ) ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#E96513" }}
+                          className="table-surface-elo-label"
+                        >
+                          {Math.ceil(
+                            getPerformance(
+                              (currentSurface === "Clay"
+                                ? [...currentData]
+                                : [...player_matches]
+                              )
+                                .filter((element) => element.surface == "Clay")
+                                .sort(
+                                  (a, b) =>
+                                    b.tourney_date - a.tourney_date ||
+                                    b.match_num - a.match_num
+                                )
+                                .splice(0, 10),
+                              player_id
+                            ).perf_surface
+                          )}
+                        </span>
                         {Math.ceil(
                           getPerformance(
                             (currentSurface === "Clay"
@@ -576,29 +646,56 @@ export function PlayerMatches() {
                               .splice(0, 10),
                             player_id
                           ).perf_surface
-                        ) - player_details[0].clay_rating}
-                      </span>
+                        ) > player_details[0].clay_rating ? (
+                          <span className="ms-2 positive-elo">
+                            <CaretUpFill size={10} color="green" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Clay"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Clay"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].clay_rating}
+                          </span>
+                        ) : (
+                          <span className="ms-2 negative-elo">
+                            <CaretDownFill size={10} color="red" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Clay"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Clay"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].clay_rating}
+                          </span>
+                        )}
+                      </>
                     ) : (
-                      <span className="ms-2 negative-elo">
-                        <CaretDownFill size={10} color="red" />
-                        {"\xa0"}
-                        {Math.ceil(
-                          getPerformance(
-                            (currentSurface === "Clay"
-                              ? [...currentData]
-                              : [...player_matches]
-                            )
-                              .filter((element) => element.surface == "Clay")
-                              .sort(
-                                (a, b) =>
-                                  b.tourney_date - a.tourney_date ||
-                                  b.match_num - a.match_num
-                              )
-                              .splice(0, 10),
-                            player_id
-                          ).perf_surface
-                        ) - player_details[0].clay_rating}
-                      </span>
+                      <></>
                     )}
                   </div>
                 </div>
@@ -612,11 +709,8 @@ export function PlayerMatches() {
                     </b>
                   </div>
                   <div className="col">
-                    <span
-                      style={{ backgroundColor: "#3EBA7C" }}
-                      className="table-surface-elo-label"
-                    >
-                      {Math.ceil(
+                    {isFinite(
+                      Math.ceil(
                         getPerformance(
                           (currentSurface === "Grass"
                             ? [...currentData]
@@ -631,27 +725,30 @@ export function PlayerMatches() {
                             .splice(0, 10),
                           player_id
                         ).perf_surface
-                      )}
-                    </span>
-                    {Math.ceil(
-                      getPerformance(
-                        (currentSurface === "Grass"
-                          ? [...currentData]
-                          : [...player_matches]
-                        )
-                          .filter((element) => element.surface == "Grass")
-                          .sort(
-                            (a, b) =>
-                              b.tourney_date - a.tourney_date ||
-                              b.match_num - a.match_num
-                          )
-                          .splice(0, 10),
-                        player_id
-                      ).perf_surface
-                    ) > player_details[0].grass_rating ? (
-                      <span className="ms-2 positive-elo">
-                        <CaretUpFill size={10} color="green" />
-                        {"\xa0"}
+                      )
+                    ) ? (
+                      <>
+                        <span
+                          style={{ backgroundColor: "#3EBA7C" }}
+                          className="table-surface-elo-label"
+                        >
+                          {Math.ceil(
+                            getPerformance(
+                              (currentSurface === "Grass"
+                                ? [...currentData]
+                                : [...player_matches]
+                              )
+                                .filter((element) => element.surface == "Grass")
+                                .sort(
+                                  (a, b) =>
+                                    b.tourney_date - a.tourney_date ||
+                                    b.match_num - a.match_num
+                                )
+                                .splice(0, 10),
+                              player_id
+                            ).perf_surface
+                          )}
+                        </span>
                         {Math.ceil(
                           getPerformance(
                             (currentSurface === "Grass"
@@ -667,29 +764,56 @@ export function PlayerMatches() {
                               .splice(0, 10),
                             player_id
                           ).perf_surface
-                        ) - player_details[0].grass_rating}
-                      </span>
+                        ) > player_details[0].grass_rating ? (
+                          <span className="ms-2 positive-elo">
+                            <CaretUpFill size={10} color="green" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Grass"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Grass"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].grass_rating}
+                          </span>
+                        ) : (
+                          <span className="ms-2 negative-elo">
+                            <CaretDownFill size={10} color="red" />
+                            {"\xa0"}
+                            {Math.ceil(
+                              getPerformance(
+                                (currentSurface === "Grass"
+                                  ? [...currentData]
+                                  : [...player_matches]
+                                )
+                                  .filter(
+                                    (element) => element.surface == "Grass"
+                                  )
+                                  .sort(
+                                    (a, b) =>
+                                      b.tourney_date - a.tourney_date ||
+                                      b.match_num - a.match_num
+                                  )
+                                  .splice(0, 10),
+                                player_id
+                              ).perf_surface
+                            ) - player_details[0].grass_rating}
+                          </span>
+                        )}
+                      </>
                     ) : (
-                      <span className="ms-2 negative-elo">
-                        <CaretDownFill size={10} color="red" />
-                        {"\xa0"}
-                        {Math.ceil(
-                          getPerformance(
-                            (currentSurface === "Grass"
-                              ? [...currentData]
-                              : [...player_matches]
-                            )
-                              .filter((element) => element.surface == "Grass")
-                              .sort(
-                                (a, b) =>
-                                  b.tourney_date - a.tourney_date ||
-                                  b.match_num - a.match_num
-                              )
-                              .splice(0, 10),
-                            player_id
-                          ).perf_surface
-                        ) - player_details[0].grass_rating}
-                      </span>
+                      <></>
                     )}
                   </div>
                 </div>

@@ -7,6 +7,7 @@ export default function Pagination({ DataPerPage, totalData, paginate }) {
     pageNumbers.push(i);
   }
 
+  console.log(totalData);
   const [selected, setSelected] = useState(1);
   return (
     <nav className="pagination-outer">

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const PLAYERS_URL = `/admin-api/players`;
-const MATCHES_URL = `/admin-api/matches/`;
+//const PLAYERS_URL = `/admin-api/players`;
+//const MATCHES_URL = `/admin-api/matches/`;
 
-//const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
-//const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;
+const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
+const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;
 
 //Load record,
 // @http:   GET admin/:doc_date
@@ -75,12 +75,36 @@ const insertHighlight = async (payload, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const updatedPlayer = await axios.put(
+  const highlight = await axios.put(
     MATCHES_URL + payload[1],
     payload[0],
     config
   );
-  return updatedPlayer.data;
+  return highlight.data;
+};
+
+const updateMatch = async (payload, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const updatedMatch = await axios.put(
+    MATCHES_URL + payload[0],
+    payload[1],
+    config
+  );
+  return updatedMatch.data;
+};
+
+const deleteMatch = async (match_id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const deletedMatch = await axios.delete(MATCHES_URL + match_id, config);
+  return deletedMatch.data;
 };
 
 //Update Player
@@ -105,6 +129,8 @@ const playersService = {
   updatePlayer,
   deletePlayer,
   insertHighlight,
+  updateMatch,
+  deleteMatch,
 };
 
 export default playersService;
