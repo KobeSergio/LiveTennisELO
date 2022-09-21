@@ -206,7 +206,7 @@ export default function RecordItem(recs) {
                       <></>
                     )}{" "}
                   </td>
-                  <td id="lactive">{record.last_active.split(" ")[0]}</td>
+                  <td id="lactive">{record.last_active == null ? <></> : record.last_active.split(" ")[0]}</td>
                   <td id="edit">
                     <EditRecord props={record} /> &nbsp;
                     <a
