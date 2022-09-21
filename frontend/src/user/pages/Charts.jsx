@@ -18,7 +18,6 @@ function parseCountry(country_id) {
   return regionNames.of(country_id); // "United States
 }
 
-const animatedComponents = makeAnimated();
 export default function Charts() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -185,7 +184,11 @@ export default function Charts() {
               <Select
                 placeholder={"Select Players..."}
                 closeMenuOnSelect={false}
-                components={animatedComponents}
+                components={{
+                  makeAnimated: () => true,
+                  DropdownIndicator: () => null,
+                  IndicatorSeparator: () => null,
+                }}
                 defaultValue={[]}
                 isMulti
                 options={showOptions ? playerOptions : []}
