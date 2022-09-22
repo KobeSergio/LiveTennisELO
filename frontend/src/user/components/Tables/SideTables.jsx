@@ -119,7 +119,7 @@ export default function () {
   //Default data
   useEffect(() => {
     setData([...players].sort(alph_average(false)));
-  }, [api_isLoading]);
+  }, [players]);
 
   //Tabs
   const [toggleRecords, setToggleRecords] = useState(6);

@@ -4,8 +4,8 @@
 
 import axios from "axios";
 
-const RECORD_URL = "/admin-api/";
-//const RECORD_URL = "http://localhost:5000/admin-api/";
+//const RECORD_URL = "/admin-api/";
+const RECORD_URL = "http://localhost:5000/admin-api/";
 
 //Load record,
 // @http:   GET admin/:doc_date

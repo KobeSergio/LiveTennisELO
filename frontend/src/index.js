@@ -32,8 +32,9 @@ export default function App() {
         <Routes>
           {/* Admin page routes */}
           <Route path="/admin-login" element={<Login />} />
+          
           <Route path="/admin/" element={<Admin />}>
-            <Route path=":doc_date" element={<Records />} />
+            <Route index path=":doc_date" element={<Records />} />
             <Route path="players" element={<Players />} />
             <Route path="players/:player_id" element={<ManagePlayer />} />
             <Route path="import" element={<Import />} />

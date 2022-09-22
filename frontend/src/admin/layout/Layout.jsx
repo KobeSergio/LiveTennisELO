@@ -3,6 +3,7 @@ import AdminNav from "../components/Navigation";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function Admin() {
   const navigate = useNavigate();

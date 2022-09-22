@@ -1,31 +1,59 @@
 import React from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { Table, People, Upload } from "react-bootstrap-icons";
+import { Table, People, Upload, Search } from "react-bootstrap-icons";
 import Footer from "../components/Footer";
-
+import { useEffect, useState, useCallback } from "react";
 //Backend
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../../features/auth/authSlice"; 
+import { logout, reset } from "../../features/auth/authSlice";
 import { resetRecords } from "../../features/records/recordsSlice";
 
-function Content() {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
-}
+import Select from "react-select";
+const customStyles = {
+  control: (base, state) => ({
+    ...base,
+    boxShadow: 0,
+    border: "none",
+    height: 43,
+    width: 250,
+    // You can also use state.isFocused to conditionally style based on the focus state
+  }),
+};
 
 function Navbar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    dispatch(resetRecords())
-    navigate('/admin-login')
-  }
+    dispatch(logout());
+    dispatch(reset());
+    dispatch(resetRecords());
+    navigate("/admin-login");
+  };
+
+  const { players, players_isLoading } = useSelector((state) => state.players);
+  const [playerOptions, setPlayers] = useState([]);
+
+  const opts = [];
+  useEffect(() => {
+    players.forEach((player) =>
+      opts.push({ value: player.player_id, label: player.player_name })
+    );
+    setPlayers(opts);
+  }, [players_isLoading]);
+
+  const handleSelect = (selectedOption) => {
+    navigate("players/" + selectedOption.value);
+  };
+
+  const [showOptions, setShowOptions] = useState(false);
+  const handleInputChange = useCallback((typedOption) => {
+    if (typedOption.length > 2) {
+      setShowOptions(true);
+    } else {
+      setShowOptions(false);
+    }
+  }, []);
 
   return (
     <nav className="navbar px-3 py-3 navbar-light">
@@ -33,6 +61,39 @@ function Navbar() {
         <a className="navbar-brand fw-bold" href="">
           Live Tennis ELO Ratings
         </a>
+        {players_isLoading ? (
+          <></>
+        ) : (
+          <>
+            <form>
+              <div className="ms-3 input-group">
+                <Select
+                  options={showOptions ? playerOptions : []}
+                  menuIsOpen={showOptions ? true : false}
+                  onInputChange={handleInputChange}
+                  name="language"
+                  placeholder="Search Player"
+                  styles={customStyles}
+                  components={{
+                    IndicatorsContainer: () => null,
+                  }}
+                  onChange={handleSelect}
+                  search
+                />
+                <div className="input-group-prepend">
+                  <span class="input-group-button">
+                    <button
+                      className="btn btn-green search-btn px-3 py-1"
+                      type="submit"
+                    >
+                      <Search color="white" className="fs-7" />
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </>
+        )}
         <button
           className="btn bg-transparent px-3 py-1"
           type="submit"
@@ -50,9 +111,7 @@ function Navbar() {
 }
 
 function Sidebar() {
-  const { latest } = useSelector(
-    (state) => state.records
-  );
+  const { latest } = useSelector((state) => state.records);
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
@@ -68,7 +127,7 @@ function Sidebar() {
                 <NavLink
                   className="nav-link"
                   activeclassname="nav-link active"
-                  to={`/admin/`+latest}
+                  to={`/admin/` + latest}
                 >
                   <a data-toggle="pill" role="tab" aria-selected="false">
                     <Table size={15} className="mb-1 me-3" />
@@ -103,13 +162,11 @@ function Sidebar() {
         </aside>
 
         <div className="bg-admin d-flex flex-column">
-          <main className="flex-shrink-0">
-            <div className="container-fluid">
-              <div className="mt-5">
-                <Content />
-              </div>
+          <div className="container-fluid">
+            <div className="mt-5">
+              <Outlet />
             </div>
-          </main>
+          </div>
 
           <Footer />
         </div>

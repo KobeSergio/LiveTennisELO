@@ -25,14 +25,14 @@ function parseDate(dateString) {
     );
   } else {
     if (dateString.includes("-")) {
-      var newdate = dateString.split(" ")[0].split("-"); 
+      var newdate = dateString.split(" ")[0].split("-");
       mydate = new Date(
         newdate[0], //Year
         newdate[1], //Month
         newdate[2] // Day
       );
     } else {
-      var newdate = dateString.split(" ")[0].split("/"); 
+      var newdate = dateString.split(" ")[0].split("/");
       mydate = new Date(
         newdate[0], //Year
         newdate[1], //Month
@@ -68,14 +68,14 @@ function computeStatus(dateString) {
     );
   } else {
     if (dateString.includes("-")) {
-      var newdate = dateString.split(" ")[0].split("-"); 
+      var newdate = dateString.split(" ")[0].split("-");
       mydate = new Date(
         newdate[0], //Year
         newdate[1], //Month
         newdate[2] // Day
       );
     } else {
-      var newdate = dateString.split(" ")[0].split("/"); 
+      var newdate = dateString.split(" ")[0].split("/");
       mydate = new Date(
         newdate[2], //Year
         newdate[1], //Month
@@ -85,7 +85,7 @@ function computeStatus(dateString) {
   }
 
   var dateToday = new Date();
-  var diff = dateToday.getFullYear() - mydate.getFullYear(); 
+  var diff = dateToday.getFullYear() - mydate.getFullYear();
   return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
     ? "Inactive"
     : Math.abs(diff) < 1
@@ -137,6 +137,9 @@ export default function Player() {
                         ? `https://i.ibb.co/dBb6xnR/no-player.png`
                         : player_details[0].img_link
                     }
+                    width={300}
+                    height={300}
+                    style={{ width: 300, height: 300, objectFit: "cover" }}
                   />
                 </div>
                 <div class="d-flex justify-content-center">
@@ -229,6 +232,11 @@ export default function Player() {
                         ) : (
                           <div>Website:</div>
                         )}
+                        {player_details[0].nicknames == null ? (
+                          <></>
+                        ) : (
+                          <div>Nicknames:</div>
+                        )}
                         {player_details[0].last_match == null ? (
                           <></>
                         ) : (
@@ -312,6 +320,13 @@ export default function Player() {
                             <></>
                           ) : (
                             player_details[0].website
+                          )}
+                        </div>
+                        <div className="text-dark" id="nicknames">
+                          {player_details[0].nicknames == null ? (
+                            <></>
+                          ) : (
+                            player_details[0].nicknames
                           )}
                         </div>
                         <div className="text-dark">

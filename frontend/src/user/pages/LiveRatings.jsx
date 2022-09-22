@@ -121,7 +121,9 @@ export default function Charts() {
                     >
                       {year}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu
+                      style={{height: 300, overflowY: "scroll" }}
+                    >
                       {years.map((year) => (
                         <Dropdown.Item onClick={() => setyear(year)} href="#/">
                           {year}
@@ -161,7 +163,7 @@ export default function Charts() {
                       "/" +
                       Math.floor(((record % 10000) % 100) / 1).toString()}
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
+                  <Dropdown.Menu style={{height: 300, overflowY: "scroll" }}>
                     {choicesCopy.map((choice) =>
                       Math.floor(choice / 10000) === year ? (
                         <Dropdown.Item

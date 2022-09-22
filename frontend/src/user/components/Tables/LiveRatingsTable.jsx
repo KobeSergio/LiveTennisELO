@@ -104,6 +104,7 @@ export default function (props) {
         setData(props.data.sort(alphabetically(true, sortBy)));
       }
     }
+    setColumn("");
     setDataPerPage(props.dataPerPage);
     setCurrentPage(1);
   }, [props]);
@@ -196,6 +197,7 @@ export default function (props) {
                   [...records].sort(alphabetically(true, "overall_rank"))
                 );
                 setsortBy("overall_rank");
+                setColumn("");
               }}
             >
               Overall
@@ -211,6 +213,7 @@ export default function (props) {
                 setToggleRecords(2);
                 setData([...records].sort(alphabetically(true, "hard_rank")));
                 setsortBy("hard_rank");
+                setColumn("");
               }}
             >
               Hard
@@ -226,6 +229,7 @@ export default function (props) {
                 setToggleRecords(3);
                 setData([...records].sort(alphabetically(true, "clay_rank")));
                 setsortBy("clay_rank");
+                setColumn("");
               }}
             >
               Clay
@@ -241,6 +245,7 @@ export default function (props) {
                 setToggleRecords(4);
                 setData([...records].sort(alphabetically(true, "grass_rank")));
                 setsortBy("grass_rank");
+                setColumn("");
               }}
             >
               Grass
@@ -256,6 +261,7 @@ export default function (props) {
                 setToggleRecords(5);
                 setData([...records].sort(alphabetically(true, "atp_rank")));
                 setsortBy("atp_rank");
+                setColumn("");
               }}
             >
               ATP
@@ -416,8 +422,8 @@ export default function (props) {
                 )}
               </th>
               <th
-                className="text-center" 
-                style={{width:"12%"}}
+                className="text-center"
+                style={{ width: "12%" }}
                 onClick={() =>
                   toggleRecords === 1 ? (
                     sorting("overall_best_rank")
@@ -492,8 +498,24 @@ export default function (props) {
                   <></>
                 )}
               </th>
-              <th className="text-center" >Country</th>
-              <th onClick={() => sorting("name")} style={{ width:'25%' }}className="text-start">
+              <th onClick={() => sorting("player_id")} className="text-center">
+                <a style={{ color: "inherit" }} href="#/">
+                  Country
+                </a>
+                {"\xa0"}
+                {column === "player_id" && order === "ASC" ? (
+                  <CaretDownFill />
+                ) : column === "player_id" && order === "DSC" ? (
+                  <CaretUpFill />
+                ) : (
+                  <></>
+                )}
+              </th>
+              <th
+                onClick={() => sorting("name")}
+                style={{ width: "25%" }}
+                className="text-start"
+              >
                 <a style={{ color: "inherit" }} href="#/">
                   Name
                 </a>
@@ -671,7 +693,7 @@ export default function (props) {
                   ) : toggleRecords === 4 ? (
                     sorting("grass_high")
                   ) : toggleRecords === 5 ? (
-                    sorting("atp_high")
+                    sorting("atp_best_rating")
                   ) : (
                     <></>
                   )
@@ -723,9 +745,9 @@ export default function (props) {
                   </>
                 ) : toggleRecords === 5 ? (
                   <>
-                    {column === "atp_high" && order === "ASC" ? (
+                    {column === "atp_best_rating" && order === "ASC" ? (
                       <CaretDownFill />
-                    ) : column === "atp_high" && order === "DSC" ? (
+                    ) : column === "atp_best_rating" && order === "DSC" ? (
                       <CaretUpFill />
                     ) : (
                       <></>
@@ -890,7 +912,7 @@ export default function (props) {
                         <></>
                       )}
                     </td>
-                    <td id="bestrank" style={{width:"12%"}}>
+                    <td id="bestrank" style={{ width: "12%" }}>
                       {toggleRecords === 1 ? (
                         <>{record.overall_best_rank}</>
                       ) : toggleRecords === 2 ? (
@@ -1008,7 +1030,7 @@ export default function (props) {
                       ) : toggleRecords === 4 ? (
                         <>{record.grass_high}</>
                       ) : toggleRecords === 5 ? (
-                        <>{record.atp_high}</>
+                        <>{record.atp_best_rating}</>
                       ) : (
                         <></>
                       )}

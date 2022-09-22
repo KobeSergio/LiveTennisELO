@@ -108,7 +108,7 @@ export default function ClientNavbar() {
                     <span class="input-group-button">
                       <button
                         className="btn btn-green search-btn px-3 py-1"
-                        type="submit"
+                        type="button"
                       >
                         <Search color="white" className="fs-7" />
                       </button>

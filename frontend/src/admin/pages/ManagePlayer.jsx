@@ -159,6 +159,9 @@ function ManagePlayer() {
                       ? `https://i.ibb.co/dBb6xnR/no-player.png`
                       : player_details[0].img_link
                   }
+                  width={300}
+                  height={300}
+                  style={{ width: 300, height: 300, objectFit: "cover" }}
                 />
               </div>
               <div className="pt-1 gc-100" id="player-id">
@@ -254,6 +257,11 @@ function ManagePlayer() {
                       ) : (
                         <div>Website:</div>
                       )}
+                      {player_details[0].nicknames == null ? (
+                        <></>
+                      ) : (
+                        <div>Nicknames:</div>
+                      )}
                       {player_details[0].last_match == null ? (
                         <></>
                       ) : (
@@ -333,6 +341,13 @@ function ManagePlayer() {
                           <></>
                         ) : (
                           player_details[0].website
+                        )}
+                      </div>
+                      <div className="text-dark" id="nicknames">
+                        {player_details[0].nicknames == null ? (
+                          <></>
+                        ) : (
+                          player_details[0].nicknames
                         )}
                       </div>
                       <div className="text-dark">
