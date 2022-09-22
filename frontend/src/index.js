@@ -31,11 +31,10 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           {/* Admin page routes */}
-          <Route path="/admin-login" element={<Login />} />
-          
+          <Route path="/admin-login" element={<Login />} /> 
           <Route path="/admin/" element={<Admin />}>
-            <Route index path=":doc_date" element={<Records />} />
-            <Route path="players" element={<Players />} />
+            <Route index path="players" element={<Players />} />
+            <Route path=":doc_date" element={<Records />} />
             <Route path="players/:player_id" element={<ManagePlayer />} />
             <Route path="import" element={<Import />} />
           </Route>

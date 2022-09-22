@@ -23,9 +23,6 @@ function Admin_login() {
     (state) => state.auth
   );
 
-  //Get data from state
-  const { isLoading } = useSelector((state) => state.records);
-  const { latest } = useSelector((state) => state.records);
   //Check if selector changes
   useEffect(() => {
     if (isError) {
@@ -33,9 +30,7 @@ function Admin_login() {
       console.log("Wrong credentials");
     }
     if (isSuccess) {
-      dispatch(latestRecord()).then((e) =>
-        navigate("/admin/" + e.payload.record.doc_date)
-      );
+      dispatch(loadPlayers()).then((e) => navigate("/admin/players"));
     }
     dispatch(reset);
   }, [user, isError, isSuccess, message]);

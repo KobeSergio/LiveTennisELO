@@ -7,14 +7,12 @@ import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../../features/auth/authSlice";
 import { resetRecords } from "../../features/records/recordsSlice";
-
 import Select from "react-select";
+
 const customStyles = {
   control: (base, state) => ({
     ...base,
-    boxShadow: 0,
-    border: "none",
-    height: 43,
+    boxShadow: 20,
     width: 250,
     // You can also use state.isFocused to conditionally style based on the focus state
   }),
@@ -22,14 +20,6 @@ const customStyles = {
 
 function Navbar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const onLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    dispatch(resetRecords());
-    navigate("/admin-login");
-  };
 
   const { players, players_isLoading } = useSelector((state) => state.players);
   const [playerOptions, setPlayers] = useState([]);
@@ -84,7 +74,7 @@ function Navbar() {
                   <span class="input-group-button">
                     <button
                       className="btn btn-green search-btn px-3 py-1"
-                      type="submit"
+                      type="button"
                     >
                       <Search color="white" className="fs-7" />
                     </button>
@@ -94,24 +84,24 @@ function Navbar() {
             </form>
           </>
         )}
-        <button
-          className="btn bg-transparent px-3 py-1"
-          type="submit"
-          title="Logout"
-          onClick={onLogout}
-        >
-          <img
-            src={require("../img/Logout.png")}
-            className="input-group-prepend bg-transparent border-0"
-          ></img>
-        </button>
       </div>
     </nav>
   );
 }
 
 function Sidebar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    dispatch(resetRecords());
+    navigate("/admin-login");
+  };
+
   const { latest } = useSelector((state) => state.records);
+
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
@@ -127,17 +117,6 @@ function Sidebar() {
                 <NavLink
                   className="nav-link"
                   activeclassname="nav-link active"
-                  to={`/admin/` + latest}
-                >
-                  <a data-toggle="pill" role="tab" aria-selected="false">
-                    <Table size={15} className="mb-1 me-3" />
-                    Records
-                  </a>
-                </NavLink>
-
-                <NavLink
-                  className="nav-link"
-                  activeclassname="nav-link active"
                   to="/admin/players"
                 >
                   <a data-toggle="pill" role="tab" aria-selected="false">
@@ -145,7 +124,16 @@ function Sidebar() {
                     Players
                   </a>
                 </NavLink>
-
+                <NavLink
+                  className="nav-link"
+                  activeclassname="nav-link active"
+                  to={`/admin/` + latest}
+                >
+                  <a data-toggle="pill" role="tab" aria-selected="false">
+                    <Table size={15} className="mb-1 me-3" />
+                    Records
+                  </a>
+                </NavLink>
                 <NavLink
                   className="nav-link"
                   activeclassname="nav-link active"
@@ -156,18 +144,30 @@ function Sidebar() {
                     Import
                   </a>
                 </NavLink>
+                <a
+                  href="#/"
+                  style={{ color: "red" }}
+                  data-toggle="pill"
+                  aria-selected="false"
+                  onClick={onLogout}
+                  className="nav-link"
+                >
+                  <img
+                    src={require("../img/Logout.png")}
+                    className="input-group-prepend bg-transparent border-0 mb-1 me-3"
+                  />
+                  Logout
+                </a>
               </div>
             </div>
           </div>
         </aside>
-
         <div className="bg-admin d-flex flex-column">
           <div className="container-fluid">
             <div className="mt-5">
               <Outlet />
             </div>
           </div>
-
           <Footer />
         </div>
       </div>

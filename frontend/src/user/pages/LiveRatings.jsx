@@ -70,8 +70,11 @@ export default function Charts() {
       setRecord(choicesCopy[0]);
     }
   }, [latest]);
-  const recordIndex = choicesCopy.findIndex((x) => x == record);
 
+  useEffect(() => {
+    setData([...records]);
+  }, [record, api_isLoading]); 
+  const recordIndex = choicesCopy.findIndex((x) => x == record); 
   const [data, setData] = useState([...records]);
   const [DataPerPage, setDataPerPage] = useState(20);
   const [len, setLen] = useState(0);
@@ -121,9 +124,7 @@ export default function Charts() {
                     >
                       {year}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu
-                      style={{height: 300, overflowY: "scroll" }}
-                    >
+                    <Dropdown.Menu style={{ height: 300, overflowY: "scroll" }}>
                       {years.map((year) => (
                         <Dropdown.Item onClick={() => setyear(year)} href="#/">
                           {year}
@@ -163,7 +164,7 @@ export default function Charts() {
                       "/" +
                       Math.floor(((record % 10000) % 100) / 1).toString()}
                   </Dropdown.Toggle>
-                  <Dropdown.Menu style={{height: 300, overflowY: "scroll" }}>
+                  <Dropdown.Menu style={{ height: 300, overflowY: "scroll" }}>
                     {choicesCopy.map((choice) =>
                       Math.floor(choice / 10000) === year ? (
                         <Dropdown.Item

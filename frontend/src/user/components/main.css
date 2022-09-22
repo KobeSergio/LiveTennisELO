@@ -21,8 +21,7 @@ h1 {
     background: #FFF;
 }
 
-.bg-admin {
-    z-index: 1;
+.bg-admin { 
     position: absolute;
     background: #F9F9FB;
     right: 0;
