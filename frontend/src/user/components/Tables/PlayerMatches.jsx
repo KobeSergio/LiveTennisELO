@@ -969,7 +969,9 @@ export function PlayerMatches() {
                       <div className="d-flex justify-content-center">
                         <span className="me-2 highlights-button">
                           {match.highlight == null ? (
-                            <></>
+                            <>
+                              <CameraVideo color="white" />
+                            </>
                           ) : (
                             <>
                               {match.highlight != "" ? (
