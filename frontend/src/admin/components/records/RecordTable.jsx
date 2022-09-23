@@ -5,6 +5,7 @@ import { deleteIndRecord } from "../../../features/records/recordsSlice";
 import { EditRecord } from "../records/EditModal";
 import { TrashFill } from "react-bootstrap-icons";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function toTitleCase(str) {
   var parsed = str;
@@ -23,6 +24,8 @@ function toTitleCase(str) {
 }
 
 export default function RecordItem(recs) {
+  const navigate = useNavigate();
+
   const [data, setData] = useState(recs.records);
   const [order, setOrder] = useState("ASC");
   const { records } = useSelector((state) => state.records);
@@ -134,7 +137,12 @@ export default function RecordItem(recs) {
                 <tr>
                   <th scope="row">{record.player_id}</th>
                   <td className="text-start" id="name">
-                    {toTitleCase(record.name)}
+                    <a
+                      href="#/"
+                      onClick={() => navigate(`./players/` + record.player_id)}
+                    >
+                      {toTitleCase(record.name)}
+                    </a>
                   </td>
                   <td id="overall">
                     {record.ranking != null ? (
