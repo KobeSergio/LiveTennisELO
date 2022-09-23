@@ -139,7 +139,7 @@ export default function RecordItem(recs) {
                   <td className="text-start" id="name">
                     <a
                       href="#/"
-                      onClick={() => navigate(`./players/` + record.player_id)}
+                      onClick={() => navigate(`/admin/players/` + record.player_id)}
                     >
                       {toTitleCase(record.name)}
                     </a>
