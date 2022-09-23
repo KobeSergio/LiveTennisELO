@@ -968,13 +968,21 @@ export function PlayerMatches() {
                     </td>
                     <td className="table-result" id="result">
                       <span className="me-2 highlights-button">
-                        {match.highlight != "" ? (
-                          <ShowHighlight
-                            props={match._id}
-                            src={match.highlight}
-                          />
+                        {match.highlight == null ? (
+                          <>
+                            <AddHighlight props={match._id} />
+                          </>
                         ) : (
-                          <AddHighlight props={match._id} />
+                          <>
+                            {match.highlight != "" ? (
+                              <ShowHighlight
+                                props={match._id}
+                                src={match.highlight}
+                              />
+                            ) : (
+                              <AddHighlight props={match._id} />
+                            )}
+                          </>
                         )}
                       </span>
                       {checkOpp(player_id, match).result === "W" ? (

@@ -968,14 +968,20 @@ export function PlayerMatches() {
                     <td className="table-result" id="result">
                       <div className="d-flex justify-content-center">
                         <span className="me-2 highlights-button">
-                          {match.highlight != "" ? (
-                            <ShowHighlight
-                              props={match._id}
-                              src={match.highlight}
-                            />
+                          {match.highlight == null ? (
+                            <></>
                           ) : (
                             <>
-                              <CameraVideo color="white" />
+                              {match.highlight != "" ? (
+                                <ShowHighlight
+                                  props={match._id}
+                                  src={match.highlight}
+                                />
+                              ) : (
+                                <>
+                                  <CameraVideo color="white" />
+                                </>
+                              )}
                             </>
                           )}
                         </span>
