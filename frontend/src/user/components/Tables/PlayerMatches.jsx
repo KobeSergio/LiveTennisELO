@@ -100,6 +100,7 @@ function getPerformance(data, player_id) {
   var sumOfAllSurface = [];
   var uncounted = 0;
   var wins = 0;
+  var loses = 0;
 
   data.forEach((match) => {
     var performanceELO = 0;
@@ -163,7 +164,7 @@ function getPerformance(data, player_id) {
               performanceELO
           );
         }
-        wins--;
+        loses++;
       }
     } else {
       uncounted++;
@@ -175,7 +176,7 @@ function getPerformance(data, player_id) {
       perf_overall: Math.max(...sumOfAll),
       perf_surface: Math.max(...sumOfAllSurface),
     };
-  } else if (wins === 0) {
+  } else if (loses === 10 - uncounted) {
     return {
       perf_overall: Math.min(...sumOfAll),
       perf_surface: Math.min(...sumOfAllSurface),

@@ -16,6 +16,7 @@ const playerSchema = new mongoose.Schema(
     winner_elo_gains: Number,
     winner_elo_surface_gains: Number, 
     score: String,   
+    
     //Loser 
     loser_local_id: String, 
     loser_name: String,  

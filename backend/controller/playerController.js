@@ -19,6 +19,17 @@ const getPlayers = asyncHandler(async (req, res) => {
   res.status(200).json(players);
 });
 
+const getPlayerslist = asyncHandler(async (req, res) => {
+  const players = await Player.find().select("player_id player_name");
+
+  if (!players) {
+    res.status(400);
+    throw new Error("No players found.");
+  }
+
+  res.status(200).json(players);
+});
+
 // @desc:       Get player for chart comparisons
 // @route:      GET api/players/:player_id
 // @access      Public
@@ -111,14 +122,20 @@ const getIndPlayer = asyncHandler(async (req, res) => {
       },
     },
   ]);
-  const records = Records.find({ player_id: { $eq: req.params.id } });
+  const records = Records.find({ player_id: { $eq: req.params.id } }).select(
+    "ranking hard grass clay atp overall_rank hard_rank clay_rank grass_rank atp_rank doc_date age"
+  );
 
-  const response = await Promise.all([player,matches,records]);
+  const response = await Promise.all([player, matches, records]);
   if (!response) {
     res.status(400);
     throw new Error("Data insufficient");
   }
-  const container = { player: response[0], matches: response[1], records: response[2] };
+  const container = {
+    player: response[0],
+    matches: response[1],
+    records: response[2],
+  };
   res.status(200).json(container);
 });
 
@@ -146,4 +163,5 @@ module.exports = {
   deletePlayer,
   getIndPlayer,
   getPlayerRecs,
+  getPlayerslist,
 };

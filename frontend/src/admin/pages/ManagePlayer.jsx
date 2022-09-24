@@ -48,8 +48,8 @@ function parseDate(dateString) {
       console.log(newdate);
       mydate = new Date(
         newdate[2], //Year
-        newdate[1], //Month
-        newdate[0] // Day
+        newdate[0], //Month
+        newdate[1] // Day
       );
     }
   }

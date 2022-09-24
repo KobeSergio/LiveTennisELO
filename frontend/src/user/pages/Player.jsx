@@ -7,7 +7,11 @@ import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadPlayer, resetPlayer } from "../../features/api/apiSlice";
+import {
+  loadPlayer,
+  loadPlayerList,
+  resetPlayer,
+} from "../../features/api/apiSlice";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -34,9 +38,9 @@ function parseDate(dateString) {
     } else {
       var newdate = dateString.split(" ")[0].split("/");
       mydate = new Date(
-        newdate[0], //Year
-        newdate[1], //Month
-        newdate[2] // Day
+        newdate[2], //Year
+        newdate[0], //Month
+        newdate[1] // Day
       );
     }
   }
@@ -94,16 +98,27 @@ function computeStatus(dateString) {
 }
 
 export default function Player() {
-  const { player_details, player_matches, player_isLoading, player_records } =
-    useSelector((state) => state.api);
+  const {
+    player_details,
+    player_matches,
+    player_isLoading,
+    player_records,
+    players,
+  } = useSelector((state) => state.api);
   const { player_id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
+    if (players.length === 0) {
+      dispatch(loadPlayerList());
+    }
     dispatch(resetPlayer());
     dispatch(loadPlayer(player_id));
   }, []);
 
   useEffect(() => {
+    if (players.length === 0) {
+      dispatch(loadPlayerList());
+    }
     dispatch(resetPlayer());
     dispatch(loadPlayer(player_id));
   }, [navigate]);

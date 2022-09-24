@@ -6,7 +6,17 @@ const Record = require("../models/recordModel");
 const getRecord = asyncHandler(async (req, res) => {
   const record = await Record.find({
     doc_date: { $eq: req.params.doc_date },
-  });
+  }).select(
+    "player_id name ranking record_high hard hard_high " +
+      "grass grass_high clay clay_high atp atp_best_rating age " +
+      "overall_ch hard_ch clay_ch grass_ch atp_ch " +
+      "overall_rank hard_rank clay_rank grass_rank atp_rank " +
+      "overall_best_rank hard_best_rank clay_best_rank grass_best_rank atp_best_rank " +
+      "overall_rank_diff hard_rank_diff clay_rank_diff grass_rank_diff atp_rank_diff " +
+      "overall_rating hard_rating clay_rating grass_rating atp_rating " +
+      "overall_best_rating hard_best_rating clay_best_rating grass_best_rating atp_best_rating " +
+      "overall_rating_diff hard_rating_diff clay_rating_diff grass_rating_diff atp_rating_diff "
+  );
   if (!record) {
     res.status(400);
     throw new Error("Record not found");
@@ -74,7 +84,7 @@ const updateRecord = asyncHandler(async (req, res) => {
     const updatedRecord = await Record.findByIdAndUpdate(
       req.params.id,
       req.body
-    ); 
+    );
     res.status(200).json(updatedRecord);
   }
 });

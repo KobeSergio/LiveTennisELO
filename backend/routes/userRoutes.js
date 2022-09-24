@@ -5,8 +5,10 @@ const {
   getPlayers,
   getPlayerRecs,
   getIndPlayer,
+  getPlayerslist,
 } = require("../controller/playerController");
 
+router.route("/api/playerslist").get(getPlayerslist);
 router.route("/api/players").get(getPlayers);
 router.route("/api/players/compare").get(getPlayerRecs);
 router.route("/api/players/:id").get(getIndPlayer);

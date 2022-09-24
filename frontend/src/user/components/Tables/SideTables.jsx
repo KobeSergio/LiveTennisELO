@@ -5,6 +5,7 @@ import TennisRatingGuide from "./TennisRatingGuide";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function toTitleCase(str) {
   if (str.toLowerCase() === "mcenroe john") {
@@ -82,7 +83,7 @@ function alph_average(ascending) {
         b["hard_peak_rating"] +
         b["clay_peak_rating"] +
         b["grass_peak_rating"]) /
-      4; 
+      4;
 
     if (a == null) {
       a = 0;
@@ -115,7 +116,7 @@ function alph_average(ascending) {
 
 export default function () {
   const { players, records, api_isLoading } = useSelector((state) => state.api);
-
+  const navigate = useNavigate();
   //Default data
   useEffect(() => {
     setData([...players].sort(alph_average(false)));
@@ -335,7 +336,14 @@ export default function () {
                                   {"\xa0"}
                                   {"\xa0"}
                                   <span className="table-country">
-                                    <a href={`./players/` + player.player_id}>
+                                    <a
+                                      href="#/"
+                                      onClick={() =>
+                                        navigate(
+                                          `./players/` + player.player_id
+                                        )
+                                      }
+                                    >
                                       {toTitleCase(player.player_name)}
                                     </a>
                                   </span>

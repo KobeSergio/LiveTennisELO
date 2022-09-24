@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const API_URL = `/api/`;
-//const API_URL = `http://localhost:5000/api/`;
+//const API_URL = `/api/`;
+const API_URL = `http://localhost:5000/api/`;
 const loadRecord = async (payload) => {
   const loadData = await axios.get(API_URL + "records/" + payload);
   return {
@@ -21,6 +21,11 @@ const loadData = async () => {
     loadData: loadData.data,
     players: loadPlayers.data,
   };
+};
+
+const loadPlayerList = async () => {
+  const loadPlayerList = await axios.get(API_URL + "playerslist/");
+  return loadPlayerList.data;
 };
 
 const drawChart = async (players) => {
@@ -57,6 +62,7 @@ const apiService = {
   loadData,
   drawChart,
   loadPlayer,
+  loadPlayerList,
 };
 
 export default apiService;

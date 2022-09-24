@@ -82,6 +82,26 @@ export const loadPlayer = createAsyncThunk(
   }
 );
 
+//Load players
+// @http:   GET /players/:id
+// @res:    players: json
+export const loadPlayerList = createAsyncThunk(
+  "api/loadPlayerList",
+  async (_, thunkAPI) => {
+    try {
+      return await apiService.loadPlayerList(); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
@@ -167,6 +187,19 @@ export const apiSlice = createSlice({
         state.player_records = action.payload.records;
       })
       .addCase(loadPlayer.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadPlayerList.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadPlayerList.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.players = action.payload;
+      })
+      .addCase(loadPlayerList.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;
