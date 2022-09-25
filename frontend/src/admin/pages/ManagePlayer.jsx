@@ -208,6 +208,16 @@ function ManagePlayer() {
                       <Instagram />
                     </a>
                   )}
+                  {player_details[0].wiki == null ? (
+                    <></>
+                  ) : (
+                    <a
+                      className="me-2"
+                      href={"https:/" + player_details[0].wiki}
+                    >
+                      <Globe />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

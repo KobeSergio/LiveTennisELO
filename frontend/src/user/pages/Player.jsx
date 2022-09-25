@@ -35,12 +35,12 @@ function parseDate(dateString) {
         newdate = dateString.split(" ")[0].split("-");
       } else {
         newdate = dateString.split("-");
-      } 
+      }
       mydate = new Date(
         newdate[0], //Year
         newdate[1], //Month
         newdate[2] // Day
-      ); 
+      );
       var dateStr = mydate.toDateString();
       return dateStr.substr(dateStr.indexOf(" ") + 1);
     } else {
@@ -203,6 +203,16 @@ export default function Player() {
                         href={"https:/" + player_details[0].instagram}
                       >
                         <Instagram />
+                      </a>
+                    )}
+                    {player_details[0].wiki == null ? (
+                      <></>
+                    ) : (
+                      <a
+                        className="me-2"
+                        href={"https:/" + player_details[0].wiki}
+                      >
+                        <Globe />
                       </a>
                     )}
                   </div>
