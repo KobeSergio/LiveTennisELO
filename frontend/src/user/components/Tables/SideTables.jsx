@@ -16,10 +16,8 @@ function toTitleCase(str) {
   });
 }
 
-function parseDate(dateString) {
-  var mydate = new Date();
-
-  if (dateString.length == 8) {
+function parseDate(dateString) { 
+  if (!dateString.includes("-") && !dateString.includes("/")) {
     return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
   } else {
     if (dateString.includes("-")) {
@@ -115,17 +113,19 @@ function alph_average(ascending) {
 }
 
 export default function () {
-  const { players, records, api_isLoading } = useSelector((state) => state.api);
+  const { top_players, records, api_isLoading } = useSelector(
+    (state) => state.api
+  );
   const navigate = useNavigate();
   //Default data
   useEffect(() => {
-    setData([...players].sort(alph_average(false)));
-  }, [players]);
+    setData([...top_players].sort(alph_average(false)));
+  }, [top_players]);
 
   //Tabs
   const [toggleRecords, setToggleRecords] = useState(6);
   //Main data
-  const [data, setData] = useState([...players].sort(alph_average(false)));
+  const [data, setData] = useState([...top_players].sort(alph_average(false)));
   var ctr = 1;
 
   //If loading
@@ -176,7 +176,7 @@ export default function () {
                   }
                   onClick={() => {
                     setToggleRecords(6);
-                    setData([...players].sort(alph_average(false)));
+                    setData([...top_players].sort(alph_average(false)));
                   }}
                 >
                   Average
@@ -191,7 +191,7 @@ export default function () {
                   onClick={() => {
                     setToggleRecords(1);
                     setData(
-                      [...players].sort(
+                      [...top_players].sort(
                         alphabetically(false, "overall_peak_rating")
                       )
                     );
@@ -209,7 +209,7 @@ export default function () {
                   onClick={() => {
                     setToggleRecords(2);
                     setData(
-                      [...players].sort(
+                      [...top_players].sort(
                         alphabetically(false, "hard_peak_rating")
                       )
                     );
@@ -227,7 +227,7 @@ export default function () {
                   onClick={() => {
                     setToggleRecords(3);
                     setData(
-                      [...players].sort(
+                      [...top_players].sort(
                         alphabetically(false, "clay_peak_rating")
                       )
                     );
@@ -245,7 +245,7 @@ export default function () {
                   onClick={() => {
                     setToggleRecords(4);
                     setData(
-                      [...players].sort(
+                      [...top_players].sort(
                         alphabetically(false, "grass_peak_rating")
                       )
                     );
@@ -263,7 +263,7 @@ export default function () {
                   onClick={() => {
                     setToggleRecords(5);
                     setData(
-                      [...players].sort(
+                      [...top_players].sort(
                         alphabetically(false, "atp_peak_rating")
                       )
                     );

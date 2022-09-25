@@ -3,9 +3,10 @@ import "./main.css";
 import { Search } from "react-bootstrap-icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { loadPlayerList } from "../../features/api/apiSlice";
 
 const customStyles = {
   control: (base, state) => ({
@@ -19,17 +20,21 @@ const customStyles = {
 };
 export default function ClientNavbar() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { players, api_isLoading } = useSelector((state) => state.api);
   const [playerOptions, setPlayers] = useState([]);
-
   const opts = [];
+
+  useEffect(() => {
+    dispatch(loadPlayerList());
+  }, []);
+
   useEffect(() => {
     players.forEach((player) =>
       opts.push({ value: player.player_id, label: player.player_name })
     );
     setPlayers(opts);
-  }, [api_isLoading]);
+  }, [players]);
 
   const handleSelect = (selectedOption) => {
     navigate("players/" + selectedOption.value);

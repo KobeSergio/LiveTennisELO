@@ -60,7 +60,9 @@ export default function Charts() {
   };
 
   const onDraw = () => {
-    dispatch(drawChart(selectedPlayers.join(",")));
+    if (selectedPlayers.length > 1) {
+      dispatch(drawChart(selectedPlayers.join(",")));
+    }
   };
   return (
     <>

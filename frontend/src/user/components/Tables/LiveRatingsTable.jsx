@@ -165,7 +165,7 @@ export default function (props) {
     transform: "translate(-45%, -45%)",
   };
 
-  if (api_isLoading) {
+  if (records.length === 0) {
     return (
       <>
         <div className="col-lg-8">

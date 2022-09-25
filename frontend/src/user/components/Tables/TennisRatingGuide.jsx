@@ -37,6 +37,22 @@ export default function () {
               much confidence we have in the pre-match rating), and the quality
               of the opponent.
             </span>
+            <br />
+            <br />
+            <h5 className="card-title">Searching:</h5>
+            <span className="card-text">
+              For searching by country, please indicate the country code only.
+              {"\xa0\xa0"}
+              Ex: United states = US.
+              <br />
+              You may refer for the country codes here:{" "}
+              <a
+                target="_blank"
+                href="https://www.worlddata.info/countrycodes.php"
+              >
+                Country Codes
+              </a>
+            </span>
           </div>
         </div>
       </div>

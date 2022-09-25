@@ -27,38 +27,46 @@ function parseCountry(country_id) {
 
 function parseDate(dateString) {
   var mydate = new Date();
-
-  if (dateString.length == 8) {
+  if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
       dateString.substring(4, 6),
       dateString.substring(6, 8)
     );
+    var dateStr = mydate.toDateString();
+    return dateStr.substr(dateStr.indexOf(" ") + 1);
   } else {
     if (dateString.includes("-")) {
-      var newdate = dateString.split(" ")[0].split("-");
-      console.log(newdate);
+      var newdate = "";
+      if (dateString.length > 10) {
+        newdate = dateString.split(" ")[0].split("-");
+      } else {
+        newdate = dateString.split("-");
+      }
       mydate = new Date(
-        newdate[2], //Year
+        newdate[0], //Year
         newdate[1], //Month
-        newdate[0] // Day
+        newdate[2] // Day
       );
+      var dateStr = mydate.toDateString();
+      return dateStr.substr(dateStr.indexOf(" ") + 1);
     } else {
-      var newdate = dateString.split(" ")[0].split("/");
-      console.log(newdate);
+      var newdate = "";
+      if (dateString.length > 10) {
+        newdate = dateString.split(" ")[0].split("/");
+      } else {
+        newdate = dateString.split("/");
+      }
       mydate = new Date(
         newdate[2], //Year
         newdate[0], //Month
         newdate[1] // Day
       );
+      var dateStr = mydate.toDateString();
+      return dateStr.substr(dateStr.indexOf(" ") + 1);
     }
   }
-
-  var dateStr = mydate.toDateString();
-
-  return dateStr.substr(dateStr.indexOf(" ") + 1);
 }
-
 function parsebirthDate(dateString) {
   var birthdate = new Date(
     dateString.substring(0, 4),
@@ -73,7 +81,7 @@ function parsebirthDate(dateString) {
 function computeStatus(dateString) {
   var mydate = new Date();
 
-  if (dateString.length == 8) {
+  if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
       dateString.substring(4, 6),
@@ -82,26 +90,23 @@ function computeStatus(dateString) {
   } else {
     if (dateString.includes("-")) {
       var newdate = dateString.split(" ")[0].split("-");
-      console.log(newdate);
       mydate = new Date(
-        newdate[2], //Year
+        newdate[0], //Year
         newdate[1], //Month
-        newdate[0] // Day
+        newdate[2] // Day
       );
     } else {
       var newdate = dateString.split(" ")[0].split("/");
-      console.log(newdate);
       mydate = new Date(
         newdate[2], //Year
-        newdate[1], //Month
-        newdate[0] // Day
+        newdate[0], //Month
+        newdate[1] // Day
       );
     }
   }
 
   var dateToday = new Date();
   var diff = dateToday.getFullYear() - mydate.getFullYear();
-  console.log(diff);
   return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
     ? "Inactive"
     : Math.abs(diff) < 1
@@ -125,7 +130,6 @@ function ManagePlayer() {
     if (!user) {
       navigate("/admin-login");
     }
-
     dispatch(loadPlayer(player_id));
   }, [user, navigate]);
 

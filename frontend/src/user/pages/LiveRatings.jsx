@@ -10,46 +10,18 @@ import SearchRecords from "../components/Search/SearchRecords";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadRecord } from "../../features/api/apiSlice";
+import {
+  loadPlayerList,
+  loadRecord,
+  resetRecords,
+} from "../../features/api/apiSlice";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
-function alphabetically(ascending, col) {
-  return function (a, b) {
-    a = a[col];
-    b = b[col];
 
-    if (a == null) {
-      a = 0;
-    }
-    if (b == null) {
-      a = 0;
-    }
-    // equal items sort equally
-    if (a === b) {
-      return 0;
-    }
-
-    // nulls sort after anything else
-    if (a === null) {
-      return 1;
-    }
-    if (b === null) {
-      return -1;
-    }
-
-    // otherwise, if we're ascending, lowest sorts first
-    if (ascending) {
-      return a < b ? -1 : 1;
-    }
-
-    // if descending, highest sorts first
-    return a < b ? 1 : -1;
-  };
-}
 export default function Charts() {
   const dispatch = useDispatch();
 
@@ -62,6 +34,7 @@ export default function Charts() {
   years = years.filter(onlyUnique);
   const [year, setyear] = useState(years[0]);
   const [record, setRecord] = useState(choicesCopy[0]);
+
   useEffect(() => {
     if (years.length != 0) {
       setyear(years[0]);
@@ -73,21 +46,34 @@ export default function Charts() {
 
   useEffect(() => {
     setData([...records]);
-  }, [record, api_isLoading]); 
-  const recordIndex = choicesCopy.findIndex((x) => x == record); 
+  }, [record, api_isLoading]);
+  const recordIndex = choicesCopy.findIndex((x) => x == record);
   const [data, setData] = useState([...records]);
   const [DataPerPage, setDataPerPage] = useState(20);
   const [len, setLen] = useState(0);
+  const [searchByCountry, setSearchByCountry] = useState(true);
   const onSearch = (e) => {
     if (e.target.value != "") {
       setLen(e.target.value.length);
-      setData(
-        records.filter((o) =>
-          Object.keys(o).some((k) =>
-            String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+      if (searchByCountry && e.target.value.length == 2) {
+        setData(
+          records.filter((o) =>
+            Object.keys(o).some((k) =>
+              String(o[k])
+                .toLowerCase()
+                .includes(e.target.value.toLowerCase() + "0")
+            )
           )
-        )
-      );
+        );
+      } else {
+        setData(
+          records.filter((o) =>
+            Object.keys(o).some((k) =>
+              String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+            )
+          )
+        );
+      }
     } else {
       setLen(e.target.value.length);
       setData([...records]);
@@ -137,6 +123,7 @@ export default function Charts() {
                   <a
                     onClick={() => {
                       if (recordIndex != choicesCopy.length) {
+                        dispatch(resetRecords());
                         dispatch(loadRecord(choicesCopy[recordIndex + 1]));
                         setRecord(choicesCopy[recordIndex + 1]);
                         setDataPerPage(20);
@@ -169,6 +156,7 @@ export default function Charts() {
                       Math.floor(choice / 10000) === year ? (
                         <Dropdown.Item
                           onClick={() => {
+                            dispatch(resetRecords());
                             dispatch(loadRecord(choice));
                             setRecord(choice);
                             setDataPerPage(20);
@@ -191,6 +179,7 @@ export default function Charts() {
                   <a
                     onClick={() => {
                       if (recordIndex != 0) {
+                        dispatch(resetRecords());
                         dispatch(loadRecord(choicesCopy[recordIndex - 1]));
                         setRecord(choicesCopy[recordIndex - 1]);
                         setDataPerPage(20);
@@ -235,10 +224,10 @@ export default function Charts() {
               </div>
             </div>
             {/* SEARCH IN RECORD */}
-            <div className="col-xl-4 col-sm-12 my-2">
+            <div className="col-xl-4 col-sm-12 mt-2">
               <div className="input-group">
                 <input
-                  className="form-control border-0 dropdown rounded-3"
+                  className="form-control border-0 dropdown rounded-3 "
                   type="text"
                   placeholder="Search in Record"
                   aria-label="Search in Record"
@@ -253,6 +242,10 @@ export default function Charts() {
                   </button>
                 </span>
               </div>
+              <p className="mb-3 p-0" style={{ color: "gray" , fontSize: 14}}>
+                {"\xa0\xa0\xa0\xa0\xa0"}For searching by country, please
+                indicate the country code only.{" "}
+              </p>
             </div>
           </div>
           <div className="row">

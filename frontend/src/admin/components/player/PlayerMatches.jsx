@@ -19,7 +19,7 @@ String.prototype.replaceAt = function (index, replacement) {
 
 function arrangeScore(player_id, match) {
   try {
-    var set = match.score.split(" ");
+    var set = match.score.split(/(\s+)/);
   } catch (error) {
     var set = match.score;
   }
@@ -40,7 +40,7 @@ function arrangeScore(player_id, match) {
           }
           fixed.push(score);
         });
-        return fixed.join([" "]);
+        return fixed.join([""]);
       }
     } catch (error) {
       return match.score;

@@ -6,6 +6,7 @@ const initialState = {
   player_matches: [],
   player_details: [],
   player_records: [],
+  top_players: [],
   records: [],
   choices: [],
   charts: null,
@@ -131,6 +132,9 @@ export const apiSlice = createSlice({
       state.player_matches = [];
       state.player_records = [];
     },
+    resetRecords: (state) => {
+      state.records = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -143,7 +147,7 @@ export const apiSlice = createSlice({
         state.latest = action.payload.latest.record.doc_date;
         state.choices = action.payload.latest.records;
         state.records = action.payload.loadData;
-        state.players = action.payload.players;
+        state.top_players = action.payload.players;
       })
       .addCase(loadData.rejected, (state, action) => {
         state.api_isLoading = false;
@@ -206,5 +210,5 @@ export const apiSlice = createSlice({
       });
   },
 });
-export const { resetApi, resetMarkers, resetPlayer } = apiSlice.actions;
+export const { resetApi, resetMarkers, resetPlayer, resetRecords } = apiSlice.actions;
 export default apiSlice.reducer;
