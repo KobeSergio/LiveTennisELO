@@ -101,7 +101,7 @@ export default function Charts() {
             <div className="col-sm-12 col-xl-4">
               <div className="input-group">
                 <div className="me-2">
-                  <Dropdown className="rounded-3">
+                  <Dropdown className="rounded-3 border border-dark ">
                     <Dropdown.Toggle
                       className="o40"
                       variant="white"
@@ -138,7 +138,7 @@ export default function Charts() {
                     </button>
                   </a>
                 </span>
-                <Dropdown className="rounded-3">
+                <Dropdown className="rounded-3 border border-dark ">
                   <Dropdown.Toggle
                     className="o40"
                     variant="white"
@@ -194,7 +194,7 @@ export default function Charts() {
                     </button>
                   </a>
                 </span>
-                <Dropdown className="border-0 dropdown rounded-3">
+                <Dropdown className="border border-dark dropdown rounded-3">
                   <Dropdown.Toggle
                     className="o40"
                     variant="white"
@@ -224,10 +224,10 @@ export default function Charts() {
               </div>
             </div>
             {/* SEARCH IN RECORD */}
-            <div className="col-xl-4 col-sm-12 mt-2">
+            <div className="col-xl-4 col-sm-12">
               <div className="input-group">
                 <input
-                  className="form-control border-0 dropdown rounded-3 "
+                  className="form-control   border border-dark "
                   type="text"
                   placeholder="Search in Record"
                   aria-label="Search in Record"
@@ -242,7 +242,7 @@ export default function Charts() {
                   </button>
                 </span>
               </div>
-              <p className="mb-3 p-0" style={{ color: "gray" , fontSize: 14}}>
+              <p className="mb-3 p-0" style={{ color: "gray", fontSize: 14 }}>
                 {"\xa0\xa0\xa0\xa0\xa0"}For searching by country, please
                 indicate the country code only.{" "}
               </p>

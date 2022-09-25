@@ -1,5 +1,11 @@
 import React from "react";
-import { Download, Search, TrashFill } from "react-bootstrap-icons";
+import {
+  Download,
+  Search,
+  TrashFill,
+  CaretDownFill,
+  CaretUpFill,
+} from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend";
@@ -27,6 +33,51 @@ function toTitleCase(str) {
   return parsed.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
+}
+
+function parseDate(dateString) {
+  if (!dateString.includes("-") && !dateString.includes("/")) {
+    return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
+  } else {
+    if (dateString.includes("-")) {
+      var newdate = dateString.split(" ")[0].split("-");
+      return newdate[0] + "-" + newdate[1];
+    } else {
+      var newdate = dateString.split(" ")[0].split("/");
+      if (newdate[0].length != 2) {
+        newdate[0] = "0" + newdate[0];
+      }
+
+      return newdate[2] + "-" + newdate[0];
+    }
+  }
+}
+function alphabetically(ascending, col) {
+  return function (a, b) {
+    a = a[col];
+    b = b[col];
+ 
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
 }
 
 function Players() {
@@ -62,60 +113,15 @@ function Players() {
   };
 
   const sorting = (col) => {
+    setColumn(col);
     if (order === "ASC") {
-      var sorted = null;
-      if (col === "player_id" || col === "name") {
-        sorted = [...data].sort((a, b) => (a[col] > b[col] ? 1 : -1));
-      } else {
-        sorted = [...data].sort(alphabetically(true, col));
-      }
-      setData(sorted);
+      setData([...data].sort(alphabetically(true, col)));
       setOrder("DSC");
     } else if (order === "DSC") {
-      var sorted = null;
-      if (col === "player_id" || col === "name") {
-        sorted = [...data].sort((a, b) => (a[col] < b[col] ? 1 : -1));
-      } else {
-        sorted = [...data].sort(alphabetically(false, col));
-      }
-      setData(sorted);
+      setData([...data].sort(alphabetically(false, col)));
       setOrder("ASC");
     }
   };
-
-  function alphabetically(ascending, col) {
-    return function (a, b) {
-      a = a[col];
-      b = b[col];
-
-      if (a == null) {
-        a = 0;
-      }
-      if (b == null) {
-        a = 0;
-      }
-      // equal items sort equally
-      if (a === b) {
-        return 0;
-      }
-
-      // nulls sort after anything else
-      if (a === null) {
-        return 1;
-      }
-      if (b === null) {
-        return -1;
-      }
-
-      // otherwise, if we're ascending, lowest sorts first
-      if (ascending) {
-        return a < b ? -1 : 1;
-      }
-
-      // if descending, highest sorts first
-      return a < b ? 1 : -1;
-    };
-  }
 
   useEffect(() => {
     dispatch(resetPlayer());
@@ -127,8 +133,9 @@ function Players() {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [DataPerPage, setDataPerPage] = useState(100);
-
+  const [DataPerPage, setDataPerPage] = useState(50);
+  //Sorting
+  const [column, setColumn] = useState("");
   //Get index of the last Data
   const indexOfLastData = currentPage * DataPerPage;
   const indexOfFirstData = indexOfLastData - DataPerPage;
@@ -145,7 +152,7 @@ function Players() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (data.length == 0 || players_isLoading) {
+  if (players_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
 
@@ -185,13 +192,13 @@ function Players() {
               {DataPerPage} per page
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(50)} href="#">
                 100 per page
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDataPerPage(250)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
                 250 per page
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDataPerPage(500)} href="#">
+              <Dropdown.Item onClick={() => setDataPerPage(200)} href="#">
                 500 per page
               </Dropdown.Item>
               <Dropdown.Item
@@ -212,69 +219,202 @@ function Players() {
       </div>
 
       {/* tables */}
-      <div className="input-group px-2">
-        <table className="table table-borderless text-center">
+      <div className="table-responsive-xl">
+        <table className="table table-hover rounded-3 text-center">
           <thead>
             <tr>
               <th onClick={() => sorting("player_id")} scope="col">
-                ID
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  ID
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "player_id" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "player_id" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
-              <th scope="col">Country</th>
+              <th scope="col">
+                <a style={{ color: "inherit", fontWeight: 700 }}>Country</a>
+              </th>
               <th
                 onClick={() => sorting("player_name")}
                 scope="col"
                 style={{ textAlign: "left" }}
               >
-                Name
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Name
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "player_name" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "player_name" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("atp_rating")} scope="col">
-                ATP
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  ATP
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "atp_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "atp_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("overall_rating")} scope="col">
-                Overall
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Overall
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "overall_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "overall_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("overall_peak_rating")} scope="col">
-                Overall Peak
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Overall Peak
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "overall_peak_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "overall_peak_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("hard_rating")} scope="col">
-                Hard
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Hard
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "hard_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "hard_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
-              <th
-                onClick={() => sorting("hard_peak_rating")}
-                className="text-start"
-                scope="col"
-              >
-                Hard Peak
+              <th onClick={() => sorting("hard_peak_rating")} scope="col">
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Hard Peak
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "hard_peak_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "hard_peak_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("clay_rating")} scope="col">
-                Clay
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Clay
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "clay_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "clay_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
-              <th
-                onClick={() => sorting("clay_peak_rating")}
-                className="text-start"
-                scope="col"
-              >
-                Clay Peak
+              <th onClick={() => sorting("clay_peak_rating")} scope="col">
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Clay Peak
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "clay_peak_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "clay_peak_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
               <th onClick={() => sorting("grass_rating")} scope="col">
-                Grass
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Grass
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "grass_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "grass_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}
+                </a>
               </th>
-              <th
-                onClick={() => sorting("grass_peak_rating")}
-                className="text-start"
-                scope="col"
-              >
-                Grass Peak
+              <th onClick={() => sorting("grass_peak_rating")} scope="col">
+                <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  Grass Peak
+                  {"\xa0"}
+                  {"\xa0"}
+                  {"\xa0"}
+                  {column === "grass_peak_rating" && order === "ASC" ? (
+                    <CaretDownFill />
+                  ) : column === "grass_peak_rating" && order === "DSC" ? (
+                    <CaretUpFill />
+                  ) : (
+                    <></>
+                  )}{" "}
+                </a>
               </th>
             </tr>
           </thead>
-          <tbody className="tbody">
+          <tbody>
             {currentData != null ? (
               <>
                 {currentData.map((player) => (
-                  <tr onClick={() => navigate(player.player_id)}>
-                    <td scope="row">{player.player_id}</td>
-                    <td className="table-40px" scope="row">
+                  <tr
+                    style={{ transform: "rotate(0)" }}
+                    onClick={() => navigate(player.player_id)}
+                  >
+                    <th scope="row">
+                      <a
+                        href="#"
+                        className="stretched-link"
+                        style={{ color: "inherit" }}
+                      >
+                        {player.player_id}
+                      </a>
+                    </th>
+                    <td>
                       {player.player_id == null ? (
                         <></>
                       ) : (
@@ -292,21 +432,45 @@ function Players() {
                     <td className="text-start" id="player_name">
                       {toTitleCase(player.player_name)}
                     </td>
-                    <td className="table-40px" id="atp_rating">
-                      {player.atp_rating}
+                    <td id="atp_rating">
+                      {player.atp_rating != null ? (
+                        <>
+                          <span
+                            style={{ backgroundColor: "#808080" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player.atp_rating}
+                          </span>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </td>
-                    <td className="table-40px" id="overall_rating">
-                      {player.overall_rating}
+                    <td id="overall_rating">
+                      {player.overall_rating != null ? (
+                        <>
+                          <span
+                            style={{ backgroundColor: "#000000" }}
+                            className="table-surface-elo-label"
+                          >
+                            {player.overall_rating}
+                          </span>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </td>
-                    <td className=" " id="overall_peak_rating">
-                      {player.overall_peak_rating}
+                    <td id="overall_peak_rating">
+                      <b>{player.overall_peak_rating}</b>
                       {player.overall_peak_rating_date == null
                         ? "\xa0"
                         : " (" +
-                          player.overall_peak_rating_date.split(" ")[0] +
+                          parseDate(
+                            player.overall_peak_rating_date.split(" ")[0]
+                          ) +
                           ")"}
                     </td>
-                    <td className="table-40px" id="hard_rating">
+                    <td id="hard_rating">
                       {player.hard_rating != null ? (
                         <>
                           <span
@@ -320,15 +484,17 @@ function Players() {
                         <></>
                       )}
                     </td>
-                    <td className="table-120px" id="hard_peak_rating">
-                      {player.hard_peak_rating}
+                    <td id="hard_peak_rating">
+                      <b>{player.hard_peak_rating}</b>
                       {player.hard_peak_rating_date == null
                         ? "\xa0"
                         : " (" +
-                          player.hard_peak_rating_date.split(" ")[0] +
+                          parseDate(
+                            player.hard_peak_rating_date.split(" ")[0]
+                          ) +
                           ")"}
                     </td>
-                    <td className=" table-40px" id="clay_rating">
+                    <td id="clay_rating">
                       {player.clay_rating != null ? (
                         <>
                           <span
@@ -342,15 +508,17 @@ function Players() {
                         <></>
                       )}
                     </td>
-                    <td className="table-120px" id="clay_peak_rating">
-                      {player.clay_peak_rating}
+                    <td id="clay_peak_rating">
+                      <b>{player.clay_peak_rating}</b>
                       {player.clay_peak_rating_date == null
                         ? "\xa0"
                         : " (" +
-                          player.clay_peak_rating_date.split(" ")[0] +
+                          parseDate(
+                            player.clay_peak_rating_date.split(" ")[0]
+                          ) +
                           ")"}
                     </td>
-                    <td className=" table-40px" id="grass_rating">
+                    <td id="grass_rating">
                       {player.grass_rating != null ? (
                         <>
                           <span
@@ -365,11 +533,13 @@ function Players() {
                       )}
                     </td>
                     <td className="table-120px" id="grass_peak_rating">
-                      {player.grass_peak_rating}
+                      <b>{player.grass_peak_rating}</b>
                       {player.grass_peak_rating_date == null
                         ? "\xa0"
                         : " (" +
-                          player.grass_peak_rating_date.split(" ")[0] +
+                          parseDate(
+                            player.grass_peak_rating_date.split(" ")[0]
+                          ) +
                           ")"}
                     </td>
                   </tr>
@@ -380,12 +550,16 @@ function Players() {
             )}
           </tbody>
         </table>
-        <div className="ms-auto">
-          <Pagination
-            DataPerPage={DataPerPage}
-            totalData={data.length}
-            paginate={paginate}
-          />
+        <div className="d-flex justify-content-end">
+          <nav className="pagination-outer">
+            <ul className="pagination">
+              <Pagination
+                DataPerPage={DataPerPage}
+                totalData={data.length}
+                paginate={paginate}
+              />
+            </ul>
+          </nav>
         </div>
       </div>
     </>

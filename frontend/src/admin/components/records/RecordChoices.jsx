@@ -27,7 +27,7 @@ export function RecordChoices(choices) {
   return (
     <div className="input-group">
       <div className="me-4">
-        <Dropdown className="border-0 dropdown rounded-3">
+        <Dropdown className="border border-dark dropdown rounded-3">
           <Dropdown.Toggle
             className="o40"
             variant="white"
@@ -50,7 +50,7 @@ export function RecordChoices(choices) {
           </button>
         </a>
       </span>
-      <Dropdown className="border-0 dropdown rounded-3">
+      <Dropdown className="border border-dark dropdown rounded-3">
         <Dropdown.Toggle
           className="o40"
           variant="white"

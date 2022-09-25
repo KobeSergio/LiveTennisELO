@@ -179,8 +179,9 @@ export default function Player() {
                       <></>
                     ) : (
                       <a
+                        target="_blank"
                         className="me-2"
-                        href={"https:/" + player_details[0].facebook}
+                        href={player_details[0].facebook}
                       >
                         <Facebook />
                       </a>
@@ -189,8 +190,9 @@ export default function Player() {
                       <></>
                     ) : (
                       <a
+                        target="_blank"
                         className="me-2"
-                        href={"https:/" + player_details[0].twitter}
+                        href={player_details[0].twitter}
                       >
                         <Twitter />
                       </a>
@@ -199,8 +201,9 @@ export default function Player() {
                       <></>
                     ) : (
                       <a
+                        target="_blank"
                         className="me-2"
-                        href={"https:/" + player_details[0].instagram}
+                        href={player_details[0].instagram}
                       >
                         <Instagram />
                       </a>
@@ -209,8 +212,9 @@ export default function Player() {
                       <></>
                     ) : (
                       <a
+                        target="_blank"
                         className="me-2"
-                        href={"https:/" + player_details[0].wiki}
+                        href={player_details[0].wiki}
                       >
                         <Globe />
                       </a>

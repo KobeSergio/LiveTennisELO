@@ -20,6 +20,7 @@ import {
   deleteRecord,
 } from "../../features/records/recordsSlice";
 import { RecordChoices } from "../components/records/RecordChoices";
+import { loadPlayers } from "../../features/players/playersSlice";
 
 function Records() {
   const navigate = useNavigate();
@@ -30,10 +31,13 @@ function Records() {
   const { records, isLoading, latest, choices } = useSelector(
     (state) => state.records
   );
-
+  const { players } = useSelector((state) => state.players);
   useEffect(() => {
     if (!user) {
       navigate("/admin-login");
+    }
+    if (players.length === 0) {
+      dispatch(loadPlayers());
     }
     if (latest == null) {
       dispatch(latestRecord());

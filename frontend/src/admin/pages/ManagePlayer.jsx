@@ -19,6 +19,7 @@ import {
   deletePlayer,
   resetPlayer,
 } from "../../features/players/playerSlice";
+import { loadPlayers } from "../../features/players/playersSlice";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -124,11 +125,15 @@ function ManagePlayer() {
   const { player_details, player_isLoading } = useSelector(
     (state) => state.player
   );
+  const { players } = useSelector((state) => state.players);
 
   useEffect(() => {
     dispatch(resetPlayer());
     if (!user) {
       navigate("/admin-login");
+    }
+    if (players.length === 0) {
+      dispatch(loadPlayers());
     }
     dispatch(loadPlayer(player_id));
   }, [user, navigate]);
@@ -182,8 +187,9 @@ function ManagePlayer() {
                     <></>
                   ) : (
                     <a
+                      target="_blank"
                       className="me-2"
-                      href={"https:/" + player_details[0].facebook}
+                      href={player_details[0].facebook}
                     >
                       <Facebook />
                     </a>
@@ -193,7 +199,8 @@ function ManagePlayer() {
                   ) : (
                     <a
                       className="me-2"
-                      href={"https:/" + player_details[0].twitter}
+                      target="_blank"
+                      href={player_details[0].twitter}
                     >
                       <Twitter />
                     </a>
@@ -202,8 +209,9 @@ function ManagePlayer() {
                     <></>
                   ) : (
                     <a
+                      target="_blank"
                       className="me-2"
-                      href={"https:/" + player_details[0].instagram}
+                      href={player_details[0].instagram}
                     >
                       <Instagram />
                     </a>
@@ -212,8 +220,9 @@ function ManagePlayer() {
                     <></>
                   ) : (
                     <a
+                      target="_blank"
                       className="me-2"
-                      href={"https:/" + player_details[0].wiki}
+                      href={player_details[0].wiki}
                     >
                       <Globe />
                     </a>

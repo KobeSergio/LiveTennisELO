@@ -16,6 +16,10 @@ String.prototype.replaceAt = function (index, replacement) {
 };
 
 function arrangeScore(player_id, match) {
+  if (match.score.includes("W/O")) {
+    return match.score;
+  }
+
   try {
     var set = match.score.split(/(\s+)/);
   } catch (error) {
@@ -24,7 +28,7 @@ function arrangeScore(player_id, match) {
   var fixed = [];
   if (match.winner_local_id == player_id) {
     return match.score;
-  } else {  
+  } else {
     try {
       if (set.length > 1) {
         set.forEach((score) => {
