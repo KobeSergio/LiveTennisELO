@@ -110,7 +110,7 @@ export const loadPlayers = createAsyncThunk(
   "api/loadPlayers",
   async (_, thunkAPI) => {
     try {
-      return await apiService.loadPlayerList(); //SERVICE
+      return await apiService.loadPlayers(); //SERVICE
     } catch (error) {
       const message =
         (error.response &&

@@ -15,8 +15,7 @@ import { SurfaceLegend } from "../components/Legend/SurfaceLegend";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { loadPlayers } from "../../features/players/playersSlice";
-import { resetPlayer } from "../../features/players/playerSlice";
+import { loadPlayers, resetPlayer } from "../../features/api/apiSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -122,22 +121,22 @@ function Players() {
   const dispatch = useDispatch();
 
   //Redirect if not logged in
-  const { players_message, players, players_isLoading } = useSelector(
-    (state) => state.players
+  const { top_players, api_isLoading } = useSelector(
+    (state) => state.api
   );
 
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ASC");
 
   useEffect(() => {
-    setData(players);
-  }, [players]);
+    setData(top_players);
+  }, [top_players]);
 
   const onSearch = (e) => {
     if (e.target.value != "") {
       if (e.target.value.length != 2) {
         setData(
-          players.filter((o) =>
+          top_players.filter((o) =>
             Object.keys(o).some((k) =>
               String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
             )
@@ -145,7 +144,7 @@ function Players() {
         );
       } else {
         setData(
-          players.filter((o) =>
+          top_players.filter((o) =>
             Object.keys(o).some((k) =>
               String(o[k])
                 .toLowerCase()
@@ -155,7 +154,7 @@ function Players() {
         );
       }
     } else {
-      setData([...players]);
+      setData([...top_players]);
     }
   };
 
@@ -196,7 +195,7 @@ function Players() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (players_isLoading) {
+  if (api_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
 
