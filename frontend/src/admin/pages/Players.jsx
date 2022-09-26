@@ -56,7 +56,7 @@ function alphabetically(ascending, col) {
   return function (a, b) {
     a = a[col];
     b = b[col];
- 
+
     // equal items sort equally
     if (a === b) {
       return 0;
@@ -100,13 +100,25 @@ function Players() {
   const onSearch = (e) => {
     setCurrentPage(1);
     if (e.target.value != "") {
-      setData(
-        data.filter((o) =>
-          Object.keys(o).some((k) =>
-            String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+      if (e.target.value.length != 2) {
+        setData(
+          players.filter((o) =>
+            Object.keys(o).some((k) =>
+              String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())
+            )
           )
-        )
-      );
+        );
+      } else {
+        setData(
+          players.filter((o) =>
+            Object.keys(o).some((k) =>
+              String(o[k])
+                .toLowerCase()
+                .includes(e.target.value.toLowerCase() + "0")
+            )
+          )
+        );
+      }
     } else {
       setData([...players]);
     }
@@ -180,6 +192,9 @@ function Players() {
               <Search color="white" className="fs-7" />
             </button>
           </span>
+          <p className="p-0" style={{ color: "gray", fontSize: 14 }}>
+            For searching by country, please indicate the country code only.{" "}
+          </p>
         </div>
         <div className="ms-auto me-5">
           <Dropdown className="border-0 dropdown rounded-3">
@@ -216,7 +231,7 @@ function Players() {
         <div className="ms-auto d-flex align-items-start">
           <SurfaceLegend />
         </div>
-      </div> 
+      </div>
       {/* tables */}
       <div className="table-responsive-xl">
         <table className="table table-hover rounded-3 text-center">
