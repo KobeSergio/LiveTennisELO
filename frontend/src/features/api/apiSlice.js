@@ -103,6 +103,26 @@ export const loadPlayerList = createAsyncThunk(
   }
 );
 
+//Load players
+// @http:   GET /players/:id
+// @res:    players: json
+export const loadPlayers = createAsyncThunk(
+  "api/loadPlayers",
+  async (_, thunkAPI) => {
+    try {
+      return await apiService.loadPlayerList(); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
@@ -150,6 +170,19 @@ export const apiSlice = createSlice({
         state.top_players = action.payload.players;
       })
       .addCase(loadData.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadPlayers.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadPlayers.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.top_players = action.payload;
+      })
+      .addCase(loadPlayers.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;
@@ -210,5 +243,6 @@ export const apiSlice = createSlice({
       });
   },
 });
-export const { resetApi, resetMarkers, resetPlayer, resetRecords } = apiSlice.actions;
+export const { resetApi, resetMarkers, resetPlayer, resetRecords } =
+  apiSlice.actions;
 export default apiSlice.reducer;

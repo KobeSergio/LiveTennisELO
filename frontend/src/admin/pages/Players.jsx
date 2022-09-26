@@ -216,8 +216,7 @@ function Players() {
         <div className="ms-auto d-flex align-items-start">
           <SurfaceLegend />
         </div>
-      </div>
-
+      </div> 
       {/* tables */}
       <div className="table-responsive-xl">
         <table className="table table-hover rounded-3 text-center">

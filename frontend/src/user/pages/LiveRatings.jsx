@@ -49,13 +49,10 @@ export default function Charts() {
   }, [record, api_isLoading]);
   const recordIndex = choicesCopy.findIndex((x) => x == record);
   const [data, setData] = useState([...records]);
-  const [DataPerPage, setDataPerPage] = useState(20);
-  const [len, setLen] = useState(0);
-  const [searchByCountry, setSearchByCountry] = useState(true);
+  const [DataPerPage, setDataPerPage] = useState(20); 
   const onSearch = (e) => {
-    if (e.target.value != "") {
-      setLen(e.target.value.length);
-      if (searchByCountry && e.target.value.length == 2) {
+    if (e.target.value != "") { 
+      if (e.target.value.length == 2) {
         setData(
           records.filter((o) =>
             Object.keys(o).some((k) =>
@@ -74,8 +71,7 @@ export default function Charts() {
           )
         );
       }
-    } else {
-      setLen(e.target.value.length);
+    } else { 
       setData([...records]);
     }
   };

@@ -16,7 +16,7 @@ function toTitleCase(str) {
   });
 }
 
-function parseDate(dateString) { 
+function parseDate(dateString) {
   if (!dateString.includes("-") && !dateString.includes("/")) {
     return dateString.substring(0, 4) + "-" + dateString.substring(4, 6);
   } else {
@@ -286,9 +286,7 @@ export default function () {
                 >
                   <thead>
                     <tr className="text-center">
-                      <th className="px-0" style={{ width: "1%" }}>
-                        Rank
-                      </th>
+                      <th style={{ width: "1%" }}>Rank</th>
                       <th
                         style={
                           toggleRecords === 6

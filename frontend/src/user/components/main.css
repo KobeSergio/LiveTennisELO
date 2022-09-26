@@ -543,6 +543,14 @@ a {
     color: #ffffff; 
 }
 
+.table-retired-label {
+    display: inline;
+    font-size: small;
+    padding: 0.1em 0.4em; 
+    border-radius: 10px; 
+    color: #ffffff; 
+}
+
 .positive-elo {
     color: #3EBA7C;
     display: inline-block;

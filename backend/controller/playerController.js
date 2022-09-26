@@ -7,15 +7,15 @@ const Records = require("../models/recordModel");
 // @route:      GET /admin/players
 // @access      Private
 const getPlayers = asyncHandler(async (req, res) => {
-  const players = await Player.find().select(
-    "player_id player_name overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date hard_rating clay_rating overall_rating grass_rating atp_rating"
-  );
-
+  const players = await Player.find()
+    .select(
+      "player_id player_name last_match overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date hard_rating clay_rating overall_rating grass_rating atp_rating"
+    )
+    .sort({ 'atp_rating': -1 });
   if (!players) {
     res.status(400);
     throw new Error("No players found.");
   }
-
   res.status(200).json(players);
 });
 

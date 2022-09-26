@@ -81,6 +81,15 @@ export default function ClientNavbar() {
               </a>
             </NavLink>
             <NavLink
+              className="nav-link me-4"
+              activeclassname="nav-link active"
+              to="/players"
+            >
+              <a data-toggle="pill" role="tab" aria-selected="false">
+                Players
+              </a>
+            </NavLink>
+            <NavLink
               className="nav-link"
               activeclassname="nav-link active"
               to="/about"

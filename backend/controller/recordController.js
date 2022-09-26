@@ -15,7 +15,7 @@ const getRecord = asyncHandler(async (req, res) => {
       "overall_rank_diff hard_rank_diff clay_rank_diff grass_rank_diff atp_rank_diff " +
       "overall_rating hard_rating clay_rating grass_rating atp_rating " +
       "overall_best_rating hard_best_rating clay_best_rating grass_best_rating atp_best_rating " +
-      "overall_rating_diff hard_rating_diff clay_rating_diff grass_rating_diff atp_rating_diff "
+      "overall_rating_diff hard_rating_diff clay_rating_diff grass_rating_diff atp_rating_diff last_active"
   );
   if (!record) {
     res.status(400);

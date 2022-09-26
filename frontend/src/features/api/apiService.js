@@ -23,6 +23,11 @@ const loadData = async () => {
   };
 };
 
+const loadPlayers = async () => {
+  const loadPlayers = await axios.get(API_URL + "players/");
+  return loadPlayers.data;
+};
+
 const loadPlayerList = async () => {
   const loadPlayerList = await axios.get(API_URL + "playerslist/");
   return loadPlayerList.data;
@@ -63,6 +68,7 @@ const apiService = {
   drawChart,
   loadPlayer,
   loadPlayerList,
+  loadPlayers,
 };
 
 export default apiService;

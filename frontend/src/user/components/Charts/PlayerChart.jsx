@@ -166,6 +166,14 @@ export function PlayerChart() {
   const [invert, setInvert] = useState(false);
   const [type, setType] = useState("time");
 
+  useEffect(() => {
+    overall_data = [];
+    hard_data = [];
+    grass_data = [];
+    clay_data = [];
+    atp_data = [];
+  }, []);
+
   //Empty data on load to be pushed below.
   useEffect(() => {
     overall_data = [];

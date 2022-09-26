@@ -12,7 +12,7 @@ import Layout from "./user/layout/Layout"; // User
 //  Admin
 import Login from "./admin/pages/Login";
 import Records from "./admin/pages/Records";
-import Players from "./admin/pages/Players";
+import AdminPlayers from "./admin/pages/Players";
 import Import from "./admin/pages/Import";
 import ManagePlayer from "./admin/pages/ManagePlayer";
 
@@ -20,6 +20,7 @@ import ManagePlayer from "./admin/pages/ManagePlayer";
 import LiveRatings from "./user/pages/LiveRatings";
 import Player from "./user/pages/Player";
 import Charts from "./user/pages/Charts";
+import Players from "./user/pages/Players";
 import About from "./user/pages/About";
 import NoPage from "./user/pages/NoPage";
 
@@ -31,9 +32,9 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           {/* Admin page routes */}
-          <Route path="/admin-login" element={<Login />} /> 
+          <Route path="/admin-login" element={<Login />} />
           <Route path="/admin/" element={<Admin />}>
-            <Route index path="players" element={<Players />} />
+            <Route index path="players" element={<AdminPlayers />} />
             <Route path=":doc_date" element={<Records />} />
             <Route path="players/:player_id" element={<ManagePlayer />} />
             <Route path="import" element={<Import />} />
@@ -44,6 +45,7 @@ export default function App() {
             <Route index element={<LiveRatings />} />
             <Route path="players/:player_id" element={<Player />} />
             <Route path="charts" element={<Charts />} />
+            <Route path="players" element={<Players />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NoPage />} />
           </Route>
