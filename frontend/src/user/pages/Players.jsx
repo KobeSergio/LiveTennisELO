@@ -20,8 +20,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Dropdown from "react-bootstrap/Dropdown";
 
 function computeStatus(dateString) {
+  if (dateString == null) {
+    return "unk";
+  }
   var mydate = new Date();
-
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
@@ -121,18 +123,17 @@ function Players() {
   const dispatch = useDispatch();
 
   //Redirect if not logged in
-  const { top_players, api_isLoading } = useSelector(
-    (state) => state.api
-  );
+  const { top_players, api_isLoading } = useSelector((state) => state.api);
 
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DSC");
 
   useEffect(() => {
     setData(top_players);
   }, [top_players]);
 
   const onSearch = (e) => {
+    setOrder("ASC");
     if (e.target.value != "") {
       if (e.target.value.length != 2) {
         setData(
@@ -160,12 +161,17 @@ function Players() {
 
   const sorting = (col) => {
     setColumn(col);
-    if (order === "ASC") {
-      setData([...data].sort(alphabetically(true, col)));
-      setOrder("DSC");
-    } else if (order === "DSC") {
+    if (col != column) {
       setData([...data].sort(alphabetically(false, col)));
       setOrder("ASC");
+    } else {
+      if (order === "ASC") {
+        setData([...data].sort(alphabetically(true, col)));
+        setOrder("DSC");
+      } else if (order === "DSC") {
+        setData([...data].sort(alphabetically(false, col)));
+        setOrder("ASC");
+      }
     }
   };
 
@@ -194,7 +200,9 @@ function Players() {
     left: "45%",
     transform: "translate(-45%, -45%)",
   };
-
+  useEffect(() => {
+    setOrder("ASC");
+  }, []);
   if (api_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
@@ -273,19 +281,13 @@ function Players() {
             <table className="table liverating-table-bg-white table-hover rounded-3 text-center">
               <thead>
                 <tr>
-                  <th onClick={() => sorting("player_id")} scope="col">
-                    <a href="#/" style={{ color: "inherit", fontWeight: 700 }}>
+                  <th scope="col">#</th>
+                  <th scope="col">
+                    <a style={{ color: "inherit", fontWeight: 700 }}>
                       Country
                       {"\xa0"}
                       {"\xa0"}
                       {"\xa0"}
-                      {column === "player_id" && order === "ASC" ? (
-                        <CaretDownFill />
-                      ) : column === "player_id" && order === "DSC" ? (
-                        <CaretUpFill />
-                      ) : (
-                        <></>
-                      )}
                     </a>
                   </th>
                   <th
@@ -466,7 +468,7 @@ function Players() {
               <tbody>
                 {currentData != null ? (
                   <>
-                    {currentData.map((player) => (
+                    {currentData.map((player, index) => (
                       <tr
                         style={{ transform: "rotate(0)" }}
                         onClick={() => navigate(player.player_id)}
@@ -477,25 +479,30 @@ function Players() {
                             className="stretched-link"
                             style={{ color: "inherit" }}
                           >
-                            {player.player_id == null ? (
-                              <></>
-                            ) : (
-                              <>
-                                <ReactCountryFlag
-                                  countryCode={player.player_id.substring(0, 2)}
-                                  style={{
-                                    filter: "drop-shadow(0 0 0.12rem black)",
-                                  }}
-                                  svg
-                                />
-                                <span id="country_code">
-                                  {"\xa0\xa0\xa0"}
-                                  {player.player_id.substring(0, 2)}
-                                </span>
-                              </>
-                            )}
+                            {order === "DSC"
+                              ? data.length - indexOfFirstData - index
+                              : indexOfFirstData + index + 1}
                           </a>
                         </th>
+                        <td id="player_country">
+                          {player.player_id == null ? (
+                            <></>
+                          ) : (
+                            <>
+                              <ReactCountryFlag
+                                countryCode={player.player_id.substring(0, 2)}
+                                style={{
+                                  filter: "drop-shadow(0 0 0.12rem black)",
+                                }}
+                                svg
+                              />
+                              <span id="country_code">
+                                {"\xa0\xa0\xa0"}
+                                {player.player_id.substring(0, 2)}
+                              </span>
+                            </>
+                          )}
+                        </td>
                         <td className="text-start" id="player_name">
                           {toTitleCase(player.player_name)}
                           {"\xa0\xa0"}
@@ -526,7 +533,8 @@ function Players() {
                           )}
                         </td>
                         <td id="atp_rating">
-                          {player.atp_rating != null ? (
+                          {player.atp_rating != null &&
+                          computeStatus(player.last_match) != "RET" ? (
                             <>
                               <span
                                 style={{ backgroundColor: "#808080" }}
