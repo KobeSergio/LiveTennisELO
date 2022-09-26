@@ -226,10 +226,12 @@ function Players() {
                   <Search color="white" className="fs-7" />
                 </span>
               </span>
-              <p className="p-0" style={{ color: "gray", fontSize: 14 }}>
-                {"\xa0\xa0\xa0\xa0\xa0"}For searching by country, please
-                indicate the country code only.{" "}
-              </p>
+              <div className="input-group" style={{ width: "100%" }}>
+                <p className="p-0" style={{ color: "gray", fontSize: 14 }}>
+                  {"\xa0\xa0\xa0\xa0\xa0"}For searching by country, please
+                  indicate the country code only.{" "}
+                </p>
+              </div>
             </div>
             <div className="ms-auto me-5">
               <Dropdown className="border border-dark dropdown rounded-3">
