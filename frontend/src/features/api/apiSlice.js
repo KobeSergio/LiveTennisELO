@@ -9,6 +9,7 @@ const initialState = {
   top_players: [],
   records: [],
   choices: [],
+  H2H: null,
   charts: null,
   latest: null,
   api_isError: false,
@@ -51,6 +52,23 @@ export const drawChart = createAsyncThunk(
   async (players, thunkAPI) => {
     try {
       return await apiService.drawChart(players); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getH2H = createAsyncThunk(
+  "api/getH2H",
+  async (players, thunkAPI) => {
+    try {
+      return await apiService.getH2H(players); //SERVICE
     } catch (error) {
       const message =
         (error.response &&
@@ -209,6 +227,19 @@ export const apiSlice = createSlice({
         state.charts = action.payload;
       })
       .addCase(drawChart.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(getH2H.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(getH2H.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.H2H = action.payload;
+      })
+      .addCase(getH2H.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;

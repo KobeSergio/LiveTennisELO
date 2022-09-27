@@ -22,6 +22,7 @@ import Player from "./user/pages/Player";
 import Charts from "./user/pages/Charts";
 import Players from "./user/pages/Players";
 import About from "./user/pages/About";
+import H2H from "./user/pages/H2H";
 import NoPage from "./user/pages/NoPage";
 
 const root = createRoot(document.getElementById("root"));
@@ -42,7 +43,8 @@ export default function App() {
 
           {/* User page routes */}
           <Route path="/" element={<Layout />}>
-            <Route index element={<LiveRatings />} />
+            <Route index element={<LiveRatings />} /> 
+            <Route path="players/H2H" element={<H2H />} />
             <Route path="players/:player_id" element={<Player />} />
             <Route path="charts" element={<Charts />} />
             <Route path="players" element={<Players />} />

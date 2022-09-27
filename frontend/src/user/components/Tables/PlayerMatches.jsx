@@ -1,12 +1,13 @@
 import { SurfaceLegend } from "../Legend/SurfaceLegend";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { AddHighlight, ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination";
+import { getH2H } from "../../../features/api/apiSlice";
 String.prototype.replaceAt = function (index, replacement) {
   return (
     this.substring(0, index) +
@@ -226,6 +227,9 @@ function getStats(data, player_id) {
 }
 
 export function PlayerMatches() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { player_id } = useParams();
   const { player_details, player_matches } = useSelector((state) => state.api);
 
@@ -1156,6 +1160,18 @@ export function PlayerMatches() {
                     </td>
                     <td className="table-round" id="round">
                       {match.round}
+                    </td>
+                    <td className="table-round" id="round">
+                      <a
+                        href="#/"
+                        onClick={() => {
+                          navigate(
+                            `/players/H2H?player_ids=${match.loser_local_id},${match.winner_local_id}`
+                          );
+                        }}
+                      >
+                        H2H
+                      </a>
                     </td>
                   </tr>
                 </>

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const API_URL = `/api/`;
-//const API_URL = `http://localhost:5000/api/`;
+//const API_URL = `/api/`;
+const API_URL = `http://localhost:5000/api/`;
 const loadRecord = async (payload) => {
   const loadData = await axios.get(API_URL + "records/" + payload);
   return {
@@ -43,6 +43,16 @@ const drawChart = async (players) => {
   };
 };
 
+const getH2H = async (players) => {
+  const H2H = await axios.get(
+    API_URL + "matches/compare?player_ids=" + players
+  );
+  return {
+    players: H2H.data.players,
+    h2h: H2H.data.h2h,
+  };
+};
+
 const loadPlayer = async (player_id) => {
   const player = await axios.get(API_URL + "players/" + player_id);
 
@@ -69,6 +79,7 @@ const apiService = {
   loadPlayer,
   loadPlayerList,
   loadPlayers,
+  getH2H,
 };
 
 export default apiService;

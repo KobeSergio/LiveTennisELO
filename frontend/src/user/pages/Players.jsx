@@ -12,12 +12,13 @@ import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend/SurfaceLegend";
 
 //Backend
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadPlayers, resetPlayer } from "../../features/api/apiSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import Dropdown from "react-bootstrap/Dropdown";
+import Select from "react-select";
 
 function computeStatus(dateString) {
   if (dateString == null) {
@@ -127,9 +128,13 @@ function Players() {
 
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("DSC");
-
+  const opts = [];
   useEffect(() => {
     setData(top_players);
+    top_players.forEach((player) =>
+      opts.push({ value: player.player_id, label: player.player_name })
+    );
+    setPlayers(opts);
   }, [top_players]);
 
   const onSearch = (e) => {
@@ -190,6 +195,30 @@ function Players() {
   const indexOfFirstData = indexOfLastData - DataPerPage;
   const currentData = data.slice(indexOfFirstData, indexOfLastData);
 
+  //Select Box
+  const [playerOptions, setPlayers] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
+  const handleInputChange = useCallback((typedOption) => {
+    if (typedOption.length > 2) {
+      setShowOptions(true);
+    } else {
+      setShowOptions(false);
+    }
+  }, []);
+
+  const handleSelect = (selectedOption) => {
+    setSelectedPlayers(
+      Array.isArray(selectedOption) ? selectedOption.map((x) => x.value) : []
+    );
+    console.log(selectedOption);
+    if (selectedPlayers.length > 0) {
+      navigate(
+        `/players/H2H?player_ids=${selectedPlayers[0]},${selectedOption[1].value}`
+      );
+    }
+  };
+
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -219,59 +248,90 @@ function Players() {
             </p>
           </div>
           {/* main search + filters */}
-          <div className="input-group pt-3 pb-3 mx-3 ">
-            <div className="input-group" style={{ width: "30%" }}>
-              <input
-                className="form-control border border-dark dropdown"
-                type="text"
-                placeholder="Search from table"
-                aria-label="Search Player"
-                onChange={onSearch}
-              />
-              <span className="input-group-button">
-                <span className="btn btn-green search-btn px-3">
-                  <Search color="white" className="fs-7" />
-                </span>
-              </span>
+          <div className="row pt-3 pb-3  ">
+            <div className="col-xs-12 col-lg-9 ">
+              <div style={{ width: "400px" }}>
+                Search:
+                <div className="input-group">
+                  <input
+                    className="form-control border border-dark dropdown"
+                    type="text"
+                    placeholder="Search from table"
+                    aria-label="Search Player"
+                    onChange={onSearch}
+                    width={300}
+                  />
+                  <span className="input-group-button">
+                    <span
+                      className="btn btn-green search-btn "
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Search color="white" className="fs-7" />
+                    </span>
+                  </span>
+                </div>
+              </div>
               <div className="input-group" style={{ width: "100%" }}>
                 <p className="p-0" style={{ color: "gray", fontSize: 14 }}>
-                  {"\xa0\xa0\xa0\xa0\xa0"}For searching by country, please
-                  indicate the country code only.{" "}
+                  For searching by country, please indicate the country code
+                  only.{" "}
                 </p>
               </div>
             </div>
-            <div className="ms-auto me-5">
-              <Dropdown className="border border-dark dropdown rounded-3">
-                <Dropdown.Toggle
-                  className="o40"
-                  variant="white"
-                  id="dropdown-basic"
-                  size="sm"
-                >
-                  {DataPerPage} per page
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => setDataPerPage(50)} href="#">
-                    50 per page
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
-                    100 per page
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setDataPerPage(200)} href="#">
-                    200 per page
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => setDataPerPage(data.length)}
-                    href="#"
-                  >
-                    All
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <div className="col-xs-12 col-lg-3">
+              <div style={{ width: "auto" }}>
+                H2H:
+                <Select
+                  placeholder={"Select Players..."}
+                  closeMenuOnSelect={false}
+                  components={{
+                    makeAnimated: () => true,
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null,
+                  }}
+                  defaultValue={[]}
+                  isMulti
+                  options={showOptions ? playerOptions : []}
+                  menuIsOpen={showOptions ? true : false}
+                  onInputChange={handleInputChange}
+                  onChange={handleSelect}
+                  isOptionDisabled={() => selectedPlayers.length >= 2}
+                />
+                <p className="p-0" style={{ color: "gray", fontSize: 14 }}>
+                  Search for two players to have their H2H report.{" "}
+                </p>
+              </div>
             </div>
           </div>
           {/* utilities */}
           <div className="input-group py-2">
+            <Dropdown className="border border-dark dropdown rounded-3">
+              <Dropdown.Toggle
+                className="o40"
+                variant="white"
+                id="dropdown-basic"
+                size="sm"
+              >
+                {DataPerPage} per page
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setDataPerPage(50)} href="#">
+                  50 per page
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setDataPerPage(100)} href="#">
+                  100 per page
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setDataPerPage(200)} href="#">
+                  200 per page
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => setDataPerPage(data.length)}
+                  href="#"
+                >
+                  All
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <div className="ms-auto d-flex align-items-start">
               <SurfaceLegend />
             </div>

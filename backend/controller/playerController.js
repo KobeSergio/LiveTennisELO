@@ -11,7 +11,7 @@ const getPlayers = asyncHandler(async (req, res) => {
     .select(
       "player_id player_name last_match overall_peak_rating overall_peak_rating_date hard_peak_rating hard_peak_rating_date grass_peak_rating grass_peak_rating_date clay_peak_rating clay_peak_rating_date atp_peak_rating atp_peak_rating_date hard_rating clay_rating overall_rating grass_rating atp_rating"
     )
-    .sort({ 'atp_rating': -1 });
+    .sort({ atp_rating: -1 });
   if (!players) {
     res.status(400);
     throw new Error("No players found.");
@@ -44,6 +44,19 @@ const getPlayerRecs = asyncHandler(async (req, res) => {
     throw new Error("Data insufficient");
   }
   res.status(200).json({ player: player, records: records });
+});
+
+// @desc:       Get player for chart comparisons
+// @route:      GET api/matches/:player_id
+// @access      Public
+const getPlayerH2H = asyncHandler(async (req, res) => {
+  const player_ids = req.query.player_ids.split(",");
+  const players = await Player.find({ player_id: { $in: player_ids } });
+  const h2h = await Matches.find({
+    winner_local_id: { $in: player_ids },
+    loser_local_id: { $in: player_ids },
+  });
+  res.status(200).json({ players: players, h2h: h2h });
 });
 
 // @desc:       Post player
@@ -164,4 +177,5 @@ module.exports = {
   getIndPlayer,
   getPlayerRecs,
   getPlayerslist,
+  getPlayerH2H,
 };

@@ -23,7 +23,6 @@ export default function Charts() {
   const dispatch = useDispatch();
 
   const { players, api_isLoading, charts } = useSelector((state) => state.api);
-  const [playerOptions, setPlayers] = useState([]);
   const [filter, setFilter] = useState("ELO Ratings");
   const [invert, setInvert] = useState(false);
   const [type, setType] = useState("time");
@@ -43,6 +42,8 @@ export default function Charts() {
     setPlayers(opts);
   }, [api_isLoading]);
 
+  //Select Box
+  const [playerOptions, setPlayers] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const handleInputChange = useCallback((typedOption) => {
