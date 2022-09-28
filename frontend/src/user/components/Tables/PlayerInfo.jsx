@@ -123,7 +123,6 @@ function getPerformance(data, player_id) {
       uncounted++;
     }
   });
-
   return wins;
 }
 
@@ -345,6 +344,19 @@ export default function PlayerInfo({ player, h2h }) {
                         </span>
                       </div>
                     </div>
+                    <div className="col-sm-6 col-6">
+                      <div className="hard-text">Hard Wins:</div>
+                    </div>
+                    <div className="col-sm-6 col-6">
+                      <div className="hard-text" id="hard">
+                        <span
+                          style={{ backgroundColor: "#015778" }}
+                          className="table-surface-elo-label"
+                        >
+                          {getPerformance(h2h, player.player_id).hard}
+                        </span>
+                      </div>
+                    </div>
                     {/* clay rank */}
                     <div className="col-sm-6 col-6">
                       <div className="clay-text">Clay Wins:</div>
@@ -360,19 +372,6 @@ export default function PlayerInfo({ player, h2h }) {
                       </div>
                     </div>
                     <div className="col-sm-6 col-6">
-                      <div className="hard-text">Hard Wins:</div>
-                    </div>
-                    <div className="col-sm-6 col-6">
-                      <div className="hard-text" id="hard">
-                        <span
-                          style={{ backgroundColor: "#015778" }}
-                          className="table-surface-elo-label"
-                        >
-                          {getPerformance(h2h, player.player_id).hard}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-6">
                       <div className="grass-text">Grass Wins:</div>
                     </div>
                     <div className="col">
@@ -381,7 +380,7 @@ export default function PlayerInfo({ player, h2h }) {
                           style={{ backgroundColor: "#3EBA7C" }}
                           className="table-surface-elo-label"
                         >
-                          {getPerformance(h2h, player.player_id).clay}
+                          {getPerformance(h2h, player.player_id).grass}
                         </span>
                       </div>
                     </div>
