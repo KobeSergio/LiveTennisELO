@@ -101,7 +101,7 @@ function getPerformance(data, player_id) {
   var uncounted = 0;
   var wins = { overall: 0, hard: 0, clay: 0, grass: 0 };
   data.forEach((match) => {
-    if (match.score != "W/O") {
+    if (match.score != "W/O" && match.score != null) {
       //Add win or lose
       if (match.winner_local_id == player_id) {
         wins.overall++;
