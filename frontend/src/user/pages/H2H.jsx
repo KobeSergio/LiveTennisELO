@@ -25,6 +25,9 @@ function getPerformance(data, player_id) {
           case "hard":
             wins.hard++;
             break;
+          case "carpet":
+            wins.hard++;
+            break;
           case "clay":
             wins.clay++;
             break;
@@ -77,7 +80,6 @@ export default function H2H() {
   }
   return (
     <>
-    
       <div className="p-3">
         <div className="d-flex justify-content-center">
           <h2>
