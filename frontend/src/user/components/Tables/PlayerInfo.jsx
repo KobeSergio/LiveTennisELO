@@ -151,7 +151,7 @@ export default function PlayerInfo({ player, h2h }) {
                 <h1 className="fs-5 fw-bold" id="player-name">
                   <a
                     href="#/"
-                    onClick={() => navigate("/players" + player.player_id)}
+                    onClick={() => navigate("/players/" + player.player_id)}
                   >
                     {player.player_name}
                   </a>

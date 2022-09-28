@@ -449,7 +449,7 @@ export function H2HTable({ player_matches }) {
                         <a
                           href="#/"
                           onClick={() =>
-                            navigate("/players" + match.winner_local_id)
+                            navigate("/players/" + match.winner_local_id)
                           }
                         >
                           {match.winner_name}
@@ -602,7 +602,7 @@ export function H2HTable({ player_matches }) {
                         <a
                           href="#/"
                           onClick={() =>
-                            navigate("/players" + match.loser_local_id)
+                            navigate("/players/" + match.loser_local_id)
                           }
                         >
                           {match.loser_name}
