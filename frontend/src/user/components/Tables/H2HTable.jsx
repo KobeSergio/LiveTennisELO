@@ -15,39 +15,13 @@ String.prototype.replaceAt = function (index, replacement) {
   );
 };
 
-function arrangeScore(player_id, match) {
-  if (match.score.includes("W/O")) {
-    return match.score;
+function toTitleCase(str) {
+  if (str.toLowerCase() === "mcenroe john") {
+    return "McEnroe John";
   }
-
-  try {
-    var set = match.score.split(/(\s+)/);
-  } catch (error) {
-    var set = match.score;
-  }
-  var fixed = [];
-  if (match.winner_local_id == player_id) {
-    return match.score;
-  } else {
-    try {
-      if (set.length > 1) {
-        set.forEach((score) => {
-          var temp = "";
-          temp = score[0];
-          try {
-            score = score.replaceAt(0, score[2]);
-            score = score.replaceAt(2, temp);
-          } catch {
-            console.log("");
-          }
-          fixed.push(score);
-        });
-        return fixed.join([""]);
-      }
-    } catch (error) {
-      return match.score;
-    }
-  }
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 function parseDate(date) {
@@ -64,7 +38,7 @@ function checkOpp(player_id, match) {
   var opp_rating_gains = 0;
   var opp_surface_rating_gains = 0;
 
-  if (match.winner_local_id == player_id) {
+  if (match.loser_local_id === player_id) {
     if (match.loser_elo != null) {
       opp_rating = match.loser_elo;
       opp_surface_rating = match.loser_elo_surface;
@@ -74,9 +48,9 @@ function checkOpp(player_id, match) {
     opponent_id = match.loser_local_id;
     opp_rating_gains = match.loser_elo_gains;
     opp_surface_rating_gains = match.loser_elo_surface_gains;
-  } else if (match.loser_local_id == player_id) {
+  } else if (match.winner_local_id === player_id) {
     if (match.winner_elo != null) {
-      opp_rating = match.loser_elo;
+      opp_rating = match.winner_elo;
       opp_surface_rating = match.winner_elo_surface;
     }
     result = "L";
@@ -383,7 +357,7 @@ export function H2HTable({ player_matches }) {
                     <b>Loser Surface ELO</b>
                   </th>
                   <th
-                    style={{ minWidth: 120 }}
+                    style={{ minWidth: 160 }}
                     className="text-start"
                     scope="col"
                   >
@@ -452,7 +426,7 @@ export function H2HTable({ player_matches }) {
                             navigate("/players/" + match.winner_local_id)
                           }
                         >
-                          {match.winner_name}
+                          {toTitleCase(match.winner_name)}
                         </a>
                       </td>
                       <td className="table-ratings" id="opp-rating">
@@ -605,7 +579,7 @@ export function H2HTable({ player_matches }) {
                             navigate("/players/" + match.loser_local_id)
                           }
                         >
-                          {match.loser_name}
+                          {toTitleCase(match.loser_name)}
                         </a>
                       </td>
                       <td className="table-ratings" id="opp-rating">

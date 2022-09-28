@@ -33,13 +33,15 @@ function arrangeScore(player_id, match) {
     try {
       if (set.length > 1) {
         set.forEach((score) => {
-          var temp = "";
-          temp = score[0];
-          try {
-            score = score.replaceAt(0, score[2]);
-            score = score.replaceAt(2, temp);
-          } catch {
-            console.log("");
+          if (!score.includes("RET")) {
+            var temp = "";
+            temp = score[0];
+            try {
+              score = score.replaceAt(0, score[2]);
+              score = score.replaceAt(2, temp);
+            } catch {
+              console.log("");
+            }
           }
           fixed.push(score);
         });
@@ -49,6 +51,15 @@ function arrangeScore(player_id, match) {
       return match.score;
     }
   }
+}
+
+function toTitleCase(str) {
+  if (str.toLowerCase() === "mcenroe john") {
+    return "McEnroe John";
+  }
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 function parseDate(date) {
@@ -1026,11 +1037,11 @@ export function PlayerMatches() {
                           <a
                             href={`./` + checkOpp(player_id, match).opponent_id}
                           >
-                            {checkOpp(player_id, match).opponent}
+                            {toTitleCase(checkOpp(player_id, match).opponent)}
                           </a>
                         </>
                       ) : (
-                        <>{checkOpp(player_id, match).opponent}</>
+                        <>{toTitleCase(checkOpp(player_id, match).opponent)}</>
                       )}
                     </td>
                     <td className="table-ratings" id="opp-rating">

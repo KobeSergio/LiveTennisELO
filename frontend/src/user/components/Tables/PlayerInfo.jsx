@@ -12,7 +12,7 @@ function parseDate(dateString) {
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
-      dateString.substring(4, 6),
+      dateString.substring(4, 6) - 1,
       dateString.substring(6, 8)
     );
     var dateStr = mydate.toDateString();
@@ -27,9 +27,10 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[0], //Year
-        newdate[1], //Month
+        newdate[1] - 1, //Month
         newdate[2] // Day
       );
+
       var dateStr = mydate.toDateString();
       return dateStr.substr(dateStr.indexOf(" ") + 1);
     } else {
@@ -41,7 +42,7 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[2], //Year
-        newdate[0], //Month
+        newdate[0] - 1, //Month
         newdate[1] // Day
       );
       var dateStr = mydate.toDateString();
@@ -53,7 +54,7 @@ function parseDate(dateString) {
 function parsebirthDate(dateString) {
   var birthdate = new Date(
     dateString.substring(0, 4),
-    dateString.substring(4, 6),
+    dateString.substring(4, 6) - 1,
     dateString.substring(6, 8)
   );
   var dateToday = new Date();
@@ -75,14 +76,14 @@ function computeStatus(dateString) {
       var newdate = dateString.split(" ")[0].split("-");
       mydate = new Date(
         newdate[0], //Year
-        newdate[1], //Month
+        newdate[1] - 1, //Month
         newdate[2] // Day
       );
     } else {
       var newdate = dateString.split(" ")[0].split("/");
       mydate = new Date(
         newdate[2], //Year
-        newdate[0], //Month
+        newdate[0] - 1, //Month
         newdate[1] // Day
       );
     }

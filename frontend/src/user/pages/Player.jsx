@@ -13,6 +13,15 @@ import {
   resetPlayer,
 } from "../../features/api/apiSlice";
 
+function toTitleCase(str) {
+  if (str.toLowerCase() === "mcenroe john") {
+    return "McEnroe John";
+  }
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
   return regionNames.of(country_id); // "United States
@@ -23,7 +32,7 @@ function parseDate(dateString) {
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
-      dateString.substring(4, 6),
+      dateString.substring(4, 6) - 1,
       dateString.substring(6, 8)
     );
     var dateStr = mydate.toDateString();
@@ -38,7 +47,7 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[0], //Year
-        newdate[1], //Month
+        newdate[1] - 1, //Month
         newdate[2] // Day
       );
       var dateStr = mydate.toDateString();
@@ -52,7 +61,7 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[2], //Year
-        newdate[0], //Month
+        newdate[0] - 1, //Month
         newdate[1] // Day
       );
       var dateStr = mydate.toDateString();
@@ -64,7 +73,7 @@ function parseDate(dateString) {
 function parsebirthDate(dateString) {
   var birthdate = new Date(
     dateString.substring(0, 4),
-    dateString.substring(4, 6),
+    dateString.substring(4, 6) - 1,
     dateString.substring(6, 8)
   );
   var dateToday = new Date();
@@ -78,7 +87,7 @@ function computeStatus(dateString) {
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
-      dateString.substring(4, 6),
+      dateString.substring(4, 6) - 1,
       dateString.substring(6, 8)
     );
   } else {
@@ -86,14 +95,14 @@ function computeStatus(dateString) {
       var newdate = dateString.split(" ")[0].split("-");
       mydate = new Date(
         newdate[0], //Year
-        newdate[1], //Month
+        newdate[1] - 1, //Month
         newdate[2] // Day
       );
     } else {
       var newdate = dateString.split(" ")[0].split("/");
       mydate = new Date(
         newdate[2], //Year
-        newdate[0], //Month
+        newdate[0] - 1, //Month
         newdate[1] // Day
       );
     }
@@ -170,7 +179,7 @@ export default function Player() {
                 </div>
                 <div class="d-flex justify-content-center">
                   <h1 className="fs-3 fw-bold" id="player-name">
-                    {player_details[0].player_name}
+                    {toTitleCase(player_details[0].player_name)}
                   </h1>
                 </div>
                 <div class="d-flex justify-content-center">
