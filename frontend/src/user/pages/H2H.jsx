@@ -98,10 +98,18 @@ export default function H2H() {
         </div>
         <div className="row d-flex justify-content-center align-items-center">
           <div className="col-xs-12 col-lg-6">
-            <PlayerInfo player={H2H.players[0]} h2h={H2H.h2h} />
+            <PlayerInfo
+              player={H2H.players[0]}
+              h2h={H2H.h2h}
+              records={H2H.records.records1}
+            />
           </div>
           <div className="col-xs-12 col-lg-6">
-            <PlayerInfo player={H2H.players[1]} h2h={H2H.h2h} />
+            <PlayerInfo
+              player={H2H.players[1]}
+              h2h={H2H.h2h}
+              records={H2H.records.records2}
+            />
           </div>
         </div>
         <H2HTable player_matches={H2H.h2h} />

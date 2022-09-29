@@ -52,11 +52,19 @@ const getPlayerRecs = asyncHandler(async (req, res) => {
 const getPlayerH2H = asyncHandler(async (req, res) => {
   const player_ids = req.query.player_ids.split(",");
   const players = await Player.find({ player_id: { $in: player_ids } });
+  const records1 = await Records.find({ player_id: player_ids[0] }).select(
+    "player_id ranking doc_date"
+  );
+  const records2 = await Records.find({ player_id: player_ids[1] }).select(
+    "player_id ranking doc_date"
+  );
   const h2h = await Matches.find({
     winner_local_id: { $in: player_ids },
     loser_local_id: { $in: player_ids },
   });
-  res.status(200).json({ players: players, h2h: h2h });
+  res
+    .status(200)
+    .json({ players: players, h2h: h2h, records: { records1, records2 } });
 });
 
 // @desc:       Post player

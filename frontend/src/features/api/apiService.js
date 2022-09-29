@@ -50,6 +50,7 @@ const getH2H = async (players) => {
   return {
     players: H2H.data.players,
     h2h: H2H.data.h2h,
+    records: H2H.data.records,
   };
 };
 

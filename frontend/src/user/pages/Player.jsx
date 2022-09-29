@@ -174,7 +174,7 @@ export default function Player() {
                     }
                     width={300}
                     height={300}
-                    style={{ width: 300, height: 300, objectFit: "cover" }}
+                    style={{ width: 300, height: '50%', objectFit: "cover" }}
                   />
                 </div>
                 <div class="d-flex justify-content-center">

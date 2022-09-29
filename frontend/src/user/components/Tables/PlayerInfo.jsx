@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import H2H from "../../pages/H2H";
+import { Line } from "react-chartjs-2";
+import { useState } from "react";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -127,8 +129,49 @@ function getPerformance(data, player_id) {
   return wins;
 }
 
-export default function PlayerInfo({ player, h2h }) {
+export default function PlayerInfo({ player, h2h, records }) {
   const navigate = useNavigate();
+  const [overall_data, setOverall_data] = useState([]);
+  useEffect(() => {
+    //Doc date or Age = x
+    //Ranking or rating = y
+
+    var chartData = [...records];
+    var tempCtr = 0;
+    var tempStorage = "";
+    var temp = [];
+    chartData
+      .sort((a, b) =>
+        a.doc_date < b.doc_date ? -1 : b.doc_date > a.doc_date ? 1 : 0
+      )
+      .forEach((record) => {
+        //Lessen long lines
+        if (record.ranking === tempStorage) {
+          tempCtr++;
+        } else {
+          tempStorage = record.ranking;
+          tempCtr = 0;
+        }
+
+        if (tempCtr < 52) {
+          var doc_X = new Date(
+            record.doc_date.toString().substring(0, 4),
+            record.doc_date.toString().substring(4, 6),
+            record.doc_date.toString().substring(6, 8)
+          );
+
+          var X = doc_X.toLocaleDateString("en-CA");
+          if (overall_data != null) {
+            temp.push({
+              x: X,
+              y: record.ranking,
+            });
+          }
+        }
+      });
+    setOverall_data(temp);
+  }, []);
+
   return (
     <>
       <div className="rounded-3 bg-white">
@@ -144,7 +187,7 @@ export default function PlayerInfo({ player, h2h }) {
                       ? `https://i.ibb.co/dBb6xnR/no-player.png`
                       : player.img_link
                   }
-                  style={{ width: 300, height: 200, objectFit: "cover" }}
+                  style={{ width: 300, height: "50%", objectFit: "cover" }}
                 />
               </div>
               <div class="d-flex justify-content-center align-items-center">
@@ -332,58 +375,105 @@ export default function PlayerInfo({ player, h2h }) {
                 <div className="col-sm-12">
                   <h1 className="fs-5 fw-bold pt-3">H2H Wins:</h1>
                   <div className="row mb-3">
-                    <div className="col-sm-6 col-6">
-                      <div>Overall Wins:</div>
-                    </div>
-                    <div className="col-sm-6 col-6">
-                      <div id="overall">
-                        <span
-                          style={{ backgroundColor: "#000000" }}
-                          className="table-surface-elo-label"
-                        >
-                          {getPerformance(h2h, player.player_id).overall}
-                        </span>
+                    <div className="col-8">
+                      <div className="row">
+                        <div className="col-sm-9 col-9">
+                          <div>Overall Wins:</div>
+                        </div>
+                        <div className="col-sm-2 col-2">
+                          <div id="overall">
+                            <span
+                              style={{ backgroundColor: "#000000" }}
+                              className="table-surface-elo-label"
+                            >
+                              {getPerformance(h2h, player.player_id).overall}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="col-sm-9 col-9">
+                          <div className="hard-text">Hard Wins:</div>
+                        </div>
+                        <div className="col-sm-2 col-2">
+                          <div className="hard-text" id="hard">
+                            <span
+                              style={{ backgroundColor: "#015778" }}
+                              className="table-surface-elo-label"
+                            >
+                              {getPerformance(h2h, player.player_id).hard}
+                            </span>
+                          </div>
+                        </div>
+                        {/* clay rank */}
+                        <div className="col-sm-9 col-9">
+                          <div className="clay-text">Clay Wins:</div>
+                        </div>
+                        <div className="col-sm-2 col-2">
+                          <div className="clay-text" id="clay">
+                            <span
+                              style={{ backgroundColor: "#E96513" }}
+                              className="table-surface-elo-label"
+                            >
+                              {getPerformance(h2h, player.player_id).clay}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="col-sm-9 col-9">
+                          <div className="grass-text">Grass Wins:</div>
+                        </div>
+                        <div className="col-sm-2 col-2">
+                          <div className="grass-text" id="grass">
+                            <span
+                              style={{ backgroundColor: "#3EBA7C" }}
+                              className="table-surface-elo-label"
+                            >
+                              {getPerformance(h2h, player.player_id).grass}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-sm-6 col-6">
-                      <div className="hard-text">Hard Wins:</div>
-                    </div>
-                    <div className="col-sm-6 col-6">
-                      <div className="hard-text" id="hard">
-                        <span
-                          style={{ backgroundColor: "#015778" }}
-                          className="table-surface-elo-label"
-                        >
-                          {getPerformance(h2h, player.player_id).hard}
-                        </span>
-                      </div>
-                    </div>
-                    {/* clay rank */}
-                    <div className="col-sm-6 col-6">
-                      <div className="clay-text">Clay Wins:</div>
-                    </div>
-                    <div className="col-sm-6 col-6">
-                      <div className="clay-text" id="clay">
-                        <span
-                          style={{ backgroundColor: "#E96513" }}
-                          className="table-surface-elo-label"
-                        >
-                          {getPerformance(h2h, player.player_id).clay}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-6">
-                      <div className="grass-text">Grass Wins:</div>
-                    </div>
-                    <div className="col">
-                      <div className="grass-text" id="grass">
-                        <span
-                          style={{ backgroundColor: "#3EBA7C" }}
-                          className="table-surface-elo-label"
-                        >
-                          {getPerformance(h2h, player.player_id).grass}
-                        </span>
-                      </div>
+                    <div className="col-4 p-0">
+                      <Line
+                        options={{
+                          scales: {
+                            xAxes: {
+                              type: "time",
+                              time: {
+                                unit: "year",
+                                tooltipFormat: "YYYY-MM-DD",
+                              },
+                            },
+                            yAxes: {
+                              position: "right",
+                            },
+                          },
+                          responsive: true,
+                          plugins: {
+                            legend: {
+                              display: false,
+                            },
+                            title: {
+                              display: false,
+                            },
+                          },
+                          maintainAspectRatio: false,
+                        }}
+                        data={{
+                          datasets: [
+                            {
+                              data: overall_data,
+                              borderColor: "black",
+                              backgroundColor: "black",
+                              borderWidth: 2,
+                              pointBorderWidth: 2,
+                              pointRadius: 0,
+                              pointHoverRadius: 5,
+                            },
+                          ],
+                        }}
+                        height={"96px"}
+                        width={"auto"}
+                      />
                     </div>
                   </div>
                 </div>
