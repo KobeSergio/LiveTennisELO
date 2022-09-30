@@ -218,6 +218,13 @@ export function H2HTable({ player_matches }) {
                     <b>Winner Surface ELO</b>
                   </th>
                   <th
+                    style={{ minWidth: 160 }}
+                    className="text-start"
+                    scope="col"
+                  >
+                    <b>Score</b>
+                  </th>
+                  <th
                     style={{ minWidth: 130 }}
                     className="text-start"
                     scope="col"
@@ -229,13 +236,6 @@ export function H2HTable({ player_matches }) {
                   </th>
                   <th style={{ minWidth: 110 }} scope="col">
                     <b>Loser Surface ELO</b>
-                  </th>
-                  <th
-                    style={{ minWidth: 160 }}
-                    className="text-start"
-                    scope="col"
-                  >
-                    <b>Score</b>
                   </th>
                   <th style={{ minWidth: 120 }} scope="col">
                     <b>Tournament</b>
@@ -446,6 +446,9 @@ export function H2HTable({ player_matches }) {
                           </>
                         )}
                       </td>
+                      <td className="text-start table-score" id="score">
+                        {match.score}
+                      </td>
                       <td className="text-start table-name" id="name">
                         <a
                           href="#/"
@@ -597,9 +600,6 @@ export function H2HTable({ player_matches }) {
                             </span>
                           </>
                         )}
-                      </td>
-                      <td className="text-start table-score" id="score">
-                        {match.score}
                       </td>
                       <td className="table-tournament" id="tournament">
                         {match.tourney_name}
