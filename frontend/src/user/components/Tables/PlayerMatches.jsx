@@ -17,6 +17,10 @@ String.prototype.replaceAt = function (index, replacement) {
 };
 
 function arrangeScore(player_id, match) {
+  if (match.score == null) {
+    return "";
+  }
+
   if (match.score.includes("W/O")) {
     return match.score;
   }
