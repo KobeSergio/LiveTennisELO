@@ -145,27 +145,28 @@ export default function PlayerInfo({ player, h2h, records }) {
         a.doc_date < b.doc_date ? -1 : b.doc_date > a.doc_date ? 1 : 0
       )
       .forEach((record) => {
-        //Lessen long lines
-        if (record.ranking === tempStorage) {
-          tempCtr++;
-        } else {
-          tempStorage = record.ranking;
-          tempCtr = 0;
-        }
+        if (record.player_id === player.player_id) {
+          if (record.ranking === tempStorage) {
+            //Lessen long lines
+            tempCtr++;
+          } else {
+            tempStorage = record.ranking;
+            tempCtr = 0;
+          }
+          if (tempCtr < 52) {
+            var doc_X = new Date(
+              record.doc_date.toString().substring(0, 4),
+              record.doc_date.toString().substring(4, 6),
+              record.doc_date.toString().substring(6, 8)
+            );
 
-        if (tempCtr < 52) {
-          var doc_X = new Date(
-            record.doc_date.toString().substring(0, 4),
-            record.doc_date.toString().substring(4, 6),
-            record.doc_date.toString().substring(6, 8)
-          );
-
-          var X = doc_X.toLocaleDateString("en-CA");
-          if (overall_data != null) {
-            temp.push({
-              x: X,
-              y: record.ranking,
-            });
+            var X = doc_X.toLocaleDateString("en-CA");
+            if (overall_data != null) {
+              temp.push({
+                x: X,
+                y: record.ranking,
+              });
+            }
           }
         }
       });
@@ -187,7 +188,7 @@ export default function PlayerInfo({ player, h2h, records }) {
                       ? `https://i.ibb.co/dBb6xnR/no-player.png`
                       : player.img_link
                   }
-                  style={{ width: 300, height: "50%", objectFit: "cover" }}
+                  style={{ width: 300, height: 300, objectFit: "cover" }}
                 />
               </div>
               <div class="d-flex justify-content-center align-items-center">

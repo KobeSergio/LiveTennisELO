@@ -39,6 +39,13 @@ export default function () {
             </span>
             <br />
             <br />
+            <h5 className="card-title">Player Matches:</h5>
+            <span className="card-text">
+              Starting from 2022 US OPEN, all ELO Ratings will be calculated
+              based on the player's current ELO before the match.
+            </span>
+            <br />
+            <br />
             <h5 className="card-title">Searching:</h5>
             <span className="card-text">
               For searching by country, please indicate the country code only.

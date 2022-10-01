@@ -129,6 +129,7 @@ function Players() {
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("DSC");
   const opts = [];
+
   useEffect(() => {
     setData(top_players);
     top_players.forEach((player) =>
@@ -232,6 +233,7 @@ function Players() {
   useEffect(() => {
     setOrder("ASC");
   }, []);
+  
   if (api_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }

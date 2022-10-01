@@ -101,14 +101,14 @@ export default function H2H() {
             <PlayerInfo
               player={H2H.players[0]}
               h2h={H2H.h2h}
-              records={H2H.records.records1}
+              records={H2H.records}
             />
           </div>
           <div className="col-xs-12 col-lg-6">
             <PlayerInfo
               player={H2H.players[1]}
               h2h={H2H.h2h}
-              records={H2H.records.records2}
+              records={H2H.records}
             />
           </div>
         </div>

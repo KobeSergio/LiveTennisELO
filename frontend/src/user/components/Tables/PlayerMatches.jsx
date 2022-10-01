@@ -1177,16 +1177,22 @@ export function PlayerMatches() {
                       {match.round}
                     </td>
                     <td className="table-round" id="round">
-                      <a
-                        href="#/"
-                        onClick={() => {
-                          navigate(
-                            `/players/H2H?player_ids=${match.loser_local_id},${match.winner_local_id}`
-                          );
-                        }}
-                      >
-                        H2H
-                      </a>
+                      {checkOpp(player_id, match).opponent_id == null ? (
+                        <></>
+                      ) : (
+                        <>
+                          <a
+                            href="#/"
+                            onClick={() => {
+                              navigate(
+                                `/players/H2H?player_ids=${match.loser_local_id},${match.winner_local_id}`
+                              );
+                            }}
+                          >
+                            H2H
+                          </a>
+                        </>
+                      )}
                     </td>
                   </tr>
                 </>
