@@ -112,6 +112,9 @@ function getPerformance(data, player_id) {
           case "hard":
             wins.hard++;
             break;
+          case "carpet":
+            wins.hard++;
+            break;
           case "clay":
             wins.clay++;
             break;
