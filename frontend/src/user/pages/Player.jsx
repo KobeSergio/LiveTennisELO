@@ -174,7 +174,7 @@ export default function Player() {
                     }
                     width={300}
                     height={300}
-                    style={{ width: 300, height: '50%', objectFit: "cover" }}
+                    style={{ width: 300, height: "50%", objectFit: "cover" }}
                   />
                 </div>
                 <div class="d-flex justify-content-center">
@@ -720,7 +720,15 @@ export default function Player() {
                         {player_details[0].atp_peak_rating == null ? (
                           <></>
                         ) : (
-                          <div>Peak ATP Rating:</div>
+                          <div>
+                            Peak ATP{" "}
+                            {player_details[0].atp_peak_rating == null ? (
+                              <>Point</>
+                            ) : (
+                              <>Points</>
+                            )}
+                            :
+                          </div>
                         )}
                       </div>
                       <div className="col">

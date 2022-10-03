@@ -188,7 +188,7 @@ export default function PlayerInfo({ player, h2h, records }) {
                       ? `https://i.ibb.co/dBb6xnR/no-player.png`
                       : player.img_link
                   }
-                  style={{ width: 300, height: 300, objectFit: "cover" }}
+                  style={{ width: 300, height: 250, objectFit: "cover" }}
                 />
               </div>
               <div class="d-flex justify-content-center align-items-center">
