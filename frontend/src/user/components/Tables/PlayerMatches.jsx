@@ -144,47 +144,51 @@ function getPerformance(data, player_id) {
 
       //Add win or lose
       if (match.winner_local_id == player_id) {
-        performanceELO += 300;
-        //Add bonus
-        if (Math.abs(p1 - p2) == 2) {
-          performanceELO += 50;
-        } else if (Math.abs(p1 - p2) == 3) {
-          performanceELO += 100;
-        }
+        if (match.loser_elo != null && match.loser_elo > 2350) {
+          performanceELO += 300;
+          //Add bonus
+          if (Math.abs(p1 - p2) == 2) {
+            performanceELO += 50;
+          } else if (Math.abs(p1 - p2) == 3) {
+            performanceELO += 100;
+          }
 
-        //Add sumOfAll
-        if (match.loser_elo != null) {
-          sumOfAll.push(
-            match.loser_elo - match.loser_elo_gains + performanceELO
-          );
-          sumOfAllSurface.push(
-            match.loser_elo_surface -
-              match.loser_elo_surface_gains +
-              performanceELO
-          );
+          //Add sumOfAll
+          if (match.loser_elo != null) {
+            sumOfAll.push(
+              match.loser_elo - match.loser_elo_gains + performanceELO
+            );
+            sumOfAllSurface.push(
+              match.loser_elo_surface -
+                match.loser_elo_surface_gains +
+                performanceELO
+            );
+          }
         }
         wins++;
       } else if (match.loser_local_id == player_id) {
-        performanceELO -= 300;
-        //Add bonus
-        if (Math.abs(p1 - p2) == 2) {
-          performanceELO -= 50;
-        } else if (Math.abs(p1 - p2) == 3) {
-          performanceELO -= 100;
-        }
+        if (match.winner_elo != null || match.winner_elo > 2350) {
+          performanceELO -= 300;
+          //Add bonus
+          if (Math.abs(p1 - p2) == 2) {
+            performanceELO -= 50;
+          } else if (Math.abs(p1 - p2) == 3) {
+            performanceELO -= 100;
+          }
 
-        //Add sumOfAll
-        if (match.winner_elo != null) {
-          sumOfAll.push(
-            match.winner_elo - match.winner_elo_gains + performanceELO
-          );
-          sumOfAllSurface.push(
-            match.winner_elo_surface -
-              match.winner_elo_surface_gains +
-              performanceELO
-          );
+          //Add sumOfAll
+          if (match.winner_elo != null) {
+            sumOfAll.push(
+              match.winner_elo - match.winner_elo_gains + performanceELO
+            );
+            sumOfAllSurface.push(
+              match.winner_elo_surface -
+                match.winner_elo_surface_gains +
+                performanceELO
+            );
+          }
+          loses++;
         }
-        loses++;
       }
     } else {
       uncounted++;
