@@ -29,8 +29,8 @@ export default function () {
             <span className="card-text">
               The principle behind any Elo system is that each player’s rating
               is an estimate of their strength, and each match (or tournament)
-              allows us to update that estimate. If a player wins, her rating
-              goes up; if she loses, it goes down. Where Elo excels is in
+              allows us to update that estimate. If a player wins, his rating
+              goes up; if he loses, it goes down. Where Elo excels is in
               determining the amount by which a rating should increase or
               decrease. There are two main variables that are taken into
               account: How many matches are already in the system (that is, how
