@@ -27,6 +27,9 @@ function parseCountry(country_id) {
 }
 
 function parseDate(dateString) {
+  if (dateString == null) {
+    return "";
+  }
   var mydate = new Date();
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(

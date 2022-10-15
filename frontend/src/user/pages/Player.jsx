@@ -28,6 +28,9 @@ function parseCountry(country_id) {
 }
 
 function parseDate(dateString) {
+  if (dateString == null) {
+    return "";
+  }
   var mydate = new Date();
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
@@ -82,8 +85,10 @@ function parsebirthDate(dateString) {
 }
 
 function computeStatus(dateString) {
+  if (dateString == null) {
+    return null;
+  }
   var mydate = new Date();
-
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
