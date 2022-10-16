@@ -176,10 +176,13 @@ export default function Player() {
                       player_details[0].img_link == null
                         ? `https://i.ibb.co/dBb6xnR/no-player.png`
                         : player_details[0].img_link
-                    }
-                    width={300}
-                    height={300}
-                    style={{ width: 300, height: "50%", objectFit: "cover" }}
+                    } 
+                    style={{
+                      width: 200,
+                      height: 300,
+                      objectFit: "cover",
+                      backgroundPosition: "center",
+                    }}
                   />
                 </div>
                 <div class="d-flex justify-content-center">

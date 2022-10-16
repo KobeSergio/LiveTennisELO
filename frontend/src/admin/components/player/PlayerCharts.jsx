@@ -156,7 +156,7 @@ export function PlayerCharts() {
   const { player_records, player_details } = useSelector(
     (state) => state.player
   );
-
+  const navigate = useNavigate();
   //Modal popup
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -175,7 +175,7 @@ export function PlayerCharts() {
     grass_data = [];
     clay_data = [];
     atp_data = [];
-  }, [filter]);
+  }, [filter, navigate]);
 
   if (overall_data.length == 0) {
     pushToDatasets(data, player_details[0], filter.toLowerCase());

@@ -18,6 +18,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "../../../css/admin/colors.css";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -154,7 +155,7 @@ function pushToDatasets(player_records, player_details, filter) {
 
 export function PlayerChart() {
   const { player_records, player_details } = useSelector((state) => state.api);
-
+  const navigate = useNavigate();
   //Modal popup
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -181,7 +182,7 @@ export function PlayerChart() {
     grass_data = [];
     clay_data = [];
     atp_data = [];
-  }, [filter]);
+  }, [filter, navigate]);
 
   if (overall_data.length == 0) {
     pushToDatasets(data, player_details[0], filter.toLowerCase());
