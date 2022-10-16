@@ -18,6 +18,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "../../../css/admin/colors.css";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 ChartJS.register(
   CategoryScale,
   LinearScale,

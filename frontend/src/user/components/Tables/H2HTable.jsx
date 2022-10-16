@@ -16,8 +16,17 @@ String.prototype.replaceAt = function (index, replacement) {
 };
 
 function toTitleCase(str) {
-  if (str.toLowerCase() === "mcenroe john") {
+  if (
+    str.toLowerCase() === "mcenroe john" ||
+    str.toLowerCase() === "john mcenroe"
+  ) {
     return "McEnroe John";
+  }
+  if (
+    str.toLowerCase() === "mcenroe patrick" ||
+    str.toLowerCase() === "patrick mcenroe"
+  ) {
+    return "McEnroe Patrick";
   }
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
