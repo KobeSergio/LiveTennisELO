@@ -1023,8 +1023,7 @@ export function PlayerMatches() {
                       {checkOpp(player_id, match).opp_rating != 2400 &&
                       checkOpp(player_id, match).opp_rating != null &&
                       checkOpp(player_id, match).opp_rating > 1
-                        ? checkOpp(player_id, match).opp_rating -
-                          checkOpp(player_id, match).opp_rating_gains
+                        ? checkOpp(player_id, match).opp_rating
                         : "< 2400"}
                       {checkOpp(player_id, match).opp_rating_gains > 0 ? (
                         <span className="ms-2 positive-elo">
@@ -1058,9 +1057,7 @@ export function PlayerMatches() {
                               style={{ backgroundColor: "#3EBA7C" }}
                               className="table-surface-elo-label"
                             >
-                              {checkOpp(player_id, match).opp_surface_rating -
-                                checkOpp(player_id, match)
-                                  .opp_surface_rating_gains}
+                              {checkOpp(player_id, match).opp_surface_rating}
                             </span>
                           ) : match.surface == "Hard" ||
                             match.surface == "Carpet" ? (
@@ -1068,18 +1065,14 @@ export function PlayerMatches() {
                               style={{ backgroundColor: "#3B9FB9" }}
                               className="table-surface-elo-label"
                             >
-                              {checkOpp(player_id, match).opp_surface_rating -
-                                checkOpp(player_id, match)
-                                  .opp_surface_rating_gains}
+                              {checkOpp(player_id, match).opp_surface_rating}
                             </span>
                           ) : match.surface == "Clay" ? (
                             <span
                               style={{ backgroundColor: "#E96513" }}
                               className="table-surface-elo-label"
                             >
-                              {checkOpp(player_id, match).opp_surface_rating -
-                                checkOpp(player_id, match)
-                                  .opp_surface_rating_gains}
+                              {checkOpp(player_id, match).opp_surface_rating}
                             </span>
                           ) : (
                             <> </>
@@ -1115,7 +1108,7 @@ export function PlayerMatches() {
                         </>
                       )}
 
-                      {checkOpp(player_id, match).opp_rating_gains > 0 ? (
+                      {checkOpp(player_id, match).opp_surface_rating_gains > 0 ? (
                         <span className="ms-2 positive-elo">
                           <CaretUpFill size={10} color="green" />
                           <br />
