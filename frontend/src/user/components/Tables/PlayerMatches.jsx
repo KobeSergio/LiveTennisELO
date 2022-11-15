@@ -294,7 +294,7 @@ export function PlayerMatches() {
             <div className="row">
               <div className="col-10">
                 <h5>
-                  <b>Match Performance:</b>
+                  <b>ELO Performance:</b>
                 </h5>
               </div>
               <div className="col-2 align-items-end">
@@ -308,7 +308,7 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Overall ELO:</b>
+                    <b>Overall:</b>
                   </div>
                   <div className="col">
                     {player_details[0].overall_rating != null ? (
@@ -333,7 +333,7 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Hard ELO:</b>{" "}
+                    <b>Hard:</b>{" "}
                   </div>
                   <div className="col">
                     {player_details[0].hard_rating != null ? (
@@ -354,7 +354,7 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Clay ELO:</b>{" "}
+                    <b>Clay:</b>{" "}
                   </div>
                   <div className="col">
                     {player_details[0].clay_rating != null ? (
@@ -375,7 +375,7 @@ export function PlayerMatches() {
               <div className="col-3 text-start">
                 <div className="row">
                   <div className="col-7">
-                    <b>Grass ELO:</b>
+                    <b>Grass:</b>
                   </div>
                   <div className="col">
                     {player_details[0].grass_rating != null ? (
@@ -399,7 +399,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Overall Last 10: {"\xa0"}
+                      Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -496,7 +496,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Hard Last 10: {"\xa0"}
+                      Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -614,7 +614,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Clay Last 10: {"\xa0"}
+                      Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
@@ -732,7 +732,7 @@ export function PlayerMatches() {
                 <div className="row">
                   <div className="col-7">
                     <b>
-                      Grass Last 10: {"\xa0"}
+                      Last 10: {"\xa0"}
                       {"\xa0"}
                     </b>
                   </div>
