@@ -62,7 +62,7 @@ function pushToDatasets(player_records, player_details, filter, surface) {
       if (tempCtr < 52) {
         var doc_X = new Date(
           record.doc_date.toString().substring(0, 4),
-          record.doc_date.toString().substring(4, 6),
+          record.doc_date.toString().substring(4, 6) - 1,
           record.doc_date.toString().substring(6, 8)
         );
 
@@ -73,7 +73,7 @@ function pushToDatasets(player_records, player_details, filter, surface) {
             if (filter.slice(-6) === "by age") {
               const dob = new Date(
                 player_details[0].birthdate.substring(0, 4),
-                player_details[0].birthdate.substring(4, 6),
+                player_details[0].birthdate.substring(4, 6) - 1,
                 player_details[0].birthdate.substring(6, 8)
               );
               //Subtract birthdate by doc_date
@@ -97,7 +97,7 @@ function pushToDatasets(player_records, player_details, filter, surface) {
             if (filter.slice(-6) === "by age") {
               const dob = new Date(
                 player_details[1].birthdate.substring(0, 4),
-                player_details[1].birthdate.substring(4, 6),
+                player_details[1].birthdate.substring(4, 6) - 1,
                 player_details[1].birthdate.substring(6, 8)
               );
               //Subtract birthdate by doc_date
@@ -126,7 +126,7 @@ function pushToDatasets(player_records, player_details, filter, surface) {
             if (filter.slice(-6) === "by age") {
               const dob = new Date(
                 player_details[0].birthdate.substring(0, 4),
-                player_details[0].birthdate.substring(4, 6),
+                player_details[0].birthdate.substring(4, 6) - 1,
                 player_details[0].birthdate.substring(6, 8)
               );
               //Subtract birthdate by doc_date
@@ -150,7 +150,7 @@ function pushToDatasets(player_records, player_details, filter, surface) {
             if (filter.slice(-6) === "by age") {
               const dob = new Date(
                 player_details[1].birthdate.substring(0, 4),
-                player_details[1].birthdate.substring(4, 6),
+                player_details[1].birthdate.substring(4, 6) - 1,
                 player_details[1].birthdate.substring(6, 8)
               );
               //Subtract birthdate by doc_date
@@ -250,7 +250,7 @@ export default function ({ invert, filter, type, surface }) {
                       }}
                       data={{
                         datasets: [],
-                      }} 
+                      }}
                       height={"600em"}
                     />
                   </div>
