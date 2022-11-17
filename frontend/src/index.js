@@ -50,7 +50,7 @@ export default function App() {
             <Route path="players/:player_id" element={<Player />} />
             <Route path="charts" element={<Charts />} />
             <Route path="players" element={<Players />} />
-            <Route path="tournaments/:tournament_id" element={<Tournament />} />
+            <Route path="tournaments/:tourney_id" element={<Tournament />} />
             <Route path="tournaments" element={<Tournaments />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NoPage />} />

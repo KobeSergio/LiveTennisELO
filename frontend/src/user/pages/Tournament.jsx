@@ -28,16 +28,18 @@ function parseDate(dateString) {
 export default function Tournament() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { tournament_id } = useParams();
+  const { tourney_id } = useParams();
   const { tournament_matches, api_isLoading } = useSelector(
     (state) => state.api
   );
   const [data, setData] = useState([]);
   useEffect(() => {
-    dispatch(loadTournament(tournament_id));
+    dispatch(loadTournament(tourney_id));
   }, []);
+
   useEffect(() => {
-    if (tournament_matches?.tournament.length != 0) {
+    console.log(tournament_matches);
+    if (tournament_matches.length != 0) {
       //sort tournament matches by match_num
       setData(
         [...tournament_matches.tournament].sort((a, b) =>
@@ -55,11 +57,10 @@ export default function Tournament() {
     transform: "translate(-45%, -45%)",
   };
 
-  if (api_isLoading || data == null) {
+  console.log(data);
+  if (api_isLoading || data == null || data.length == 0) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
-
-  console.log(tournament_matches?.tournament);
 
   //return table with tournament matches
   return (

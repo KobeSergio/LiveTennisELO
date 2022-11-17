@@ -21,7 +21,7 @@ const initialState = {
 };
 export const loadTournament = createAsyncThunk(
   "api/tournament",
-  async (tourney_id, thunkAPI) => {
+  async (tourney_id, thunkAPI) => { 
     try {
       return await apiService.loadTournament(tourney_id);
     } catch (error) {
