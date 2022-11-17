@@ -27,7 +27,7 @@ function parseDate(dateString) {
       var newdate = dateString.split(" ")[0].split("/");
       if (newdate[0].length != 2) {
         newdate[0] = "0" + newdate[0];
-      } 
+      }
       return newdate[2] + "-" + newdate[0];
     }
   }

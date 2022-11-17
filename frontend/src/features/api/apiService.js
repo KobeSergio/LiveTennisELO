@@ -73,6 +73,21 @@ const loadPlayer = async (player_id) => {
     records: player.data.records,
   };
 };
+
+const loadTournaments = async () => {
+  const tournaments = await axios.get(API_URL + "tournaments/");
+  return {
+    tournaments: tournaments.data,
+  };
+};
+
+const loadTournament = async (tourney_id) => {
+  const tournament = await axios.get(API_URL + "tournaments/" + tourney_id);
+  return {
+    tournament: tournament.data,
+  };
+};
+
 const apiService = {
   loadRecord,
   loadData,
@@ -80,6 +95,8 @@ const apiService = {
   loadPlayer,
   loadPlayerList,
   loadPlayers,
+  loadTournaments,
+  loadTournament,
   getH2H,
 };
 

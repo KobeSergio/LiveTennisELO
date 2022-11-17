@@ -9,6 +9,8 @@ const initialState = {
   top_players: [],
   records: [],
   choices: [],
+  tournaments: [],
+  tournament_matches: [],
   H2H: null,
   charts: null,
   latest: null,
@@ -17,6 +19,39 @@ const initialState = {
   api_isLoading: false,
   api_message: "",
 };
+export const loadTournament = createAsyncThunk(
+  "api/tournament",
+  async (tourney_id, thunkAPI) => {
+    try {
+      return await apiService.loadTournament(tourney_id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const loadTournaments = createAsyncThunk(
+  "api/tournaments",
+  async (thunkAPI) => {
+    try {
+      return await apiService.loadTournaments();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const loadData = createAsyncThunk("api/loadData", async (thunkAPI) => {
   try {
@@ -153,6 +188,8 @@ export const apiSlice = createSlice({
       state.player_records = [];
       state.records = [];
       state.choices = [];
+      state.tournaments = [];
+      state.tournament_matches = [];
       state.latest = null;
       state.api_isError = false;
       state.api_isSuccess = false;
@@ -268,6 +305,32 @@ export const apiSlice = createSlice({
         state.players = action.payload;
       })
       .addCase(loadPlayerList.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadTournaments.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadTournaments.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.tournaments = action.payload;
+      })
+      .addCase(loadTournaments.rejected, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isError = true;
+        state.api_message = action.payload;
+      })
+      .addCase(loadTournament.pending, (state) => {
+        state.api_isLoading = true;
+      })
+      .addCase(loadTournament.fulfilled, (state, action) => {
+        state.api_isLoading = false;
+        state.api_isSuccess = true;
+        state.tournament_matches = action.payload;
+      })
+      .addCase(loadTournament.rejected, (state, action) => {
         state.api_isLoading = false;
         state.api_isError = true;
         state.api_message = action.payload;

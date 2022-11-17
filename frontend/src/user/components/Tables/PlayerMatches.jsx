@@ -1082,8 +1082,8 @@ export function PlayerMatches() {
                     </td>
                     <td className="table-surface-elo" id="opp-surface-elo">
                       {checkOpp(player_id, match).opp_surface_rating != 2350 &&
-                      checkOpp(player_id, match).opp_rating != null &&
-                      checkOpp(player_id, match).opp_rating > 1 ? (
+                      checkOpp(player_id, match).opp_surface_rating != null &&
+                      checkOpp(player_id, match).opp_surface_rating > 1 ? (
                         <>
                           {match.surface == "Grass" ? (
                             <span
@@ -1141,7 +1141,8 @@ export function PlayerMatches() {
                         </>
                       )}
 
-                      {checkOpp(player_id, match).opp_rating_gains > 0 ? (
+                      {checkOpp(player_id, match).opp_surface_rating_gains >
+                      0 ? (
                         <span className="ms-2 positive-elo">
                           <CaretUpFill size={10} color="green" />
                           <br />

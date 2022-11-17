@@ -24,6 +24,8 @@ import Players from "./user/pages/Players";
 import About from "./user/pages/About";
 import H2H from "./user/pages/H2H";
 import NoPage from "./user/pages/NoPage";
+import Tournaments from "./user/pages/Tournaments";
+import Tournament from "./user/pages/Tournament";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -43,11 +45,13 @@ export default function App() {
 
           {/* User page routes */}
           <Route path="/" element={<Layout />}>
-            <Route index element={<LiveRatings />} /> 
+            <Route index element={<LiveRatings />} />
             <Route path="players/H2H" element={<H2H />} />
             <Route path="players/:player_id" element={<Player />} />
             <Route path="charts" element={<Charts />} />
             <Route path="players" element={<Players />} />
+            <Route path="tournaments/:tournament_id" element={<Tournament />} />
+            <Route path="tournaments" element={<Tournaments />} />
             <Route path="about" element={<About />} />
             <Route path="*" element={<NoPage />} />
           </Route>
