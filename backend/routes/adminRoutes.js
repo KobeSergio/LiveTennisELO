@@ -16,7 +16,12 @@ const {
   deletePlayer,
   getIndPlayer,
 } = require("../controller/playerController");
-const { updateMatch, deleteMatch } = require("../controller/matchesController");
+const {
+  updateMatch,
+  deleteMatch,
+  updateTournament,
+  deleteTournament,
+} = require("../controller/matchesController");
 const { protect } = require("../middleware/authMiddleware");
 const { parseCSV } = require("../middleware/parseCSV");
 
@@ -39,6 +44,12 @@ router
   .route("/matches/:id")
   .put(protect, updateMatch)
   .delete(protect, deleteMatch);
+
+router
+  .route("/tournament/:id")
+  .put(protect, updateTournament)
+  .delete(protect, deleteTournament);
+
 router
   .route("/:doc_date")
   .get(protect, getRecord)
@@ -48,7 +59,6 @@ router
   .put(protect, updateRecord)
   .delete(protect, deleteRecord);
 router.route("/futureRecords/:doc_date/:player_id").get(protect, futureRecord);
-
 
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
 

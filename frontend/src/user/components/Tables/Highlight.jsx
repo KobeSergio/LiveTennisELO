@@ -37,7 +37,10 @@ export function ShowHighlight(props) {
               <div className="videoWrapper">
                 <iframe
                   className="iframe"
-                  src={"https://www.youtube.com/embed/" + props.src.slice(-11)}
+                  src={
+                    "https://www.youtube.com/embed/" +
+                    props.src.trim().slice(-11)
+                  }
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

@@ -23,6 +23,29 @@ const deleteMatch = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Match Deleted" });
 });
 
+const updateTournament = asyncHandler(async (req, res) => {
+  //Find all matches by tourney_id and update all with the new name
+  const matches = await Matches.updateMany(
+    { tourney_id: req.params.id },
+    req.body
+  );
+  if (!matches) {
+    res.status(400);
+    throw new Error("Tournament not found");
+  }
+  res.status(200).json(matches);
+});
+
+const deleteTournament = asyncHandler(async (req, res) => {
+  //Find all matches by tourney_id and update all with the new name
+  const matches = await Matches.deleteMany({ tourney_id: req.params.id });
+  if (!matches) {
+    res.status(400);
+    throw new Error("Tournament not found");
+  }
+  res.status(200).json(matches);
+});
+
 const getTournaments = asyncHandler(async (req, res) => {
   const tournaments = await Matches.aggregate([
     {
@@ -152,4 +175,6 @@ module.exports = {
   getTournaments,
   getTournament,
   latestTournament,
+  updateTournament,
+  deleteTournament,
 };

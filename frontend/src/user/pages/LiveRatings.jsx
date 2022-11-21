@@ -5,7 +5,7 @@ import Footer from "../components/Footer/Footer";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import LatestTournament from "../components/Tables/LatestTournament";
 
-export default function Charts() {
+export default function Charts() { 
   return (
     <>
       <div

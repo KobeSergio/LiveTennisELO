@@ -1,11 +1,12 @@
 import axios from "axios";
 
 const port = process.env.PORT || 5000;
-const PLAYERS_URL = `/admin-api/players`;
-const MATCHES_URL = `/admin-api/matches/`;
+//const PLAYERS_URL = `/admin-api/players`;
+//const MATCHES_URL = `/admin-api/matches/`;
 
-//const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
-//const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;
+const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
+const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;
+const TOURNEY_URL = `http://localhost:5000/admin-api/tournament/`;
 
 //Load record,
 // @http:   GET admin/:doc_date
@@ -43,7 +44,7 @@ const loadPlayer = async (player_id, token) => {
       });
     });
   }
- 
+
   return {
     player: player.data.player,
     matches: matchContainer,
@@ -106,6 +107,31 @@ const deleteMatch = async (match_id, token) => {
   return deletedMatch.data;
 };
 
+const updateTournament = async (payload, token) => {
+  console.log(payload);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const updatedTournament = await axios.put(
+    TOURNEY_URL + payload[0],
+    payload[1],
+    config
+  );
+  return updatedTournament.data;
+};
+
+const deleteTournament = async (match_id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const deletedTournament = await axios.delete(TOURNEY_URL + match_id, config);
+  return deletedTournament.data;
+};
+
 //Update Player
 // @http:   DELETE admin/players/:player_id
 // @res:    message: json
@@ -130,6 +156,8 @@ const playersService = {
   insertHighlight,
   updateMatch,
   deleteMatch,
+  updateTournament,
+  deleteTournament,
 };
 
 export default playersService;

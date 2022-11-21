@@ -110,6 +110,42 @@ export const deleteMatch = createAsyncThunk(
   }
 );
 
+export const updateTournament = createAsyncThunk(
+  "matches/updateTournament",
+  async (payload, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await playersService.updateTournament(payload, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteTournament = createAsyncThunk(
+  "matches/deleteTournament",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await playersService.deleteTournament(id, token); //SERVICE
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //Delete player
 // @http:   DELETE admin/players/:player_id
 // @res:    updatedPlayer: json
@@ -211,6 +247,32 @@ export const playerSlice = createSlice({
         state.player_message = action.payload;
       })
       .addCase(deleteMatch.rejected, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isError = true;
+        state.player_message = action.payload;
+      })
+      .addCase(updateTournament.pending, (state) => {
+        state.player_isLoading = true;
+      })
+      .addCase(updateTournament.fulfilled, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isSuccess = true;
+        state.player_message = action.payload;
+      })
+      .addCase(updateTournament.rejected, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isError = true;
+        state.player_message = action.payload;
+      })
+      .addCase(deleteTournament.pending, (state) => {
+        state.player_isLoading = true;
+      })
+      .addCase(deleteTournament.fulfilled, (state, action) => {
+        state.player_isLoading = false;
+        state.player_isSuccess = true;
+        state.player_message = action.payload;
+      })
+      .addCase(deleteTournament.rejected, (state, action) => {
         state.player_isLoading = false;
         state.player_isError = true;
         state.player_message = action.payload;

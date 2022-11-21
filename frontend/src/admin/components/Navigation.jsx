@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { Table, People, Upload, Search } from "react-bootstrap-icons";
+import { Table, People, Upload, Search, Trophy } from "react-bootstrap-icons";
 import Footer from "../components/Footer";
 import { useEffect, useState, useCallback } from "react";
 //Backend
@@ -132,6 +132,16 @@ function Sidebar() {
                   <a data-toggle="pill" role="tab" aria-selected="false">
                     <Table size={15} className="mb-1 me-3" />
                     Records
+                  </a>
+                </NavLink>
+                <NavLink
+                  className="nav-link"
+                  activeclassname="nav-link active"
+                  to="/admin/tournaments"
+                >
+                  <a data-toggle="pill" aria-selected="false">
+                    <Trophy size={15} className="mb-1 me-3" />
+                    Tournaments
                   </a>
                 </NavLink>
                 <NavLink

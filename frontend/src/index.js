@@ -15,6 +15,8 @@ import Records from "./admin/pages/Records";
 import AdminPlayers from "./admin/pages/Players";
 import Import from "./admin/pages/Import";
 import ManagePlayer from "./admin/pages/ManagePlayer";
+import AdminTournament from "./admin/pages/AdminTournament";
+import AdminTournaments from "./admin/pages/AdminTournaments";
 
 // User
 import LiveRatings from "./user/pages/LiveRatings";
@@ -40,6 +42,11 @@ export default function App() {
             <Route index path="players" element={<AdminPlayers />} />
             <Route path=":doc_date" element={<Records />} />
             <Route path="players/:player_id" element={<ManagePlayer />} />
+            <Route
+              path="tournaments/:tourney_id"
+              element={<AdminTournament />}
+            />
+            <Route path="tournaments" element={<AdminTournaments />} />
             <Route path="import" element={<Import />} />
           </Route>
 
