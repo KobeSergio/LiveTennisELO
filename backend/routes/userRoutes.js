@@ -7,10 +7,12 @@ const {
   getIndPlayer,
   getPlayerslist,
   getPlayerH2H,
+  getHotPerformance,
 } = require("../controller/playerController");
 const {
   getTournaments,
   getTournament,
+  latestTournament,
 } = require("../controller/matchesController");
 
 router.route("/api/playerslist").get(getPlayerslist);
@@ -22,5 +24,7 @@ router.route("/api/records/:doc_date").get(getRecord);
 router.route("/api/matches/compare").get(getPlayerH2H);
 router.route("/api/tournaments").get(getTournaments);
 router.route("/api/tournaments/:id").get(getTournament);
+router.route("/api/latesttournament").get(latestTournament);
+router.route("/api/hotperformance/:sortby").get(getHotPerformance);
 
 module.exports = router;

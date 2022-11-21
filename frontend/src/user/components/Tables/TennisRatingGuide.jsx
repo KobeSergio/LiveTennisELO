@@ -11,7 +11,7 @@ export default function () {
       <h2 className="fs-4">Tennis rating guide:</h2>
 
       <div className="p-2">
-        <div className="card rounded-3">
+        <div className="card rounded-3 shadow-sm">
           <div className="card-body">
             <h5 className="card-title">ATP Ranking:</h5>
             <span className="card-text">

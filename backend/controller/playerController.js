@@ -155,6 +155,102 @@ const getIndPlayer = asyncHandler(async (req, res) => {
   res.status(200).json(container);
 });
 
+const getHotPerformance = asyncHandler(async (req, res) => {
+  if (
+    req.params.sortby != "overall" &&
+    req.params.sortby != "hard" &&
+    req.params.sortby != "grass" &&
+    req.params.sortby != "clay"
+  ) {
+    res.status(400);
+    throw new Error("Invalid surface");
+  }
+
+  //get top 10 players according to ranking where atp is not null and greater than 1000
+  const players = await Player.find({
+    atp_rating: { $ne: null, $gt: 300 },
+  })
+    .select(
+      "player_id player_name overall_rating hard_rating grass_rating clay_rating atp_rating"
+    )
+    .sort(
+      req.params.sortby == "overall"
+        ? { overall_rating: -1 }
+        : req.params.sortby == "hard"
+        ? { hard_rating: -1 }
+        : req.params.sortby == "clay"
+        ? { clay_rating: -1 }
+        : { grass_rating: -1 }
+    )
+    .limit(20);
+
+  if (!players) {
+    res.status(400);
+    throw new Error("Data insufficient");
+  }
+
+  //for each player in players, get the last 10 matches
+  const promises = players.map(async (player) => {
+    const matches = await Matches.aggregate([
+      { $sort: { tourney_date: -1 } },
+      {
+        $match: {
+          $or: [
+            { winner_local_id: { $eq: player.player_id } },
+            { loser_local_id: { $eq: player.player_id } },
+          ],
+        },
+      },
+      { $limit: 1000 },
+      {
+        $group: {
+          _id: player.player_id,
+          game: {
+            $push: {
+              _id: "$_id",
+              tourney_name: "$tourney_name",
+              tourney_date: "$tourney_date",
+              surface: "$surface",
+              match_num: "$match_num",
+              winner_local_id: "$winner_local_id", //LOCAL ID
+              winner_name: "$winner_name",
+              loser_local_id: "$loser_local_id", //LOCAL ID
+              loser_name: "$loser_name",
+              score: "$score",
+              round: "$round",
+              winner_elo: "$winner_elo",
+              winner_elo_gains: "$winner_elo_gains",
+              winner_elo_surface: "$winner_elo_surface",
+              winner_elo_surface_gains: "$winner_elo_surface_gains",
+              loser_elo: "$loser_elo",
+              loser_elo_gains: "$loser_elo_gains",
+              loser_elo_surface: "$loser_elo_surface",
+              loser_elo_surface_gains: "$loser_elo_surface_gains",
+              highlight: "$highlight",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          player_name: player.player_name,
+          mostRecentGames: "$game",
+        },
+      },
+    ]);
+    return matches;
+  });
+
+  const response = await Promise.all(promises);
+
+  if (!response) {
+    res.status(400);
+    throw new Error("Data insufficient");
+  }
+
+  res.status(200).json(response);
+});
+
 // @desc:       Delete player with the id of :id
 // @route:      DELETE /admin/players/:player_id
 // @access      Private
@@ -181,4 +277,5 @@ module.exports = {
   getPlayerRecs,
   getPlayerslist,
   getPlayerH2H,
+  getHotPerformance,
 };

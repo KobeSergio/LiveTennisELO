@@ -5,6 +5,7 @@ import { loadTournament } from "../../features/api/apiSlice";
 import { ShowHighlight } from "../components/Tables/Highlight";
 import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import ClipLoader from "react-spinners/ClipLoader";
+import ReactCountryFlag from "react-country-flag";
 
 function toTitleCase(str) {
   if (str.toLowerCase() === "mcenroe john") {
@@ -62,6 +63,7 @@ export default function Tournament() {
     return <ClipLoader cssOverride={override} size={70} />;
   }
 
+  var currentRound = "";
   //return table with tournament matches
   return (
     <div className="px-4 py-4">
@@ -76,7 +78,7 @@ export default function Tournament() {
       <div className="table-responsive-xl">
         <table
           style={{ boxShadow: "none" }}
-          className="table liverating-table-bg-white rounded-3 text-center"
+          className="table borderless liverating-table-bg-white text-center mb-0"
         >
           <thead>
             <tr>
@@ -114,8 +116,26 @@ export default function Tournament() {
             {/* map data */}
             {data.map((match) => (
               <>
+                {currentRound.toLowerCase() == match.round.toLowerCase() ? (
+                  <></>
+                ) : (
+                  <>
+                    {currentRound != "" ? (
+                      <>
+                        <div hidden={true}>{(currentRound = match.round)}</div>
+                        <tr>
+                          <td colSpan={100}>
+                            <hr />
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <div hidden={true}>{(currentRound = match.round)}</div>
+                    )}
+                  </>
+                )}
                 <tr
-                  style={{ lineHeight: 2.5, minHeight: 2.5, height: 2.5 }}
+                  style={{ lineHeight: 1.5, minHeight: 1.5, height: 1.5 }}
                   className="align-middle"
                 >
                   <td scope="row" id="date" key={match.tourney_id}>
@@ -149,6 +169,19 @@ export default function Tournament() {
                     {match.winner_local_id != null ? (
                       <>
                         <a href={`./` + match.winner_local_id}>
+                          {
+                            <ReactCountryFlag
+                              countryCode={match.winner_local_id.substring(
+                                0,
+                                2
+                              )}
+                              style={{
+                                filter: "drop-shadow(0 0 0.05rem black)",
+                              }}
+                              svg
+                            />
+                          }
+                          {"\xa0\xa0\xa0\xa0"}
                           {toTitleCase(match.winner_name)}
                         </a>
                       </>
@@ -156,7 +189,7 @@ export default function Tournament() {
                       <> {toTitleCase(match.winner_name)}</>
                     )}
                   </td>
-                  <td id="opp-rating">
+                  <td>
                     {match.winner_elo != 2350 &&
                     match.winner_elo != null &&
                     match.winner_elo > 1
@@ -184,7 +217,7 @@ export default function Tournament() {
                       </>
                     )}
                   </td>
-                  <td id="opp-rating">
+                  <td>
                     {match.winner_elo_surface != 2350 &&
                     match.winner_elo_surface != null &&
                     match.winner_elo_surface > 1 ? (
@@ -270,6 +303,16 @@ export default function Tournament() {
                     {match.loser_local_id != null ? (
                       <>
                         <a href={`./` + match.loser_local_id}>
+                          {
+                            <ReactCountryFlag
+                              countryCode={match.loser_local_id.substring(0, 2)}
+                              style={{
+                                filter: "drop-shadow(0 0 0.05rem black)",
+                              }}
+                              svg
+                            />
+                          }
+                          {"\xa0\xa0\xa0\xa0"}
                           {toTitleCase(match.loser_name)}
                         </a>
                       </>
@@ -277,7 +320,7 @@ export default function Tournament() {
                       <> {toTitleCase(match.loser_name)}</>
                     )}
                   </td>
-                  <td id="opp-rating">
+                  <td>
                     {match.loser_elo != 2350 &&
                     match.loser_elo != null &&
                     match.loser_elo > 1
@@ -305,7 +348,7 @@ export default function Tournament() {
                       </>
                     )}
                   </td>
-                  <td id="opp-rating">
+                  <td>
                     {match.loser_elo_surface != 2350 &&
                     match.loser_elo_surface != null &&
                     match.loser_elo_surface > 1 ? (
