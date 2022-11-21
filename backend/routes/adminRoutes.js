@@ -7,6 +7,7 @@ const {
   deleteRecord,
   deleteWholeRecord,
   latestRecord,
+  futureRecord,
 } = require("../controller/recordController");
 const {
   getPlayers,
@@ -46,6 +47,8 @@ router
   .route("/:doc_date/:id")
   .put(protect, updateRecord)
   .delete(protect, deleteRecord);
+router.route("/futureRecords/:doc_date/:player_id").get(protect, futureRecord);
+
 
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
 

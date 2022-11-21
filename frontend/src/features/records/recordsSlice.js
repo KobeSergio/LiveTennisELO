@@ -58,7 +58,8 @@ export const latestRecord = createAsyncThunk(
 // @res:
 export const uploadRecord = createAsyncThunk(
   "records/uploadRecord",
-  async (payload, thunkAPI) => {
+  async (payload, thunkAPI) => 
+  {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await recordsService.uploadRecord(payload, token); //SERVICE

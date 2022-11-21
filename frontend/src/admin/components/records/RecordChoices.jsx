@@ -23,7 +23,6 @@ export function RecordChoices(choices) {
 
   const recordIndex = choicesCopy.findIndex((x) => x == doc_date);
 
-  console.log(recordIndex)
   return (
     <div className="input-group">
       <div className="me-4">

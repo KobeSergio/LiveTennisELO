@@ -37,6 +37,24 @@ const latestRecord = asyncHandler(async (req, res) => {
   }
 });
 
+const futureRecord = asyncHandler(async (req, res) => 
+{
+  const record = await Record.find
+  ({
+    doc_date: {$gt: req.params.doc_date},
+    player_id: {$eq: req.params.player_id}
+  });
+  if (!record) 
+  {
+    res.status(400);
+    throw new Error("Record not found");
+  } 
+  else 
+  {
+    res.status(200).json(record);
+  }
+});
+
 // @desc:       Post record/s to database
 // @route:      POST /admin/import
 // @access      Private
@@ -124,4 +142,5 @@ module.exports = {
   deleteRecord,
   deleteWholeRecord,
   latestRecord,
+  futureRecord
 };

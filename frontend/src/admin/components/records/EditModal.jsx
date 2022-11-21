@@ -44,7 +44,8 @@ export function EditRecord(props) {
     // dispatch(loadRecord(doc_date));
   }, [isError, isSuccess, message, navigate, dispatch]);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e) => 
+  {
     e.preventDefault();
     const recordData = {
       ranking,
@@ -54,11 +55,22 @@ export function EditRecord(props) {
       atp,
       lactive,
     };
-    const routeDetails = {
+    const routeDetails = 
+    {
       _id: props.props._id,
       doc_date: doc_date,
+      player_id: props.props.player_id
     };
-    dispatch(updateRecord([routeDetails, recordData])).then(() => {
+    const oldData = 
+    {
+      ranking: props.props.ranking,
+      hard: props.props.hard,
+      clay: props.props.clay,
+      grass: props.props.grass,
+      atp: props.props.atp,
+      lactive: props.props.last_active,
+    }
+    dispatch(updateRecord([routeDetails, recordData, oldData])).then(() => {
       window.location.reload(false);
     });
   };
