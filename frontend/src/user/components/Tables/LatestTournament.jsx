@@ -180,7 +180,14 @@ export default function LatestTournament() {
                           <td className="text-start  " id="name">
                             {match.winner_local_id != null ? (
                               <>
-                                <a href={`./` + match.winner_local_id}>
+                                <a
+                                  href="#/"
+                                  onClick={() =>
+                                    navigate(
+                                      `./players/` + match.winner_local_id
+                                    )
+                                  }
+                                >
                                   {
                                     <ReactCountryFlag
                                       countryCode={match.winner_local_id.substring(
@@ -205,7 +212,14 @@ export default function LatestTournament() {
                           <td className="text-start " id="name">
                             {match.loser_local_id != null ? (
                               <>
-                                <a href={`./` + match.loser_local_id}>
+                                <a
+                                  href="#/"
+                                  onClick={() =>
+                                    navigate(
+                                      `./players/` + match.loser_local_id
+                                    )
+                                  }
+                                >
                                   {
                                     <ReactCountryFlag
                                       countryCode={match.loser_local_id.substring(
