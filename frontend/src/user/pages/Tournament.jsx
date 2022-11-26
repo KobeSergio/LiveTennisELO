@@ -8,7 +8,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import ReactCountryFlag from "react-country-flag";
 
 function toTitleCase(str) {
-  if (str.toLowerCase() === "mcenroe john") {
+  if (
+    str.toLowerCase() === "mcenroe john" ||
+    str.toLowerCase() === "john mcenroe"
+  ) {
     return "McEnroe John";
   }
   return str.replace(/\w\S*/g, function (txt) {
@@ -168,7 +171,7 @@ export default function Tournament() {
                   <td className="text-start  " id="name">
                     {match.winner_local_id != null ? (
                       <>
-                        <a href={`./` + match.winner_local_id}>
+                        <a href={`/players/` + match.winner_local_id}>
                           {
                             <ReactCountryFlag
                               countryCode={match.winner_local_id.substring(
@@ -302,7 +305,7 @@ export default function Tournament() {
                   <td className="text-start " id="name">
                     {match.loser_local_id != null ? (
                       <>
-                        <a href={`./` + match.loser_local_id}>
+                        <a href={`/players/` + match.loser_local_id}>
                           {
                             <ReactCountryFlag
                               countryCode={match.loser_local_id.substring(0, 2)}

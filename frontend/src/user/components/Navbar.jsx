@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { loadPlayerList } from "../../features/api/apiSlice";
+import banner from "../img/TenELOs.png";
 
 const customStyles = {
   control: (base, state) => ({
@@ -51,6 +52,10 @@ export default function ClientNavbar() {
 
   return (
     <>
+      {/* Running image banner */}
+      <div style={{margin: -10}}>
+        <img src={banner} class="img-fluid" alt="Responsive image" />
+      </div>
       <Navbar className="px-4 py-3" bg="light" expand="lg">
         <Navbar.Brand
           className="fw-bold"

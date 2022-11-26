@@ -103,6 +103,8 @@ export default function Tournaments() {
     }
   }, [year]);
 
+  console.log(data)
+
   const override = {
     margin: 0,
     position: "absolute",

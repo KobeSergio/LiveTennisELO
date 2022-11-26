@@ -152,6 +152,7 @@ export default function HotPerformances() {
     console.log("first");
     setIsLoading(true);
     //fetch perf_data from api and set it to perf_data
+    //fetch(`http://localhost:5000/api/hotperformance/${category}`)
     fetch(`/api/hotperformance/${category}`)
       .then((res) => res.json())
       .then((json) => {
@@ -164,7 +165,7 @@ export default function HotPerformances() {
                 ? getPerformance(
                     player[0].mostRecentGames
                       .filter(
-                        (element) => element.surface.toLowerCase() == category
+                        (element) => element.surface?.toLowerCase() == category
                       )
                       .sort(
                         (a, b) =>
