@@ -84,16 +84,125 @@ const insertHighlight = async (payload, token) => {
 };
 
 const updateMatch = async (payload, token) => {
+  console.log(payload);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  var winner_elo = payload[1].winner_elo - payload[2].winner_elo;
+  var winner_elo_surface = payload[1].winner_elo_surface - payload[2].winner_elo_surface;
+  var loser_elo = payload[1].loser_elo - payload[2].loser_elo;
+  var loser_elo_surface = payload[1].loser_elo_surface - payload[2].loser_elo_surface;
+
   const updatedMatch = await axios.put(
     MATCHES_URL + payload[0],
     payload[1],
     config
   );
+  
+  const futureRecord = await axios.get(MATCHES_URL + "futureRecordTourney/" + payload[2].tourney_date, config);
+  console.log(futureRecord.data);
+  for (var i = 0; i < futureRecord.length; i++)
+  {
+    if (payload[0] != futureRecord.data[i]['_id'])
+    {
+      if (loser_elo != 0 && payload[1].loser_local_id == futureRecord.data[i]['loser_local_id'])
+      {
+        const newData = 
+        {
+          loser_elo: loser_elo + futureRecord.data[i].grass,
+        };
+
+        await axios.put(
+          MATCHES_URL + futureRecord.data[i]['_id'],
+          newData,
+          config
+        );
+      }
+
+      //Loser elo surface
+      if (loser_elo_surface != 0 && payload[1].loser_local_id == futureRecord.data[i]['loser_local_id'])
+      {
+        if (payload[1]['surface'] == "Carpet" || payload[1]['surface'] == "Hard" 
+          && futureRecord.data[i]['surface'] == "Carpet" || futureRecord.data[i]['surface'] == "Hard")
+        {
+          const newData = 
+          {
+            loser_elo_surface: loser_elo_surface + futureRecord.data[i]['loser_elo_surface']
+          };
+
+          await axios.put(
+            MATCHES_URL + futureRecord.data[i]['_id'],
+            newData,
+            config
+          );
+        }
+        else if (payload[1]['surface'] == futureRecord.data[i]['surface'])
+        {
+          const newData = 
+          {
+            loser_elo_surface: loser_elo_surface + futureRecord.data[i]['loser_elo_surface']
+          };
+
+          await axios.put(
+            MATCHES_URL + futureRecord.data[i]['_id'],
+            newData,
+            config
+          );
+        }
+      }
+
+      //Winner elo
+      if (winner_elo != 0 && payload[1].winner_local_id == futureRecord.data[i]['winner_local_id'])
+      {
+        const newData = 
+        {
+          winner_elo: winner_elo + futureRecord.data[i].atp
+        };
+
+        await axios.put(
+          MATCHES_URL + futureRecord.data[i]['_id'],
+          newData,
+          config
+        );
+      }
+
+      //Winner elo surface
+      if (winner_elo_surface != 0 && payload[1].winner_local_id == futureRecord.data[i]['winner_local_id'])
+      {
+        if (payload[1]['surface'] == "Carpet" || payload[1]['surface'] == "Hard" 
+          && futureRecord.data[i]['surface'] == "Carpet" || futureRecord.data[i]['surface'] == "Hard")
+        {
+          const newData = 
+          {
+            winner_elo_surface: winner_elo_surface + futureRecord.data[i]['winner_local_id']
+          };
+
+          await axios.put(
+            MATCHES_URL + futureRecord.data[i]['_id'],
+            newData,
+            config
+          );
+        }
+        else if (payload[1]['surface'] == futureRecord.data[i]['surface'])
+        {
+          const newData = 
+          {
+            winner_elo_surface: winner_elo_surface + futureRecord.data[i]['winner_local_id']
+          };
+
+          await axios.put(
+            MATCHES_URL + futureRecord.data[i]['_id'],
+            newData,
+            config
+          );
+        }
+      }
+    }
+  }
+
   return updatedMatch.data;
 };
 

@@ -98,8 +98,30 @@ export default function EditMatch(props) {
       loser_elo_surface,
       loser_elo_surface_gains,
     };
-    dispatch(updateMatch([props.props.match._id, MatchData]));
-    window.location.reload(false);
+
+    const oldData = 
+    {
+      tourney_date: props.props.match.tourney_date,
+      tourney_id: props.props.match.tourney_id,
+      winner_local_id: props.props.match.winner_local_id,
+      loser_local_id: props.props.match.loser_local_id,
+      match_num: props.props.match.match_num,
+      round: props.props.match.round,
+      score: props.props.match.score,
+      surface: props.props.match.surface,
+      highlight: props.props.match.highlight,
+      winner_elo: props.props.match.winner_elo,
+      winner_elo_gains: props.props.match.winner_elo_gains,
+      winner_elo_surface: props.props.match.winner_elo_surface,
+      winner_elo_surface_gains: props.props.match.winner_elo_surface_gains,
+      loser_elo: props.props.match.loser_elo,
+      loser_elo_gains: props.props.match.loser_elo_gains,
+      loser_elo_surface: props.props.match.loser_elo_surface,
+      loser_elo_surface_gains: props.props.match.loser_elo_surface_gains,
+    };
+
+    dispatch(updateMatch([props.props.match._id, MatchData, oldData]));
+    //window.location.reload(false);
   };
 
   return (

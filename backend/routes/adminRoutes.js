@@ -21,6 +21,7 @@ const {
   deleteMatch,
   updateTournament,
   deleteTournament,
+  futureRecordTourney
 } = require("../controller/matchesController");
 const { protect } = require("../middleware/authMiddleware");
 const { parseCSV } = require("../middleware/parseCSV");
@@ -59,6 +60,10 @@ router
   .put(protect, updateRecord)
   .delete(protect, deleteRecord);
 router.route("/futureRecords/:doc_date/:player_id").get(protect, futureRecord);
+
+router.route("/matches/futureRecordTourney/:tourney_date").get(protect, futureRecordTourney);
+
+//Matches
 
 //router.route("/:id").put(updateRecord).delete(deleteRecord).post(postRecord);
 

@@ -14,6 +14,18 @@ const updateMatch = asyncHandler(async (req, res) => {
   res.status(200).json(match);
 });
 
+const futureRecordTourney = asyncHandler(async (req, res) => {
+  const tournament = await Matches.find(
+  { 
+    tourney_date: { $gte: req.params.tourney_date },
+  });
+  if (!tournament) {
+    res.status(400);
+    throw new Error("Tournament not found");
+  }
+  res.status(200).json(tournament);
+});
+
 const deleteMatch = asyncHandler(async (req, res) => {
   const match = await Matches.findByIdAndDelete(req.params.id);
   if (!match) {
@@ -177,4 +189,5 @@ module.exports = {
   latestTournament,
   updateTournament,
   deleteTournament,
+  futureRecordTourney
 };
