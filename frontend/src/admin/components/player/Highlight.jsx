@@ -21,7 +21,7 @@ export function ShowHighlight(props) {
     highlight,
   };
 
-  console.log(props.src.slice(-11));
+  //console.log(props.src.slice(-11));
   return (
     <>
       <a href="#/">

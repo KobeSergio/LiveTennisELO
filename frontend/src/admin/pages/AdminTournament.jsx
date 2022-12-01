@@ -46,7 +46,7 @@ export default function AdminTournament() {
   }, []);
 
   useEffect(() => {
-    console.log(tournament_matches);
+    //.log(tournament_matches);
     if (tournament_matches.length != 0) {
       //sort tournament matches by match_num
       setData(
@@ -65,7 +65,7 @@ export default function AdminTournament() {
     transform: "translate(-45%, -45%)",
   };
 
-  console.log(data);
+  //console.log(data);
   if (api_isLoading || data == null || data.length == 0) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
