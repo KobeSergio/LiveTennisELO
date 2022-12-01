@@ -434,7 +434,17 @@ export default function AllTimeTop() {
                                   </a>
                                 </span>
                               </td>
-                              <td>{player.overall_peak_rating}</td>
+                              <td>
+                                <span
+                                  title="ELO"
+                                  style={{
+                                    backgroundColor: "#000000",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player.overall_peak_rating}
+                                </span>
+                              </td>
                               <td>
                                 {player.overall_peak_rating_date == null ? (
                                   <></>
@@ -477,7 +487,17 @@ export default function AllTimeTop() {
                                   </a>
                                 </span>
                               </td>
-                              <td>{player.hard_peak_rating}</td>
+                              <td>
+                                <span
+                                  title="Peak"
+                                  style={{
+                                    backgroundColor: "#015778",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player.hard_peak_rating}
+                                </span>
+                              </td>
                               <td>
                                 {player.hard_peak_rating_date == null ? (
                                   <></>
@@ -518,7 +538,17 @@ export default function AllTimeTop() {
                                   </a>
                                 </span>
                               </td>
-                              <td>{player.clay_peak_rating}</td>
+                              <td>
+                                <span
+                                  title="Performance"
+                                  style={{
+                                    backgroundColor: "#E96513",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player.clay_peak_rating}
+                                </span>
+                              </td>
                               <td>
                                 {player.clay_peak_rating_date == null ? (
                                   <></>
@@ -559,7 +589,17 @@ export default function AllTimeTop() {
                                   </a>
                                 </span>
                               </td>
-                              <td>{player.grass_peak_rating}</td>
+                              <td>
+                                <span
+                                  title="Performance"
+                                  style={{
+                                    backgroundColor: "#3EBA7C",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player.grass_peak_rating}
+                                </span>
+                              </td>
                               <td>
                                 {player.grass_peak_rating_date == null ? (
                                   <></>
@@ -602,7 +642,17 @@ export default function AllTimeTop() {
                                   </a>
                                 </span>
                               </td>
-                              <td>{player.atp_peak_rating}</td>
+                              <td>
+                                <span
+                                  title="Performance"
+                                  style={{
+                                    backgroundColor: "#000000",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player.atp_peak_rating}
+                                </span>
+                              </td>
                               <td>
                                 {player.atp_peak_rating_date == null ? (
                                   <></>
@@ -644,13 +694,21 @@ export default function AllTimeTop() {
                                 </span>
                               </td>
                               <td>
-                                {Math.floor(
-                                  (player.overall_peak_rating +
-                                    player.hard_peak_rating +
-                                    player.clay_peak_rating +
-                                    player.grass_peak_rating) /
-                                    4
-                                )}
+                                <span
+                                  title="Performance"
+                                  style={{
+                                    backgroundColor: "#000000",
+                                  }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {Math.floor(
+                                    (player.overall_peak_rating +
+                                      player.hard_peak_rating +
+                                      player.clay_peak_rating +
+                                      player.grass_peak_rating) /
+                                      4
+                                  )}
+                                </span>
                               </td>
                             </tr>
                           ))}

@@ -197,7 +197,7 @@ export default function Tournament() {
                     match.winner_elo != null &&
                     match.winner_elo > 1
                       ? match.winner_elo
-                      : "< 2350"}
+                      : ""}
                     {match.winner_elo_gains > 0 ? (
                       <span className="ms-2 positive-elo">
                         <CaretUpFill size={10} color="green" />
@@ -252,33 +252,7 @@ export default function Tournament() {
                         )}
                       </>
                     ) : (
-                      <>
-                        {match.surface == "Grass" ? (
-                          <span
-                            style={{ backgroundColor: "#3EBA7C" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : match.surface == "Hard" ||
-                          match.surface == "Carpet" ? (
-                          <span
-                            style={{ backgroundColor: "#3B9FB9" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : match.surface == "Clay" ? (
-                          <span
-                            style={{ backgroundColor: "#E96513" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : (
-                          <> </>
-                        )}
-                      </>
+                      <></>
                     )}
                     {match.winner_elo_surface_gains > 0 ? (
                       <span className="ms-2 positive-elo">
@@ -328,7 +302,7 @@ export default function Tournament() {
                     match.loser_elo != null &&
                     match.loser_elo > 1
                       ? match.loser_elo
-                      : "< 2350"}
+                      : " "}
                     {match.loser_elo_gains > 0 ? (
                       <span className="ms-2 positive-elo">
                         <CaretUpFill size={10} color="green" />
@@ -383,33 +357,7 @@ export default function Tournament() {
                         )}
                       </>
                     ) : (
-                      <>
-                        {match.surface == "Grass" ? (
-                          <span
-                            style={{ backgroundColor: "#3EBA7C" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : match.surface == "Hard" ||
-                          match.surface == "Carpet" ? (
-                          <span
-                            style={{ backgroundColor: "#3B9FB9" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : match.surface == "Clay" ? (
-                          <span
-                            style={{ backgroundColor: "#E96513" }}
-                            className="table-surface-elo-label"
-                          >
-                            {"< 2350"}
-                          </span>
-                        ) : (
-                          <> </>
-                        )}
-                      </>
+                      <></>
                     )}
                     {match.loser_elo_surface_gains > 0 ? (
                       <span className="ms-2 positive-elo">

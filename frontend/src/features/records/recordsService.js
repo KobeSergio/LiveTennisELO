@@ -4,8 +4,8 @@
 
 import axios from "axios";
 
-const RECORD_URL = "/admin-api/";
-//const RECORD_URL = "http://localhost:5000/admin-api/";
+//const RECORD_URL = "/admin-api/";
+const RECORD_URL = "http://localhost:5000/admin-api/";
 
 //Load record,
 // @http:   GET admin/:doc_date
@@ -61,19 +61,15 @@ const uploadRecord = async (payload, token) => {
 // @http:   POST admin/
 // @res:    user: json
 //New [patch 69.0]
-const updateRecord = async (payload, token) => 
-{
-  const config = 
-  {
-    headers: 
-    {
+const updateRecord = async (payload, token) => {
+  const config = {
+    headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
   //Update current data, current date
-  const updateRecord = await axios.put
-  (
+  const updateRecord = await axios.put(
     RECORD_URL + payload[0].doc_date + "/" + payload[0]._id,
     payload[1],
     config
@@ -85,25 +81,34 @@ const updateRecord = async (payload, token) =>
   var hard = payload[1].hard - payload[2].hard;
   var ranking = payload[1].ranking - payload[2].ranking;
 
-  const futureRecord = await axios.get(RECORD_URL + "/futureRecords/" + payload[0].doc_date + "/" + payload[0].player_id, config);
+  const futureRecord = await axios.get(
+    RECORD_URL +
+      "/futureRecords/" +
+      payload[0].doc_date +
+      "/" +
+      payload[0].player_id,
+    config
+  );
 
   //Update future data if available
-  for (var i = 0; i < futureRecord.data.length; i++)
-  {
-    console.log(futureRecord.data[i].doc_date + " : " + futureRecord.data[i]._id);
-    const newData = 
-    {
+  for (var i = 0; i < futureRecord.data.length; i++) {
+    console.log(
+      futureRecord.data[i].doc_date + " : " + futureRecord.data[i]._id
+    );
+    const newData = {
       atp: atp + futureRecord.data[i].atp,
       clay: clay + futureRecord.data[i].clay,
       grass: grass + futureRecord.data[i].grass,
       hard: hard + futureRecord.data[i].hard,
       ranking: ranking + futureRecord.data[i].ranking,
-      lactive: futureRecord.data[i].lactive
+      lactive: futureRecord.data[i].lactive,
     };
 
-    await axios.put
-    (
-      RECORD_URL + futureRecord.data[i].doc_date + "/" + futureRecord.data[i]._id,
+    await axios.put(
+      RECORD_URL +
+        futureRecord.data[i].doc_date +
+        "/" +
+        futureRecord.data[i]._id,
       newData,
       config
     );
