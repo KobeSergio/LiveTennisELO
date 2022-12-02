@@ -83,6 +83,9 @@ export default function EditMatch(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const dynamic = document.getElementById('dynamic-checkbox').checked;
+
     const MatchData = {
       match_num,
       round,
@@ -97,6 +100,7 @@ export default function EditMatch(props) {
       loser_elo_gains,
       loser_elo_surface,
       loser_elo_surface_gains,
+      dynamic
     };
 
     const oldData = 
@@ -401,6 +405,8 @@ export default function EditMatch(props) {
             </div>
           </div>
           <Modal.Footer>
+            <input id="dynamic-checkbox" name="dynamic" type="checkbox"/>
+            <p>Make Dynamic</p>
             <Button
               onClick={handleClose}
               className="btn btn-gray btn-sm"
