@@ -152,7 +152,8 @@ export default function HotPerformances() {
     console.log("first");
     setIsLoading(true);
     //fetch perf_data from api and set it to perf_data
-    fetch(`/api/hotperformance/${category}`)
+    fetch(`http://localhost:5000/api/hotperformance/${category}`)
+      // fetch(`/api/hotperformance/${category}`)
       .then((res) => res.json())
       .then((json) => {
         var last10 = [];
@@ -164,7 +165,7 @@ export default function HotPerformances() {
                 ? getPerformance(
                     player[0].mostRecentGames
                       .filter(
-                        (element) => element.surface.toLowerCase() == category
+                        (element) => element.surface?.toLowerCase() == category
                       )
                       .sort(
                         (a, b) =>
@@ -375,7 +376,24 @@ export default function HotPerformances() {
                     </a>
                   </span>
                 </td>
-                <td>{player.performance}</td>
+                <td>
+                  <span
+                    title="Performance"
+                    style={{
+                      backgroundColor:
+                        category == "hard"
+                          ? "#015778"
+                          : category == "clay"
+                          ? "#E96513"
+                          : category == "grass"
+                          ? "#3EBA7C"
+                          : "#000000",
+                    }}
+                    className="table-surface-elo-label"
+                  >
+                    <>{player.performance}</>
+                  </span>
+                </td>
               </tr>
             </>
           ))}

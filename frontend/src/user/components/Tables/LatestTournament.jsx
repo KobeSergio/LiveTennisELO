@@ -39,7 +39,8 @@ export default function LatestTournament() {
   useEffect(() => {
     setIsLoading(true);
     //fetch tourney_data from api and set it to tourney_data
-    fetch(`/api/latesttournament`)
+    fetch(`http://localhost:5000/api/latesttournament`)
+      //fetch(`/api/latesttournament`)
       .then((res) => res.json())
       .then((json) => {
         setTourney_data(json);

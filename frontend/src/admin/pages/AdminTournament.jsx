@@ -186,7 +186,7 @@ export default function AdminTournament() {
                   <td className="text-start  " id="name">
                     {match.winner_local_id != null ? (
                       <>
-                        <a href={`./` + match.winner_local_id}>
+                        <a href={`/admin/players/` + match.winner_local_id}>
                           {
                             <ReactCountryFlag
                               countryCode={match.winner_local_id.substring(
@@ -320,7 +320,7 @@ export default function AdminTournament() {
                   <td className="text-start " id="name">
                     {match.loser_local_id != null ? (
                       <>
-                        <a href={`./` + match.loser_local_id}>
+                        <a href={`/admin/players/` + match.loser_local_id}>
                           {
                             <ReactCountryFlag
                               countryCode={match.loser_local_id.substring(0, 2)}

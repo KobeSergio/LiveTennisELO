@@ -109,6 +109,7 @@ const getIndPlayer = asyncHandler(async (req, res) => {
         game: {
           $push: {
             _id: "$_id",
+            tourney_id: "$tourney_id",
             tourney_name: "$tourney_name",
             tourney_date: "$tourney_date",
             surface: "$surface",
@@ -182,7 +183,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
         ? { clay_rating: -1 }
         : { grass_rating: -1 }
     )
-    .limit(20);
+    .limit(30);
 
   if (!players) {
     res.status(400);

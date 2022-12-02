@@ -3,6 +3,7 @@ import axios from "axios";
 const port = process.env.PORT || 5000;
 //const PLAYERS_URL = `/admin-api/players`;
 //const MATCHES_URL = `/admin-api/matches/`;
+//const TOURNEY_URL = `/admin-api/tournament/`;
 
 const PLAYERS_URL = `http://localhost:5000/admin-api/players`;
 const MATCHES_URL = `http://localhost:5000/admin-api/matches/`;

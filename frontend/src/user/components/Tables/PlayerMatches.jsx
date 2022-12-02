@@ -1169,7 +1169,9 @@ export function PlayerMatches() {
                       {arrangeScore(player_id, match)}
                     </td>
                     <td className="table-tournament" id="tournament">
-                      {match.tourney_name}
+                      <a href={`/tournaments/` + match.tourney_id}>
+                        {match.tourney_name}
+                      </a>
                     </td>
                     <td className="table-round" id="round">
                       {match.round}

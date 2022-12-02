@@ -1131,15 +1131,45 @@ export default function (props) {
                   </td>
                   <td id="ranking">
                     {toggleRecords === 1 ? (
-                      <>{record.ranking}</>
+                      <span
+                        title="Overall"
+                        style={{ backgroundColor: "#000000" }}
+                        className="table-surface-elo-label"
+                      >
+                        <>{record.ranking}</>
+                      </span>
                     ) : toggleRecords === 2 ? (
-                      <>{record.hard}</>
+                      <span
+                        title="Hard"
+                        style={{ backgroundColor: "#015778" }}
+                        className="table-surface-elo-label"
+                      >
+                        <>{record.hard}</>
+                      </span>
                     ) : toggleRecords === 3 ? (
-                      <>{record.clay}</>
+                      <span
+                        title="Clay"
+                        style={{ backgroundColor: "#E96513" }}
+                        className="table-surface-elo-label"
+                      >
+                        <>{record.clay}</>
+                      </span>
                     ) : toggleRecords === 4 ? (
-                      <>{record.grass}</>
+                      <span
+                        title="Grass"
+                        style={{ backgroundColor: "#3EBA7C" }}
+                        className="table-surface-elo-label"
+                      >
+                        <>{record.grass}</>
+                      </span>
                     ) : toggleRecords === 5 ? (
-                      <>{record.atp}</>
+                      <span
+                        title="ATP"
+                        style={{ backgroundColor: "#000000" }}
+                        className="table-surface-elo-label"
+                      >
+                        <>{record.atp}</>
+                      </span>
                     ) : (
                       <></>
                     )}

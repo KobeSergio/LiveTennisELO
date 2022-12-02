@@ -61,19 +61,15 @@ const uploadRecord = async (payload, token) => {
 // @http:   POST admin/
 // @res:    user: json
 //New [patch 69.0]
-const updateRecord = async (payload, token) => 
-{
-  const config = 
-  {
-    headers: 
-    {
+const updateRecord = async (payload, token) => {
+  const config = {
+    headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
   //Update current data, current date
-  const updateRecord = await axios.put
-  (
+  const updateRecord = await axios.put(
     RECORD_URL + payload[0].doc_date + "/" + payload[0]._id,
     payload[1],
     config
