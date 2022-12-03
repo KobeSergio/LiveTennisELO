@@ -202,7 +202,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
           ],
         },
       },
-      { $limit: 1000 },
+      { $limit: 500 },
       {
         $group: {
           _id: player.player_id,
