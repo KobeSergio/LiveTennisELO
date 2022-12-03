@@ -34,7 +34,7 @@ const root = createRoot(document.getElementById("root"));
 export default function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           {/* Admin page routes */}
           <Route path="/admin-login" element={<Login />} />
