@@ -183,7 +183,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
         ? { clay_rating: -1 }
         : { grass_rating: -1 }
     )
-    .limit(30);
+    .limit(20);
 
   if (!players) {
     res.status(400);
