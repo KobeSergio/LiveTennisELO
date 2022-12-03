@@ -56,6 +56,9 @@ export function EditRecord(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const dynamic = document.getElementById('dynamic-checkbox').checked;
+
     const recordData = {
       ranking,
       hard,
@@ -63,6 +66,7 @@ export function EditRecord(props) {
       grass,
       atp,
       lactive,
+      dynamic
     };
     const routeDetails = {
       _id: props.props._id,
@@ -188,6 +192,8 @@ export function EditRecord(props) {
             </div>
           </div>
           <Modal.Footer>
+            <input id="dynamic-checkbox" name="dynamic" type="checkbox"/>
+            <p>Make Dynamic</p>
             <Button
               onClick={handleClose}
               className="btn btn-gray btn-sm"
