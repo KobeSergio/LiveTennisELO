@@ -15,8 +15,7 @@ const updateMatch = asyncHandler(async (req, res) => {
 });
 
 const futureRecordTourney = asyncHandler(async (req, res) => {
-  const tournament = await Matches.find(
-  { 
+  const tournament = await Matches.find({
     tourney_date: { $gte: req.params.tourney_date },
   });
   if (!tournament) {
@@ -130,7 +129,7 @@ const latestTournament = asyncHandler(async (req, res) => {
   //sort by date and match_num
   const promises = tournaments.map(async (tournament) => {
     const matches = await Matches.aggregate([
-      { $sort: { tourney_date: 1, match_num: -1 } },
+      { $sort: { tourney_date: -1, match_num: -1 } },
       {
         $match: {
           tourney_id: { $eq: tournament.tourney_id },
@@ -189,5 +188,5 @@ module.exports = {
   latestTournament,
   updateTournament,
   deleteTournament,
-  futureRecordTourney
+  futureRecordTourney,
 };
