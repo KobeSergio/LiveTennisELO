@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.41b0ef72.css",
-    "main.js": "/static/js/main.25c82684.js",
+    "main.js": "/static/js/main.b1ffcfd2.js",
     "static/media/TenELOs.png": "/static/media/TenELOs.ec936c80668e54695453.png",
     "static/media/bg-charts2.png": "/static/media/bg-charts2.6c4231e7bfae0bf6709c.png",
     "static/media/bg-liveratings.png": "/static/media/bg-liveratings.6ae6e585e40176b80c8d.png",
@@ -9,10 +9,10 @@
     "static/media/rect-white.png": "/static/media/rect-white.013a557c3804d35cc7ac.png",
     "index.html": "/index.html",
     "main.41b0ef72.css.map": "/static/css/main.41b0ef72.css.map",
-    "main.25c82684.js.map": "/static/js/main.25c82684.js.map"
+    "main.b1ffcfd2.js.map": "/static/js/main.b1ffcfd2.js.map"
   },
   "entrypoints": [
     "static/css/main.41b0ef72.css",
-    "static/js/main.25c82684.js"
+    "static/js/main.b1ffcfd2.js"
   ]
 }
