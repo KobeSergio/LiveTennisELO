@@ -97,8 +97,6 @@ const updateMatch = async (payload, token) => {
     config
   );
 
-  console.log(payload[1]);
-
   if (payload[1]["dynamic"]) {
     const futureRecord = await axios.get(
       MATCHES_URL + "futureRecordTourney/" + payload[2].tourney_date,
@@ -112,12 +110,6 @@ const updateMatch = async (payload, token) => {
       payload[1].loser_elo_surface - payload[2].loser_elo_surface;
 
     for (var i = 0; i < futureRecord.data.length; i++) {
-      console.log(
-        payload[2]["loser_local_id"] +
-          " == " +
-          futureRecord.data[i]["winner_local_id"]
-      );
-
       if (payload[0] != futureRecord.data[i]["_id"]) {
         if (
           payload[2]["loser_local_id"] == futureRecord.data[i]["loser_local_id"]
@@ -190,12 +182,10 @@ const updateMatch = async (payload, token) => {
               newData,
               config
             );
-          }
-          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
-          {
-            const newData = 
-            {
-              winner_elo_surface: loser_elo_surface + futureRecord.data[i]['winner_elo_surface']
+          } else if (payload[2]["surface"] == futureRecord.data[i]["surface"]) {
+            const newData = {
+              winner_elo_surface:
+                loser_elo_surface + futureRecord.data[i]["winner_elo_surface"],
             };
 
             await axios.put(
@@ -207,11 +197,12 @@ const updateMatch = async (payload, token) => {
         }
 
         //Winner elo
-        if (payload[2]['winner_local_id'] == futureRecord.data[i]['winner_local_id'])
-        {
-          const newData = 
-          {
-            winner_elo: winner_elo + futureRecord.data[i]['winner_elo']
+        if (
+          payload[2]["winner_local_id"] ==
+          futureRecord.data[i]["winner_local_id"]
+        ) {
+          const newData = {
+            winner_elo: winner_elo + futureRecord.data[i]["winner_elo"],
           };
 
           await axios.put(
@@ -236,12 +227,10 @@ const updateMatch = async (payload, token) => {
               newData,
               config
             );
-          }
-          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
-          {
-            const newData = 
-            {
-              winner_elo_surface: winner_elo_surface + futureRecord.data[i]['winner_elo_surface']
+          } else if (payload[2]["surface"] == futureRecord.data[i]["surface"]) {
+            const newData = {
+              winner_elo_surface:
+                winner_elo_surface + futureRecord.data[i]["winner_elo_surface"],
             };
 
             await axios.put(
@@ -250,12 +239,12 @@ const updateMatch = async (payload, token) => {
               config
             );
           }
-        }
-        else if (payload[2]['winner_local_id'] == futureRecord.data[i]['loser_local_id'])
-        {
-          const newData = 
-          {
-            loser_elo: winner_elo + futureRecord.data[i]['loser_elo']
+        } else if (
+          payload[2]["winner_local_id"] ==
+          futureRecord.data[i]["loser_local_id"]
+        ) {
+          const newData = {
+            loser_elo: winner_elo + futureRecord.data[i]["loser_elo"],
           };
 
           await axios.put(
@@ -280,12 +269,10 @@ const updateMatch = async (payload, token) => {
               newData,
               config
             );
-          }
-          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
-          {
-            const newData = 
-            {
-              loser_elo_surface: winner_elo_surface + futureRecord.data[i]['loser_elo_surface']
+          } else if (payload[2]["surface"] == futureRecord.data[i]["surface"]) {
+            const newData = {
+              loser_elo_surface:
+                winner_elo_surface + futureRecord.data[i]["loser_elo_surface"],
             };
 
             await axios.put(
@@ -312,7 +299,6 @@ const deleteMatch = async (match_id, token) => {
 };
 
 const updateTournament = async (payload, token) => {
-  console.log(payload);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -123,8 +123,8 @@ export default function EditMatch(props) {
       loser_elo_surface_gains: props.props.match.loser_elo_surface_gains,
     };
 
-    dispatch(updateMatch([props.props.match._id, MatchData, oldData]));
-    window.location.reload(false);
+    dispatch(updateMatch([props.props.match._id, MatchData, oldData])).then(()=>{
+      window.location.reload(false);});
   };
 
   return (

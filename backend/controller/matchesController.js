@@ -10,7 +10,6 @@ const updateMatch = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Player not found");
   }
-  console.log(match);
   res.status(200).json(match);
 });
 
