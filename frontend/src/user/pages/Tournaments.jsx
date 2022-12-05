@@ -1,11 +1,6 @@
 import bg_img from "../img/bg-charts2.png";
 import Dropdown from "react-bootstrap/Dropdown";
-import {
-  ChevronLeft,
-  ChevronRight,
-  CaretDownFill,
-  CaretUpFill,
-} from "react-bootstrap-icons";
+import { CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -103,7 +98,7 @@ export default function Tournaments() {
     }
   }, [year]);
 
-  console.log(data)
+  console.log(data);
 
   const override = {
     margin: 0,

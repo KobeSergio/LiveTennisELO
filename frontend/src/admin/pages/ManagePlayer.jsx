@@ -2,12 +2,7 @@ import { PlayerCharts } from "../components/player/PlayerCharts";
 import { PlayerMatches } from "../components/player/PlayerMatches";
 import { EditContent } from "../components/player/EditContent";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
-import {
-  SuccessToast,
-  ErrorToast,
-  NotificationContainer,
-} from "../components/Notifications";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 
 //Backend

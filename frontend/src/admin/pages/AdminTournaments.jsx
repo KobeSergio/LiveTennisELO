@@ -1,11 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import {
-  ChevronLeft,
-  ChevronRight,
-  CaretDownFill,
-  CaretUpFill,
-  TrashFill,
-} from "react-bootstrap-icons";
+import { CaretDownFill, CaretUpFill, TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";

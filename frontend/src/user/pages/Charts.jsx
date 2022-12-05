@@ -5,13 +5,12 @@ import { drawChart } from "../../features/api/apiSlice";
 import Graph from "../components/Charts/Graph";
 import Footer from "../components/Footer/Footer";
 import { loadData } from "../../features/api/apiSlice";
-import { X, CaretDownFill, Plus, Pencil } from "react-bootstrap-icons";
+import { Pencil } from "react-bootstrap-icons";
 import Button from "react-bootstrap/esm/Button";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
-import makeAnimated from "react-select/animated";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });

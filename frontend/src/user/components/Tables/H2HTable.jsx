@@ -1,11 +1,10 @@
 import { SurfaceLegend } from "../Legend/SurfaceLegend";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import { useEffect } from "react";
-import { AddHighlight, ShowHighlight } from "./Highlight";
+import { ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useSelector } from "react-redux";
 import Pagination from "../Pagination";
 String.prototype.replaceAt = function (index, replacement) {
   return (

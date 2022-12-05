@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Download,
-  Search,
-  TrashFill,
-  CaretDownFill,
-  CaretUpFill,
-} from "react-bootstrap-icons";
+import { Search, CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend";
@@ -13,7 +7,7 @@ import { SurfaceLegend } from "../components/Legend";
 //Backend
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loadPlayers } from "../../features/players/playersSlice";
 import { resetPlayer } from "../../features/players/playerSlice";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -86,9 +80,7 @@ function Players() {
 
   //Redirect if not logged in
   const { user } = useSelector((state) => state.auth);
-  const { players_message, players, players_isLoading } = useSelector(
-    (state) => state.players
-  );
+  const { players, players_isLoading } = useSelector((state) => state.players);
 
   const [data, setData] = useState([]);
   const [order, setOrder] = useState("ASC");

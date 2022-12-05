@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import ReactCountryFlag from "react-country-flag";
 import { ShowHighlight } from "./Highlight";
-import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
+import { CameraVideo } from "react-bootstrap-icons";
 
 function toTitleCase(str) {
   if (str.toLowerCase() === "mcenroe john") {

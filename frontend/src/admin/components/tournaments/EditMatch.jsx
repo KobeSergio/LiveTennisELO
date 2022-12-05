@@ -84,7 +84,7 @@ export default function EditMatch(props) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const dynamic = document.getElementById("dynamic-checkbox").checked;
+    const dynamic = document.getElementById('dynamic-checkbox').checked;
 
     const MatchData = {
       match_num,
@@ -100,10 +100,11 @@ export default function EditMatch(props) {
       loser_elo_gains,
       loser_elo_surface,
       loser_elo_surface_gains,
-      dynamic,
+      dynamic
     };
 
-    const oldData = {
+    const oldData = 
+    {
       tourney_date: props.props.match.tourney_date,
       tourney_id: props.props.match.tourney_id,
       winner_local_id: props.props.match.winner_local_id,
@@ -124,7 +125,7 @@ export default function EditMatch(props) {
     };
 
     dispatch(updateMatch([props.props.match._id, MatchData, oldData]));
-    window.location.reload(false);
+    //window.location.reload(false);
   };
 
   return (
@@ -404,7 +405,7 @@ export default function EditMatch(props) {
             </div>
           </div>
           <Modal.Footer>
-            <input id="dynamic-checkbox" name="dynamic" type="checkbox" />
+            <input id="dynamic-checkbox" name="dynamic" type="checkbox"/>
             <p>Make Dynamic</p>
             <Button
               onClick={handleClose}

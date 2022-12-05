@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadTournament } from "../../features/api/apiSlice";
-import { ShowHighlight, AddHighlight } from "../components/player/Highlight";
+import { ShowHighlight } from "../components/player/Highlight";
 import { deleteMatch } from "../../features/players/playerSlice";
 import EditMatch from "../components/tournaments/EditMatch";
 import {

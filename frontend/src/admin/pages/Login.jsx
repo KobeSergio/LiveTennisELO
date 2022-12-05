@@ -2,7 +2,6 @@ import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
-import { latestRecord, loadRecord } from "../../features/records/recordsSlice";
 import { loadPlayers } from "../../features/players/playersSlice";
 
 //Constructor

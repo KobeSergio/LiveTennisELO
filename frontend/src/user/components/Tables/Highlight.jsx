@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { CameraVideo, PlusLg } from "react-bootstrap-icons";
+import { Modal } from "react-bootstrap";
+import { CameraVideo } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
-import { insertHighlight } from "../../../features/players/playerSlice";
 
 export function ShowHighlight(props) {
   //Frontend stuff
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     highlight: "",

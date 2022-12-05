@@ -1,10 +1,4 @@
-import { Search, Download, TrashFill } from "react-bootstrap-icons";
-import {
-  YearDropdown,
-  DateDropdown,
-  RowsDropdown,
-} from "../components/Dropdown";
-import { SearchRecords } from "../components/Search";
+import { Search, TrashFill } from "react-bootstrap-icons";
 import { SurfaceLegend } from "../components/Legend";
 import RecordTable from "../components/records/RecordTable";
 import ClipLoader from "react-spinners/ClipLoader";

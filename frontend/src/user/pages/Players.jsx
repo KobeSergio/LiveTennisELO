@@ -1,12 +1,6 @@
 import React from "react";
 import bg_img from "../img/bg-charts2.png";
-import {
-  Download,
-  Search,
-  TrashFill,
-  CaretDownFill,
-  CaretUpFill,
-} from "react-bootstrap-icons";
+import { Search, CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend/SurfaceLegend";
@@ -233,7 +227,7 @@ function Players() {
   useEffect(() => {
     setOrder("ASC");
   }, []);
-  
+
   if (api_isLoading) {
     return <ClipLoader cssOverride={override} size={70} />;
   }

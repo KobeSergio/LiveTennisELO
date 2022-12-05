@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import { useState } from "react";
 export default function Pagination({ DataPerPage, totalData, paginate }) {
   const pageNumbers = [];
@@ -6,7 +5,7 @@ export default function Pagination({ DataPerPage, totalData, paginate }) {
   for (let i = 1; i <= Math.ceil(totalData / DataPerPage); i++) {
     pageNumbers.push(i);
   }
- 
+
   const [selected, setSelected] = useState(1);
   return (
     <nav className="pagination-outer">

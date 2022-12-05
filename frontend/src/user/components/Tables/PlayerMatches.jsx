@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import { useEffect } from "react";
-import { AddHighlight, ShowHighlight } from "./Highlight";
+import { ShowHighlight } from "./Highlight";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination";
