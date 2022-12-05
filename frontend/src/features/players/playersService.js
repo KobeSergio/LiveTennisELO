@@ -183,7 +183,7 @@ const updateMatch = async (payload, token) =>
               config
             );
           }
-          else if (payload[1]['surface'] == futureRecord.data[i]['surface'])
+          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
           {
             const newData = 
             {
@@ -199,7 +199,7 @@ const updateMatch = async (payload, token) =>
         }
 
         //Winner elo
-        if (payload[1]['winner_local_id'] == futureRecord.data[i]['winner_local_id'])
+        if (payload[2]['winner_local_id'] == futureRecord.data[i]['winner_local_id'])
         {
           const newData = 
           {
@@ -226,7 +226,7 @@ const updateMatch = async (payload, token) =>
               config
             );
           }
-          else if (payload[1]['surface'] == futureRecord.data[i]['surface'])
+          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
           {
             const newData = 
             {
@@ -240,7 +240,7 @@ const updateMatch = async (payload, token) =>
             );
           }
         }
-        else if (payload[1]['winner_local_id'] == futureRecord.data[i]['loser_local_id'])
+        else if (payload[2]['winner_local_id'] == futureRecord.data[i]['loser_local_id'])
         {
           const newData = 
           {
@@ -267,7 +267,7 @@ const updateMatch = async (payload, token) =>
               config
             );
           }
-          else if (payload[1]['surface'] == futureRecord.data[i]['surface'])
+          else if (payload[2]['surface'] == futureRecord.data[i]['surface'])
           {
             const newData = 
             {
