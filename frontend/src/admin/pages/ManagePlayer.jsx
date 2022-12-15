@@ -4,6 +4,7 @@ import { EditContent } from "../components/player/EditContent";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { Button } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
+import { FaCross } from "react-icons/fa";
 
 //Backend
 import { useEffect } from "react";
@@ -29,7 +30,7 @@ function parseDate(dateString) {
   if (!dateString.includes("-") && !dateString.includes("/")) {
     mydate = new Date(
       dateString.substring(0, 4),
-      dateString.substring(4, 6),
+      dateString.substring(4, 6) - 1,
       dateString.substring(6, 8)
     );
     var dateStr = mydate.toDateString();
@@ -44,7 +45,7 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[0], //Year
-        newdate[1], //Month
+        newdate[1] - 1, //Month
         newdate[2] // Day
       );
       var dateStr = mydate.toDateString();
@@ -58,7 +59,7 @@ function parseDate(dateString) {
       }
       mydate = new Date(
         newdate[2], //Year
-        newdate[0], //Month
+        newdate[0] - 1, //Month
         newdate[1] // Day
       );
       var dateStr = mydate.toDateString();
@@ -66,13 +67,24 @@ function parseDate(dateString) {
     }
   }
 }
-function parsebirthDate(dateString) {
+
+function parsebirthDate(dateString, death) {
   var birthdate = new Date(
     dateString.substring(0, 4),
-    dateString.substring(4, 6),
+    dateString.substring(4, 6) - 1,
     dateString.substring(6, 8)
   );
   var dateToday = new Date();
+  if (death != null) {
+    const deathSplit = death.split("-");
+    const deathdate = new Date(
+      deathSplit[0], //Year
+      deathSplit[1] - 1, //Month
+      deathSplit[2] // Day
+    );
+    var diff = birthdate.getFullYear() - deathdate.getFullYear();
+    return Math.abs(diff);
+  }
   var diff = birthdate.getFullYear() - dateToday.getFullYear();
   return Math.abs(diff);
 }
@@ -237,7 +249,10 @@ function ManagePlayer() {
                   <div className="row">
                     <div className="col-6">
                       {/* age, country, bithplace, height weight, socials */}
-                      {player_details[0].birthdate == null ? (
+                      {(player_details[0].birthdate == null ||
+                        computeStatus(player_details[0].last_match) ==
+                          "Retired") &&
+                      player_details[0].death == null ? (
                         <></>
                       ) : (
                         <div>Age:</div>
@@ -295,13 +310,26 @@ function ManagePlayer() {
                       )}
                     </div>
                     <div className="col">
-                      {" "}
                       {/* age, country, bithplace, height weight, socials */}
                       <div className="text-dark" id="age">
-                        {player_details[0].birthdate == null ? (
+                        {(player_details[0].birthdate == null ||
+                          computeStatus(player_details[0].last_match) ==
+                            "Retired") &&
+                        player_details[0].death == null ? (
                           <></>
                         ) : (
-                          parsebirthDate(player_details[0].birthdate)
+                          <>
+                            {parsebirthDate(
+                              player_details[0].birthdate,
+                              player_details[0].death ?? null
+                            )}
+                            {"\xa0\xa0"}
+                            {player_details[0].death == null ? (
+                              <> </>
+                            ) : (
+                              <FaCross title="Deceased" />
+                            )}
+                          </>
                         )}
                       </div>
                       <div className="text-dark" id="country">
@@ -445,15 +473,24 @@ function ManagePlayer() {
                           <></>
                         ) : (
                           <>
-                            <span
-                              style={{ backgroundColor: "#000000" }}
-                              className="table-surface-elo-label"
-                            >
-                              {player_details[0].overall_rank +
-                                " (" +
-                                player_details[0].overall_rating +
-                                ") "}
-                            </span>
+                            {player_details[0].last_match == null ? (
+                              <></>
+                            ) : computeStatus(player_details[0].last_match) ===
+                              "Retired" ? (
+                              <>{"\xa0"}</>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ backgroundColor: "#000000" }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player_details[0].overall_rank +
+                                    " (" +
+                                    player_details[0].overall_rating +
+                                    ") "}
+                                </span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -506,15 +543,24 @@ function ManagePlayer() {
                           "\xa0"
                         ) : (
                           <>
-                            <span
-                              style={{ backgroundColor: "#E96513" }}
-                              className="table-surface-elo-label"
-                            >
-                              {player_details[0].clay_rank +
-                                " (" +
-                                player_details[0].clay_rating +
-                                ") "}
-                            </span>
+                            {player_details[0].last_match == null ? (
+                              <></>
+                            ) : computeStatus(player_details[0].last_match) ===
+                              "Retired" ? (
+                              <>{"\xa0"}</>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ backgroundColor: "#E96513" }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player_details[0].clay_rank +
+                                    " (" +
+                                    player_details[0].clay_rating +
+                                    ") "}
+                                </span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -562,15 +608,24 @@ function ManagePlayer() {
                           "\xa0"
                         ) : (
                           <>
-                            <span
-                              style={{ backgroundColor: "#015778" }}
-                              className="table-surface-elo-label"
-                            >
-                              {player_details[0].hard_rank +
-                                " (" +
-                                player_details[0].hard_rating +
-                                ") "}
-                            </span>
+                            {player_details[0].last_match == null ? (
+                              <></>
+                            ) : computeStatus(player_details[0].last_match) ===
+                              "Retired" ? (
+                              <>{"\xa0"}</>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ backgroundColor: "#015778" }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player_details[0].hard_rank +
+                                    " (" +
+                                    player_details[0].hard_rating +
+                                    ") "}
+                                </span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -616,15 +671,24 @@ function ManagePlayer() {
                           "\xa0"
                         ) : (
                           <>
-                            <span
-                              style={{ backgroundColor: "#3EBA7C" }}
-                              className="table-surface-elo-label"
-                            >
-                              {player_details[0].grass_rank +
-                                " (" +
-                                player_details[0].grass_rating +
-                                ") "}
-                            </span>
+                            {player_details[0].last_match == null ? (
+                              <></>
+                            ) : computeStatus(player_details[0].last_match) ===
+                              "Retired" ? (
+                              <>{"\xa0"}</>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ backgroundColor: "#3EBA7C" }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player_details[0].grass_rank +
+                                    " (" +
+                                    player_details[0].grass_rating +
+                                    ") "}
+                                </span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -665,7 +729,15 @@ function ManagePlayer() {
                       {player_details[0].atp_peak_rating == null ? (
                         <></>
                       ) : (
-                        <div>Peak ATP Rating:</div>
+                        <div>
+                          Peak ATP{" "}
+                          {player_details[0].atp_peak_rating == null ? (
+                            <>Point</>
+                          ) : (
+                            <>Points</>
+                          )}
+                          :
+                        </div>
                       )}
                     </div>
                     <div className="col">
@@ -674,15 +746,24 @@ function ManagePlayer() {
                           "\xa0"
                         ) : (
                           <>
-                            <span
-                              style={{ backgroundColor: "#000000" }}
-                              className="table-surface-elo-label"
-                            >
-                              {player_details[0].atp_rank +
-                                " (" +
-                                player_details[0].atp_rating +
-                                " pts) "}
-                            </span>
+                            {player_details[0].last_match == null ? (
+                              <></>
+                            ) : computeStatus(player_details[0].last_match) ===
+                              "Retired" ? (
+                              <>{"\xa0"}</>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ backgroundColor: "#000000" }}
+                                  className="table-surface-elo-label"
+                                >
+                                  {player_details[0].atp_rank +
+                                    " (" +
+                                    player_details[0].atp_rating +
+                                    " pts) "}
+                                </span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>

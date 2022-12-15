@@ -2,6 +2,7 @@ import { PlayerChart } from "../components/Charts/PlayerChart";
 import { PlayerMatches } from "../components/Tables/PlayerMatches";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
+import { FaCross } from "react-icons/fa";
 
 //Backend
 import { useEffect } from "react";
@@ -76,13 +77,23 @@ function parseDate(dateString) {
   }
 }
 
-function parsebirthDate(dateString) {
+function parsebirthDate(dateString, death) {
   var birthdate = new Date(
     dateString.substring(0, 4),
     dateString.substring(4, 6) - 1,
     dateString.substring(6, 8)
   );
   var dateToday = new Date();
+  if (death != null) {
+    const deathSplit = death.split("-");
+    const deathdate = new Date(
+      deathSplit[0], //Year
+      deathSplit[1] - 1, //Month
+      deathSplit[2] // Day
+    );
+    var diff = birthdate.getFullYear() - deathdate.getFullYear();
+    return Math.abs(diff);
+  }
   var diff = birthdate.getFullYear() - dateToday.getFullYear();
   return Math.abs(diff);
 }
@@ -179,7 +190,7 @@ export default function Player() {
                       player_details[0].img_link == null
                         ? `https://i.ibb.co/dBb6xnR/no-player.png`
                         : player_details[0].img_link
-                    } 
+                    }
                     style={{
                       width: 200,
                       height: 300,
@@ -251,7 +262,10 @@ export default function Player() {
                     <div className="row">
                       <div className="col-6">
                         {/* age, country, bithplace, height weight, socials */}
-                        {player_details[0].birthdate == null ? (
+                        {(player_details[0].birthdate == null ||
+                          computeStatus(player_details[0].last_match) ==
+                            "Retired") &&
+                        player_details[0].death == null ? (
                           <></>
                         ) : (
                           <div>Age:</div>
@@ -309,17 +323,26 @@ export default function Player() {
                         )}
                       </div>
                       <div className="col">
-                        {" "}
                         {/* age, country, bithplace, height weight, socials */}
                         <div className="text-dark" id="age">
-                          {player_details[0].birthdate == null ? (
+                          {(player_details[0].birthdate == null ||
+                            computeStatus(player_details[0].last_match) ==
+                              "Retired") &&
+                          player_details[0].death == null ? (
                             <></>
                           ) : (
-                            parsebirthDate(player_details[0].birthdate) +
-                            " " +
-                            "(" +
-                            parseDate(player_details[0].birthdate) +
-                            ")"
+                            <>
+                              {parsebirthDate(
+                                player_details[0].birthdate,
+                                player_details[0].death ?? null
+                              )}
+                              {"\xa0\xa0"}
+                              {player_details[0].death == null ? (
+                                <> </>
+                              ) : (
+                                <FaCross title="Deceased" />
+                              )}
+                            </>
                           )}
                         </div>
                         <div className="text-dark" id="country">

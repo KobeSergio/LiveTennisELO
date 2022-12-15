@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-
+import { X } from "react-bootstrap-icons";
 import { Pencil, Windows } from "react-bootstrap-icons";
 //Backend
 import { useDispatch } from "react-redux";
@@ -33,6 +33,7 @@ export function EditContent(player) {
     facebook: player.player.facebook,
     instagram: player.player.instagram,
     nicknames: player.player.nicknames,
+    death: player.player.death,
   });
 
   const {
@@ -48,6 +49,7 @@ export function EditContent(player) {
     facebook,
     instagram,
     nicknames,
+    death,
   } = formData;
 
   const onSubmit = (e) => {
@@ -65,7 +67,9 @@ export function EditContent(player) {
       facebook,
       instagram,
       nicknames,
+      death,
     };
+
     const routeDetails = {
       _id: player.player._id,
       player_id: player_id,
@@ -74,6 +78,16 @@ export function EditContent(player) {
       window.location.reload(false);
     });
   };
+
+  function onDeathDelete() {
+    const routeDetails = {
+      _id: player.player._id,
+      player_id: player_id,
+    };
+    dispatch(updatePlayer([routeDetails, { death: null }])).then(() => {
+      window.location.reload(false);
+    });
+  }
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -149,7 +163,7 @@ export function EditContent(player) {
                 <div className="row">
                   <div className="col-sm-3 me-5">
                     <Form.Group className="mb-3">
-                      <Form.Label>Birthdate:</Form.Label>
+                      <Form.Label>Birthdate: yyyymmdd</Form.Label>
                       <Form.Control
                         type="text"
                         size="sm"
@@ -293,6 +307,24 @@ export function EditContent(player) {
                         onChange={onChange}
                         autoFocus
                       />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Death: yyyy-mm-dd</Form.Label>
+                      <div className="d-flex">
+                        <Form.Control
+                          type="text"
+                          size="sm"
+                          className="form-control-border"
+                          id="death"
+                          name="death"
+                          placeholder={player.player.death}
+                          onChange={onChange}
+                          autoFocus
+                        />{" "}
+                        <a href="#" onClick={() => onDeathDelete()}>
+                          <X />
+                        </a>
+                      </div>
                     </Form.Group>
                   </div>
                 </div>
@@ -450,7 +482,7 @@ export function EditMatch(props) {
     loser_elo_surface_gains,
   } = formData;
 
-  const onChange = (e) => { 
+  const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,

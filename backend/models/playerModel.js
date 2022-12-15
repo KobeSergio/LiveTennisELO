@@ -18,6 +18,7 @@ const playerSchema = new mongoose.Schema(
     wiki: String,
     website: String,
     nicknames: String,
+    death: String,
     favorite_surface: String,
     overall_rank: Number,
     overall_peak_rank: Number,

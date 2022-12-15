@@ -52,10 +52,12 @@ export default function ClientNavbar() {
 
   return (
     <>
-      {/* Running image banner */}
-      <div style={{ margin: -10 }}>
-        <img src={banner} class="img-fluid" alt="Responsive image" />
-      </div>
+      {/* Running image banner */} 
+      <img
+        src={banner}
+        class="img-fluid ratio ratio-1x1"
+        alt="Responsive image"
+      /> 
       <Navbar className="px-4 py-3" bg="light" expand="lg">
         <Navbar.Brand
           className="fw-bold"
