@@ -262,9 +262,7 @@ export default function Player() {
                     <div className="row">
                       <div className="col-6">
                         {/* age, country, bithplace, height weight, socials */}
-                        {(player_details[0].birthdate == null ||
-                          computeStatus(player_details[0].last_match) ==
-                            "Retired") &&
+                        {player_details[0].birthdate == null &&
                         player_details[0].death == null ? (
                           <></>
                         ) : (
@@ -325,9 +323,7 @@ export default function Player() {
                       <div className="col">
                         {/* age, country, bithplace, height weight, socials */}
                         <div className="text-dark" id="age">
-                          {(player_details[0].birthdate == null ||
-                            computeStatus(player_details[0].last_match) ==
-                              "Retired") &&
+                          {player_details[0].birthdate == null &&
                           player_details[0].death == null ? (
                             <></>
                           ) : (
