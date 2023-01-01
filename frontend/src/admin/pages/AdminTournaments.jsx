@@ -60,9 +60,7 @@ export default function AdminTournaments() {
   }, [user, navigate]);
 
   const [data, setData] = useState([]);
-  //get current year as string
-  const currentYear = new Date().getFullYear().toString();
-  const [year, setYear] = useState(currentYear);
+  const [year, setYear] = useState(null);
   const [order, setOrder] = useState("DSC");
   const [column, setColumn] = useState("");
 
@@ -87,12 +85,16 @@ export default function AdminTournaments() {
   }, []);
 
   useEffect(() => {
-    if (tournaments != null) {
-      //filter tournaments by year
+    if (year == null) {
       const filteredTournaments = tournaments?.tournaments?.filter(
-        (tournament) => tournament.tourney_date.toString().slice(0, 4) === year
+        (tournament) => tournament.tourney_date.toString().slice(0, 4)
       );
-      setData(filteredTournaments?.sort(alphabetically(false, "tourney_date")));
+      setYear(
+        filteredTournaments
+          ?.sort(alphabetically(false, "tourney_date"))[0]
+          .tourney_date.toString()
+          .slice(0, 4)
+      );
     }
   }, [tournaments]);
 

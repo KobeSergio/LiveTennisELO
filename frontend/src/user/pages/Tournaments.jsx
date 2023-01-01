@@ -52,9 +52,7 @@ export default function Tournaments() {
   const { tournaments, api_isLoading } = useSelector((state) => state.api);
 
   const [data, setData] = useState([]);
-  //get current year as string
-  const currentYear = new Date().getFullYear().toString();
-  const [year, setYear] = useState(currentYear);
+  const [year, setYear] = useState(null);
   const [order, setOrder] = useState("DSC");
   const [column, setColumn] = useState("");
 
@@ -79,12 +77,16 @@ export default function Tournaments() {
   }, []);
 
   useEffect(() => {
-    if (tournaments != null) {
-      //filter tournaments by year
+    if (year == null) {
       const filteredTournaments = tournaments?.tournaments?.filter(
-        (tournament) => tournament.tourney_date.toString().slice(0, 4) === year
+        (tournament) => tournament.tourney_date.toString().slice(0, 4)
       );
-      setData(filteredTournaments?.sort(alphabetically(false, "tourney_date")));
+      setYear(
+        filteredTournaments
+          ?.sort(alphabetically(false, "tourney_date"))[0]
+          .tourney_date.toString()
+          .slice(0, 4)
+      );
     }
   }, [tournaments]);
 
@@ -98,8 +100,6 @@ export default function Tournaments() {
     }
   }, [year]);
 
-  console.log(data);
-
   const override = {
     margin: 0,
     position: "absolute",
@@ -111,6 +111,7 @@ export default function Tournaments() {
   if (api_isLoading || data == null || data.length === 0) {
     return <ClipLoader cssOverride={override} size={70} />;
   }
+
   return (
     <div className="charts-bg" style={{ backgroundImage: `url(${bg_img})` }}>
       <div className="px-4 py-4">

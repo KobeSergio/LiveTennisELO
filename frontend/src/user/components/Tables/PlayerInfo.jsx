@@ -60,8 +60,9 @@ function parsebirthDate(dateString) {
     dateString.substring(6, 8)
   );
   var dateToday = new Date();
-  var diff = birthdate.getFullYear() - dateToday.getFullYear();
-  return Math.abs(diff);
+  const diffTime = Math.abs(birthdate - dateToday);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return Math.abs(Math.floor(diffDays / 365));
 }
 
 function computeStatus(dateString) {
@@ -92,10 +93,12 @@ function computeStatus(dateString) {
   }
 
   var dateToday = new Date();
-  var diff = dateToday.getFullYear() - mydate.getFullYear();
-  return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
+  const diffTime = Math.abs(dateToday - mydate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays >= 365 && diffDays <= 730
     ? "Inactive"
-    : Math.abs(diff) < 1
+    : diffDays < 365
     ? "Active"
     : "Retired";
 }

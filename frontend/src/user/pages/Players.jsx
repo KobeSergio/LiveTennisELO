@@ -44,10 +44,12 @@ function computeStatus(dateString) {
   }
 
   var dateToday = new Date();
-  var diff = dateToday.getFullYear() - mydate.getFullYear();
-  return Math.abs(diff) >= 1 && Math.abs(diff) <= 2
+  const diffTime = Math.abs(dateToday - mydate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays >= 365 && diffDays <= 730
     ? "INACT"
-    : Math.abs(diff) < 1
+    : diffDays < 365
     ? "Active"
     : "RET";
 }
