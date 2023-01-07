@@ -78,8 +78,14 @@ export default function Tournaments() {
 
   useEffect(() => {
     if (year == null) {
+      //filter tournaments where not tournament date is null
+
       const filteredTournaments = tournaments?.tournaments?.filter(
-        (tournament) => tournament.tourney_date.toString().slice(0, 4)
+        (tournament) => {
+          if (tournament.tourney_date != null) {
+            return tournament?.tourney_date.toString().slice(0, 4);
+          }
+        }
       );
       setYear(
         filteredTournaments
@@ -94,7 +100,11 @@ export default function Tournaments() {
     //filter tournaments by year and sort ascending
     if (tournaments != null) {
       const filteredTournaments = tournaments?.tournaments?.filter(
-        (tournament) => tournament.tourney_date.toString().slice(0, 4) === year
+        (tournament) => {
+          if (tournament.tourney_date != null) {
+            return tournament.tourney_date.toString().slice(0, 4) === year;
+          }
+        }
       );
       setData(filteredTournaments?.sort(alphabetically(false, "tourney_date")));
     }
@@ -138,9 +148,11 @@ export default function Tournaments() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ height: 300, overflowY: "scroll" }}>
                   {tournaments.tournaments
-                    .map((tournament) =>
-                      tournament.tourney_date.toString().slice(0, 4)
-                    )
+                    .map((tournament) => {
+                      if (tournament.tourney_date != null) {
+                        return tournament.tourney_date.toString().slice(0, 4);
+                      }
+                    })
                     .filter(
                       (value, index, self) => self.indexOf(value) === index
                     )
