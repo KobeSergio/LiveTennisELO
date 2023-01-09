@@ -79,7 +79,6 @@ export default function Tournaments() {
   useEffect(() => {
     if (year == null) {
       //filter tournaments where not tournament date is null
-
       const filteredTournaments = tournaments?.tournaments?.filter(
         (tournament) => {
           if (tournament.tourney_date != null) {

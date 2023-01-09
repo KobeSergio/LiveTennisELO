@@ -169,7 +169,48 @@ const getHotPerformance = asyncHandler(async (req, res) => {
 
   //get top 10 players according to ranking where atp is not null and greater than 1000
   const players = await Player.find({
-    atp_rating: { $ne: null, $gt: 300 },
+    $or: [
+      {
+        $and: [
+          {
+            atp_rating: { $ne: null, $gt: 300 },
+          },
+          {
+            overall_rating: { $ne: null, $gt: 2500 },
+          },
+        ],
+      },
+      {
+        $and: [
+          {
+            atp_rating: { $ne: null, $gt: 300 },
+          },
+          {
+            hard_rating: { $ne: null, $gt: 2500 },
+          },
+        ],
+      },
+      {
+        $and: [
+          {
+            atp_rating: { $ne: null, $gt: 300 },
+          },
+          {
+            clay_rating: { $ne: null, $gt: 2500 },
+          },
+        ],
+      },
+      {
+        $and: [
+          {
+            atp_rating: { $ne: null, $gt: 300 },
+          },
+          {
+            grass_rating: { $ne: null, $gt: 2500 },
+          },
+        ],
+      },
+    ],
   })
     .select(
       "player_id player_name overall_rating hard_rating grass_rating clay_rating atp_rating"
@@ -183,7 +224,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
         ? { clay_rating: -1 }
         : { grass_rating: -1 }
     )
-    .limit(25);
+    .limit(35);
 
   if (!players) {
     res.status(400);
@@ -202,7 +243,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
           ],
         },
       },
-      { $limit: 500 },
+      { $limit: 550 },
       {
         $group: {
           _id: player.player_id,
