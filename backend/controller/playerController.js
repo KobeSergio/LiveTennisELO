@@ -176,7 +176,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
             atp_rating: { $ne: null, $gt: 300 },
           },
           {
-            overall_rating: { $ne: null, $gt: 2500 },
+            overall_rating: { $ne: null, $gt: 2700 },
           },
         ],
       },
@@ -186,7 +186,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
             atp_rating: { $ne: null, $gt: 300 },
           },
           {
-            hard_rating: { $ne: null, $gt: 2500 },
+            hard_rating: { $ne: null, $gt: 2700 },
           },
         ],
       },
@@ -196,7 +196,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
             atp_rating: { $ne: null, $gt: 300 },
           },
           {
-            clay_rating: { $ne: null, $gt: 2500 },
+            clay_rating: { $ne: null, $gt: 2700 },
           },
         ],
       },
@@ -206,7 +206,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
             atp_rating: { $ne: null, $gt: 300 },
           },
           {
-            grass_rating: { $ne: null, $gt: 2500 },
+            grass_rating: { $ne: null, $gt: 2700 },
           },
         ],
       },
@@ -224,7 +224,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
         ? { clay_rating: -1 }
         : { grass_rating: -1 }
     )
-    .limit(35);
+    .limit(32);
 
   if (!players) {
     res.status(400);
@@ -243,7 +243,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
           ],
         },
       },
-      { $limit: 550 },
+      { $limit: 100 },
       {
         $group: {
           _id: player.player_id,
