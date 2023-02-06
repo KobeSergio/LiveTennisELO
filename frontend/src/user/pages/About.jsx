@@ -2,14 +2,11 @@ import bg_img from "../img/bg-liveratings.png";
 import AboutContent from "../components/Content/About";
 import TennisRatingGuide from "../components/Tables/TennisRatingGuide";
 import Footer from "../components/Footer/Footer";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import { useEffect } from "react";
 
 export default function About() {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
-
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   return (
     <>
       <div

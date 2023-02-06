@@ -11,7 +11,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useCallback } from "react";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 function parseCountry(country_id) {
   let regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -19,6 +19,7 @@ function parseCountry(country_id) {
 }
 
 export default function Charts() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,7 +34,6 @@ export default function Charts() {
     if (players.length == 0) {
       dispatch(loadData());
     }
-    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

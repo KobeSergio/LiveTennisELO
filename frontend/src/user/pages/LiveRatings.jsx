@@ -4,14 +4,11 @@ import SideTables from "../components/Tables/SideTables";
 import Footer from "../components/Footer/Footer";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import LatestTournament from "../components/Tables/LatestTournament";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import { useEffect } from "react";
 
 export default function Charts() {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
-
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   return (
     <>
       <div

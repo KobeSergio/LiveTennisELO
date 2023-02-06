@@ -3,7 +3,7 @@ import { PlayerMatches } from "../components/Tables/PlayerMatches";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { FaCross } from "react-icons/fa";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 //Backend
 import { useEffect } from "react";
@@ -143,6 +143,7 @@ function computeStatus(dateString) {
 }
 
 export default function Player() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const {
     player_details,
     player_matches,
@@ -158,7 +159,6 @@ export default function Player() {
     }
     dispatch(resetPlayer());
     dispatch(loadPlayer(player_id));
-    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

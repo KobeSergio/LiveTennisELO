@@ -5,7 +5,7 @@ import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { Button } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import { FaCross } from "react-icons/fa";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 //Backend
 import { useEffect } from "react";
@@ -133,6 +133,7 @@ function computeStatus(dateString) {
 }
 
 function ManagePlayer() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { player_id } = useParams();
@@ -142,11 +143,8 @@ function ManagePlayer() {
   const { player_details, player_isLoading } = useSelector(
     (state) => state.player
   );
-  const { players } = useSelector((state) => state.players);
 
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
+  const { players } = useSelector((state) => state.players);
 
   useEffect(() => {
     dispatch(resetPlayer());

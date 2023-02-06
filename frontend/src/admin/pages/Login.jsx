@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
 import { loadPlayers } from "../../features/players/playersSlice";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 //Constructor
 function Admin_login() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,10 +23,6 @@ function Admin_login() {
   const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
 
   //Check if selector changes
   useEffect(() => {

@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 // Layouts
 import Admin from "./admin/layout/Layout"; // Admin
@@ -28,8 +28,7 @@ import About from "./user/pages/About";
 import H2H from "./user/pages/H2H";
 import NoPage from "./user/pages/NoPage";
 import Tournaments from "./user/pages/Tournaments";
-import Tournament from "./user/pages/Tournament";
-import { useEffect } from "react";
+import Tournament from "./user/pages/Tournament"; 
 
 const root = createRoot(document.getElementById("root"));
 
@@ -37,9 +36,9 @@ const TRACKING_ID = "G-T4ZLEKEVK9"; // Replace with your Google Analytics tracki
 ReactGA.initialize(TRACKING_ID);
 
 export default function App() {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
+  // Send pageview with a custom path
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+ 
   return (
     <Provider store={store}>
       <BrowserRouter basename="/">

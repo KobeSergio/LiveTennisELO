@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap-icons";
 import ClipLoader from "react-spinners/ClipLoader";
 import ReactCountryFlag from "react-country-flag";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 function toTitleCase(str) {
   if (str.toLowerCase() === "mcenroe john") {
@@ -35,6 +35,7 @@ function parseDate(dateString) {
 }
 
 export default function AdminTournament() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const dispatch = useDispatch();
   const { tourney_id } = useParams();
   const { tournament_matches, api_isLoading } = useSelector(
@@ -43,7 +44,6 @@ export default function AdminTournament() {
   const [data, setData] = useState([]);
   useEffect(() => {
     dispatch(loadTournament(tourney_id));
-    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { Download } from "react-bootstrap-icons";
 import UploadBox from "../components/UploadBox";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 //Backend
 import { useEffect } from "react";
@@ -26,13 +26,10 @@ function ImportFailed() {
 }
 
 function Import() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const navigate = useNavigate();
   //Redirect if not logged in
   const { user } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
 
   useEffect(() => {
     if (!user) {

@@ -1,7 +1,7 @@
 import { H2HTable } from "../components/Tables/H2HTable";
 import PlayerInfo from "../components/Tables/PlayerInfo";
 import ClipLoader from "react-spinners/ClipLoader";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 //Backend
 import { useEffect } from "react";
@@ -47,6 +47,7 @@ function getPerformance(data, player_id) {
   return wins;
 }
 export default function H2H() {
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname });
   const { api_isLoading, H2H, players } = useSelector((state) => state.api);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,8 +59,7 @@ export default function H2H() {
     }
     if (H2H == null) {
       dispatch(getH2H(searchParams.get("player_ids")));
-    } 
-    ReactGA.pageview(window.location.pathname);
+    }
   }, []);
 
   useEffect(() => {
