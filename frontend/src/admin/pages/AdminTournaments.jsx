@@ -7,6 +7,7 @@ import { loadTournaments } from "../../features/api/apiSlice";
 import { useEffect, useState } from "react";
 import { deleteTournament } from "../../features/players/playerSlice";
 import EditTournament from "../components/tournaments/EditTournament";
+import ReactGA from "react-ga";
 
 function parseDate(dateString) {
   if (dateString == null) {
@@ -53,6 +54,9 @@ export default function AdminTournaments() {
   const { tournaments, api_isLoading } = useSelector((state) => state.api);
   const { user } = useSelector((state) => state.auth);
 
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
   useEffect(() => {
     if (!user) {
       navigate("/admin-login");

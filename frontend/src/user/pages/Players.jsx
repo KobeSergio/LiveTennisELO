@@ -4,6 +4,7 @@ import { Search, CaretDownFill, CaretUpFill } from "react-bootstrap-icons";
 import ReactCountryFlag from "react-country-flag";
 import Pagination from "../components/Pagination";
 import { SurfaceLegend } from "../components/Legend/SurfaceLegend";
+import ReactGA from "react-ga";
 
 //Backend
 import { useEffect, useState, useCallback } from "react";
@@ -228,6 +229,7 @@ function Players() {
   };
   useEffect(() => {
     setOrder("ASC");
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   if (api_isLoading) {

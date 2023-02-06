@@ -6,6 +6,7 @@ import { ShowHighlight } from "../components/Tables/Highlight";
 import { CaretUpFill, CaretDownFill, CameraVideo } from "react-bootstrap-icons";
 import ClipLoader from "react-spinners/ClipLoader";
 import ReactCountryFlag from "react-country-flag";
+import ReactGA from "react-ga";
 
 function toTitleCase(str) {
   if (
@@ -39,6 +40,7 @@ export default function Tournament() {
   const [data, setData] = useState([]);
   useEffect(() => {
     dispatch(loadTournament(tourney_id));
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

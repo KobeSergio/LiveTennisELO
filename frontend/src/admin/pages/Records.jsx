@@ -2,6 +2,7 @@ import { Search, TrashFill } from "react-bootstrap-icons";
 import { SurfaceLegend } from "../components/Legend";
 import RecordTable from "../components/records/RecordTable";
 import ClipLoader from "react-spinners/ClipLoader";
+import ReactGA from "react-ga";
 
 //Backend
 import { useEffect, useState } from "react";
@@ -26,6 +27,11 @@ function Records() {
     (state) => state.records
   );
   const { players } = useSelector((state) => state.players);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
+
   useEffect(() => {
     if (!user) {
       navigate("/admin-login");

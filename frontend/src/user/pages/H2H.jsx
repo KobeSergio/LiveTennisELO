@@ -1,6 +1,7 @@
 import { H2HTable } from "../components/Tables/H2HTable";
 import PlayerInfo from "../components/Tables/PlayerInfo";
 import ClipLoader from "react-spinners/ClipLoader";
+import ReactGA from "react-ga";
 
 //Backend
 import { useEffect } from "react";
@@ -57,7 +58,8 @@ export default function H2H() {
     }
     if (H2H == null) {
       dispatch(getH2H(searchParams.get("player_ids")));
-    }
+    } 
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

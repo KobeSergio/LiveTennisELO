@@ -1,16 +1,15 @@
-import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import bg_img from "../img/bg-liveratings.png";
-
-import {
-  YearDropdown,
-  RowsDropdown,
-  DateDropdown,
-} from "../../components/Dropdown";
 import AboutContent from "../components/Content/About";
 import TennisRatingGuide from "../components/Tables/TennisRatingGuide";
 import Footer from "../components/Footer/Footer";
+import ReactGA from "react-ga";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
+
   return (
     <>
       <div

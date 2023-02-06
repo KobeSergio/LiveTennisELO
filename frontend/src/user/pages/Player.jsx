@@ -3,6 +3,7 @@ import { PlayerMatches } from "../components/Tables/PlayerMatches";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Facebook, Twitter, Instagram, Globe } from "react-bootstrap-icons";
 import { FaCross } from "react-icons/fa";
+import ReactGA from "react-ga";
 
 //Backend
 import { useEffect } from "react";
@@ -157,6 +158,7 @@ export default function Player() {
     }
     dispatch(resetPlayer());
     dispatch(loadPlayer(player_id));
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   useEffect(() => {

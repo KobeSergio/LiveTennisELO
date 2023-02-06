@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { loadTournaments } from "../../features/api/apiSlice";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga";
 
 function parseDate(dateString) {
   if (dateString == null) {
@@ -73,6 +74,7 @@ export default function Tournaments() {
   };
 
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname); 
     dispatch(loadTournaments());
   }, []);
 
