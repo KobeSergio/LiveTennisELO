@@ -31,6 +31,7 @@ app.use(cors()); // Use this after the variable declaration
 
 app.use("/admin-api", require("./routes/adminRoutes"));
 app.use("/admin-login", require("./routes/loginRoutes"));
+app.use("/sitemap.xml", require("./routes/sitemapRouter"));
 app.use("/", require("./routes/userRoutes"));
 
 app.use(errorHandler);
