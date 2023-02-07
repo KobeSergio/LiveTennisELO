@@ -18,13 +18,13 @@ router.get("/", async function (req, res) {
   try {
     // Fetching todo records and mapping
     // it the desired URL pattern
-    const player_data = await Players.find(),
-      players = player_data.map((player) => `/players/${player.player_id}`),
+    const player_data = await Players.find().distinct("player_id"),
+      players = player_data.map((player_id) => `/players/${player_id}`),
       // Base url of our site
       smStream = new SitemapStream({
         hostname: "https://tenelos.com/",
       }),
-      pipeline = smStream.pipe(zlib.createGzip());
+      pipeline = smStream.pipe(zlib.createGzip()); 
 
     // Write todo URL to the stream
     players.forEach((item) =>

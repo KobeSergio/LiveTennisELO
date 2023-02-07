@@ -31,7 +31,8 @@ app.use(cors()); // Use this after the variable declaration
 
 app.use("/admin-api", require("./routes/adminRoutes"));
 app.use("/admin-login", require("./routes/loginRoutes"));
-app.use("/sitemap.xml", require("./routes/sitemapRouter"));
+app.use("/tourney-sitemap.xml", require("./routes/tournamentSitemapRouter"));
+app.use("/player-sitemap.xml", require("./routes/playersSitemapRouter"));
 app.use("/", require("./routes/userRoutes"));
 
 app.use(errorHandler);
