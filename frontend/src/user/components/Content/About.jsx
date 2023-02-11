@@ -156,7 +156,7 @@ export default function () {
               For inquiries, bugs, comments, or just to say hello, feel free to
               reach out to us at{" "}
               <a href="mailto:tennis.elos@gmail.com?subject=Mail from our Website">
-                <b>tennis.elos@gmail.com</b>
+                <b className="underline">tennis.elos@gmail.com</b>
               </a>
               , we'd love to hear from you!
             </p>

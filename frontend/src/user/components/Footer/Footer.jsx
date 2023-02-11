@@ -6,7 +6,7 @@ export default function () {
           <hr style={{ width: "80%" }} className="ms-auto me-auto" />@ 2023 Live
           Tennis ELO Ratings | Contact us:{" "}
           <a href="mailto:tennis.elos@gmail.com?subject=Mail from our Website">
-            <b>tennis.elos@gmail.com</b>
+            <b className="underline">tennis.elos@gmail.com</b>
           </a>
         </div>
       </footer>
