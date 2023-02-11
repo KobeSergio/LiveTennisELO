@@ -151,12 +151,7 @@ export default function () {
             </p>
           </section>
           <section className="mb-5">
-            <div className="d-flex align-items-start">
-              <div className="d-flex align-items-start">
-                <Question size={24} className="me-2 mt-1" />
-                <h3>Contact us:</h3>
-              </div>
-            </div>
+            <h5 className="fw-bold mb-0">Contact us:</h5>
             <p className="fw-normal ">
               For inquiries, bugs, comments, or just to say hello, feel free to
               reach out to us at <b>tennis.elos@gmail.com</b>, we'd love to hear
