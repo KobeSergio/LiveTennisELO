@@ -150,6 +150,19 @@ export default function () {
               of the opponent.
             </p>
           </section>
+          <section className="mb-5">
+            <div className="d-flex align-items-start">
+              <div className="d-flex align-items-start">
+                <Question size={24} className="me-2 mt-1" />
+                <h3>Contact us:</h3>
+              </div>
+            </div>
+            <p className="fw-normal ">
+              For inquiries, bugs, comments, or just to say hello, feel free to
+              reach out to us at <b>tennis.elos@gmail.com</b>, we'd love to hear
+              from you!
+            </p>
+          </section>
         </div>
       </div>
     </>
