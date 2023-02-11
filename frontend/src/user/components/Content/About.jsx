@@ -154,7 +154,7 @@ export default function () {
             <h5 className="fw-bold mb-0">Contact us:</h5>
             <p className="fw-normal ">
               For inquiries, bugs, comments, or just to say hello, feel free to
-              reach out to us at
+              reach out to us at{" "}
               <a href="mailto:tennis.elos@gmail.com?subject=Mail from our Website">
                 <b>tennis.elos@gmail.com</b>
               </a>
