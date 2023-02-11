@@ -155,11 +155,10 @@ export default function () {
             <p className="fw-normal ">
               For inquiries, bugs, comments, or just to say hello, feel free to
               reach out to us at{" "}
-              <a
-                href="mailto:tennis.elos@gmail.com?subject=Mail from our Website"
-                className="underline"
-              >
-                <b>tennis.elos@gmail.com</b>
+              <a href="mailto:tennis.elos@gmail.com?subject=Mail from our Website">
+                <u>
+                  <b>tennis.elos@gmail.com</b>
+                </u>
               </a>
               , we'd love to hear from you!
             </p>
