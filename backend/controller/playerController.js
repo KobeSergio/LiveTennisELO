@@ -206,7 +206,7 @@ const getHotPerformance = asyncHandler(async (req, res) => {
             atp_rating: { $ne: null, $gt: 300 },
           },
           {
-            grass_rating: { $ne: null, $gt: 2700 },
+            grass_rating: { $ne: null, $gt: 2625 },
           },
         ],
       },

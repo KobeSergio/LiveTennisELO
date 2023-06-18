@@ -67,17 +67,11 @@ function alphabetically(ascending, col) {
 function alph_average(ascending) {
   return function (a, b) {
     a =
-      (a["overall_peak_rating"] +
-        a["hard_peak_rating"] +
-        a["clay_peak_rating"] +
-        a["grass_peak_rating"]) /
-      4;
+      (a["hard_peak_rating"] + a["clay_peak_rating"] + a["grass_peak_rating"]) /
+      3;
     b =
-      (b["overall_peak_rating"] +
-        b["hard_peak_rating"] +
-        b["clay_peak_rating"] +
-        b["grass_peak_rating"]) /
-      4;
+      (b["hard_peak_rating"] + b["clay_peak_rating"] + b["grass_peak_rating"]) /
+      3;
 
     if (a == null) {
       a = 0;
