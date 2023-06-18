@@ -189,7 +189,11 @@ export default function HotPerformances() {
           });
         });
         setPerfData(
-          last10.sort(alphabetically(false, "performance")).splice(0, 10)
+          //filter last10 to not include NaN performance
+          last10
+            .filter((item) => !Number.isNaN(item.performance)) // Filter out items where performance is NaN
+            .sort((a, b) => b.performance - a.performance) // Sort in descending order
+            .slice(0, 10) // Take the top 10
         );
         setIsLoading(false);
       });
