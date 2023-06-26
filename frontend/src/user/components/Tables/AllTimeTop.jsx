@@ -696,11 +696,10 @@ export default function AllTimeTop() {
                                   className="table-surface-elo-label"
                                 >
                                   {Math.floor(
-                                    (player.overall_peak_rating +
-                                      player.hard_peak_rating +
+                                    (player.hard_peak_rating +
                                       player.clay_peak_rating +
                                       player.grass_peak_rating) /
-                                      4
+                                      3
                                   )}
                                 </span>
                               </td>
